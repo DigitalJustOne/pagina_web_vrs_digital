@@ -1,0 +1,1 @@
+import{t as e}from"./inclinar.CoG-yTew.js";e(`[data-mosaico]`,{x:10,y:7});

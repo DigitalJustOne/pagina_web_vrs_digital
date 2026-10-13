@@ -1,0 +1,32 @@
+# robots.txt de VRS Digital
+# Todo el sitio es público, salvo las páginas internas de abajo.
+# (Las páginas en borrador no se bloquean aquí: llevan noindex y no están en el sitemap.)
+
+User-agent: *
+Allow: /
+Disallow: /gracias/
+
+# Buscadores y asistentes de IA: acceso explícito al contenido público.
+User-agent: Googlebot
+User-agent: Bingbot
+User-agent: Applebot
+User-agent: DuckDuckBot
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+User-agent: GPTBot
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: ClaudeBot
+User-agent: Claude-SearchBot
+User-agent: Claude-User
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: CCBot
+Allow: /
+Disallow: /gracias/
+
+# Resumen del sitio para modelos de lenguaje (llmstxt.org)
+# https://goldenrod-bee-973005.hostingersite.com/llms.txt
+# https://goldenrod-bee-973005.hostingersite.com/llms-full.txt
+
+Sitemap: https://goldenrod-bee-973005.hostingersite.com/sitemap-index.xml
