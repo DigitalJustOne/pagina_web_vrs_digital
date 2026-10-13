@@ -1,0 +1,46 @@
+---
+// /recursos/ — centro de guías para dueños de empresas de servicios.
+// Textos: src/data/contenido/recursos.ts. Guías: colección «recursos» (src/content/recursos/*.md),
+// de donde salen fecha de actualización, minutos de lectura, fuentes, preguntas y temas (sus H2).
+// La plantilla arma SEO, JSON-LD (CollectionPage, migas y FAQ), preguntas, enlaces y cierre.
+// Momentos propios:
+//   - Portada: las guías publicadas como portadas de vidrio apiladas en 3D (CSS), con una
+//     portada «en preparación» al fondo.
+//   - #guias: cada guía en una tarjeta grande con lo que ayuda a decidir si leerla.
+import PlantillaPagina from '@/components/pagina/PlantillaPagina.astro';
+import Biblioteca from '@/components/paginas/empresa/Biblioteca.astro';
+import { fichasGuias } from '@/components/paginas/empresa/guias';
+import { seccionDe } from '@/components/paginas/empresa/secciones';
+import TarjetasGuias from '@/components/paginas/empresa/TarjetasGuias.astro';
+import { contenido, textosGuia } from '@/data/contenido/recursos';
+
+const guias = seccionDe(contenido, 'guias', 'guias');
+const preparacion = seccionDe(contenido, 'en-preparacion', 'lista');
+const fichas = await fichasGuias(guias.s.items, textosGuia.etiqueta);
+---
+<PlantillaPagina
+  contenido={contenido}
+  resaltado="páginas web, Google y WhatsApp"
+  opciones={{
+    'en-preparacion': { resaltado: 'estamos preparando' },
+    'como-las-hacemos': { resaltado: 'cómo se hacen' },
+    servicios: { resaltado: 'por usted' },
+  }}
+>
+  <Biblioteca
+    slot="visual"
+    guias={fichas}
+    enPreparacion={preparacion.s.etiqueta}
+    rotuloActualizada={textosGuia.actualizada}
+    rotuloFuentes={textosGuia.fuentes}
+  />
+  <TarjetasGuias
+    slot="seccion-guias"
+    seccion={guias.s}
+    guias={fichas}
+    textos={textosGuia}
+    fondo={guias.fondo}
+    numero={guias.numero}
+    resaltado="publicadas"
+  />
+</PlantillaPagina>

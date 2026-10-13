@@ -1,0 +1,867 @@
+---
+/**
+ * Visual de la portada de /asistente-whatsapp-business/: «el agente responde a cualquier hora;
+ * una persona continúa en su horario».
+ * Un teléfono (esquemático, sin copiar la interfaz de WhatsApp ni su logo) con la conversación
+ * de ejemplo de la página, rodeado por un anillo de 24 horas en perspectiva:
+ *   - anillo fino de marca: el agente de IA (puede responder a cualquier hora);
+ *   - arco claro y grueso: el horario de su equipo (ilustrativo);
+ *   - dos marcas con las horas reales del ejemplo (9:42 p. m. el agente; al día siguiente,
+ *     8:15 a. m., una persona) y una luz que recorre el día.
+ * El anillo se parte en dos mitades (detrás y delante del teléfono) para dar profundidad sin 3D real.
+ *
+ * Al cargar: el anillo se traza, los mensajes llegan en orden y aparecen las fichas. Después solo
+ * fluye el anillo y gira la luz (en HTML con rotate y opacity: van por el compositor). Sin JS no cambia nada; con movimiento reducido, todo quieto.
+ * Espacio reservado con aspect-ratio (CLS 0). Una sola imagen para lectores de pantalla.
+ * Textos: relojAtencion en src/data/contenido/asistente-whatsapp-business.ts.
+ */
+import Icono from '@/components/ui/Icono.astro';
+import { relojAtencion as R } from '@/data/contenido/asistente-whatsapp-business';
+
+interface Props {
+  class?: string;
+}
+const { class: clase } = Astro.props;
+const uid = Math.random().toString(36).slice(2, 8);
+
+// ── Geometría (unidades del lienzo: 100 de ancho × 108 de alto, igual al viewBox) ──────────
+const ALTO = 108;
+const C = { x: 50, y: 60, rx: 45, ry: 14 };
+const r1 = (n: number) => Math.round(n * 100) / 100;
+/** Hora del día (0-24) → punto del anillo. 12 m. queda al frente; 12 a. m., al fondo. */
+const punto = (h: number) => {
+  const fi = ((180 - (h - 6) * 15) * Math.PI) / 180;
+  return { x: r1(C.x + C.rx * Math.cos(fi)), y: r1(C.y + C.ry * Math.sin(fi)) };
+};
+/** «9:42 p. m.» → 21,7. */
+const aHoras = (t: string) => {
+  const m = t.match(/(\d{1,2}):(\d{2})\s*([ap])/i);
+  if (!m) return 12;
+  const h = (Number(m[1]) % 12) + (m[3].toLowerCase() === 'p' ? 12 : 0);
+  return h + Number(m[2]) / 60;
+};
+const izq = punto(6);
+const der = punto(18);
+const mitadAtras = `M${der.x} ${der.y} A${C.rx} ${C.ry} 0 0 0 ${izq.x} ${izq.y}`;
+const mitadDelante = `M${izq.x} ${izq.y} A${C.rx} ${C.ry} 0 0 0 ${der.x} ${der.y}`;
+// Horario ilustrativo del equipo: 8:00 a. m. a 6:00 p. m.
+const inicioEquipo = punto(8);
+const arcoEquipo = `M${inicioEquipo.x} ${inicioEquipo.y} A${C.rx} ${C.ry} 0 0 0 ${der.x} ${der.y}`;
+const horas = Array.from({ length: 24 }, (_, h) => ({ h, ...punto(h), mayor: h % 6 === 0 }));
+const marcaAgente = punto(aHoras(R.agente.hora));
+const marcaPersona = punto(aHoras(R.persona.hora));
+const pct = (y: number) => `${r1((y / ALTO) * 100)}%`;
+---
+<div role="img" aria-label={R.etiqueta} data-reloj class:list={['reloj relative mx-auto w-full', clase]}>
+  <div class="lienzo" aria-hidden="true">
+    <span class="halo"></span>
+
+    <!-- Mitad trasera del anillo (detrás del teléfono) -->
+    <svg class="capa atras" viewBox={`0 0 100 ${ALTO}`} fill="none">
+      <defs>
+        <linearGradient id={`agente-${uid}`} x1="0" y1="0" x2="100" y2="0" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#6366f1" />
+          <stop offset="0.5" stop-color="#c0c1ff" />
+          <stop offset="1" stop-color="#8083ff" />
+        </linearGradient>
+      </defs>
+      <path class="anillo" d={mitadAtras} stroke={`url(#agente-${uid})`} pathLength="100" />
+      {horas.filter((p) => p.y < C.y - 0.01).map((p) => <circle class:list={['tic', p.mayor && 'mayor']} cx={p.x} cy={p.y} r={p.mayor ? 0.9 : 0.45} />)}
+      <g class="marca marca-agente">
+        <circle cx={marcaAgente.x} cy={marcaAgente.y} r="1.5" />
+      </g>
+      <path class="guia" d={`M${marcaAgente.x} ${marcaAgente.y - 1.6} L${marcaAgente.x} 44`} />
+    </svg>
+
+    <!-- Luz que recorre el día (gira sobre el plano del anillo) -->
+    <span class="orbita" style={`top:${pct(C.y)}`}><span class="brazo"><span class="luz"></span></span></span>
+    <span class="orbita delante" style={`top:${pct(C.y)}`}><span class="brazo"><span class="luz"></span></span></span>
+
+    <!-- Flujo del anillo y ondas de las marcas, en HTML (giran y laten por el compositor; en el
+         SVG recalculaban estilos en cada cuadro). Mitad trasera detrás del teléfono. -->
+    <span class="flujo-anillo atras" style={`top:${pct(C.y)}`}><span class="flujo-giro"></span></span>
+    <span class="onda atras" style={`left:${marcaAgente.x}%;top:${pct(marcaAgente.y)}`}></span>
+    <span class="flujo-anillo delante" style={`top:${pct(C.y)}`}><span class="flujo-giro"></span></span>
+    <span class="onda delante" style={`left:${marcaPersona.x}%;top:${pct(marcaPersona.y)}`}></span>
+
+    <!-- Teléfono -->
+    <div class="telefono">
+      <div class="pantalla">
+        <span class="isla"></span>
+        <span class="cabecera">
+          <span class="avatar"></span>
+          <span class="grid gap-[0.6cqi]">
+            <span class="b" style="--w:15cqi"></span>
+            <span class="b tenue" style="--w:9cqi"></span>
+          </span>
+        </span>
+        <span class="mensajes">
+          <span class="msg m-1 cliente">
+            <span class="burbuja">
+              <span class="b" style="--w:15cqi"></span>
+              <span class="b" style="--w:10cqi"></span>
+              <span class="t-hora">{R.agente.hora}</span>
+            </span>
+          </span>
+          <span class="msg m-2 agente">
+            <span class="autor"><Icono nombre="spark" tamano={10} />{R.autorAgente}</span>
+            <span class="burbuja">
+              <span class="escribiendo"><span></span><span></span><span></span></span>
+              <span class="b" style="--w:20cqi"></span>
+              <span class="b" style="--w:17cqi"></span>
+              <span class="b" style="--w:11cqi"></span>
+              <span class="t-hora">{R.agente.hora}</span>
+            </span>
+          </span>
+          <span class="msg m-3 separador">{R.separador}</span>
+          <span class="msg m-4 persona">
+            <span class="autor"><Icono nombre="user" tamano={10} />{R.autorPersona}</span>
+            <span class="burbuja">
+              <span class="b" style="--w:19cqi"></span>
+              <span class="b" style="--w:13cqi"></span>
+              <span class="t-hora">{R.persona.hora}</span>
+            </span>
+          </span>
+        </span>
+        <span class="entrada"><span></span><span class="enviar"><Icono nombre="send" tamano={10} /></span></span>
+      </div>
+    </div>
+
+    <!-- Mitad delantera del anillo (delante del teléfono) -->
+    <svg class="capa delante" viewBox={`0 0 100 ${ALTO}`} fill="none">
+      <path class="equipo-luz" d={arcoEquipo} />
+      <path class="anillo" d={mitadDelante} stroke={`url(#agente-${uid})`} pathLength="100" />
+      <path class="equipo" d={arcoEquipo} pathLength="100" />
+      {horas.filter((p) => p.y >= C.y - 0.01).map((p) => <circle class:list={['tic', p.mayor && 'mayor']} cx={p.x} cy={p.y} r={p.mayor ? 0.9 : 0.45} />)}
+      <g class="marca marca-persona">
+        <circle cx={marcaPersona.x} cy={marcaPersona.y} r="1.5" />
+      </g>
+      <path class="guia" d={`M${marcaPersona.x} ${marcaPersona.y + 1.6} L${marcaPersona.x} 76`} />
+    </svg>
+
+    <!-- Rótulos de las horas -->
+    <span class="rotulo-hora" style={`left:0;top:${pct(izq.y - 8.5)}`}>{R.horas.manana}</span>
+    <span class="rotulo-hora" style={`right:0;top:${pct(der.y - 8.5)}`}>{R.horas.tarde}</span>
+    <span class="rotulo-hora centro" style={`top:${pct(C.y + C.ry + 4.2)}`}>{R.horas.mediodia}</span>
+
+    <!-- Fichas -->
+    <span class="ficha ficha-agente" style={`top:${pct(29)}`}>
+      <span class="ficha-icono"><Icono nombre="spark" tamano={14} /></span>
+      <span class="grid">
+        <span class="ficha-hora"><span class="nw">{R.agente.hora}</span> · <span class="nw">{R.agente.detalle}</span></span>
+        <span class="ficha-titulo">{R.agente.titulo}</span>
+      </span>
+    </span>
+    <span class="ficha ficha-persona" style={`top:${pct(77)}`}>
+      <span class="ficha-icono claro"><Icono nombre="user" tamano={14} /></span>
+      <span class="grid">
+        <span class="ficha-hora"><span class="nw">{R.persona.hora}</span> · <span class="nw">{R.persona.detalle}</span></span>
+        <span class="ficha-titulo">{R.persona.titulo}</span>
+      </span>
+    </span>
+
+    <!-- Leyenda -->
+    <span class="leyenda">
+      <span class="item"><span class="muestra agente"></span>{R.leyendaAgente}</span>
+      <span class="item"><span class="muestra equipo"></span>{R.leyendaEquipo}</span>
+    </span>
+  </div>
+</div>
+
+<style>
+  .reloj {
+    aspect-ratio: 100 / 108;
+    max-width: 34rem;
+    container-type: inline-size;
+  }
+  .lienzo {
+    position: absolute;
+    inset: 0;
+  }
+  .halo {
+    position: absolute;
+    left: 10%;
+    right: 10%;
+    top: 14%;
+    height: 66%;
+    border-radius: 999px;
+    background: radial-gradient(closest-side, rgb(99 102 241 / 0.32), transparent 75%);
+    filter: blur(28px);
+  }
+  .capa {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+  .atras {
+    z-index: 1;
+  }
+  .delante {
+    z-index: 3;
+  }
+  .anillo {
+    stroke-width: 0.45;
+    opacity: 0.9;
+  }
+  .atras .anillo {
+    opacity: 0.5;
+  }
+  /* Flujo: el mismo círculo aplastado de .orbita, con guiones (degradado cónico) en un aro de
+     0,7 unidades; cada mitad se recorta para quedar detrás o delante del teléfono. */
+  .flujo-anillo {
+    position: absolute;
+    left: 5%;
+    width: 90%;
+    aspect-ratio: 1;
+    transform: translateY(-50%) scaleY(0.311);
+    pointer-events: none;
+    /* El aro gira: sin recorte, las esquinas del cuadrado que rota ensanchan la página en celular. */
+    overflow: hidden;
+  }
+  .flujo-anillo.atras {
+    z-index: 1;
+    clip-path: inset(0 0 50% 0);
+    opacity: 0.4;
+  }
+  .flujo-anillo.delante {
+    z-index: 3;
+    clip-path: inset(50% 0 0 0);
+    opacity: 0.85;
+  }
+  .flujo-giro {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: repeating-conic-gradient(#e4e4ff 0 3.6deg, transparent 3.6deg 22.5deg);
+    -webkit-mask: radial-gradient(closest-side, transparent calc(100% - 0.75cqi), #000 calc(100% - 0.7cqi), #000 99%, transparent 100%);
+    mask: radial-gradient(closest-side, transparent calc(100% - 0.75cqi), #000 calc(100% - 0.7cqi), #000 99%, transparent 100%);
+  }
+  .equipo {
+    stroke: #e5e1e4;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+  }
+  .equipo-luz {
+    stroke: rgb(229 225 228 / 0.22);
+    stroke-width: 4.5;
+    stroke-linecap: round;
+    filter: blur(1.4px);
+  }
+  .tic {
+    fill: rgb(229 225 228 / 0.38);
+  }
+  .tic.mayor {
+    fill: #c0c1ff;
+  }
+  .atras .tic {
+    fill: rgb(229 225 228 / 0.22);
+  }
+  .marca circle {
+    fill: #c0c1ff;
+  }
+  .onda {
+    position: absolute;
+    width: 4.8cqi;
+    aspect-ratio: 1;
+    translate: -50% -50%;
+    border-radius: 50%;
+    background: rgb(192 193 255 / 0.18);
+    pointer-events: none;
+  }
+  .onda.atras {
+    z-index: 1;
+  }
+  .onda.delante {
+    z-index: 3;
+    background: rgb(229 225 228 / 0.2);
+  }
+  .marca-persona circle {
+    fill: #e5e1e4;
+  }
+  .guia {
+    stroke: rgb(229 225 228 / 0.35);
+    stroke-width: 0.3;
+    stroke-dasharray: 0.8 0.8;
+  }
+
+  /* ── Luz que recorre el día: círculo aplastado al plano del anillo ─────────── */
+  .orbita {
+    position: absolute;
+    z-index: 1;
+    left: 5%;
+    width: 90%;
+    aspect-ratio: 1;
+    /* Un solo transform: el minificador descarta «translate» si la regla también tiene «transform». */
+    transform: translateY(-50%) scaleY(0.311);
+    pointer-events: none;
+  }
+  /* Copia por delante del teléfono: se ve solo en la mitad delantera del giro (sección Movimiento). */
+  .orbita.delante {
+    z-index: 4;
+    opacity: 0;
+  }
+  /* Brazo sin ancho, del centro al borde: al girar no se sale del anillo (no crea
+     desbordamiento horizontal en celular, como pasaría con un cuadrado girado). */
+  .brazo {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    width: 0;
+    height: 50%;
+    transform-origin: 50% 100%;
+  }
+  .luz {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 4.2cqi;
+    height: 4.2cqi;
+    translate: -50% -50%;
+    border-radius: 999px;
+    background: radial-gradient(circle, #fff 0 18%, rgb(192 193 255 / 0.9) 30%, rgb(128 131 255 / 0) 70%);
+    opacity: 0;
+  }
+
+  /* ── Teléfono ──────────────────────────────────────────────────────────── */
+  .telefono {
+    position: absolute;
+    z-index: 2;
+    transform: perspective(900px) rotateY(-11deg) rotateX(3deg);
+    left: 32%;
+    top: 2.8%;
+    width: 36%;
+    aspect-ratio: 9 / 18.5;
+    padding: 1.2cqi;
+    border-radius: 6.4cqi;
+    background: linear-gradient(150deg, #3a393d 0%, #1c1b1e 40%, #0e0e10 100%);
+    box-shadow:
+      inset 0 0 0 1px rgb(229 225 228 / 0.1),
+      inset 0 1px 0 rgb(229 225 228 / 0.14),
+      0 40px 70px -24px rgb(0 0 0 / 0.85),
+      0 0 60px -20px rgb(99 102 241 / 0.5);
+  }
+  .pantalla {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border-radius: 5.3cqi;
+    overflow: hidden;
+    background:
+      radial-gradient(rgb(192 193 255 / 0.05) 1px, transparent 1px) 0 0 / 10px 10px,
+      linear-gradient(180deg, #131315 0%, #0e0e10 100%);
+  }
+  .isla {
+    position: absolute;
+    top: 1.3cqi;
+    left: 50%;
+    width: 9cqi;
+    height: 2.4cqi;
+    translate: -50% 0;
+    border-radius: 999px;
+    background: #050506;
+  }
+  .cabecera {
+    display: flex;
+    align-items: center;
+    gap: 1.6cqi;
+    padding: 5.2cqi 2.4cqi 1.8cqi;
+    background: rgb(28 27 30 / 0.9);
+  }
+  .avatar {
+    flex: none;
+    width: 5cqi;
+    height: 5cqi;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #c0c1ff, #6366f1);
+  }
+  .b {
+    display: block;
+    width: var(--w);
+    max-width: 100%;
+    height: 1.05cqi;
+    border-radius: 99px;
+    background: rgb(229 225 228 / 0.42);
+  }
+  .b.tenue {
+    background: rgb(74 222 128 / 0.55);
+  }
+  .mensajes {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 1.5cqi;
+    padding: 2.4cqi 2cqi;
+  }
+  .msg {
+    display: flex;
+    flex-direction: column;
+  }
+  .cliente {
+    align-items: flex-end;
+  }
+  .agente,
+  .persona {
+    align-items: flex-start;
+  }
+  .burbuja {
+    position: relative;
+    display: grid;
+    gap: 0.9cqi;
+    max-width: 88%;
+    padding: 1.4cqi 1.8cqi 1.1cqi;
+    border-radius: 2.2cqi;
+  }
+  .cliente .burbuja {
+    background: rgb(37 211 102 / 0.16);
+    box-shadow: inset 0 0 0 1px rgb(37 211 102 / 0.25);
+    border-bottom-right-radius: 0.6cqi;
+  }
+  .agente .burbuja {
+    background: rgb(53 52 55 / 0.92);
+    box-shadow: inset 0 0 0 1px rgb(229 225 228 / 0.07);
+    border-top-left-radius: 0.6cqi;
+  }
+  .persona .burbuja {
+    background: rgb(128 131 255 / 0.2);
+    box-shadow: inset 0 0 0 1px rgb(192 193 255 / 0.25);
+    border-top-left-radius: 0.6cqi;
+  }
+  .t-hora {
+    justify-self: end;
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: clamp(6.5px, 1.55cqi, 8.5px);
+    line-height: 1;
+    color: var(--color-ink-soft, #c9c5c8);
+  }
+  .autor {
+    display: flex;
+    align-items: center;
+    gap: 0.6cqi;
+    margin: 0 0 0.7cqi 0.4cqi;
+    font-size: clamp(6.5px, 1.6cqi, 9px);
+    font-weight: 600;
+    color: var(--color-ink-soft, #c9c5c8);
+  }
+  .persona .autor {
+    color: var(--color-primary, #c0c1ff);
+  }
+  .autor :global(svg) {
+    width: 1.15em;
+    height: 1.15em;
+  }
+  .separador {
+    align-self: center;
+    margin-block: 0.6cqi;
+    padding: 0.6cqi 1.8cqi;
+    border-radius: 999px;
+    background: rgb(42 42 44 / 0.9);
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: clamp(6.5px, 1.5cqi, 8.5px);
+    color: var(--color-ink-soft, #c9c5c8);
+  }
+  .escribiendo {
+    display: none;
+  }
+  .entrada {
+    display: flex;
+    align-items: center;
+    gap: 1.2cqi;
+    padding: 0 2cqi 2.4cqi;
+  }
+  .entrada > span:first-child {
+    flex: 1;
+    height: 4.6cqi;
+    border-radius: 999px;
+    background: rgb(42 42 44 / 0.75);
+  }
+  .enviar {
+    display: grid;
+    place-items: center;
+    width: 4.6cqi;
+    height: 4.6cqi;
+    border-radius: 999px;
+    background: rgb(37 211 102 / 0.9);
+    color: #0e0e10;
+  }
+  .enviar :global(svg) {
+    width: 50%;
+    height: 50%;
+  }
+
+  /* ── Rótulos, fichas y leyenda ─────────────────────────────────────────── */
+  .rotulo-hora {
+    position: absolute;
+    z-index: 4;
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: clamp(11px, 2.1cqi, 11.5px);
+    letter-spacing: 0.06em;
+    color: var(--color-ink-soft, #c9c5c8);
+  }
+  .rotulo-hora.centro {
+    left: 0;
+    right: 0;
+    text-align: center;
+  }
+  .ficha {
+    position: absolute;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    gap: 2cqi;
+    max-width: 37%;
+    padding: 1.6cqi 2.8cqi 1.6cqi 1.6cqi;
+    border-radius: 3cqi;
+    background: rgb(42 42 44 / 0.9);
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    box-shadow:
+      0 18px 40px -14px rgb(0 0 0 / 0.75),
+      inset 0 0 0 1px rgb(229 225 228 / 0.12);
+  }
+  .ficha-agente {
+    right: 0;
+  }
+  .ficha-persona {
+    left: 0;
+  }
+  .ficha-icono {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 6.6cqi;
+    height: 6.6cqi;
+    border-radius: 1.8cqi;
+    background: rgb(128 131 255 / 0.22);
+    color: var(--color-primary, #c0c1ff);
+  }
+  .ficha-icono.claro {
+    background: rgb(229 225 228 / 0.14);
+    color: var(--color-ink, #e5e1e4);
+  }
+  .ficha-icono :global(svg) {
+    width: 55%;
+    height: 55%;
+  }
+  .ficha-hora {
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: clamp(11px, 1.9cqi, 11.5px);
+    letter-spacing: 0.04em;
+    color: var(--color-ink-soft, #c9c5c8);
+  }
+  .nw {
+    white-space: nowrap;
+  }
+  .ficha-titulo {
+    font-family: var(--font-display, system-ui);
+    font-size: clamp(11px, 2.75cqi, 14.5px);
+    font-weight: 600;
+    line-height: 1.25;
+    color: var(--color-ink, #e5e1e4);
+  }
+  .leyenda {
+    position: absolute;
+    z-index: 4;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: grid;
+    justify-items: center;
+    gap: 1.2cqi;
+    font-size: clamp(11px, 2.35cqi, 12.5px);
+    color: var(--color-ink-soft, #c9c5c8);
+  }
+  /* En celular, el teléfono es una miniatura: sus rótulos (hora, autor, separador) quedarían en
+     unos 6 px. Se dejan solo las burbujas; las fichas de al lado dicen la hora y quién responde. */
+  @media (max-width: 639.98px) {
+    .t-hora,
+    .autor,
+    .separador {
+      display: none;
+    }
+    /* Con los rótulos en 11 px, las fichas necesitan algo más de ancho (la hora se parte en «·»). */
+    .ficha {
+      max-width: 44%;
+      padding-right: 2cqi;
+    }
+    .ficha-hora {
+      letter-spacing: 0;
+    }
+  }
+  .item {
+    display: inline-flex;
+    align-items: center;
+    gap: 2cqi;
+  }
+  .muestra {
+    flex: none;
+    width: 6cqi;
+    border-radius: 99px;
+  }
+  .muestra.agente {
+    height: 2px;
+    background: repeating-linear-gradient(90deg, #c0c1ff 0 5px, transparent 5px 8px);
+  }
+  .muestra.equipo {
+    height: 4px;
+    background: #e5e1e4;
+  }
+
+  /* ════ Movimiento ═══════════════════════════════════════════════════════
+     Lo oculto vive solo en las animaciones: sin ellas, todo se ve completo. */
+  @media (prefers-reduced-motion: no-preference) {
+    .anillo,
+    .equipo {
+      stroke-dasharray: 100;
+      animation: reloj-trazar 1.4s var(--ease-out-expo) both;
+    }
+    .atras .anillo {
+      animation-delay: 0.15s;
+    }
+    .delante .anillo {
+      animation-delay: 0.5s;
+    }
+    .equipo {
+      animation-delay: 1s;
+    }
+    .equipo-luz,
+    .tic,
+    .rotulo-hora,
+    .leyenda {
+      animation: reloj-aparecer 0.9s var(--ease-out-expo) 0.9s both;
+    }
+    /* Los guiones giran con el día, en el mismo sentido que la luz. */
+    .flujo-giro {
+      animation: reloj-fluir 18s linear infinite;
+    }
+    .marca {
+      animation: reloj-pop 0.6s var(--ease-out-expo) both;
+      transform-box: fill-box;
+      transform-origin: center;
+    }
+    .marca-agente {
+      animation-delay: 1.5s;
+    }
+    .marca-persona {
+      animation-delay: 3.1s;
+    }
+    /* Ocultas hasta que empiezan (las marcas aparecen antes con reloj-pop). */
+    .onda {
+      opacity: 0;
+      animation: reloj-onda 2.6s ease-out 3.6s infinite;
+    }
+    .guia {
+      animation: reloj-aparecer 0.6s ease-out both;
+    }
+    .atras .guia {
+      animation-delay: 1.7s;
+    }
+    .delante .guia {
+      animation-delay: 3.3s;
+    }
+
+    .telefono {
+      animation:
+        reloj-entrar 1s var(--ease-out-expo) 0.1s both,
+        reloj-flotar 7s ease-in-out 1.4s infinite;
+    }
+    .msg {
+      animation: reloj-mensaje 0.5s var(--ease-out-expo) both;
+    }
+    .m-1 {
+      animation-delay: 0.7s;
+    }
+    .m-2 {
+      animation-delay: 1.3s;
+    }
+    .m-3 {
+      animation-delay: 2.6s;
+    }
+    .m-4 {
+      animation-delay: 3s;
+    }
+    /* «Escribiendo…» dentro de la burbuja del agente antes de que aparezca el texto. */
+    .agente .burbuja > :not(.escribiendo) {
+      animation: reloj-texto 0.3s ease-out 2s both;
+    }
+    .escribiendo {
+      position: absolute;
+      left: 1.8cqi;
+      top: 50%;
+      display: flex;
+      gap: 0.7cqi;
+      translate: 0 -50%;
+      animation: reloj-escribiendo 0.7s linear 1.3s both;
+    }
+    /* Solo mientras se ve «escribiendo» (0,7 s desde 1,3 s): después no siguen en bucle ocultos. */
+    .escribiendo span {
+      width: 1.1cqi;
+      height: 1.1cqi;
+      border-radius: 99px;
+      background: var(--color-primary, #c0c1ff);
+      animation: reloj-punto 0.7s ease-in-out 3;
+    }
+    .escribiendo span:nth-child(2) {
+      animation-delay: 0.12s;
+    }
+    .escribiendo span:nth-child(3) {
+      animation-delay: 0.24s;
+    }
+
+    .ficha {
+      animation:
+        reloj-ficha 0.9s var(--ease-out-expo) both,
+        reloj-flotar-ficha 6s ease-in-out infinite;
+    }
+    .ficha-agente {
+      animation-delay: 1.8s, 2.8s;
+    }
+    .ficha-persona {
+      animation-delay: 3.4s, 4.4s;
+    }
+
+    /* La luz recorre el día: 12 a. m. (fondo) → 6 a. m. → 12 m. (frente) → 6 p. m. Pasa
+       detrás del teléfono en la mitad trasera y delante en la delantera: dos copias del brazo,
+       una detrás y otra delante, que se alternan con opacidad (antes se animaba z-index, que
+       recalculaba estilos en cada cuadro). */
+    .orbita {
+      animation: reloj-detras 14s linear 2s infinite;
+    }
+    .orbita.delante {
+      animation-name: reloj-delante;
+    }
+    .brazo {
+      animation: reloj-girar 14s linear 2s infinite;
+    }
+    .luz {
+      animation: reloj-aparecer 0.8s ease-out 2s both;
+      opacity: 1;
+    }
+  }
+
+  @keyframes reloj-trazar {
+    from {
+      stroke-dashoffset: 100;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  @keyframes reloj-fluir {
+    to {
+      rotate: -360deg;
+    }
+  }
+  @keyframes reloj-aparecer {
+    from {
+      opacity: 0;
+    }
+  }
+  @keyframes reloj-pop {
+    from {
+      opacity: 0;
+      scale: 0.3;
+    }
+  }
+  @keyframes reloj-onda {
+    0% {
+      scale: 0.8;
+      opacity: 1;
+    }
+    100% {
+      scale: 2.6;
+      opacity: 0;
+    }
+  }
+  @keyframes reloj-entrar {
+    from {
+      opacity: 0;
+      translate: 0 24px;
+    }
+  }
+  /* Con transform (no translate): reloj-entrar ya anima translate y las dos juntas no iban por
+     el compositor. Repite el transform de .telefono y suma el desplazamiento. */
+  @keyframes reloj-flotar {
+    50% {
+      transform: perspective(900px) rotateY(-11deg) rotateX(3deg) translateY(-1.6%);
+    }
+  }
+  @keyframes reloj-mensaje {
+    from {
+      opacity: 0;
+      translate: 0 8px;
+      scale: 0.96;
+    }
+  }
+  @keyframes reloj-texto {
+    from {
+      opacity: 0;
+    }
+  }
+  @keyframes reloj-escribiendo {
+    0%,
+    99% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+  @keyframes reloj-punto {
+    50% {
+      translate: 0 -40%;
+      opacity: 0.5;
+    }
+  }
+  @keyframes reloj-ficha {
+    from {
+      opacity: 0;
+      translate: 0 10px;
+      scale: 0.94;
+    }
+  }
+  @keyframes reloj-flotar-ficha {
+    50% {
+      transform: translateY(-5px);
+    }
+  }
+  @keyframes reloj-girar {
+    from {
+      rotate: 0deg;
+    }
+    to {
+      rotate: -360deg;
+    }
+  }
+  /* Detrás del teléfono (z 1) en la mitad trasera; delante (z 4) en la delantera. */
+  @keyframes reloj-detras {
+    0%,
+    24.9% {
+      opacity: 1;
+    }
+    25%,
+    74.9% {
+      opacity: 0;
+    }
+    75%,
+    100% {
+      opacity: 1;
+    }
+  }
+  @keyframes reloj-delante {
+    0%,
+    24.9% {
+      opacity: 0;
+    }
+    25%,
+    74.9% {
+      opacity: 1;
+    }
+    75%,
+    100% {
+      opacity: 0;
+    }
+  }
+</style>

@@ -1,0 +1,128 @@
+---
+/**
+ * Marco de las secciones propias del grupo «empresa» (slots «seccion-<id>» de PlantillaPagina).
+ * Reproduce lo que Seccion.astro pone alrededor del cuerpo, para que una sección propia se vea
+ * igual que las demás:
+ *   <section id aria-labelledby="<id>-titulo">, fondo base/bajo con filo de luz, número de orden
+ *   (solo computador), encabezado (etiqueta + H2 + introducción) y pie (párrafos, nota, nota de
+ *   precios si la sección muestra un precio de VRS Digital, y enlace).
+ *
+ * dividido: encabezado fijo a la izquierda (5 columnas) con el slot «lateral» debajo; cuerpo a la
+ *           derecha (7 columnas). apilado: encabezado arriba y cuerpo a todo el ancho.
+ *
+ * <MarcoEmpresa seccion={s} fondo="bajo" numero={3} resaltado="a propósito" disposicion="dividido">
+ *   <Visual slot="lateral" />
+ *   …cuerpo…
+ * </MarcoEmpresa>
+ */
+import EncabezadoSeccion from '@/components/ui/EncabezadoSeccion.astro';
+import PieSeccion from '@/components/pagina/PieSeccion.astro';
+import { idTitulo, muestraPrecio } from '@/lib/paginas';
+import type { Seccion } from '@/data/contenido/tipos';
+
+interface Props {
+  seccion: Seccion;
+  fondo?: 'base' | 'bajo';
+  numero?: number;
+  resaltado?: string;
+  disposicion?: 'dividido' | 'apilado';
+  /** Párrafos del pie (por defecto, los de la sección). */
+  parrafos?: readonly string[];
+  /** Muestra el pie (párrafos, nota, nota de precios y enlace). */
+  conPie?: boolean;
+  class?: string;
+}
+
+const {
+  seccion: s,
+  fondo = 'base',
+  numero,
+  resaltado,
+  disposicion = 'apilado',
+  parrafos = s.parrafos ?? [],
+  conPie = true,
+  class: clase,
+} = Astro.props;
+const dividido = disposicion === 'dividido';
+const idT = idTitulo(s.id);
+const pie = { parrafos, nota: s.nota, enlace: s.enlace, notaPrecios: muestraPrecio(s) };
+---
+<section id={s.id} aria-labelledby={idT} data-tipo={s.tipo} class:list={['marco-empresa seccion relative isolate', `fondo-${fondo}`, clase]}>
+  {
+    numero !== undefined && (
+      <span aria-hidden="true" class="numero pointer-events-none absolute top-0 right-6 -z-10 hidden font-display select-none lg:block xl:right-[max(2rem,calc((100vw-80rem)/2+2rem))]">
+        {String(numero).padStart(2, '0')}
+      </span>
+    )
+  }
+  <div class="contenedor">
+    <div class:list={['grid', dividido && 'gap-10 lg:grid-cols-12 lg:gap-x-14']}>
+      <div class:list={['min-w-0', dividido && 'lg:col-span-5']}>
+        <div class:list={[dividido && 'lg:sticky lg:top-[calc(var(--alto-encabezado)+2.5rem)]']}>
+          <EncabezadoSeccion
+            etiqueta={s.etiqueta}
+            titulo={s.titulo}
+            resaltado={resaltado}
+            introduccion={s.introduccion}
+            id={idT}
+            dividido={!dividido}
+          />
+          <slot name="lateral" />
+        </div>
+      </div>
+      <div class:list={['min-w-0', dividido ? 'lg:col-span-7' : 'tras-encabezado']}>
+        <slot />
+        {conPie && <PieSeccion {...pie} />}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Igual que Seccion.astro: clip (no hidden) para no romper los bloques fijos (sticky). */
+  .marco-empresa {
+    overflow: clip;
+  }
+  .fondo-bajo {
+    background: var(--color-surface-low, #1c1b1e);
+  }
+  .fondo-bajo::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgb(192 193 255 / 0.28) 30%, rgb(128 131 255 / 0.22) 70%, transparent);
+  }
+  .numero {
+    font-size: clamp(8rem, 12vw, 13rem);
+    line-height: 1;
+    font-weight: 600;
+    letter-spacing: -0.06em;
+    translate: 0 -42%;
+    background: linear-gradient(180deg, rgb(192 193 255 / 0.03) 40%, rgb(192 193 255 / 0.12));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-stroke: 1px rgb(192 193 255 / 0.13);
+  }
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .numero {
+        animation-name: marco-empresa-numero;
+        animation-duration: auto;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+        animation-timeline: view();
+        animation-range: entry 10% entry 90%;
+      }
+    }
+  }
+  @keyframes marco-empresa-numero {
+    from {
+      translate: 0 -95%;
+    }
+    to {
+      translate: 0 -42%;
+    }
+  }
+</style>

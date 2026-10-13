@@ -1,0 +1,10 @@
+---
+// /politica-de-privacidad/ — política de tratamiento de datos personales (Ley 1581 de 2012).
+// BORRADOR pendiente de revisión jurídica: el módulo tiene `borrador: true`, así que la
+// plantilla muestra el aviso visible de borrador y marca la página como noindex.
+// Todo el texto sale de src/data/contenido/politica-de-privacidad.ts y los datos de contacto
+// de src/data/sitio.ts. Formato «documento»: índice lateral fijo y texto de lectura.
+import PlantillaPagina from '@/components/pagina/PlantillaPagina.astro';
+import { contenido } from '@/data/contenido/politica-de-privacidad';
+---
+<PlantillaPagina contenido={contenido} estilo="documento" />

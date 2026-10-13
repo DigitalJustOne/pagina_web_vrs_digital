@@ -1,0 +1,1354 @@
+---
+/**
+ * Recorrido de la portada: «encuentran su empresa → entienden qué ofrece → reciben respuesta».
+ * Historia fija (data-historia, src/scripts/desplazamiento.ts): a la izquierda los tres pasos,
+ * a la derecha una pantalla que cambia con el desplazamiento (búsqueda, página web y WhatsApp)
+ * y se inclina en 3D. Todo el texto sale de `recorrido` en src/data/contenido/inicio.ts.
+ *
+ * Estados:
+ *   - Con movimiento, en computador (1024 px o más) y con espacio suficiente: la sección se queda
+ *     fija mientras se recorren los pasos.
+ *   - En celular, sin JS, con movimiento reducido o si el bloque no cabe en la pantalla: lista
+ *     normal con las tres pantallas y los tres pasos completos (en celular la fijación recortaba
+ *     el contenido).
+ * Las pantallas son una ilustración (role="img" con su descripción); el ejemplo está rotulado.
+ *
+ * <Recorrido slot="despues-problema" />
+ */
+import EncabezadoSeccion from '@/components/ui/EncabezadoSeccion.astro';
+import Icono from '@/components/ui/Icono.astro';
+import Nota from '@/components/pagina/Nota.astro';
+import { recorrido as r } from '@/data/contenido/inicio';
+
+interface Props {
+  class?: string;
+}
+
+const { class: clase } = Astro.props;
+const idT = `${r.id}-titulo`;
+const [m0, m1] = r.chat.mensajes;
+const { empresa, busqueda, web, chat } = r;
+const { seguimiento } = chat;
+---
+<section id={r.id} aria-labelledby={idT} class:list={['recorrido relative isolate', clase]}>
+  <div aria-hidden="true" class="recorrido-fondo pointer-events-none absolute inset-0 -z-10">
+    <span data-parallax="0.16" class="luz luz-a"></span>
+    <span data-parallax="-0.1" class="luz luz-b"></span>
+  </div>
+
+  <div class="contenedor pt-20 lg:pt-28">
+    <EncabezadoSeccion
+      etiqueta={r.etiqueta}
+      titulo={r.titulo}
+      resaltado={r.resaltado}
+      introduccion={r.introduccion}
+      id={idT}
+      dividido
+    />
+  </div>
+
+  <div class="historia" data-historia>
+    <div class="fijo contenedor" data-historia-fijo>
+      <div class="rejilla">
+        <ol role="list" aria-label={r.etiquetaPasos} class="pasos">
+          {
+            r.pasos.map((p) => (
+              <li class="paso" data-historia-paso>
+                <span aria-hidden="true" class="paso-icono">
+                  <Icono nombre={p.icono} tamano={20} />
+                </span>
+                <div class="min-w-0">
+                  <p class="paso-num">Paso {p.paso}</p>
+                  <h3 class="paso-titulo">{p.titulo}</h3>
+                  <p class="paso-texto">{p.texto}</p>
+                </div>
+                <span aria-hidden="true" class="paso-avance"></span>
+              </li>
+            ))
+          }
+        </ol>
+
+        <div class="escenario">
+          <p class="rotulo chip">
+            <Icono nombre="info" tamano={14} />
+            {r.rotulo}
+          </p>
+          <div class="marco" role="img" aria-label={r.etiquetaVisual}>
+            <div class="escenas" aria-hidden="true">
+              <!-- 1. Búsqueda -->
+              <div class="escena e-busqueda" data-historia-escena>
+                <div class="e-lienzo">
+                  <div class="e-buscador e-anim" style="--n:0">
+                    <Icono nombre="search" tamano={16} class="e-ico" />
+                    <span class="e-consulta">{busqueda.consulta}</span>
+                    <span class="e-cursor"></span>
+                  </div>
+                  <p class="e-rotulo e-anim" style="--n:1">{busqueda.rotulo}</p>
+                  <div class="e-resultado e-tenue e-anim" style="--n:2">
+                    <span class="e-l" style="width:34%"></span>
+                    <span class="e-l e-l-alta" style="width:68%"></span>
+                    <span class="e-l" style="width:90%"></span>
+                  </div>
+                  <div class="e-resultado e-destacado e-anim" style="--n:3">
+                    <p class="e-sitio">
+                      <span class="e-logo">{empresa.iniciales}</span>
+                      <span class="e-sitio-texto">
+                        <span class="e-sitio-nombre">{empresa.nombre}</span>
+                        <span class="e-sitio-ciudad">{empresa.ciudad}</span>
+                      </span>
+                    </p>
+                    <p class="e-enlace">{busqueda.titulo}</p>
+                    <p class="e-desc">{busqueda.descripcion}</p>
+                    <div class="e-faq">
+                      {
+                        busqueda.preguntas.map((q, i) => (
+                          <p class="e-anim" style={`--n:${4 + i}`}>
+                            <Icono nombre="chevron-down" tamano={14} class="e-ico" />
+                            {q}
+                          </p>
+                        ))
+                      }
+                    </div>
+                    <span class="e-sello e-anim" style="--n:6">
+                      <Icono nombre="tick" tamano={14} class="e-ico" />
+                      {busqueda.sello}
+                    </span>
+                  </div>
+                  <div class="e-resultado e-tenue e-anim" style="--n:4">
+                    <span class="e-l" style="width:28%"></span>
+                    <span class="e-l e-l-alta" style="width:58%"></span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 2. Página web -->
+              <div class="escena e-web" data-historia-escena>
+                <div class="e-cromo">
+                  <span class="e-puntos"><i></i><i></i><i></i></span>
+                  <span class="e-url">
+                    <Icono nombre="lock" tamano={12} class="e-ico" />
+                    <span class="e-l" style="width:46%"></span>
+                  </span>
+                </div>
+                <div class="e-lienzo">
+                  <div class="e-nav e-anim" style="--n:0">
+                    <span class="e-logo">{empresa.iniciales}</span>
+                    <span class="e-marca">{empresa.nombre}</span>
+                    <span class="e-nav-enlaces"><span class="e-l"></span><span class="e-l"></span><span class="e-l"></span></span>
+                  </div>
+                  <div class="e-portada">
+                    <div class="e-portada-texto">
+                      <div class="e-punto-guia e-anim" style="--n:1" data-guia="1">
+                        <p class="e-etiqueta">{web.etiqueta}</p>
+                        <p class="e-h">{web.titulo}</p>
+                      </div>
+                      <div class="e-punto-guia e-anim" style="--n:2" data-guia="2">
+                        <div class="e-chips">{web.chips.map((c) => <span>{c}</span>)}</div>
+                      </div>
+                      <div class="e-punto-guia e-anim" style="--n:3" data-guia="3">
+                        <div class="e-botones">
+                          <span class="e-btn e-btn-wa">
+                            <Icono nombre="whatsapp" tamano={14} class="e-ico" />
+                            {web.botonWhatsApp}
+                          </span>
+                          <span class="e-btn e-btn-sec">{web.botonFormulario}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="e-foto e-anim" style="--n:2">
+                      <span class="e-foto-icono"><Icono nombre="calculator" tamano={28} class="e-ico" /></span>
+                      <span class="e-l" style="width:70%"></span>
+                      <span class="e-l" style="width:46%"></span>
+                    </div>
+                  </div>
+                  <div class="e-servicios">
+                    {
+                      (['file', 'calculator', 'users'] as const).map((ic, i) => (
+                        <span class="e-servicio e-anim" style={`--n:${3 + i}`}>
+                          <Icono nombre={ic} tamano={16} class="e-ico" />
+                          <span class="e-l" style="width:80%" />
+                          <span class="e-l" style="width:55%" />
+                        </span>
+                      ))
+                    }
+                  </div>
+                  <div class="e-leyenda e-anim" style="--n:6">
+                    <span><b>1</b>{web.anotaciones.que}</span>
+                    <span><b>2</b>{web.anotaciones.quien}</span>
+                    <span><b>3</b>{web.anotaciones.como}</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 3. WhatsApp -->
+              <div class="escena e-chat" data-historia-escena>
+                <div class="e-chat-cabecera">
+                  <span class="e-logo e-logo-redondo">{empresa.iniciales}</span>
+                  <span class="e-chat-nombre">
+                    <span class="e-sitio-nombre">{empresa.nombre}</span>
+                    <span class="e-chat-estado"><i></i>{empresa.estado}</span>
+                  </span>
+                </div>
+                <div class="e-lienzo e-chat-cuerpo">
+                  {m0.separador && <span class="e-separador e-anim" style="--n:0">{m0.separador}</span>}
+                  <div class="e-burbuja e-cliente e-anim" style="--n:1">
+                    <span>{m0.texto}</span>
+                    <span class="e-hora">{m0.hora}</span>
+                  </div>
+                  <span class="e-autor e-anim" style="--n:3">
+                    <Icono nombre="spark" tamano={12} class="e-ico" />
+                    {chat.autor}
+                  </span>
+                  <div class="e-escribiendo"><i></i><i></i><i></i></div>
+                  <div class="e-burbuja e-agente e-anim" style="--n:4">
+                    <span>{m1.texto}</span>
+                    <span class="e-hora">{m1.hora}</span>
+                  </div>
+                  <span class="e-traspaso e-anim" style="--n:6">
+                    <Icono nombre="user" tamano={14} class="e-ico" />
+                    {chat.traspaso}
+                  </span>
+                  {seguimiento.separador && <span class="e-separador e-extra e-anim">{seguimiento.separador}</span>}
+                  <span class="e-autor e-autor-persona e-extra e-anim">
+                    <Icono nombre="user" tamano={12} class="e-ico" />
+                    {chat.autorPersona}
+                  </span>
+                  <div class="e-burbuja e-persona e-extra e-anim">
+                    <span>{seguimiento.texto}</span>
+                    <span class="e-hora">{seguimiento.hora}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="barra" aria-hidden="true">
+        <span class="barra-pista"><span class="barra-relleno"></span></span>
+        <span class="barra-nodos">
+          {r.pasos.map((p) => <span class="barra-nodo"><Icono nombre={p.icono} tamano={14} /></span>)}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="contenedor pb-20 lg:pb-28">
+    <Nota texto={r.nota} class="mt-10 lg:mt-12" />
+  </div>
+</section>
+
+<style>
+  /* ── Sección ─────────────────────────────────────────────────────────── */
+  .recorrido {
+    background: var(--color-surface-lowest);
+    overflow: clip;
+  }
+  .recorrido::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgb(192 193 255 / 0.28) 30%, rgb(128 131 255 / 0.22) 70%, transparent);
+  }
+  .recorrido-fondo {
+    background-image: radial-gradient(rgb(192 193 255 / 0.06) 1px, transparent 1px);
+    background-size: 28px 28px;
+    -webkit-mask-image: linear-gradient(180deg, transparent, #000 18%, #000 82%, transparent);
+    mask-image: linear-gradient(180deg, transparent, #000 18%, #000 82%, transparent);
+  }
+  .luz {
+    position: absolute;
+    border-radius: 999px;
+    filter: blur(80px);
+  }
+  .luz-a {
+    width: min(44rem, 100vw);
+    aspect-ratio: 1;
+    right: -14rem;
+    top: 18%;
+    background: radial-gradient(circle, rgb(99 102 241 / 0.24), transparent 65%);
+  }
+  .luz-b {
+    width: min(32rem, 80vw);
+    aspect-ratio: 1;
+    left: -12rem;
+    bottom: 6%;
+    background: radial-gradient(circle, rgb(192 193 255 / 0.1), transparent 65%);
+  }
+
+  /* ── Historia (por defecto: lista normal) ─────────────────────────────── */
+  .historia {
+    --alto-marco: 23rem;
+    --tinta: var(--color-ink, #e5e1e4);
+  }
+  .fijo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.25rem;
+    padding-top: 3rem;
+  }
+  .rejilla {
+    display: grid;
+    gap: 2.5rem;
+  }
+  @media (min-width: 1024px) {
+    .historia {
+      --alto-marco: 27rem;
+    }
+    .historia.vrs-historia {
+      --alto-marco: clamp(22rem, calc(100svh - var(--alto-encabezado) - 9rem), 32rem);
+    }
+    .fijo {
+      padding-top: 4rem;
+    }
+    .rejilla {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      align-items: center;
+      gap: 4rem;
+    }
+  }
+
+  /* Pasos */
+  .pasos {
+    display: grid;
+    gap: 0.75rem;
+  }
+  .paso {
+    position: relative;
+    display: grid;
+    grid-template-columns: 2.75rem minmax(0, 1fr);
+    gap: 1rem;
+    padding: 1.25rem;
+    border-radius: 1rem;
+    background: var(--color-surface-low);
+    box-shadow: inset 0 1px 0 rgb(229 225 228 / 0.05);
+    overflow: hidden;
+  }
+  .paso-icono {
+    display: flex;
+    width: 2.75rem;
+    height: 2.75rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.875rem;
+    background: rgb(128 131 255 / 0.12);
+    color: var(--color-primary);
+    transition:
+      background-color 0.4s,
+      color 0.4s,
+      box-shadow 0.4s;
+  }
+  .paso-num {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-primary);
+  }
+  .paso-titulo {
+    margin-top: 0.25rem;
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    color: var(--color-ink);
+  }
+  .paso-texto {
+    margin-top: 0.5rem;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--color-ink-soft);
+  }
+  .paso-avance {
+    position: absolute;
+    inset: auto 1.25rem 0;
+    height: 2px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, #c0c1ff, #8083ff 60%, #6366f1);
+    transform-origin: left;
+    transform: scaleX(var(--paso-progreso, 0));
+  }
+
+  /* Escenario */
+  .escenario {
+    position: relative;
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 0.875rem;
+  }
+  /* Rótulo del ejemplo: una pestaña sobre el borde superior de la pantalla. */
+  .rotulo {
+    position: absolute;
+    top: 0;
+    left: 1rem;
+    right: 1rem;
+    z-index: 3;
+    width: fit-content;
+    margin-inline: auto;
+    text-align: center;
+    background:
+      linear-gradient(rgb(128 131 255 / 0.18), rgb(128 131 255 / 0.18)),
+      var(--color-surface-lowest);
+    box-shadow:
+      inset 0 0 0 1px rgb(192 193 255 / 0.25),
+      0 8px 24px -8px rgb(0 0 0 / 0.6);
+  }
+  .marco {
+    position: relative;
+    width: 100%;
+    max-width: 38rem;
+    perspective: 1600px;
+  }
+  .marco::before,
+  .marco::after {
+    content: '';
+    position: absolute;
+    inset: 6% 2%;
+    z-index: -1;
+    border-radius: 50%;
+    filter: blur(56px);
+    transition: opacity 0.9s;
+  }
+  .marco::before {
+    background: radial-gradient(closest-side, rgb(99 102 241 / 0.42), transparent);
+  }
+  .marco::after {
+    background: radial-gradient(closest-side, rgb(37 211 102 / 0.2), rgb(99 102 241 / 0.16) 55%, transparent);
+    opacity: 0;
+  }
+  .escenas {
+    display: grid;
+    gap: 1.25rem;
+  }
+  .escena {
+    position: relative;
+    display: flex;
+    height: var(--alto-marco);
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 1.5rem;
+    background:
+      radial-gradient(120% 70% at 100% 0%, rgb(128 131 255 / 0.12), transparent 60%),
+      linear-gradient(180deg, #1c1b1e 0%, #131315 100%);
+    box-shadow:
+      inset 0 0 0 1px rgb(192 193 255 / 0.12),
+      inset 0 1px 0 rgb(255 255 255 / 0.06),
+      0 40px 80px -30px rgb(0 0 0 / 0.85);
+    container-type: size;
+  }
+  /* Todo lo de adentro se mide en em: la pantalla escala con su alto y su ancho. */
+  .e-lienzo {
+    display: flex;
+    min-height: 0;
+    flex: 1;
+    flex-direction: column;
+    gap: 0.75em;
+    padding: 1.25em;
+    font-size: clamp(0.6875rem, min(3.7cqh, 3.9cqw), 0.9375rem);
+    line-height: 1.45;
+    color: var(--color-ink-soft);
+  }
+  .escena :global(.e-ico) {
+    width: 1.15em;
+    height: 1.15em;
+  }
+  .e-l {
+    display: block;
+    height: 0.55em;
+    border-radius: 999px;
+    background: rgb(229 225 228 / 0.1);
+  }
+  .e-l-alta {
+    height: 0.8em;
+    background: rgb(192 193 255 / 0.18);
+  }
+  .e-logo {
+    display: inline-flex;
+    width: 2.2em;
+    height: 2.2em;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.6em;
+    background: linear-gradient(135deg, #c0c1ff, #6366f1);
+    color: var(--color-on-primary);
+    font-family: var(--font-display);
+    font-size: 0.85em;
+    font-weight: 700;
+  }
+  .e-logo-redondo {
+    border-radius: 999px;
+    width: 2.6em;
+    height: 2.6em;
+  }
+
+  /* 1. Búsqueda */
+  .e-buscador {
+    display: flex;
+    min-height: 3em;
+    align-items: center;
+    gap: 0.65em;
+    padding: 0 1.1em;
+    border-radius: 999px;
+    background: #0e0e10;
+    box-shadow: inset 0 0 0 1px rgb(192 193 255 / 0.18);
+    color: var(--tinta);
+  }
+  .e-buscador :global(.e-ico) {
+    color: var(--color-primary);
+  }
+  .e-consulta {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .e-cursor {
+    width: 1.5px;
+    height: 1.1em;
+    flex: none;
+    margin-left: -0.4em;
+    background: var(--color-primary);
+  }
+  .e-rotulo {
+    font-family: var(--font-mono);
+    font-size: 0.78em;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-ink-mute);
+  }
+  .e-resultado {
+    display: grid;
+    gap: 0.5em;
+    padding: 0.9em 1em;
+    border-radius: 1em;
+  }
+  .e-tenue {
+    background: rgb(229 225 228 / 0.03);
+  }
+  .e-destacado {
+    position: relative;
+    gap: 0.35em;
+    background: rgb(42 42 44 / 0.9);
+    box-shadow:
+      inset 0 0 0 1px rgb(192 193 255 / 0.32),
+      0 0 0 0.35em rgb(128 131 255 / 0.1),
+      0 1.5em 3em -1.2em rgb(99 102 241 / 0.55);
+  }
+  .e-sitio {
+    display: flex;
+    align-items: center;
+    gap: 0.6em;
+  }
+  .e-sitio-texto,
+  .e-chat-nombre {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    line-height: 1.25;
+  }
+  .e-sitio-nombre {
+    font-weight: 600;
+    color: var(--tinta);
+  }
+  .e-sitio-ciudad {
+    font-size: 0.85em;
+    color: var(--color-ink-mute);
+  }
+  .e-enlace {
+    margin-top: 0.3em;
+    font-family: var(--font-display);
+    font-size: 1.2em;
+    font-weight: 600;
+    line-height: 1.25;
+    color: var(--color-primary);
+  }
+  .e-desc {
+    line-height: 1.45;
+  }
+  .e-faq {
+    display: grid;
+    gap: 0.3em;
+    margin-top: 0.35em;
+  }
+  .e-faq p {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    padding: 0.45em 0.7em;
+    border-radius: 0.6em;
+    background: rgb(14 14 16 / 0.6);
+    color: var(--tinta);
+  }
+  .e-faq :global(.e-ico) {
+    color: var(--color-primary);
+  }
+  .e-sello {
+    position: absolute;
+    top: -0.9em;
+    right: 0.9em;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    padding: 0.3em 0.75em;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #c0c1ff, #8083ff);
+    color: var(--color-on-primary);
+    font-size: 0.82em;
+    font-weight: 600;
+    box-shadow: 0 0.6em 1.6em -0.4em rgb(128 131 255 / 0.7);
+  }
+
+  /* 2. Página web */
+  .e-cromo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.7rem 1rem;
+    background: rgb(53 52 55 / 0.55);
+    box-shadow: inset 0 -1px 0 rgb(229 225 228 / 0.06);
+  }
+  .e-puntos {
+    display: flex;
+    gap: 0.35rem;
+  }
+  .e-puntos i {
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 999px;
+    background: rgb(229 225 228 / 0.18);
+  }
+  .e-url {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    gap: 0.5rem;
+    max-width: 18rem;
+    margin-inline: auto;
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+    background: rgb(14 14 16 / 0.7);
+    color: var(--color-online);
+    font-size: 0.75rem;
+  }
+  .e-url .e-l {
+    height: 0.4rem;
+  }
+  .e-nav {
+    display: flex;
+    align-items: center;
+    gap: 0.6em;
+  }
+  .e-marca {
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--tinta);
+    white-space: nowrap;
+  }
+  .e-nav-enlaces {
+    display: flex;
+    flex: 1;
+    justify-content: flex-end;
+    gap: 0.6em;
+  }
+  .e-nav-enlaces .e-l {
+    width: 2.6em;
+  }
+  .e-portada {
+    display: grid;
+    gap: 1em;
+    margin-top: 0.4em;
+  }
+  .e-portada-texto {
+    display: grid;
+    min-width: 0;
+    gap: 0.9em;
+  }
+  .e-foto,
+  .e-servicios {
+    display: none;
+  }
+  @container (min-width: 30rem) {
+    .e-portada {
+      grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+    }
+    .e-foto {
+      display: flex;
+      min-height: 9em;
+      flex-direction: column;
+      justify-content: flex-end;
+      gap: 0.5em;
+      padding: 1em;
+      border-radius: 1em;
+      background:
+        radial-gradient(80% 70% at 25% 15%, rgb(192 193 255 / 0.45), transparent 60%),
+        linear-gradient(160deg, #8083ff 0%, #6366f1 45%, #2a2a2c 100%);
+      box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.1);
+    }
+    .e-foto .e-l {
+      background: rgb(255 255 255 / 0.4);
+    }
+  }
+  .e-foto-icono {
+    display: flex;
+    width: 2.8em;
+    height: 2.8em;
+    margin-bottom: auto;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.8em;
+    background: rgb(14 14 16 / 0.35);
+    color: #fff;
+  }
+  .e-foto-icono :global(.e-ico) {
+    width: 1.5em;
+    height: 1.5em;
+  }
+  @container (min-height: 25rem) {
+    .e-servicios {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.6em;
+    }
+  }
+  .e-servicio {
+    display: grid;
+    gap: 0.5em;
+    padding: 0.85em;
+    border-radius: 0.8em;
+    background: rgb(229 225 228 / 0.04);
+    box-shadow: inset 0 1px 0 rgb(229 225 228 / 0.05);
+    color: var(--color-primary);
+  }
+  .e-punto-guia {
+    position: relative;
+    padding-left: 2.4em;
+  }
+  .e-punto-guia::before {
+    content: attr(data-guia);
+    position: absolute;
+    left: 0;
+    top: 0.1em;
+    display: flex;
+    width: 1.6em;
+    height: 1.6em;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: rgb(128 131 255 / 0.18);
+    box-shadow: 0 0 0 1px rgb(192 193 255 / 0.45);
+    color: var(--color-primary);
+    font-family: var(--font-mono);
+    font-size: 0.8em;
+    font-weight: 600;
+  }
+  .e-etiqueta {
+    font-family: var(--font-mono);
+    font-size: 0.75em;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-primary);
+  }
+  .e-h {
+    margin-top: 0.25em;
+    font-family: var(--font-display);
+    font-size: 1.55em;
+    font-weight: 600;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    color: var(--tinta);
+  }
+  .e-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4em;
+  }
+  .e-chips span {
+    padding: 0.3em 0.75em;
+    border-radius: 999px;
+    background: rgb(128 131 255 / 0.14);
+    color: var(--color-primary);
+    font-size: 0.9em;
+  }
+  .e-botones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em;
+  }
+  .e-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45em;
+    padding: 0.6em 1em;
+    border-radius: 0.7em;
+    font-weight: 600;
+    font-size: 0.92em;
+    color: var(--tinta);
+  }
+  .e-btn-wa {
+    background: #15803d;
+    color: #fff;
+  }
+  .e-btn-sec {
+    background: rgb(255 255 255 / 0.06);
+    box-shadow: inset 0 0 0 1px rgb(229 225 228 / 0.14);
+  }
+  .e-leyenda {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4em 0.9em;
+    margin-top: auto;
+    padding-top: 0.8em;
+    border-top: 1px solid rgb(229 225 228 / 0.07);
+    font-size: 0.88em;
+    color: var(--tinta);
+  }
+  .e-leyenda span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+  }
+  .e-leyenda b {
+    display: inline-flex;
+    width: 1.5em;
+    height: 1.5em;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: rgb(128 131 255 / 0.18);
+    color: var(--color-primary);
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+  }
+
+  /* 3. WhatsApp */
+  .e-chat-cabecera {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.85rem 1rem;
+    background: rgb(28 27 30 / 0.92);
+    box-shadow: inset 0 -1px 0 rgb(229 225 228 / 0.06);
+    font-size: 0.875rem;
+  }
+  .e-chat-estado {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.75rem;
+    color: var(--color-ink-soft);
+  }
+  .e-chat-estado i {
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 999px;
+    background: var(--color-online);
+    box-shadow: 0 0 8px rgb(74 222 128 / 0.7);
+  }
+  .e-chat-cuerpo {
+    gap: 0.55em;
+    background: radial-gradient(rgb(192 193 255 / 0.05) 1px, transparent 1px) 0 0 / 1.3em 1.3em;
+  }
+  .e-separador {
+    align-self: center;
+    padding: 0.2em 0.8em;
+    border-radius: 999px;
+    background: rgb(42 42 44 / 0.85);
+    font-family: var(--font-mono);
+    font-size: 0.78em;
+    letter-spacing: 0.08em;
+  }
+  .e-burbuja {
+    max-width: 86%;
+    padding: 0.55em 0.8em 0.45em;
+    border-radius: 1.1em;
+    color: var(--tinta);
+    line-height: 1.42;
+  }
+  .e-cliente {
+    align-self: flex-end;
+    background: rgb(37 211 102 / 0.16);
+    box-shadow: inset 0 0 0 1px rgb(37 211 102 / 0.22);
+    border-bottom-right-radius: 0.35em;
+  }
+  .e-agente {
+    align-self: flex-start;
+    background: rgb(53 52 55 / 0.9);
+    box-shadow: inset 0 0 0 1px rgb(229 225 228 / 0.06);
+    border-top-left-radius: 0.35em;
+  }
+  .e-hora {
+    float: right;
+    margin: 0.3em 0 0 0.7em;
+    font-family: var(--font-mono);
+    font-size: 0.75em;
+    color: var(--color-ink-soft);
+  }
+  .e-autor {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35em;
+    margin-top: 0.2em;
+    font-size: 0.8em;
+    font-weight: 500;
+  }
+  .e-autor :global(.e-ico) {
+    color: var(--color-primary);
+  }
+  .e-autor-persona {
+    color: var(--color-primary);
+  }
+  .e-persona {
+    align-self: flex-start;
+    background: rgb(128 131 255 / 0.18);
+    box-shadow: inset 0 0 0 1px rgb(192 193 255 / 0.2);
+    border-top-left-radius: 0.35em;
+  }
+  .e-chat-cuerpo > .e-extra {
+    display: none;
+  }
+  @container (min-height: 31.5rem) {
+    .e-chat-cuerpo > .e-extra {
+      display: block;
+    }
+    .e-chat-cuerpo > .e-autor.e-extra,
+    .e-chat-cuerpo > .e-separador.e-extra {
+      display: inline-flex;
+    }
+  }
+  .e-escribiendo {
+    display: none;
+  }
+  .e-traspaso {
+    display: inline-flex;
+    align-self: center;
+    align-items: center;
+    gap: 0.45em;
+    margin-top: auto;
+    padding: 0.4em 0.9em;
+    border-radius: 999px;
+    background: rgb(128 131 255 / 0.16);
+    box-shadow: inset 0 0 0 1px rgb(192 193 255 / 0.25);
+    color: var(--color-primary);
+    font-size: 0.85em;
+    font-weight: 600;
+  }
+
+  /* Barra de progreso (solo con la historia activa) */
+  .barra {
+    display: none;
+  }
+
+  /* ── Historia activa (desplazamiento.ts agrega .vrs-historia solo con movimiento) ── */
+  .historia.vrs-historia .fijo {
+    padding-block: 1.25rem;
+  }
+  .historia.vrs-historia .barra {
+    position: relative;
+    display: block;
+    height: 1.75rem;
+    flex: none;
+  }
+  .barra-pista {
+    position: absolute;
+    left: 0.875rem;
+    right: 0.875rem;
+    top: 50%;
+    height: 2px;
+    border-radius: 2px;
+    background: rgb(229 225 228 / 0.08);
+    overflow: hidden;
+  }
+  .barra-relleno {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, #c0c1ff, #8083ff 60%, #25d366);
+    transform-origin: left;
+    transform: scaleX(var(--historia-progreso, 0));
+  }
+  .barra-nodos {
+    position: relative;
+    display: flex;
+    height: 100%;
+    justify-content: space-between;
+  }
+  .barra-nodo {
+    display: flex;
+    width: 1.75rem;
+    height: 1.75rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: var(--color-surface-high);
+    color: var(--color-ink-mute);
+    transition:
+      background-color 0.4s,
+      color 0.4s;
+  }
+  .historia[data-paso-activo] .barra-nodo:first-child,
+  .historia[data-paso-activo='1'] .barra-nodo:nth-child(2),
+  .historia[data-paso-activo='2'] .barra-nodo {
+    background: linear-gradient(135deg, #c0c1ff, #8083ff);
+    color: var(--color-on-primary);
+  }
+
+  .historia.vrs-historia .paso[data-activo] .paso-icono {
+    background: linear-gradient(135deg, #c0c1ff, #8083ff);
+    color: var(--color-on-primary);
+    box-shadow: 0 10px 30px -8px rgb(128 131 255 / 0.6);
+  }
+  .historia[data-paso-activo='2'] .marco::after {
+    opacity: 1;
+  }
+  .historia[data-paso-activo='2'] .marco::before {
+    opacity: 0.4;
+  }
+
+  /* Pantallas superpuestas: solo la del paso activo se ve. */
+  .historia.vrs-historia .escenas {
+    transform-style: preserve-3d;
+    transform: rotateX(4deg) rotateY(calc((var(--historia-progreso, 0) - 0.5) * -12deg));
+  }
+  .historia.vrs-historia .escena {
+    grid-area: 1 / 1;
+    opacity: 0;
+    visibility: hidden;
+    transform: translate3d(0, 2.5rem, -7rem) rotateX(-10deg);
+    transition:
+      opacity 0.55s var(--ease-out-expo),
+      transform 0.9s var(--ease-out-expo),
+      visibility 0s linear 0.55s;
+  }
+  .historia.vrs-historia .escena[data-activo] {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition-delay: 0s;
+  }
+  /* Las pantallas ya vistas salen hacia arriba; las que vienen esperan abajo. */
+  .historia.vrs-historia[data-paso-activo='1'] .escena:nth-child(1),
+  .historia.vrs-historia[data-paso-activo='2'] .escena:nth-child(-n + 2) {
+    transform: translate3d(0, -2.5rem, -7rem) rotateX(10deg);
+  }
+  .historia.vrs-historia[data-paso-activo='2'] .escena:nth-child(3) {
+    transform: none;
+  }
+
+  /* Entrada de los elementos de la pantalla activa (se repite al volver a ella). */
+  .historia.vrs-historia .escena[data-activo] .e-anim {
+    animation: e-entrar 0.7s var(--ease-out-expo) both;
+    animation-delay: calc(var(--n, 0) * 110ms + 180ms);
+  }
+  .historia.vrs-historia .escena[data-activo] .e-consulta {
+    animation: e-escribir 1.1s steps(28, end) 0.25s both;
+  }
+  .historia.vrs-historia .escena[data-activo] .e-cursor {
+    animation: e-parpadeo 1s steps(1, end) infinite;
+  }
+  .historia.vrs-historia .escena[data-activo] .e-sello {
+    animation: e-sello 0.7s var(--ease-out-expo) 0.95s both;
+  }
+  /* Pulso de los números guía: un aro que crece y se desvanece (scale y opacity, por el
+     compositor; antes se animaba box-shadow y recalculaba estilos en cada cuadro). */
+  .historia.vrs-historia .escena[data-activo] .e-punto-guia::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.1em;
+    width: 1.6em;
+    height: 1.6em;
+    font-size: 0.8em;
+    border-radius: 999px;
+    box-shadow: 0 0 0 0.3em rgb(128 131 255 / 0.45);
+    opacity: 0;
+    pointer-events: none;
+    animation: e-pulso 2.4s ease-out 1s infinite;
+  }
+  /* «Escribiendo…»: ocupa el lugar de la respuesta y se va cuando llega (sin mover nada). */
+  .historia.vrs-historia .e-chat-cuerpo {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-content: start;
+  }
+  .historia.vrs-historia .e-cliente {
+    justify-self: end;
+  }
+  .historia.vrs-historia .e-agente,
+  .historia.vrs-historia .e-autor,
+  .historia.vrs-historia .e-persona {
+    justify-self: start;
+  }
+  .historia.vrs-historia .e-separador,
+  .historia.vrs-historia .e-traspaso {
+    justify-self: center;
+  }
+  .historia.vrs-historia .e-escribiendo {
+    display: flex;
+    grid-row: 4;
+    grid-column: 1;
+    align-self: start;
+    justify-self: start;
+    gap: 0.3em;
+    padding: 0.8em 0.9em;
+    border-radius: 1.1em;
+    border-top-left-radius: 0.35em;
+    background: rgb(53 52 55 / 0.9);
+  }
+  .historia.vrs-historia .e-agente {
+    grid-row: 4;
+    grid-column: 1;
+  }
+  .historia.vrs-historia .e-traspaso {
+    margin-top: 0.4em;
+  }
+  .e-escribiendo i {
+    width: 0.4em;
+    height: 0.4em;
+    border-radius: 999px;
+    background: var(--color-primary);
+    opacity: 0.8;
+  }
+  .historia.vrs-historia .escena[data-activo] .e-escribiendo {
+    animation: e-escribiendo 0.9s var(--ease-out-expo) 0.4s both;
+  }
+  /* Solo mientras se ve «escribiendo…» (hasta 1,3 s): después no siguen en bucle ocultos. */
+  .historia.vrs-historia .escena[data-activo] .e-escribiendo i {
+    animation: e-punto 1s ease-in-out 2;
+  }
+  .historia.vrs-historia .escena[data-activo] .e-escribiendo i:nth-child(2) {
+    animation-delay: 0.15s;
+  }
+  .historia.vrs-historia .escena[data-activo] .e-escribiendo i:nth-child(3) {
+    animation-delay: 0.3s;
+  }
+  .historia.vrs-historia .escena[data-activo] .e-agente {
+    animation-delay: 1.15s;
+  }
+  .historia.vrs-historia .escena[data-activo] .e-autor {
+    animation-delay: 0.35s;
+  }
+  .historia.vrs-historia .escena[data-activo] .e-traspaso {
+    animation-delay: 1.6s;
+  }
+  .historia.vrs-historia .escena[data-activo] .e-separador.e-extra {
+    animation-delay: 2s;
+  }
+  .historia.vrs-historia .escena[data-activo] .e-autor-persona {
+    animation-delay: 2.1s;
+  }
+  .historia.vrs-historia .escena[data-activo] .e-persona {
+    animation-delay: 2.15s;
+  }
+
+  /* Computador: pasos en columna; el activo se ilumina. */
+  @media (min-width: 1024px) {
+    .historia.vrs-historia .paso {
+      background: transparent;
+      box-shadow: none;
+      transition:
+        opacity 0.5s var(--ease-out-expo),
+        background-color 0.4s,
+        box-shadow 0.4s;
+    }
+    .historia.vrs-historia .paso[data-activo] {
+      background: var(--color-surface-low);
+      box-shadow:
+        inset 0 0 0 1px rgb(192 193 255 / 0.14),
+        0 24px 48px -28px rgb(99 102 241 / 0.6);
+    }
+    /* En computador cada paso tiene su propia línea de avance: la barra general sobra. */
+    .historia.vrs-historia .barra {
+      display: none;
+    }
+  }
+
+  /* Computador bajo (laptops de 720 a 860 px de alto): los tres pasos no caben completos.
+     Los títulos quedan en fila y el texto del paso activo aparece debajo, en un área de alto fijo
+     (sin saltos de diseño). El avance de cada paso se pinta como fondo de su fila. */
+  @media (min-width: 1024px) and (max-height: 860px) {
+    .historia.vrs-historia .pasos {
+      position: relative;
+      gap: 0.375rem;
+      padding-bottom: 10.5rem;
+    }
+    .historia.vrs-historia .paso,
+    .historia.vrs-historia .paso[data-activo] {
+      position: static;
+      align-items: center;
+      padding: 0.75rem 1rem;
+      background-image: linear-gradient(90deg, #c0c1ff, #8083ff 60%, #6366f1);
+      background-repeat: no-repeat;
+      background-position: 1rem 100%;
+      background-size: calc(var(--paso-progreso, 0) * (100% - 2rem)) 2px;
+    }
+    .historia.vrs-historia .paso-avance {
+      display: none;
+    }
+    .historia.vrs-historia .paso-texto {
+      position: absolute;
+      inset: auto 0 0;
+      height: 10.5rem;
+      margin: 0;
+      padding: 1.25rem 1rem 0 4.75rem;
+      font-size: 1.0625rem;
+      color: var(--color-ink);
+      opacity: 0;
+      transition: opacity 0.45s var(--ease-out-expo);
+    }
+    .historia.vrs-historia .paso[data-activo] .paso-texto {
+      opacity: 1;
+    }
+  }
+
+  /* Celular y tableta: pantalla arriba, el paso activo debajo (misma celda). */
+  @media (max-width: 1023px) {
+    /* El bloque fijo mide exactamente la pantalla bajo el encabezado; la pantalla de ejemplo
+       toma el alto que dejan el paso y la barra. Si no cabe ni con el mínimo, el script deja la lista. */
+    .historia.vrs-historia .fijo {
+      height: calc(100svh - var(--alto-encabezado));
+      gap: 0.75rem;
+      padding-block: 0.75rem;
+    }
+    .historia.vrs-historia .rejilla {
+      display: flex;
+      min-height: 0;
+      flex: 1;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .historia.vrs-historia .escenario {
+      order: -1;
+      min-height: 0;
+      flex: 1;
+      justify-content: center;
+    }
+    .historia.vrs-historia .marco {
+      display: flex;
+      min-height: 12.5rem;
+      max-height: 27rem;
+      flex: 1;
+    }
+    .historia.vrs-historia .escenas {
+      width: 100%;
+      grid-template-rows: minmax(0, 1fr);
+    }
+    .historia.vrs-historia .escena {
+      height: auto;
+    }
+    .historia.vrs-historia .paso-icono {
+      display: none;
+    }
+    .historia.vrs-historia .pasos {
+      grid-template-areas: 'paso';
+    }
+    .historia.vrs-historia .paso {
+      grid-area: paso;
+      grid-template-columns: minmax(0, 1fr);
+      padding: 0.875rem 1rem 1rem;
+      transition:
+        opacity 0.45s var(--ease-out-expo),
+        transform 0.6s var(--ease-out-expo);
+    }
+    /* Solo transparentes (no visibility: hidden): los lectores de pantalla leen los tres pasos. */
+    .historia.vrs-historia .paso:not([data-activo]) {
+      opacity: 0;
+      transform: translateY(0.5rem);
+    }
+    .historia.vrs-historia .paso-texto {
+      font-size: 0.9375rem;
+      line-height: 1.55;
+    }
+    .historia.vrs-historia .escenas {
+      transform: rotateX(3deg) rotateY(calc((var(--historia-progreso, 0) - 0.5) * -8deg));
+    }
+  }
+
+  /* Celular de pantalla baja (360 x 640): el párrafo del paso le quitaba a la pantalla de ejemplo
+     unos 120 px y la cortaba a mitad de mensaje. Se ve solo el título; el párrafo sigue en el
+     documento para los lectores de pantalla. */
+  @media (max-width: 1023px) and (max-height: 700px) {
+    .historia.vrs-historia .paso-texto {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+  }
+
+  /* Bajo 768 px, BarraMovil (fija abajo) tapa ~4,5 rem: el bloque fijo deja ese espacio libre. */
+  @media (max-width: 767.98px) {
+    .historia.vrs-historia .fijo {
+      padding-bottom: calc(4.75rem + env(safe-area-inset-bottom, 0px));
+    }
+  }
+
+  @keyframes e-entrar {
+    from {
+      opacity: 0;
+      transform: translateY(0.9em);
+    }
+  }
+  @keyframes e-escribir {
+    from {
+      clip-path: inset(0 100% 0 0);
+    }
+    to {
+      clip-path: inset(0 0 0 0);
+    }
+  }
+  @keyframes e-parpadeo {
+    50% {
+      opacity: 0;
+    }
+  }
+  @keyframes e-sello {
+    from {
+      opacity: 0;
+      transform: translateY(0.4em) scale(0.85);
+    }
+  }
+  @keyframes e-pulso {
+    0% {
+      opacity: 1;
+      scale: 0.85;
+    }
+    70%,
+    100% {
+      opacity: 0;
+      scale: 1.75;
+    }
+  }
+  @keyframes e-escribiendo {
+    0% {
+      opacity: 0;
+      visibility: visible;
+    }
+    15%,
+    85% {
+      opacity: 1;
+      visibility: visible;
+    }
+    100% {
+      opacity: 0;
+      visibility: hidden;
+    }
+  }
+  @keyframes e-punto {
+    0%,
+    60%,
+    100% {
+      transform: translateY(0);
+      opacity: 0.45;
+    }
+    30% {
+      transform: translateY(-0.2em);
+      opacity: 1;
+    }
+  }
+</style>

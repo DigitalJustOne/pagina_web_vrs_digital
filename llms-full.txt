@@ -1,8 +1,8 @@
 # VRS Digital: información completa
 
-> VRS Digital es un estudio digital de Bogotá, Colombia, dirigido por su fundador, Víctor Alfonso Ramírez Sepúlveda. Crea páginas web para empresas de servicios, las prepara para Google y asistentes de IA, y configura el agente de IA que Meta ofrece en WhatsApp Business. Implementación desde $1.200.000 COP y mensualidad desde $99.000 COP. Precios en pesos colombianos, IVA incluido.
+> VRS Digital es un estudio digital de Bogotá, Colombia, dirigido por su fundador, Víctor Alfonso Ramírez Sepúlveda. Crea páginas web para empresas de servicios, las prepara para Google y asistentes de IA, y configura el agente de IA que Meta ofrece en WhatsApp Business. Landing Page desde $350.000 COP (pago único). Planes web: precio anual desde $1.200.000 COP, o 12 cuotas desde $120.000 COP al mes (20 % más en total). Precios en pesos colombianos, IVA incluido.
 
-Este archivo reúne el contenido esencial de https://goldenrod-bee-973005.hostingersite.com/ en texto plano. Todos los precios están en pesos colombianos (COP). Última actualización: 2026-10-11. Resumen con enlaces: https://goldenrod-bee-973005.hostingersite.com/llms.txt
+Este archivo reúne el contenido esencial de https://goldenrod-bee-973005.hostingersite.com/ en texto plano. Todos los precios están en pesos colombianos (COP). Última actualización: 2026-10-13. Resumen con enlaces: https://goldenrod-bee-973005.hostingersite.com/llms.txt
 
 ## Quiénes somos
 
@@ -11,7 +11,6 @@ Este archivo reúne el contenido esencial de https://goldenrod-bee-973005.hostin
 - Eslogan: «Más visible. Mejor atendido.»
 - Ubicación: Bogotá, Colombia
 - Fundador: Víctor Alfonso Ramírez Sepúlveda (Víctor Ramírez), fundador y responsable de cada proyecto. Perfil profesional: https://www.linkedin.com/in/victor-alfonso-ramirez-sepulveda/
-- 15+ proyectos entregados
 - 3+ años de experiencia
 - 2 proyectos activos como máximo, para cuidar la calidad
 
@@ -59,18 +58,19 @@ Se publica el valor inicial de cada plan («desde»). Precios en pesos colombian
 
 Para empresas que necesitan presencia profesional y un contacto claro.
 
-- Implementación (pago único): desde $1.200.000 COP (IVA incluido)
-- Mensualidad: desde $99.000 COP al mes (IVA incluido)
+- Precio anual: desde $1.200.000 COP (IVA incluido), pago de una vez
+- O en 12 cuotas: $120.000 COP al mes, total $1.440.000 COP (IVA incluido)
 
 Incluye:
 
+- Dominio (.com o .com.co) y hosting incluidos el primer año
 - Sitio de hasta cinco secciones o páginas, según alcance
 - Diseño adaptable a celular
 - Estructura y textos preparados con apoyo de IA y revisados por Víctor Ramírez
 - Botón de WhatsApp
 - Formulario de contacto
 - Optimización inicial para Google en cada página
-- Certificado de seguridad (SSL), dominio y hosting incluidos mientras tenga la mensualidad
+- Certificado de seguridad (SSL) y configuración técnica
 - Manual breve de uso
 
 No incluye:
@@ -83,8 +83,8 @@ No incluye:
 
 Para empresas que quieren recibir clientes desde Google y asistentes de IA.
 
-- Implementación (pago único): desde $2.200.000 COP (IVA incluido)
-- Mensualidad: desde $350.000 COP al mes (IVA incluido)
+- Precio anual: desde $2.200.000 COP (IVA incluido), pago de una vez
+- O en 12 cuotas: $220.000 COP al mes, total $2.640.000 COP (IVA incluido)
 
 Todo lo de Web Esencial, más:
 
@@ -106,8 +106,8 @@ No incluye:
 
 Para empresas que quieren ser encontradas y responder a sus clientes incluso fuera de horario.
 
-- Implementación (pago único): desde $3.000.000 COP (IVA incluido)
-- Mensualidad: desde $490.000 COP al mes (IVA incluido)
+- Precio anual: desde $3.000.000 COP (IVA incluido), pago de una vez
+- O en 12 cuotas: $300.000 COP al mes, total $3.600.000 COP (IVA incluido)
 
 Todo lo de Web Visible, más:
 
@@ -126,17 +126,37 @@ No incluye:
 - API, CRM o integraciones con otros sistemas
 - Envíos masivos
 
-### Landing page
+### Landing Page
 
-Una sola página enfocada en vender un servicio o una campaña: diseño adaptado a celular, botón de WhatsApp, formulario de contacto, certificado de seguridad (SSL) y optimización inicial para Google.
+Para lanzar un servicio, una promoción o su negocio con una sola página que lleva a WhatsApp. Una página de una sola sección, diseñada para convertir visitas en mensajes de WhatsApp. Pago único, sin mensualidad obligatoria.
 
-- Pago único: desde $350.000 COP (IVA incluido)
-- Combo primer año con dominio y hosting: $449.900 COP (IVA incluido; ahorra $50.000)
+- Precio: $350.000 COP, pago único (IVA incluido)
+- Con dominio y hosting del primer año: $449.900 COP (IVA incluido)
 
-### Dominio + hosting
+Incluye:
 
-- Web Esencial, Web Visible y Web + Atención Inteligente: dominio (.com, .co o .com.co), hosting y certificado de seguridad incluidos, sin costo adicional, mientras mantenga la mensualidad.
-- Landing page y Plan Emprendedor: dominio + hosting por $149.900 COP al año (IVA incluido).
+- Una página de una sola sección, con sus textos de venta
+- Diseño adaptable a celular
+- Botón de WhatsApp y formulario de contacto
+- Optimización inicial para Google
+
+No incluye:
+
+- Varias páginas o una página por servicio
+- Seguimiento mensual de posicionamiento
+- Atención inteligente en WhatsApp
+
+### Dominio + Hosting
+
+- $149.900 COP al año (IVA incluido), para la Landing Page y el Plan Emprendedor
+- El primer año va incluido sin costo en Web Esencial, Web Visible y Web + Atención Inteligente
+
+Incluye:
+
+- Dominio .com o .com.co, registrado a nombre de su empresa
+- Hosting (alojamiento) de su web
+- Certificado de seguridad (SSL), el candado del navegador
+
 ### Plan Emprendedor
 
 Página de una sola sección, estandarizada, con alojamiento (hosting) y agenda básica incluidos. Pensado para microempresas que empiezan.
@@ -179,10 +199,9 @@ Ningún plan incluye:
 
 Condiciones:
 
-- La mensualidad empieza desde la publicación.
-- Dominio y hosting: incluidos mientras tenga la mensualidad. Licencias y suscripciones externas se identifican por separado.
-- Incluye dos rondas de cambios. Las solicitudes adicionales se cotizan aparte.
-- La mensualidad indica cuántos cambios o solicitudes incluye. No ofrecemos soporte ilimitado.
+- Cada plan tiene un precio anual: se paga de una vez o en 12 cuotas mensuales, que suman 20 % más.
+- Dominio y hosting incluidos el primer año en los planes web. Para la Landing Page y el Plan Emprendedor, $149.900 al año, IVA incluido.
+- Licencias y suscripciones externas se identifican por separado.
 - Trabajamos con un máximo de dos proyectos al mismo tiempo; la fecha de inicio se asigna según disponibilidad.
 
 ## Proyectos
@@ -282,9 +301,9 @@ Enlace público: https://darkgreen-barracuda-813471.hostingersite.com/
 
 URL: https://goldenrod-bee-973005.hostingersite.com/
 
-VRS Digital, estudio digital en Bogotá: páginas web listas para Google y la IA, y el agente de IA de WhatsApp. Landing desde $350.000. Dominio y hosting incluidos. IVA incluido.
+VRS Digital, estudio digital en Bogotá: páginas web listas para Google y la IA, y el agente de IA de WhatsApp. Desde $1.200.000 IVA incluido.
 
-En resumen: VRS Digital es un estudio digital de Bogotá dirigido por su fundador, Víctor Ramírez. Crea landing pages desde $350.000 y páginas web para empresas de servicios desde $1.200.000 más una mensualidad desde $99.000, con dominio y hosting incluidos (IVA incluido), las prepara para Google y asistentes de IA, y configura el agente de IA que Meta ofrece en WhatsApp Business cuando su cuenta tiene acceso. Usted habla directamente con quien hace el trabajo.
+En resumen: VRS Digital es un estudio digital de Bogotá dirigido por su fundador, Víctor Ramírez. Crea páginas web para empresas de servicios desde $1.200.000 al año, o en 12 cuotas de $120.000 al mes (IVA incluido), las prepara para Google y asistentes de IA, y configura el agente de IA que Meta ofrece en WhatsApp Business cuando su cuenta tiene acceso. Usted habla directamente con quien hace el trabajo.
 
 ### Quién está detrás: Víctor Ramírez y su método
 
@@ -292,7 +311,7 @@ URL: https://goldenrod-bee-973005.hostingersite.com/nosotros/
 
 Conozca a Víctor Ramírez, fundador y responsable de VRS Digital: cómo usa la IA con revisión humana, por qué atiende pocos proyectos y su aval MinTIC.
 
-En resumen: VRS Digital es un estudio digital de Bogotá dirigido por Víctor Alfonso Ramírez Sepúlveda, su fundador y responsable de cada proyecto. Trabaja solo, apoyado por inteligencia artificial para acelerar la investigación, los textos y el desarrollo, y revisa personalmente cada entrega. Suma más de 15 proyectos entregados y más de 3 años de experiencia.
+En resumen: VRS Digital es un estudio digital de Bogotá dirigido por Víctor Alfonso Ramírez Sepúlveda, su fundador y responsable de cada proyecto. Trabaja solo, apoyado por inteligencia artificial para acelerar la investigación, los textos y el desarrollo, y revisa personalmente cada entrega. Suma más de 3 años de experiencia.
 
 ### Proyectos reales de páginas web y plataformas
 
@@ -300,7 +319,7 @@ URL: https://goldenrod-bee-973005.hostingersite.com/proyectos/
 
 Proyectos de VRS Digital con enlace público: webs y plataformas para industria, restaurantes, logística y bienestar, y productos propios. Revise qué se hizo.
 
-En resumen: VRS Digital ha entregado más de 15 proyectos. En esta página mostramos 6 con enlace público: sitios web y plataformas para industria eléctrica, restaurantes, logística y bienestar, y dos plataformas para el sector belleza, una de ellas Beauty Manager, producto propio de VRS Digital. De cada uno explicamos el contexto, qué se hizo y qué incluye, sin agregar resultados que no podamos respaldar.
+En resumen: Estos son los proyectos de VRS Digital con enlace público: webs y plataformas para industria, restaurantes, logística, bienestar y belleza, además de un producto propio. Cada uno tiene su enlace para revisarlo.
 
 ### Revisión digital gratuita para su empresa
 
@@ -314,9 +333,9 @@ En resumen: La revisión digital gratuita de VRS Digital analiza la claridad de 
 
 URL: https://goldenrod-bee-973005.hostingersite.com/paginas-web-bogota/
 
-Diseño de páginas web en Bogotá para empresas de servicios: rápidas, adaptadas a celular, con WhatsApp y listas para Google. Landing desde $350.000. Dominio y hosting incluidos. IVA incluido.
+Diseño de páginas web en Bogotá para empresas de servicios: rápidas, adaptadas a celular, con WhatsApp y listas para Google. Desde $1.200.000 IVA incluido.
 
-En resumen: Diseñamos páginas web para empresas de servicios en Bogotá. El plan Web Esencial cuesta desde $1.200.000 de implementación y $99.000 al mes, e incluye hasta cinco secciones adaptadas a celular, botón de WhatsApp, formulario y optimización inicial para Google. Usted trata directamente con Víctor Ramírez, quien dirige y revisa cada proyecto. Precios en pesos colombianos, IVA incluido.
+En resumen: Diseñamos páginas web para empresas de servicios en Bogotá. El plan Web Esencial cuesta desde $1.200.000 al año, o en 12 cuotas de $120.000 al mes, e incluye hasta cinco secciones adaptadas a celular, botón de WhatsApp, formulario y optimización inicial para Google. Usted trata directamente con Víctor Ramírez, quien dirige y revisa cada proyecto. Precios en pesos colombianos, IVA incluido.
 
 ### Posicionamiento en Google y asistentes de IA
 
@@ -356,15 +375,15 @@ URL: https://goldenrod-bee-973005.hostingersite.com/paginas-web-empresas-servici
 
 Página web para empresas de servicios profesionales: abogados, inmobiliarias, SST y servicios técnicos. Explique qué hace y cuánto cuesta empezar. Vea cómo.
 
-En resumen: Una empresa de servicios vende algo que no se ve. Su web debe explicar qué hace, para quién, cómo trabaja y cuánto cuesta empezar. VRS Digital diseña esa web desde $1.200.000 más una mensualidad desde $99.000, con dominio y hosting incluidos, IVA incluido (o una landing page desde $350.000), la prepara para Google y asistentes de IA y, en el plan Web + Atención Inteligente, configura el agente de IA de WhatsApp Business para responder preguntas frecuentes.
+En resumen: Una empresa de servicios vende algo que no se ve. Su web debe explicar qué hace, para quién, cómo trabaja y cuánto cuesta empezar. VRS Digital diseña esa web desde $1.200.000 al año, o en 12 cuotas de $120.000 al mes, IVA incluido, la prepara para Google y asistentes de IA y, en el plan Web + Atención Inteligente, configura el agente de IA de WhatsApp Business para responder preguntas frecuentes.
 
 ### Precios: páginas web, Google y WhatsApp con IA
 
 URL: https://goldenrod-bee-973005.hostingersite.com/precios/
 
-Precios publicados con IVA incluido: landing page desde $350.000, Web Esencial desde $1.200.000, Web Visible desde $2.200.000 y Web + Atención Inteligente desde $3.000.000. Vea qué incluye.
+Planes web desde $1.200.000 al año, o en 12 cuotas. Landing desde $350.000, pago único. IVA incluido.
 
-En resumen: Landing page desde $350.000, pago único (combo primer año con dominio y hosting: $449.900). Web Esencial desde $1.200.000, Web Visible desde $2.200.000 y Web + Atención Inteligente desde $3.000.000 de implementación, más una mensualidad desde $99.000, $350.000 o $490.000 según el plan, con dominio y hosting incluidos mientras tenga la mensualidad. El Plan Emprendedor cuesta $49.900 al mes. Dominio + hosting para la landing y el Plan Emprendedor: $149.900 al año. Licencias y suscripciones externas, como los planes de pago de Meta, se identifican por separado. Precios en pesos colombianos, IVA incluido.
+En resumen: Landing Page desde $350.000, pago único. Web Esencial desde $1.200.000 al año, Web Visible desde $2.200.000 y Web + Atención Inteligente desde $3.000.000. Cada plan web también se puede pagar en 12 cuotas mensuales, con 20 % más en total. El Plan Emprendedor cuesta $49.900 al mes. Dominio y hosting van incluidos el primer año en los planes web; para la Landing Page, $149.900 al año. Todo con IVA incluido.
 
 ### Guías: páginas web, Google y WhatsApp con IA
 
@@ -396,13 +415,13 @@ Fuente: https://goldenrod-bee-973005.hostingersite.com/
 
 ### ¿En qué se diferencia VRS Digital de una agencia tradicional?
 
-Usted habla directamente con quien diseña, desarrolla y revisa su proyecto, sin intermediarios. Su web, su visibilidad en Google y su WhatsApp se planean con una sola estrategia. Los precios y los alcances están publicados. A cambio, somos claros con los límites: atendemos máximo dos proyectos a la vez y no ofrecemos CRM, API, chatbots a medida ni soporte ilimitado.
+Usted habla directamente con quien diseña, desarrolla y revisa su proyecto, sin intermediarios. Su web, su visibilidad en Google y su WhatsApp se planean con una sola estrategia. Los precios y los alcances están publicados. A cambio, somos claros con los límites: atendemos máximo dos proyectos a la vez y no ofrecemos CRM, API ni chatbots a medida.
 
 Fuente: https://goldenrod-bee-973005.hostingersite.com/
 
 ### ¿Puedo contratar solo la página web?
 
-Sí. Para vender un solo servicio, la landing page cuesta desde $350.000, pago único. El plan Web Esencial incluye la página web completa, desde $1.200.000 de implementación y $99.000 al mes, con dominio y hosting incluidos. El seguimiento mensual en Google empieza en Web Visible, y la configuración del agente de IA de WhatsApp Business, en Web + Atención Inteligente. Para microempresas que empiezan está el Plan Emprendedor, por $49.900 al mes. Los planes con mensualidad incluyen dominio y hosting; los costos externos van aparte. Precios en pesos colombianos, IVA incluido.
+Sí. El plan Web Esencial incluye la página web, desde $1.200.000 al año, o en 12 cuotas de $120.000 al mes. El seguimiento mensual en Google empieza en Web Visible, y la configuración del agente de IA de WhatsApp Business, en Web + Atención Inteligente. Para microempresas que empiezan está el Plan Emprendedor, por $49.900 al mes. Dominio y hosting van incluidos en los planes web; los costos externos van aparte. Precios en pesos colombianos, IVA incluido.
 
 Fuente: https://goldenrod-bee-973005.hostingersite.com/
 
@@ -444,7 +463,7 @@ Fuente: https://goldenrod-bee-973005.hostingersite.com/nosotros/
 
 ### ¿Los proyectos de VRS Digital son reales?
 
-Sí. Cada uno tiene un enlace público para que usted lo revise, y está rotulado según su tipo: trabajo para un cliente o producto propio de VRS Digital. Mostramos el sector, el contexto, lo que se hizo y lo que incluye hoy, según lo que tenemos registrado. No publicamos testimonios, reseñas ni cifras que no podamos respaldar.
+Sí. Cada uno tiene un enlace público para que usted lo revise, y está marcado como trabajo para un cliente o producto propio de VRS Digital.
 
 Fuente: https://goldenrod-bee-973005.hostingersite.com/proyectos/
 
@@ -468,7 +487,7 @@ Fuente: https://goldenrod-bee-973005.hostingersite.com/proyectos/
 
 ### ¿Publicarán mi proyecto en esta página?
 
-Solo con su autorización por escrito. Si nos autoriza, mostramos el contexto, lo que se hizo y el resultado, y explicamos cómo y en qué periodo se midió. Si prefiere confidencialidad, no lo publicamos, o lo mostramos sin su nombre si usted lo aprueba. Nunca agregamos testimonios, reseñas ni cifras que no podamos respaldar.
+Solo con su autorización por escrito. Si prefiere confidencialidad, no lo publicamos.
 
 Fuente: https://goldenrod-bee-973005.hostingersite.com/proyectos/
 
@@ -510,7 +529,7 @@ Fuente: https://goldenrod-bee-973005.hostingersite.com/contacto/
 
 ### ¿Cuánto cuesta una página web para empresa en Bogotá con VRS Digital?
 
-Una landing page cuesta desde $350.000, pago único. El plan Web Esencial cuesta desde $1.200.000 de implementación y $99.000 al mes, con dominio y hosting incluidos. Incluye hasta cinco secciones, diseño adaptado a celular, botón de WhatsApp, formulario y optimización inicial para Google. Si además quiere seguimiento mensual del posicionamiento, el plan Web Visible empieza en $2.200.000. El valor final depende del número de páginas, los textos y la información, y queda por escrito antes de empezar. Precios en pesos colombianos, IVA incluido.
+El plan Web Esencial cuesta desde $1.200.000 al año, o en 12 cuotas de $120.000 al mes. Incluye hasta cinco secciones, diseño adaptado a celular, botón de WhatsApp, formulario y optimización inicial para Google. Si además quiere seguimiento mensual del posicionamiento, el plan Web Visible empieza en $2.200.000. El valor final depende del número de páginas, los textos y la información, y queda por escrito antes de empezar. Precios en pesos colombianos, IVA incluido.
 
 Fuente: https://goldenrod-bee-973005.hostingersite.com/paginas-web-bogota/
 
@@ -534,13 +553,13 @@ Fuente: https://goldenrod-bee-973005.hostingersite.com/paginas-web-bogota/
 
 ### ¿Puedo cambiar yo mismo los textos de mi web?
 
-Su web no tiene un panel de edición abierto en internet, y eso la hace más rápida y segura. Los cambios de textos, precios o fotos los hacemos nosotros. Su mensualidad indica cuántos cambios o solicitudes incluye; lo adicional se cotiza aparte. Usted nos envía la solicitud por WhatsApp o por correo. Respondemos en uno o dos días hábiles.
+Su web no tiene un panel de edición abierto en internet, y eso la hace más rápida y segura. Los cambios de textos, precios o fotos los hacemos nosotros. Usted nos envía la solicitud por WhatsApp o por correo. Respondemos en uno o dos días hábiles.
 
 Fuente: https://goldenrod-bee-973005.hostingersite.com/paginas-web-bogota/
 
-### ¿Cuántas rondas de cambios incluye el diseño?
+### ¿Cómo reviso el diseño antes de que quede listo?
 
-Incluye dos rondas de cambios. En cada ronda usted reúne sus comentarios y nosotros los aplicamos. Las solicitudes adicionales se cotizan aparte. Para evitar sorpresas, en la etapa de preparación usted revisa la estructura y los textos en un documento central antes del diseño: así los cambios grandes se resuelven temprano y la presentación final llega más cerca de lo que usted espera.
+En la etapa de preparación usted revisa la estructura y los textos en un documento central antes del diseño. Así los cambios grandes se resuelven temprano y la presentación final llega más cerca de lo que usted espera.
 
 Fuente: https://goldenrod-bee-973005.hostingersite.com/paginas-web-bogota/
 
@@ -672,7 +691,7 @@ Fuente: https://goldenrod-bee-973005.hostingersite.com/paginas-web-contadores/
 
 ### ¿Cuánto cuesta una página web para una firma contable?
 
-Para una firma con muchas preguntas repetidas en temporada, recomendamos Web + Atención Inteligente: desde $3.000.000 de implementación y $490.000 al mes, con la configuración del agente de IA de WhatsApp Business. Si su prioridad es aparecer en Google con una página por servicio, Web Visible empieza en $2.200.000. La web sola, Web Esencial, desde $1.200.000. El dominio y el hosting van incluidos mientras tenga la mensualidad; los costos de Meta van aparte. Precios en pesos colombianos, IVA incluido.
+Para una firma con muchas preguntas repetidas en temporada, recomendamos Web + Atención Inteligente: desde $3.000.000 al año, o en 12 cuotas de $300.000 al mes, con la configuración del agente de IA de WhatsApp Business. Si su prioridad es aparecer en Google con una página por servicio, Web Visible empieza en $2.200.000. La web sola, Web Esencial, desde $1.200.000. Los costos de Meta van aparte. Precios en pesos colombianos, IVA incluido.
 
 Fuente: https://goldenrod-bee-973005.hostingersite.com/paginas-web-contadores/
 
@@ -726,7 +745,7 @@ Fuente: https://goldenrod-bee-973005.hostingersite.com/paginas-web-consultores/
 
 ### ¿Cuánto cuesta una página web para un consultor?
 
-Para que lo encuentren en Google con una página por servicio o programa, recomendamos Web Visible: desde $2.200.000 de implementación y $350.000 al mes, con seguimiento mensual. Si además quiere ordenar las solicitudes por WhatsApp con el agente de IA, Web + Atención Inteligente empieza en $3.000.000. Una web más sencilla, Web Esencial, desde $1.200.000. El dominio y el hosting van incluidos mientras tenga la mensualidad; los costos de Meta van aparte. Precios en pesos colombianos, IVA incluido.
+Para que lo encuentren en Google con una página por servicio o programa, recomendamos Web Visible: desde $2.200.000 al año, o en 12 cuotas de $220.000 al mes, con seguimiento mensual. Si además quiere ordenar las solicitudes por WhatsApp con el agente de IA, Web + Atención Inteligente empieza en $3.000.000. Una web más sencilla, Web Esencial, desde $1.200.000. Los costos de Meta van aparte. Precios en pesos colombianos, IVA incluido.
 
 Fuente: https://goldenrod-bee-973005.hostingersite.com/paginas-web-consultores/
 
@@ -762,9 +781,27 @@ Fuente: https://goldenrod-bee-973005.hostingersite.com/paginas-web-empresas-serv
 
 ### ¿Cómo es el proceso para tener mi página web?
 
-Son cinco etapas: diagnóstico, con una reunión de hasta 45 minutos; preparación de la estructura y los textos, que usted revisa en un documento; construcción; aprobación, con dos rondas de ajustes; y publicación. Trabajamos con máximo dos proyectos a la vez, así que la fecha de inicio se asigna según disponibilidad y queda por escrito.
+Son cinco etapas: diagnóstico, con una reunión de hasta 45 minutos; preparación de la estructura y los textos, que usted revisa en un documento; construcción; aprobación; y publicación. Trabajamos con máximo dos proyectos a la vez, así que la fecha de inicio se asigna según disponibilidad y queda por escrito.
 
 Fuente: https://goldenrod-bee-973005.hostingersite.com/paginas-web-empresas-servicios/
+
+### ¿Cuánto cuesta una landing page?
+
+La Landing Page cuesta $350.000, pago único, IVA incluido. Es una página de una sola sección para vender un servicio o una promoción, con botón de WhatsApp, formulario y optimización inicial para Google. Lista para publicar, con dominio y hosting del primer año, cuesta $449.900.
+
+Fuente: https://goldenrod-bee-973005.hostingersite.com/precios/
+
+### ¿Puedo pagar en cuotas?
+
+Sí. Cada plan web tiene un precio anual que puede pagar de una vez o en 12 cuotas mensuales. Las cuotas suman 20 % más. Por ejemplo, Web Esencial cuesta $1.200.000 de una vez, o 12 cuotas de $120.000 (total $1.440.000), IVA incluido.
+
+Fuente: https://goldenrod-bee-973005.hostingersite.com/precios/
+
+### ¿El dominio y el hosting están incluidos?
+
+En Web Esencial, Web Visible y Web + Atención Inteligente, el dominio (.com o .com.co) y el hosting van incluidos el primer año. Para la Landing Page y el Plan Emprendedor cuestan $149.900 al año, IVA incluido. El dominio queda a nombre de su empresa.
+
+Fuente: https://goldenrod-bee-973005.hostingersite.com/precios/
 
 ### ¿Por qué los precios dicen «desde»?
 
@@ -772,33 +809,15 @@ Porque cada empresa necesita un alcance distinto. El precio publicado es el valo
 
 Fuente: https://goldenrod-bee-973005.hostingersite.com/precios/
 
-### ¿Qué incluye la mensualidad?
-
-Depende del plan. En Web Esencial cubre el mantenimiento y la actualización de su información. En Web Visible suma el seguimiento mensual del posicionamiento y mejoras limitadas. En Web + Atención Inteligente suma la revisión del agente de WhatsApp. Cada propuesta indica cuántos cambios o solicitudes incluye la mensualidad. No ofrecemos soporte ilimitado.
-
-Fuente: https://goldenrod-bee-973005.hostingersite.com/precios/
-
-### ¿Cuánto cuesta el primer año?
-
-Sume la implementación y 12 mensualidades. En Web Esencial, desde $2.388.000; en Web Visible, desde $6.400.000; en Web + Atención Inteligente, desde $8.880.000. El dominio y el hosting ya van incluidos. A esto se suman, si aplican, las licencias o suscripciones externas y, si los usa, los planes de pago de Meta. El valor exacto depende del alcance de su proyecto. Precios en pesos colombianos, IVA incluido.
-
-Fuente: https://goldenrod-bee-973005.hostingersite.com/precios/
-
 ### ¿Qué se paga aparte?
 
-El dominio y el hosting van incluidos mientras tenga la mensualidad (con la landing page o el Plan Emprendedor, dominio + hosting cuesta $149.900 al año). Las licencias y las suscripciones externas se identifican por separado en la propuesta. Si usa el agente de IA de WhatsApp y necesita más respuestas que el cupo gratuito de Meta, el plan de pago lo contrata y lo paga usted directamente a Meta. También se cotizan aparte los cambios que superen las dos rondas incluidas.
+El dominio y el hosting de la Landing Page y del Plan Emprendedor ($149.900 al año). Las licencias y las suscripciones externas se identifican por separado en la propuesta. Si usa el agente de IA de WhatsApp y necesita más respuestas que el cupo gratuito de Meta, el plan de pago lo contrata y lo paga usted directamente a Meta. Los servicios que no estén en su plan se cotizan aparte. Precios en pesos colombianos, IVA incluido.
 
 Fuente: https://goldenrod-bee-973005.hostingersite.com/precios/
 
-### ¿Cómo se paga y cuándo empieza la mensualidad?
+### ¿Cómo se paga?
 
-La implementación se paga en tres partes: 50 % para iniciar el proyecto, 30 % al aprobar el diseño o la versión funcional y 20 % antes de publicar. La mensualidad empieza desde la publicación, no antes. Puede pagar con transferencia Bancolombia, PSE a través de Bold o tarjeta de crédito o débito a través de Bold. Antes del primer pago usted recibe la propuesta por escrito con el alcance y el valor.
-
-Fuente: https://goldenrod-bee-973005.hostingersite.com/precios/
-
-### ¿Ofrecen soporte ilimitado?
-
-No. La mensualidad indica cuántos cambios o solicitudes incluye, y lo adicional se cotiza aparte. Nuestro acompañamiento humano es de lunes a viernes, de 9:00 a. m. a 6:00 p. m. (hora de Colombia). Respondemos en uno o dos días hábiles. Su web y el agente de WhatsApp pueden funcionar a cualquier hora, pero eso no significa soporte humano permanente.
+Puede pagar el precio anual de una vez o en 12 cuotas mensuales. Medios de pago: transferencia Bancolombia, PSE a través de Bold o tarjeta de crédito o débito a través de Bold. Antes del primer pago usted recibe la propuesta por escrito con el alcance y el valor.
 
 Fuente: https://goldenrod-bee-973005.hostingersite.com/precios/
 
@@ -1100,7 +1119,7 @@ Configuramos el agente de IA que Meta ofrece en WhatsApp Business. Verificamos s
 
 El agente puede responder a cualquier hora. Nuestro acompañamiento humano es de lunes a viernes, de 9:00 a. m. a 6:00 p. m. (hora de Colombia), y respondemos en uno o dos días hábiles.
 
-El servicio está incluido en el plan Web + Atención Inteligente, desde $3.000.000 de implementación y $490.000 al mes. Los costos de Meta los paga usted directamente a Meta y no están incluidos en nuestro precio. Si su cuenta no tiene acceso, entregamos la web, descontamos o posponemos ese componente y configuramos las funciones clásicas de la app. Vea el detalle en [configuración del agente de IA de WhatsApp Business](https://goldenrod-bee-973005.hostingersite.com/asistente-whatsapp-business/).
+El servicio está incluido en el plan Web + Atención Inteligente, desde $3.000.000 al año, o en 12 cuotas de $300.000 al mes. Los costos de Meta los paga usted directamente a Meta y no están incluidos en nuestro precio. Si su cuenta no tiene acceso, entregamos la web, descontamos o posponemos ese componente y configuramos las funciones clásicas de la app. Vea el detalle en [configuración del agente de IA de WhatsApp Business](https://goldenrod-bee-973005.hostingersite.com/asistente-whatsapp-business/).
 
 #### Cómo hicimos esta guía
 
@@ -1219,22 +1238,25 @@ Una propuesta de pago único puede salir más cara al segundo año si el alojami
 
 Publicamos el valor inicial de cada plan, con IVA incluido. El valor final depende del número de páginas, los textos, la migración, el catálogo y la cantidad de información, y queda por escrito en la propuesta, con IVA incluido, antes de cualquier pago.
 
-| Plan | Para quién | Implementación | Mensualidad | Primer año con 12 mensualidades |
+| Plan | Para quién | Precio anual, de una vez | 12 cuotas mensuales de | Total en 12 cuotas |
 |---|---|---|---|---|
-| Web Esencial | Empresas que necesitan presencia profesional y un contacto claro | Desde $1.200.000 | Desde $99.000 | Desde $2.388.000 |
-| Web Visible | Empresas que quieren recibir clientes desde Google y asistentes de IA | Desde $2.200.000 | Desde $350.000 | Desde $6.400.000 |
-| Web + Atención Inteligente | Empresas que además quieren responder por WhatsApp fuera de horario | Desde $3.000.000 | Desde $490.000 | Desde $8.880.000, más los costos de Meta |
+| Landing Page | Quien necesita una sola página para vender un servicio o una promoción | $350.000, pago único | No aplica | $449.900 con dominio y hosting |
+| Web Esencial | Empresas que necesitan presencia profesional y un contacto claro | Desde $1.200.000 | Desde $120.000 | Desde $1.440.000 |
+| Web Visible | Empresas que quieren recibir clientes desde Google y asistentes de IA | Desde $2.200.000 | Desde $220.000 | Desde $2.640.000 |
+| Web + Atención Inteligente | Empresas que además quieren responder por WhatsApp fuera de horario | Desde $3.000.000 | Desde $300.000 | Desde $3.600.000, más los costos de Meta |
 
 Lo que conviene saber de nuestros planes:
 
+- **Landing Page**: una página de una sola sección con sus textos de venta, botón de WhatsApp, formulario y optimización inicial para Google, por $350.000, pago único. Lista para publicar, con dominio y hosting del primer año, cuesta $449.900.
+- **Dominio + Hosting**: en Web Esencial, Web Visible y Web + Atención Inteligente van incluidos el primer año. Para la Landing Page y el Plan Emprendedor cuestan $149.900 al año. El dominio (.com o .com.co) queda a nombre de su empresa.
 - **Web Esencial** incluye hasta cinco secciones o páginas, diseño adaptado a celular, botón de WhatsApp, formulario, optimización inicial para Google, certificado de seguridad y un manual breve.
 - **Web Visible** suma investigación de lo que buscan sus clientes, una página por servicio, datos estructurados, preguntas frecuentes y seguimiento mensual.
 - **Web + Atención Inteligente** suma la configuración del agente de IA que Meta ofrece en WhatsApp Business: verificamos que su cuenta tenga acceso, organizamos la información, lo probamos con 25 a 40 preguntas y definimos cuándo pasa la conversación a una persona. Si su cuenta no tiene acceso, descontamos o posponemos ese componente y configuramos las funciones clásicas de la app. El agente puede responder a cualquier hora; nuestro acompañamiento humano es de lunes a viernes, de 9:00 a. m. a 6:00 p. m. (hora de Colombia), y respondemos en uno o dos días hábiles.
 - El **Plan Emprendedor** es una oferta aparte para microempresas que empiezan: una página de una sola sección, estandarizada, con alojamiento (hosting) y agenda básica, por $49.900 al mes.
 
-El pago de la implementación se divide en tres partes: 50 % para iniciar el proyecto, 30 % al aprobar el diseño o la versión funcional y 20 % antes de publicar. La mensualidad empieza desde la publicación. Incluye dos rondas de cambios; las solicitudes adicionales se cotizan aparte. El dominio y el hosting van incluidos mientras tenga la mensualidad (con la landing page o el Plan Emprendedor, dominio + hosting cuesta $149.900 al año). Las licencias y las suscripciones externas se identifican por separado. Puede ver el detalle en [precios y condiciones](https://goldenrod-bee-973005.hostingersite.com/precios/).
+Cada plan web se puede pagar de una vez por su precio anual, o en 12 cuotas mensuales que suman 20 % más. Las licencias y las suscripciones externas se identifican por separado. Puede ver el detalle en [precios y condiciones](https://goldenrod-bee-973005.hostingersite.com/precios/).
 
-¿Somos la opción más económica? No. Si su prioridad es tener presencia en internet al menor costo, varias de las opciones de la primera tabla pueden servirle. Nuestros planes están pensados para empresas de servicios que quieren una página por servicio, posicionamiento en Google y atención por WhatsApp bajo una misma estrategia, con una sola persona responsable del proyecto.
+Si su prioridad es tener presencia en internet al menor costo, la Landing Page es nuestra opción de entrada. Nuestros planes web están pensados para empresas de servicios que quieren una página por servicio, posicionamiento en Google y atención por WhatsApp bajo una misma estrategia, con una sola persona responsable del proyecto.
 
 #### Cómo comparar cotizaciones: lista de verificación
 
@@ -1242,9 +1264,9 @@ Haga estas preguntas a cada proveedor, incluidos nosotros, y pida las respuestas
 
 1. **¿A nombre de quién queda el dominio?** Lo recomendable es que quede a nombre de su empresa.
 2. **¿Quién es dueño de los textos, las imágenes y el diseño?** Y qué recibe usted si termina la relación.
-3. **¿Cuántas rondas de cambios incluye?** Y cuánto cuesta un cambio adicional.
-4. **¿Qué cubre la mensualidad?** Cuántos cambios, qué soporte, en qué horario y en cuánto tiempo responden.
-5. **¿La mensualidad es obligatoria? ¿Hay permanencia mínima?**
+3. **¿El precio es de una vez o en cuotas? ¿Cuánto suman las cuotas en total?**
+4. **¿Qué incluye el precio que paga?** Y en qué horario responden.
+5. **¿Hay cobros periódicos o permanencia mínima?**
 6. **¿El precio incluye IVA? ¿Qué se paga aparte?** Dominio, alojamiento, licencias, fotos, costos de Meta.
 7. **¿Cuál es la fecha estimada de entrega?** Y qué necesita usted entregar para cumplirla.
 8. **¿Qué pasa con mi web si el proveedor deja de prestar el servicio?** Accesos, copias de seguridad y traslado.

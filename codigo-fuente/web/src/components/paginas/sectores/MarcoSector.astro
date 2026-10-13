@@ -1,0 +1,150 @@
+---
+/**
+ * Marco de las secciones propias del grupo «sectores» (/precios/, /proyectos/ y las páginas de
+ * contadores y consultores), para los slots «seccion-<id>» de PlantillaPagina.
+ * Reproduce lo que Seccion.astro pone alrededor del cuerpo, para que la página no note el cambio:
+ *   <section id aria-labelledby="<id>-titulo">, fondo base/bajo/brillo, número grande de orden
+ *   (solo computador), encabezado (etiqueta + H2 + introducción) y pie (PieSeccion).
+ *
+ * disposicion:
+ *   apilado  → encabezado arriba (título a la izquierda, introducción a la derecha) y cuerpo debajo.
+ *   dividido → encabezado fijo a la izquierda (5 columnas) y cuerpo a la derecha (7).
+ *
+ * <MarcoSector seccion={s} fondo="bajo" numero={3} resaltado="punto por punto" pie={{ nota: s.nota }}>
+ *   …cuerpo…
+ * </MarcoSector>
+ */
+import EncabezadoSeccion from '@/components/ui/EncabezadoSeccion.astro';
+import PieSeccion from '@/components/pagina/PieSeccion.astro';
+import { idTitulo } from '@/lib/paginas';
+import type { Enlace, FondoSeccion, Seccion } from '@/data/contenido/tipos';
+
+interface Props {
+  seccion: Seccion;
+  fondo?: FondoSeccion;
+  /** Número de orden (01, 02…) como en las demás secciones de la plantilla. */
+  numero?: number;
+  /** Fragmento exacto del H2 que se pinta con el degradado. */
+  resaltado?: string;
+  disposicion?: 'apilado' | 'dividido';
+  /** Pie de la sección. false: sin pie. */
+  pie?: { parrafos?: readonly string[]; nota?: string; notaPrecios?: boolean; enlace?: Enlace } | false;
+  class?: string;
+}
+
+const { seccion: s, fondo = 'base', numero, resaltado, disposicion = 'apilado', pie = false, class: clase } = Astro.props;
+const dividido = disposicion === 'dividido';
+const idT = idTitulo(s.id);
+---
+<section
+  id={s.id}
+  aria-labelledby={idT}
+  data-tipo={s.tipo}
+  class:list={['marco-sector seccion relative isolate', `fondo-${fondo}`, clase]}
+>
+  {
+    fondo === 'brillo' && (
+      <div aria-hidden="true" class="luces pointer-events-none absolute inset-0 -z-10">
+        <span data-parallax="0.18" class="luz luz-a" />
+        <span data-parallax="-0.12" class="luz luz-b" />
+      </div>
+    )
+  }
+  {
+    numero !== undefined && (
+      <span aria-hidden="true" class="numero pointer-events-none absolute top-0 right-6 -z-10 hidden font-display select-none lg:block xl:right-[max(2rem,calc((100vw-80rem)/2+2rem))]">
+        {String(numero).padStart(2, '0')}
+      </span>
+    )
+  }
+
+  <div class="contenedor">
+    <div class:list={['grid', dividido && 'gap-10 lg:grid-cols-12 lg:gap-x-14']}>
+      <div class:list={['min-w-0', dividido && 'lg:col-span-5']}>
+        <div class:list={[dividido && 'lg:sticky lg:top-[calc(var(--alto-encabezado)+2.5rem)]']}>
+          <EncabezadoSeccion
+            etiqueta={s.etiqueta}
+            titulo={s.titulo}
+            resaltado={resaltado}
+            introduccion={s.introduccion}
+            id={idT}
+            dividido={!dividido}
+          />
+          <slot name="lateral" />
+        </div>
+      </div>
+      <div class:list={['min-w-0', dividido ? 'lg:col-span-7' : 'tras-encabezado']}>
+        <slot />
+        {pie && <PieSeccion {...pie} />}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* clip (no hidden): recorta luces y número sin romper los bloques fijos (sticky). */
+  .marco-sector {
+    overflow: clip;
+  }
+  .fondo-bajo {
+    background: var(--color-surface-low, #1c1b1e);
+  }
+  .fondo-bajo::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgb(192 193 255 / 0.28) 30%, rgb(128 131 255 / 0.22) 70%, transparent);
+  }
+  .luz {
+    position: absolute;
+    border-radius: 999px;
+    filter: blur(70px);
+  }
+  .luz-a {
+    width: min(42rem, 90vw);
+    aspect-ratio: 1;
+    left: -14rem;
+    top: 8%;
+    background: radial-gradient(circle, rgb(99 102 241 / 0.28), transparent 65%);
+  }
+  .luz-b {
+    width: min(34rem, 80vw);
+    aspect-ratio: 1;
+    right: -10rem;
+    bottom: 0;
+    background: radial-gradient(circle, rgb(192 193 255 / 0.14), transparent 65%);
+  }
+  .numero {
+    font-size: clamp(8rem, 12vw, 13rem);
+    line-height: 1;
+    font-weight: 600;
+    letter-spacing: -0.06em;
+    translate: 0 -42%;
+    background: linear-gradient(180deg, rgb(192 193 255 / 0.03) 40%, rgb(192 193 255 / 0.12));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-stroke: 1px rgb(192 193 255 / 0.13);
+  }
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .numero {
+        animation-name: sector-numero;
+        animation-duration: auto;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+        animation-timeline: view();
+        animation-range: entry 10% entry 90%;
+      }
+    }
+  }
+  @keyframes sector-numero {
+    from {
+      translate: 0 -95%;
+    }
+    to {
+      translate: 0 -42%;
+    }
+  }
+</style>

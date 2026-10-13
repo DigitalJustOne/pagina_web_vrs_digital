@@ -1,0 +1,645 @@
+---
+// Encabezado fijo del sitio.
+// - Transparente sobre la portada; al bajar 24 px aparece una cápsula de vidrio
+//   con sombra ambiental (IntersectionObserver, sin escuchar el desplazamiento).
+// - Computador (≥1024 px): menú con submenús desplegables accesibles.
+// - Celular y tableta (<1024 px): botón "Menú" que abre un panel de pantalla
+//   completa (<dialog> abierto con show() y comportamiento modal propio: aria-modal,
+//   foco atrapado, Escape, scroll bloqueado y devuelve el foco).
+// - Exporta la variable CSS --alto-encabezado para que la primera sección de
+//   cada página deje ese espacio arriba (ver .bajo-encabezado al final).
+import Marca from './navegacion/Marca.astro';
+import Icono from './navegacion/Icono.astro';
+import type { NombreIcono } from './navegacion/iconos';
+import { MENU, CTA_PRINCIPAL, CONTACTO, SERVICIOS, PRECIO_MINIMO, enlaceWhatsApp, formatoCOP } from '@/data/sitio';
+
+interface Props {
+  /** Ruta de la página actual, con barra final (ej. '/precios/'). Marca el enlace activo. */
+  ruta?: string;
+}
+
+type Hijo = { nombre: string; href: string };
+type ItemMenu = { nombre: string; href: string; hijos?: readonly Hijo[] };
+
+const normalizar = (valor: string) => {
+  let r = valor.split(/[?#]/)[0] || '/';
+  if (!r.startsWith('/')) r = `/${r}`;
+  if (!r.endsWith('/')) r = `${r}/`;
+  return r;
+};
+const ruta = normalizar(Astro.props.ruta ?? Astro.url.pathname);
+
+/** aria-current: 'page' en la página exacta; 'true' en la sección madre (ej. /recursos/ dentro de /recursos/articulo/). */
+const estado = (href: string): 'page' | 'true' | undefined => {
+  const destino = normalizar(href);
+  if (destino === ruta) return 'page';
+  if (destino !== '/' && ruta.startsWith(destino)) return 'true';
+  return undefined;
+};
+
+const menu = MENU as readonly ItemMenu[];
+const grupos = menu.filter((i) => i.hijos?.length);
+const sencillos = menu.filter((i) => !i.hijos?.length);
+
+const ICONO_SERVICIO: Record<string, NombreIcono> = { monitor: 'monitor', search: 'buscar', message: 'mensaje', refresh: 'actualizar' };
+const ICONO_RUTA: Record<string, NombreIcono> = {
+  '/paginas-web-contadores/': 'calculadora',
+  '/paginas-web-consultores/': 'presentacion',
+  '/paginas-web-empresas-servicios/': 'maletin',
+  '/precios/': 'etiqueta',
+  '/proyectos/': 'cuadricula',
+  '/recursos/': 'libro',
+  '/nosotros/': 'personas',
+};
+const servicioDe = (href: string) => SERVICIOS.find((s) => `/${s.slug}/` === normalizar(href));
+const iconoDe = (href: string): NombreIcono => {
+  const porRuta = ICONO_RUTA[normalizar(href)];
+  if (porRuta) return porRuta;
+  const s = servicioDe(href);
+  return (s && ICONO_SERVICIO[s.icono]) || 'flecha-derecha';
+};
+
+const precioDesde = formatoCOP(PRECIO_MINIMO);
+const PIE_DESPLEGABLE: Record<string, { texto: string; detalle: string; href: string }> = {
+  Servicios: { texto: 'Planes y precios', detalle: `Desde ${precioDesde} · IVA incluido`, href: '/precios/' },
+  Sectores: { texto: '¿Su sector no aparece?', detalle: 'Cuéntenos sobre su empresa', href: CTA_PRINCIPAL.href },
+};
+
+const idDe = (nombre: string) =>
+  'submenu-' + nombre.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-');
+const grupoActivo = (item: ItemMenu) => item.hijos?.some((h) => estado(h.href)) ?? false;
+const esInicio = ruta === '/';
+/** En /contacto/ el botón principal baja al formulario en vez de volver a cargar la página. */
+const enContacto = ruta === normalizar(CTA_PRINCIPAL.href);
+const hrefCta = enContacto ? '#formulario' : CTA_PRINCIPAL.href;
+const nuevaPestana = ' (se abre en una pestaña nueva)';
+---
+<div class="enc-centinela" data-centinela-encabezado aria-hidden="true"></div>
+
+<header class="enc" data-encabezado>
+  <div class="enc-marco">
+    <div class="enc-barra">
+      <span class="enc-fondo vidrio" aria-hidden="true"></span>
+      <span class="enc-progreso" aria-hidden="true"></span>
+
+      <a href="/" class="enc-marca" aria-current={esInicio ? 'page' : undefined}>
+        <Marca alto={30} class="enc-marca__logo" />
+        <span class="sr-only">: ir a la página de inicio</span>
+      </a>
+
+      <nav class="enc-nav" aria-label="Principal">
+        <ul class="enc-nav__lista">
+          {
+            menu.map((item) =>
+              item.hijos?.length ? (
+                <li class="enc-item" data-desplegable>
+                  <button
+                    type="button"
+                    class="enc-enlace"
+                    aria-expanded="false"
+                    aria-controls={idDe(item.nombre)}
+                    data-activo={grupoActivo(item) ? '' : undefined}
+                  >
+                    {item.nombre}
+                    {grupoActivo(item) && <span class="sr-only">, sección actual</span>}
+                    <Icono nombre="flecha-abajo" tamano={16} class="enc-enlace__flecha" />
+                  </button>
+                  <div
+                    id={idDe(item.nombre)}
+                    class:list={['enc-sub', { 'enc-sub--ancho': item.hijos.some((h) => servicioDe(h.href)) }]}
+                    data-panel
+                  >
+                    <ul class="enc-sub__lista">
+                      {item.hijos.map((hijo) => {
+                        const servicio = servicioDe(hijo.href);
+                        return (
+                          <li>
+                            <a href={hijo.href} class="enc-sub__enlace" aria-current={estado(hijo.href)}>
+                              <span class="enc-sub__icono">
+                                <Icono nombre={iconoDe(hijo.href)} tamano={20} />
+                              </span>
+                              <span class="enc-sub__textos">
+                                <span class="enc-sub__nombre">{hijo.nombre}</span>
+                                {servicio && <span class="enc-sub__resumen">{servicio.resumen}</span>}
+                              </span>
+                            </a>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                    {PIE_DESPLEGABLE[item.nombre] && (
+                      <a href={PIE_DESPLEGABLE[item.nombre].href} class="enc-sub__pie" aria-current={estado(PIE_DESPLEGABLE[item.nombre].href)}>
+                        <span>
+                          <span class="enc-sub__pie-titulo">{PIE_DESPLEGABLE[item.nombre].texto}</span>
+                          <span class="enc-sub__pie-detalle">{PIE_DESPLEGABLE[item.nombre].detalle}</span>
+                        </span>
+                        <Icono nombre="flecha-derecha" tamano={18} class="enc-sub__pie-flecha" />
+                      </a>
+                    )}
+                  </div>
+                </li>
+              ) : (
+                <li class="enc-item">
+                  <a href={item.href} class="enc-enlace" aria-current={estado(item.href)}>
+                    {item.nombre}
+                  </a>
+                </li>
+              ),
+            )
+          }
+        </ul>
+      </nav>
+
+      <div class="enc-acciones">
+        <a href={hrefCta} class="boton boton-primario enc-cta" aria-current={enContacto ? undefined : estado(CTA_PRINCIPAL.href)}>
+          {CTA_PRINCIPAL.texto}
+        </a>
+        <button
+          type="button"
+          class="enc-boton-menu enc-solo-js"
+          aria-expanded="false"
+          aria-controls="menu-movil"
+          aria-haspopup="dialog"
+          data-abrir-menu
+        >
+          <span class="enc-hamburguesa" aria-hidden="true"><span></span><span></span></span>
+          Menú
+        </button>
+        <a href="#navegacion-pie" class="enc-boton-menu enc-sin-js">Menú</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<dialog id="menu-movil" class="enc-movil" aria-label="Menú principal" aria-modal="true" data-menu-movil>
+  <div class="enc-movil__panel">
+    <div class="enc-marco">
+      <div class="enc-barra">
+        <a href="/" class="enc-marca" aria-current={esInicio ? 'page' : undefined}>
+          <Marca alto={30} />
+          <span class="sr-only">: ir a la página de inicio</span>
+        </a>
+        <button type="button" class="enc-boton-menu" data-cerrar-menu autofocus>
+          <Icono nombre="cerrar" tamano={18} />
+          Cerrar
+          <span class="sr-only"> el menú</span>
+        </button>
+      </div>
+    </div>
+
+    <nav class="enc-movil__nav" aria-label="Principal">
+      <div class="enc-movil__grupos">
+        {
+          grupos.map((grupo, g) => (
+            <div class="enc-movil__grupo enc-movil__item" style={`--i:${g * 4}`}>
+              <p class="enc-movil__titulo" id={`movil-${idDe(grupo.nombre)}`}>
+                {grupo.nombre}
+              </p>
+              <ul aria-labelledby={`movil-${idDe(grupo.nombre)}`}>
+                {grupo.hijos!.map((hijo) => (
+                  <li>
+                    <a href={hijo.href} class="enc-movil__enlace" aria-current={estado(hijo.href)}>
+                      <span class="enc-movil__icono">
+                        <Icono nombre={iconoDe(hijo.href)} tamano={18} />
+                      </span>
+                      <span class="enc-movil__texto">{hijo.nombre}</span>
+                      <Icono nombre="flecha-derecha" tamano={18} class="enc-movil__flecha" />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+
+      <ul class="enc-movil__mosaico">
+        {
+          sencillos.map((item, i) => (
+            <li class="enc-movil__item" style={`--i:${grupos.length * 4 + i}`}>
+              <a href={item.href} class="enc-movil__baldosa" aria-current={estado(item.href)}>
+                <Icono nombre={iconoDe(item.href)} tamano={20} class="enc-movil__baldosa-icono" />
+                <span>{item.nombre}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+
+      <p class="enc-movil__horario enc-movil__item" style={`--i:${grupos.length * 4 + sencillos.length}`}>
+        <Icono nombre="reloj" tamano={16} />
+        <span>{CONTACTO.horario}</span>
+      </p>
+    </nav>
+
+    <div class="enc-movil__acciones enc-movil__item" style={`--i:${grupos.length * 4 + sencillos.length}`}>
+      <a href={hrefCta} class="boton boton-primario w-full">
+        {CTA_PRINCIPAL.texto}
+        <Icono nombre="flecha-derecha" tamano={18} />
+      </a>
+      <a href={enlaceWhatsApp()} target="_blank" rel="noopener" class="boton boton-secundario w-full">
+        <Icono nombre="whatsapp" tamano={20} class="icono-whatsapp" />
+        Escribir por WhatsApp
+        <span class="sr-only">{nuevaPestana}</span>
+      </a>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  const raiz = document.documentElement;
+  const reducido = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  // ── 1. Cápsula de vidrio al bajar 24 px ────────────────────────────────────
+  const encabezado = document.querySelector<HTMLElement>('[data-encabezado]');
+  const centinela = document.querySelector('[data-centinela-encabezado]');
+  if (encabezado && centinela && 'IntersectionObserver' in window) {
+    new IntersectionObserver(([e]) => encabezado.toggleAttribute('data-solido', !e.isIntersecting)).observe(centinela);
+  } else if (encabezado) {
+    const revisar = () => encabezado.toggleAttribute('data-solido', window.scrollY > 24);
+    window.addEventListener('scroll', revisar, { passive: true });
+    revisar();
+  }
+
+  // ── 2. Submenús de computador ──────────────────────────────────────────────
+  type Modo = 'clic' | 'puntero' | null;
+  interface Desplegable { li: HTMLElement; boton: HTMLButtonElement; panel: HTMLElement; modo: Modo; espera?: number }
+  const punteroFino = window.matchMedia('(hover: hover) and (pointer: fine)');
+  const desplegables: Desplegable[] = [];
+
+  function abrir(d: Desplegable, modo: Exclude<Modo, null>) {
+    desplegables.forEach((otro) => otro !== d && cerrar(otro));
+    window.clearTimeout(d.espera);
+    d.modo = modo;
+    d.li.setAttribute('data-abierto', '');
+    d.boton.setAttribute('aria-expanded', 'true');
+  }
+  function cerrar(d: Desplegable, devolverFoco = false) {
+    window.clearTimeout(d.espera);
+    if (!d.modo) return;
+    d.modo = null;
+    d.li.removeAttribute('data-abierto');
+    d.boton.setAttribute('aria-expanded', 'false');
+    if (devolverFoco) d.boton.focus();
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-desplegable]').forEach((li) => {
+    const boton = li.querySelector<HTMLButtonElement>('button[aria-controls]');
+    const panel = li.querySelector<HTMLElement>('[data-panel]');
+    if (!boton || !panel) return;
+    const d: Desplegable = { li, boton, panel, modo: null };
+    desplegables.push(d);
+    const enlaces = () => Array.from(panel.querySelectorAll<HTMLAnchorElement>('a'));
+
+    boton.addEventListener('click', () => {
+      // Si ya se abrió al pasar el puntero, el clic lo deja fijo en vez de cerrarlo.
+      if (d.modo === 'puntero') d.modo = 'clic';
+      else if (d.modo) cerrar(d);
+      else abrir(d, 'clic');
+    });
+
+    li.addEventListener('pointerenter', (e) => {
+      if (e.pointerType !== 'mouse' || !punteroFino.matches) return;
+      window.clearTimeout(d.espera);
+      if (!d.modo) d.espera = window.setTimeout(() => abrir(d, 'puntero'), 70);
+    });
+    li.addEventListener('pointerleave', (e) => {
+      if (e.pointerType !== 'mouse') return;
+      window.clearTimeout(d.espera);
+      if (d.modo === 'puntero') d.espera = window.setTimeout(() => cerrar(d), 200);
+    });
+
+    li.addEventListener('keydown', (e) => {
+      const lista = enlaces();
+      const actual = lista.indexOf(document.activeElement as HTMLAnchorElement);
+      if (e.key === 'Escape' && d.modo) {
+        e.preventDefault();
+        cerrar(d, true);
+      } else if (e.key === 'ArrowDown' && e.target === boton) {
+        e.preventDefault();
+        abrir(d, 'clic');
+        lista[0]?.focus();
+      } else if (actual > -1 && ['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(e.key)) {
+        e.preventDefault();
+        const destino =
+          e.key === 'Home' ? 0 : e.key === 'End' ? lista.length - 1 : (actual + (e.key === 'ArrowDown' ? 1 : -1) + lista.length) % lista.length;
+        lista[destino]?.focus();
+      }
+    });
+
+    // Al salir con Tab hacia otro elemento, se cierra.
+    li.addEventListener('focusout', (e) => {
+      const siguiente = e.relatedTarget as Node | null;
+      if (siguiente && !li.contains(siguiente)) cerrar(d);
+    });
+  });
+
+  document.addEventListener('pointerdown', (e) => {
+    desplegables.forEach((d) => d.modo && !d.li.contains(e.target as Node) && cerrar(d));
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    desplegables.forEach((d) => d.modo && cerrar(d, d.li.contains(document.activeElement)));
+  });
+
+  // ── 3. Panel de celular ────────────────────────────────────────────────────
+  const dialogo = document.querySelector<HTMLDialogElement>('[data-menu-movil]');
+  const botonAbrir = document.querySelector<HTMLButtonElement>('[data-abrir-menu]');
+  const DURACION_CIERRE = 220;
+  let cerrando = 0;
+
+  // Diálogo no modal (show) que cubre toda la pantalla: showModal() vuelve inerte todo el
+  // documento y eso recalcula los estilos de miles de nodos (el toque tardaba más de 400 ms).
+  // El comportamiento modal se hace aquí: aria-modal, foco atrapado, Escape y bloqueo del scroll.
+  // La animación de entrada sale de @starting-style (sin forzar un layout síncrono).
+  function abrirMenu() {
+    if (!dialogo || !botonAbrir || dialogo.open) return;
+    raiz.classList.add('enc-bloqueo');
+    dialogo.show();
+    botonAbrir.setAttribute('aria-expanded', 'true');
+    dialogo.setAttribute('data-visible', '');
+  }
+
+  function cerrarMenu(inmediato = false) {
+    if (!dialogo?.open) return;
+    dialogo.removeAttribute('data-visible');
+    window.clearTimeout(cerrando);
+    if (inmediato || reducido.matches) dialogo.close();
+    else cerrando = window.setTimeout(() => dialogo.open && dialogo.close(), DURACION_CIERRE);
+  }
+
+  if (dialogo && botonAbrir) {
+    botonAbrir.addEventListener('click', abrirMenu);
+    dialogo.querySelector('[data-cerrar-menu]')?.addEventListener('click', () => cerrarMenu());
+    // Escape: cierre animado en lugar del cierre seco del navegador.
+    dialogo.addEventListener('cancel', (e) => {
+      e.preventDefault();
+      cerrarMenu();
+    });
+    // Teclado: Escape cierra y Tab / Mayús+Tab no salen del panel.
+    dialogo.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        cerrarMenu();
+        return;
+      }
+      if (e.key !== 'Tab') return;
+      const focos = dialogo.querySelectorAll<HTMLElement>('a[href], button:not([disabled])');
+      const primero = focos[0];
+      const ultimo = focos[focos.length - 1];
+      if (!primero || !ultimo) return;
+      if (e.shiftKey && document.activeElement === primero) {
+        e.preventDefault();
+        ultimo.focus();
+      } else if (!e.shiftKey && document.activeElement === ultimo) {
+        e.preventDefault();
+        primero.focus();
+      }
+    });
+    // Limpieza única, venga de donde venga el cierre.
+    dialogo.addEventListener('close', () => {
+      window.clearTimeout(cerrando);
+      dialogo.removeAttribute('data-visible');
+      raiz.classList.remove('enc-bloqueo');
+      botonAbrir.setAttribute('aria-expanded', 'false');
+      botonAbrir.focus({ preventScroll: true });
+    });
+    dialogo.addEventListener('click', (e) => {
+      if ((e.target as Element).closest('a[href]')) cerrarMenu(true);
+    });
+    window.matchMedia('(min-width: 1024px)').addEventListener('change', (e) => e.matches && cerrarMenu(true));
+    // Al volver con el botón Atrás (bfcache), la página no debe quedar con el menú abierto.
+    window.addEventListener('pagehide', () => cerrarMenu(true));
+  }
+</script>
+
+<style is:global>
+  /* --alto-encabezado y .bajo-encabezado viven en global.css (capa components),
+     para que una página pueda ajustarlos con utilidades de Tailwind. */
+
+  html.enc-bloqueo { overflow: hidden; scrollbar-gutter: stable; }
+  html.js .enc-sin-js, html:not(.js) .enc-solo-js { display: none !important; }
+
+  .enc-centinela { position: absolute; top: 24px; left: 0; width: 1px; height: 1px; pointer-events: none; }
+
+  /* ── Barra ─────────────────────────────────────────────────────────────── */
+  .enc { position: fixed; inset-inline: 0; top: 0; z-index: 50; }
+  .enc-marco { max-width: 80rem; margin-inline: auto; padding: 0.5rem 0.5rem 0; }
+  .enc-barra {
+    position: relative; isolation: isolate;
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    height: 4rem; padding-inline: 0.75rem; border-radius: 1.25rem;
+  }
+  @media (min-width: 640px) { .enc-marco { padding-inline: 0.75rem; } }
+  @media (min-width: 1024px) {
+    .enc-marco { padding: 0.5rem 1rem 0; }
+    .enc-barra { height: 4.5rem; padding-inline: 1rem; }
+  }
+  /* Desde 1280 px el menú queda centrado en la página, no entre logo y botón. */
+  @media (min-width: 1280px) {
+    .enc > .enc-marco > .enc-barra { display: grid; grid-template-columns: 1fr auto 1fr; }
+    .enc > .enc-marco > .enc-barra > .enc-acciones { justify-self: end; }
+    .enc > .enc-marco > .enc-barra > .enc-marca { justify-self: start; }
+  }
+
+  .enc-fondo {
+    position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none;
+    box-shadow: 0 20px 40px rgb(0 0 0 / 0.4), inset 0 0 0 1px rgb(229 225 228 / 0.07);
+    opacity: 0; transform: scale(0.98);
+    transition: opacity 0.35s var(--ease-out-expo), transform 0.6s var(--ease-out-expo);
+  }
+  .enc[data-solido] .enc-fondo { opacity: 1; transform: none; }
+
+  /* Progreso de lectura: línea de luz que crece con el desplazamiento (sin JS). */
+  .enc-progreso {
+    position: absolute; left: 1.25rem; right: 1.25rem; bottom: 0; height: 2px; border-radius: 2px; pointer-events: none;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-primary-container) 60%, var(--color-indigo));
+    box-shadow: 0 0 12px rgb(128 131 255 / 0.6);
+    transform-origin: left center; transform: scaleX(0); opacity: 0; transition: opacity 0.3s;
+  }
+  @supports (animation-timeline: scroll()) {
+    /* Propiedades sueltas a propósito: el minificador une el atajo con la línea de
+       tiempo y Chrome descarta esa forma. */
+    .enc-progreso { animation-name: enc-progreso; animation-timing-function: linear; animation-fill-mode: both; animation-timeline: scroll(root block); }
+    .enc[data-solido] .enc-progreso { opacity: 0.85; }
+  }
+  @keyframes enc-progreso { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+  .enc-marca {
+    display: inline-flex; align-items: center; min-height: 2.75rem; padding-inline: 0.25rem; margin-inline-start: -0.25rem;
+    border-radius: 0.75rem; flex: none;
+  }
+  .enc-marca .marca-vrs__simbolo { transition: transform 0.5s var(--ease-out-expo); }
+  .enc-marca:hover .marca-vrs__simbolo { transform: rotate(-6deg) scale(1.06); }
+  /* En 1024-1279 px el menú completo necesita el espacio del nombre. */
+  @media (min-width: 1024px) and (max-width: 1279.98px) { .enc-marca .marca-vrs__nombre { display: none; } }
+
+  /* ── Menú de computador ────────────────────────────────────────────────── */
+  .enc-nav { display: none; }
+  @media (min-width: 1024px) { .enc-nav { display: block; } }
+  .enc-nav__lista { display: flex; align-items: center; gap: 0.125rem; }
+  .enc-item { position: relative; }
+
+  .enc-enlace {
+    position: relative; display: inline-flex; align-items: center; gap: 0.25rem;
+    min-height: 2.75rem; padding-inline: 0.75rem; border-radius: 9999px;
+    font-size: 0.9375rem; font-weight: 500; color: var(--color-ink-soft); cursor: pointer; white-space: nowrap;
+  }
+  @media (min-width: 1280px) { .enc-enlace { padding-inline: 0.9rem; } }
+  .enc-enlace::before {
+    content: ''; position: absolute; inset: 0; border-radius: inherit; z-index: -1;
+    background: rgb(229 225 228 / 0.07); opacity: 0; transition: opacity 0.2s;
+  }
+  .enc-enlace:hover, .enc-enlace[aria-expanded='true'], .enc-enlace[aria-current], .enc-enlace[data-activo] { color: var(--color-ink); }
+  .enc-enlace:hover::before, .enc-enlace[aria-expanded='true']::before { opacity: 1; }
+  .enc-enlace[aria-current]::after, .enc-enlace[data-activo]::after {
+    content: ''; position: absolute; left: 50%; bottom: 0.3rem; width: 4px; height: 4px; border-radius: 50%;
+    background: var(--color-primary); box-shadow: 0 0 8px 2px rgb(192 193 255 / 0.65); transform: translateX(-50%);
+  }
+  .enc-enlace[data-activo]::after { margin-left: -0.5rem; }
+  .enc-enlace__flecha { color: var(--color-ink-mute); transition: transform 0.3s var(--ease-out-expo); }
+  .enc-item[data-abierto] .enc-enlace__flecha { transform: rotate(180deg); color: var(--color-primary); }
+
+  .enc-sub {
+    position: absolute; top: calc(100% + 0.75rem); left: -0.5rem; z-index: 10;
+    width: 20rem; padding: 0.5rem; border-radius: 1.25rem;
+    background: rgb(42 42 44 / 0.86);
+    -webkit-backdrop-filter: blur(24px) saturate(140%); backdrop-filter: blur(24px) saturate(140%);
+    box-shadow: 0 24px 48px rgb(0 0 0 / 0.45), inset 0 0 0 1px rgb(229 225 228 / 0.08);
+    visibility: hidden; opacity: 0; transform: translateY(-6px) scale(0.98); transform-origin: 2rem 0;
+    transition: opacity 0.18s ease, transform 0.3s var(--ease-out-expo), visibility 0s linear 0.3s;
+  }
+  .enc-sub--ancho { width: 34rem; }
+  /* Puente invisible para que el puntero cruce el espacio sin cerrar el panel. */
+  .enc-sub::before { content: ''; position: absolute; left: 0; right: 0; bottom: 100%; height: 0.875rem; }
+  .enc-item[data-abierto] > .enc-sub,
+  html:not(.js) .enc-item:hover > .enc-sub,
+  html:not(.js) .enc-item:focus-within > .enc-sub {
+    visibility: visible; opacity: 1; transform: none; transition-delay: 0s;
+  }
+
+  .enc-sub__lista { display: grid; gap: 0.125rem; }
+  .enc-sub__enlace {
+    position: relative; display: flex; align-items: center; gap: 0.875rem;
+    min-height: 3rem; padding: 0.625rem 0.75rem; border-radius: 0.875rem; color: var(--color-ink);
+  }
+  .enc-sub--ancho .enc-sub__enlace { align-items: flex-start; padding: 0.875rem; }
+  .enc-sub__enlace::before {
+    content: ''; position: absolute; inset: 0; border-radius: inherit; z-index: -1;
+    background: rgb(229 225 228 / 0.06); opacity: 0; transition: opacity 0.2s;
+  }
+  .enc-sub__enlace:hover::before, .enc-sub__enlace:focus-visible::before, .enc-sub__enlace[aria-current]::before { opacity: 1; }
+  .enc-sub__icono {
+    flex: none; display: grid; place-items: center; width: 2.5rem; height: 2.5rem; border-radius: 0.75rem;
+    background: rgb(128 131 255 / 0.12); color: var(--color-primary); box-shadow: inset 0 0 0 1px rgb(192 193 255 / 0.12);
+    transition: transform 0.4s var(--ease-out-expo);
+  }
+  .enc-sub__enlace:hover .enc-sub__icono { transform: rotate(-6deg) scale(1.06); }
+  .enc-sub__textos { display: grid; gap: 0.25rem; min-width: 0; }
+  .enc-sub__nombre { font-weight: 500; line-height: 1.3; }
+  .enc-sub__enlace[aria-current] .enc-sub__nombre { color: var(--color-primary); }
+  .enc-sub__resumen { font-size: 0.875rem; line-height: 1.45; color: var(--color-ink-mute); }
+
+  .enc-sub__pie {
+    position: relative; display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    margin-top: 0.375rem; padding: 0.875rem 1rem; border-radius: 0.875rem; min-height: 3rem;
+    background: rgb(14 14 16 / 0.55);
+  }
+  .enc-sub__pie-titulo { display: block; font-weight: 500; color: var(--color-ink); line-height: 1.3; }
+  .enc-sub__pie-detalle { display: block; font-size: 0.8125rem; font-family: var(--font-mono); color: var(--color-primary); margin-top: 0.125rem; }
+  .enc-sub__pie-flecha { flex: none; color: var(--color-primary); transition: transform 0.3s var(--ease-out-expo); }
+  .enc-sub__pie:hover .enc-sub__pie-flecha { transform: translateX(4px); }
+
+  /* ── Acciones ──────────────────────────────────────────────────────────── */
+  .enc-acciones { display: flex; align-items: center; gap: 0.5rem; flex: none; }
+  .enc-cta { display: none; min-height: 2.75rem; padding: 0.5rem 1.125rem; font-size: 0.9375rem; border-radius: 0.75rem; }
+  @media (min-width: 768px) { .enc-cta { display: inline-flex; } }
+
+  .enc-boton-menu {
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.625rem;
+    min-height: 2.75rem; min-width: 2.75rem; padding-inline: 1rem; border-radius: 9999px;
+    font-size: 0.9375rem; font-weight: 500; color: var(--color-ink); cursor: pointer;
+    background: rgb(229 225 228 / 0.07); box-shadow: inset 0 0 0 1px rgb(229 225 228 / 0.12);
+    transition: transform 0.2s var(--ease-out-expo);
+  }
+  .enc-boton-menu:active { transform: scale(0.96); }
+  @media (min-width: 1024px) { .enc-acciones .enc-boton-menu { display: none !important; } }
+  .enc-hamburguesa { display: grid; gap: 5px; width: 18px; }
+  .enc-hamburguesa > span { display: block; height: 1.75px; border-radius: 2px; background: currentColor; transition: transform 0.3s var(--ease-out-expo); }
+  .enc-hamburguesa > span:last-child { width: 12px; justify-self: end; }
+  .enc-boton-menu:hover .enc-hamburguesa > span:last-child { transform: scaleX(1.5); transform-origin: right; }
+
+  /* ── Panel de celular ──────────────────────────────────────────────────── */
+  .enc-movil {
+    position: fixed; inset: 0; width: 100%; height: 100%; max-width: none; max-height: none;
+    margin: 0; padding: 0; border: 0; background: transparent; color: var(--color-ink); overflow: hidden;
+    z-index: 60; /* no modal: por encima del encabezado (50) y de la barra de celular (40) */
+  }
+  .enc-movil__panel {
+    position: absolute; inset: 0; display: flex; flex-direction: column;
+    overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain;
+    background:
+      radial-gradient(circle at 100% 0%, rgb(99 102 241 / 0.3), rgb(99 102 241 / 0) 22rem),
+      rgb(19 19 21 / 0.97);
+    -webkit-backdrop-filter: blur(24px); backdrop-filter: blur(24px);
+    opacity: 0; transform: translateY(-10px);
+    transition: opacity 0.22s ease, transform 0.45s var(--ease-out-expo);
+  }
+  .enc-movil[data-visible] .enc-movil__panel { opacity: 1; transform: none; }
+  /* Barra superior y acciones fijas dentro del panel: "Cerrar" y los botones siempre a mano. */
+  .enc-movil .enc-marco { position: sticky; top: 0; z-index: 2; width: 100%; background: linear-gradient(rgb(19 19 21 / 0.96) 70%, rgb(19 19 21 / 0)); }
+
+  .enc-movil__item { opacity: 0; transform: translateY(12px); transition: opacity 0.35s ease, transform 0.55s var(--ease-out-expo); }
+  .enc-movil[data-visible] .enc-movil__item { opacity: 1; transform: none; transition-delay: calc(var(--i, 0) * 30ms + 80ms); }
+  /* Estado de partida de la entrada (el panel se abre con data-visible ya puesto). */
+  @starting-style {
+    .enc-movil[data-visible] .enc-movil__panel { opacity: 0; transform: translateY(-10px); }
+    .enc-movil[data-visible] .enc-movil__item { opacity: 0; transform: translateY(12px); }
+  }
+
+  .enc-movil__nav { padding: 0.75rem 1.25rem 0; max-width: 40rem; width: 100%; margin-inline: auto; }
+  .enc-movil__grupos { display: grid; gap: 1.5rem; }
+  @media (min-width: 640px) { .enc-movil__grupos { grid-template-columns: 1fr 1fr; } }
+  .enc-movil__titulo { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-primary); margin-bottom: 0.5rem; padding-inline: 0.25rem; }
+  .enc-movil__enlace {
+    display: flex; align-items: center; gap: 0.875rem; min-height: 3rem; padding: 0.5rem 0.5rem 0.5rem 0.25rem; border-radius: 0.875rem;
+    font-size: 1.0625rem; line-height: 1.3; color: var(--color-ink);
+  }
+  .enc-movil__enlace:active, .enc-movil__enlace[aria-current] { background: rgb(229 225 228 / 0.05); }
+  .enc-movil__icono {
+    flex: none; display: grid; place-items: center; width: 2.25rem; height: 2.25rem; border-radius: 0.75rem;
+    background: rgb(128 131 255 / 0.12); color: var(--color-primary);
+  }
+  .enc-movil__texto { flex: 1; min-width: 0; }
+  .enc-movil__enlace[aria-current] .enc-movil__texto { color: var(--color-primary); }
+  .enc-movil__flecha { flex: none; color: var(--color-ink-mute); }
+
+  .enc-movil__mosaico { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-top: 1.5rem; }
+  @media (min-width: 640px) { .enc-movil__mosaico { grid-template-columns: repeat(4, 1fr); } }
+  .enc-movil__baldosa {
+    position: relative; display: flex; flex-direction: column; justify-content: space-between; gap: 1rem;
+    min-height: 5rem; padding: 0.875rem 1rem; border-radius: 1rem; background: var(--color-surface-low);
+    font-family: var(--font-display); font-size: 1.125rem; font-weight: 500; color: var(--color-ink);
+  }
+  .enc-movil__baldosa-icono { color: var(--color-primary); }
+  .enc-movil__baldosa[aria-current] { background: var(--color-surface-high); box-shadow: inset 0 0 0 1px rgb(192 193 255 / 0.35); }
+  .enc-movil__baldosa[aria-current]::after {
+    content: ''; position: absolute; top: 1rem; right: 1rem; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--color-primary); box-shadow: 0 0 10px 2px rgb(192 193 255 / 0.6);
+  }
+
+  .enc-movil__horario { display: flex; align-items: flex-start; gap: 0.5rem; margin-top: 1.25rem; padding-inline: 0.25rem; font-size: 0.8125rem; line-height: 1.5; color: var(--color-ink-mute); }
+  .enc-movil__horario svg { flex: none; margin-top: 0.125rem; }
+  .enc-movil__acciones {
+    position: sticky; bottom: 0; z-index: 2; display: grid; gap: 0.625rem; margin-top: auto;
+    padding: 1.5rem max(1.25rem, calc((100% - 37.5rem) / 2)) max(1rem, env(safe-area-inset-bottom));
+    /* Fondo opaco que se difumina hacia arriba: en pantallas bajas no se ven enlaces detrás de los botones. */
+    background: linear-gradient(to top, rgb(19 19 21) 75%, rgb(19 19 21 / 0));
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .enc-fondo, .enc-sub, .enc-movil__panel, .enc-movil__item, .enc-enlace__flecha, .enc-sub__icono,
+    .enc-marca .marca-vrs__simbolo, .enc-hamburguesa > span, .enc-sub__pie-flecha { transition: none !important; }
+    .enc-sub, .enc-movil__panel, .enc-movil__item, .enc-fondo { transform: none !important; }
+  }
+</style>

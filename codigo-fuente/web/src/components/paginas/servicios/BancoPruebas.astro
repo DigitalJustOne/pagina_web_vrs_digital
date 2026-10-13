@@ -1,0 +1,207 @@
+---
+/**
+ * Sección #pruebas de /asistente-whatsapp-business/: el «banco de pruebas» del agente.
+ * Toma la tabla del módulo (Grupo · Preguntas · Qué comprobamos · Ejemplo) y la muestra como:
+ *   1. una barra con una celda por pregunta (30 en la distribución base), agrupada por color;
+ *   2. una tarjeta por grupo (H3) con su número de preguntas, qué comprobamos y el ejemplo
+ *      escrito como lo mandaría un cliente (burbuja de chat).
+ * Las cifras salen de las filas del módulo: si cambia la distribución, todo se recalcula.
+ * Sin JS o con movimiento reducido: todo visible y quieto.
+ *
+ * Con `plegar`, en celular las tarjetas de los grupos se pliegan tras ese botón (Plegable.astro);
+ * el resumen de la barra queda a la vista. En computador se ven abiertas.
+ *
+ * <BancoPruebas seccion={seccion} fondo="base" numero={7} resaltado="antes de activarlo" plegar="Ver…" />
+ */
+import Plegable from '@/components/pagina/Plegable.astro';
+import type { SeccionTabla } from '@/data/contenido/tipos';
+import MarcoSeccion from './MarcoSeccion.astro';
+
+interface Props {
+  seccion: SeccionTabla;
+  fondo?: 'base' | 'bajo';
+  numero?: number;
+  resaltado?: string;
+  /** Texto del botón que pliega las tarjetas de los grupos en celular. */
+  plegar?: string;
+}
+
+const { seccion: s, fondo = 'base', numero, resaltado, plegar } = Astro.props;
+
+/** Tonos por grupo (marca, coral de aviso, ámbar y verde de «en línea»), en el orden de las filas. */
+const TONOS = ['#c0c1ff', '#8083ff', '#ffb4ab', '#f2c46d', '#4ade80'];
+const [, rotuloCantidad = 'Preguntas', rotuloComprobamos = 'Qué comprobamos', rotuloEjemplo = 'Ejemplo'] = s.columnas;
+const grupos = s.filas.map((f, i) => ({
+  nombre: f[0] ?? '',
+  cantidad: Number.parseInt(f[1] ?? '0', 10) || 0,
+  comprobamos: f[2] ?? '',
+  ejemplo: f[3] ?? '',
+  tono: TONOS[i % TONOS.length],
+}));
+const total = grupos.reduce((t, g) => t + g.cantidad, 0);
+const unidad = rotuloCantidad.toLowerCase();
+const singular = (n: number) => (n === 1 ? unidad.replace(/s$/, '') : unidad);
+const descripcionBarra = `${total} ${unidad} de prueba: ${grupos.map((g) => `${g.cantidad} ${g.nombre.toLowerCase()}`).join(', ')}.`;
+let celda = 0;
+---
+<MarcoSeccion seccion={s} fondo={fondo} numero={numero} resaltado={resaltado}>
+  <div class="contenedor tras-encabezado">
+    <!-- 1. Resumen: una celda por pregunta -->
+    <div data-revelar class:list={['resumen rounded-panel p-6 sm:p-8', fondo === 'bajo' ? 'bg-surface-high' : 'bg-surface-low']}>
+      <div class="flex flex-wrap items-end justify-between gap-x-8 gap-y-3">
+        <p class="flex items-baseline gap-3">
+          <span class="font-display text-5xl leading-none font-semibold tracking-[-0.04em] text-ink sm:text-6xl">{total}</span>
+          <span class="font-mono text-xs tracking-[0.18em] text-ink-soft uppercase">{unidad} · {grupos.length} grupos</span>
+        </p>
+        <ul role="list" class="flex flex-wrap gap-x-5 gap-y-2 text-sm text-ink-soft">
+          {
+            grupos.map((g) => (
+              <li class="flex items-center gap-2">
+                <span aria-hidden="true" class="h-2.5 w-2.5 rounded-full" style={`background:${g.tono}`} />
+                {g.nombre}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+      <div role="img" aria-label={descripcionBarra} class="barra mt-7">
+        {
+          grupos.map((g) => (
+            <span class="tramo" style={`--tono:${g.tono};flex-grow:${g.cantidad}`}>
+              {Array.from({ length: g.cantidad }, () => (
+                <span class="celda" style={`--k:${celda++}`} />
+              ))}
+            </span>
+          ))
+        }
+      </div>
+    </div>
+
+    <!-- 2. Un grupo por tarjeta (con `plegar`, plegadas en celular) -->
+    <Plegable texto={plegar} class="mt-5">
+    <ul role="list" class:list={['grupos grid gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3', !plegar && 'mt-5']}>
+      {
+        grupos.map((g, i) => (
+          <li
+            data-revelar
+            style={`--tono:${g.tono};--retraso:${Math.min(i, 4) * 70}ms`}
+            class:list={['grupo flex flex-col rounded-card p-6 sm:p-7', i === 0 && 'sm:col-span-2', fondo === 'bajo' ? 'bg-surface-high' : 'bg-surface-low']}
+          >
+            <div class="flex items-start justify-between gap-4">
+              <h3 class="titulo-tarjeta flex items-center gap-2.5">
+                <span aria-hidden="true" class="punto" />
+                {g.nombre}
+              </h3>
+              <p class="cantidad shrink-0 font-mono text-sm text-ink-soft">
+                <span class="font-display text-2xl font-semibold text-ink">{g.cantidad}</span> {singular(g.cantidad)}
+              </p>
+            </div>
+            <dl class:list={['mt-5 grid gap-5', i === 0 && 'lg:grid-cols-2 lg:gap-8']}>
+              <div>
+                <dt class="font-mono text-[0.6875rem] tracking-[0.16em] text-ink-soft uppercase">{rotuloComprobamos}</dt>
+                <dd class="mt-2 leading-relaxed text-ink">{g.comprobamos}</dd>
+              </div>
+              <div>
+                <dt class="font-mono text-[0.6875rem] tracking-[0.16em] text-ink-soft uppercase">{rotuloEjemplo}</dt>
+                <dd class="mt-2.5">
+                  <span class="burbuja">{g.ejemplo}</span>
+                </dd>
+              </div>
+            </dl>
+          </li>
+        ))
+      }
+    </ul>
+    </Plegable>
+  </div>
+</MarcoSeccion>
+
+<style>
+  .resumen {
+    box-shadow: inset 0 1px 0 rgb(229 225 228 / 0.05);
+  }
+  .barra {
+    display: flex;
+    gap: 0.375rem;
+  }
+  .tramo {
+    display: grid;
+    flex-basis: 0;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+    gap: 2px;
+    min-width: 0;
+  }
+  @media (min-width: 640px) {
+    .barra {
+      gap: 0.75rem;
+    }
+    .tramo {
+      gap: 0.25rem;
+    }
+  }
+  .celda {
+    display: block;
+    height: 2.5rem;
+    border-radius: 0.375rem;
+    background: var(--tono);
+    box-shadow: 0 0 18px -6px var(--tono);
+  }
+  @media (min-width: 640px) {
+    .celda {
+      height: 3rem;
+    }
+  }
+  .grupo {
+    position: relative;
+    box-shadow: inset 0 1px 0 rgb(229 225 228 / 0.05);
+  }
+  /* Filo de color del grupo en el borde superior. */
+  .grupo::before {
+    content: '';
+    position: absolute;
+    left: 1.5rem;
+    right: 1.5rem;
+    top: 0;
+    height: 2px;
+    border-radius: 0 0 2px 2px;
+    background: linear-gradient(90deg, var(--tono), transparent);
+  }
+  .punto {
+    flex: none;
+    width: 0.625rem;
+    height: 0.625rem;
+    border-radius: 999px;
+    background: var(--tono);
+    box-shadow: 0 0 10px var(--tono);
+  }
+  /* Ejemplo: como lo escribiría un cliente por WhatsApp. */
+  .burbuja {
+    display: inline-block;
+    max-width: 100%;
+    padding: 0.625rem 0.875rem;
+    border-radius: 1rem;
+    border-bottom-left-radius: 0.3rem;
+    background: rgb(37 211 102 / 0.12);
+    box-shadow: inset 0 0 0 1px rgb(37 211 102 / 0.22);
+    color: var(--color-ink, #e5e1e4);
+    font-size: 0.9375rem;
+    line-height: 1.5;
+  }
+
+  /* Las celdas se llenan una a una al aparecer el resumen. */
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js) .resumen .celda {
+      transform: scaleY(0.25);
+      opacity: 0.25;
+      transition:
+        transform 0.5s var(--ease-out-expo),
+        opacity 0.5s var(--ease-out-expo);
+      transition-delay: calc(250ms + var(--k) * 35ms);
+    }
+    :global(.js) .resumen:global(.visible) .celda {
+      transform: none;
+      opacity: 1;
+    }
+  }
+</style>

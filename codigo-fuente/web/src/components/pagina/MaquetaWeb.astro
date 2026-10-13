@@ -1,0 +1,573 @@
+---
+/**
+ * Visual de /paginas-web-bogota/ (y de otras páginas de diseño web): una página web de empresa
+ * que «se construye» en un computador y en un celular, en 3D con CSS.
+ * - Sin texto inventado: la página se dibuja con bloques. Las fichas flotantes usan textos
+ *   reales de lo que incluye el plan Web Esencial (PLANES de sitio.ts).
+ * - Inclinación 3D: sigue al puntero (solo puntero fino) y se endereza al desplazarse.
+ * - Movimiento reducido o sin JS: maqueta estática, completa.
+ * - Espacio reservado con aspect-ratio (CLS 0). Es una sola imagen para lectores de pantalla.
+ *
+ * <MaquetaWeb slot="visual" />
+ */
+import Icono from '@/components/ui/Icono.astro';
+import type { NombreIcono } from '@/components/ui/iconos';
+import { PLANES } from '@/data/sitio';
+
+interface Props {
+  etiqueta?: string;
+  class?: string;
+}
+
+const {
+  etiqueta = 'Ilustración: una página web de empresa en un computador y en un celular, con botón de WhatsApp, formulario de contacto y optimización para Google.',
+  class: clase,
+} = Astro.props;
+
+// Fichas: textos tal cual de lo que incluye Web Esencial.
+const incluye = PLANES.find((p) => p.id === 'esencial')?.incluye ?? [];
+const texto = (clave: string) => incluye.find((t) => t.toLowerCase().includes(clave)) ?? '';
+interface Ficha {
+  icono: NombreIcono;
+  texto: string;
+  clase: string;
+}
+const FICHAS = (
+  [
+    { icono: 'monitor', texto: texto('celular'), clase: 'ficha-a' },
+    { icono: 'whatsapp', texto: texto('whatsapp'), clase: 'ficha-b' },
+    { icono: 'search', texto: texto('google'), clase: 'ficha-c' },
+  ] satisfies Ficha[]
+).filter((f) => f.texto);
+---
+<div role="img" aria-label={etiqueta} data-maqueta class:list={['maqueta relative mx-auto w-full max-w-[34rem]', clase]}>
+  <div class="escena" aria-hidden="true">
+    <div class="enderezar">
+      <div class="lienzo">
+        <!-- Computador: ventana del navegador -->
+        <div class="navegador borde-luz">
+          <div class="barra">
+            <span class="punto"></span><span class="punto"></span><span class="punto"></span>
+            <span class="direccion"><Icono nombre="lock" tamano={10} /><span class="linea w-[45%]"></span></span>
+          </div>
+          <div class="pagina">
+            <div class="nav c c1">
+              <span class="logo"></span>
+              <span class="linea w-[12%]"></span><span class="linea w-[10%]"></span><span class="linea w-[12%]"></span>
+              <span class="pildora"></span>
+            </div>
+            <div class="portada">
+              <div class="portada-texto">
+                <span class="titular c c2"></span>
+                <span class="titular corto c c3"></span>
+                <span class="linea w-[88%] c c4"></span>
+                <span class="linea w-[70%] c c4"></span>
+                <span class="botones c c5"><span class="boton-a"></span><span class="boton-b"></span></span>
+              </div>
+              <div class="portada-imagen c c3">
+                <span class="orbe"></span>
+              </div>
+            </div>
+            <div class="tarjetas">
+              <span class="tarjeta-m c c6"><span class="icono-m"></span><span class="linea w-[80%]"></span><span class="linea w-[60%]"></span></span>
+              <span class="tarjeta-m c c7"><span class="icono-m"></span><span class="linea w-[75%]"></span><span class="linea w-[55%]"></span></span>
+              <span class="tarjeta-m c c8"><span class="icono-m"></span><span class="linea w-[82%]"></span><span class="linea w-[50%]"></span></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Celular -->
+        <div class="telefono">
+          <div class="pantalla">
+            <span class="muesca"></span>
+            <span class="titular-m c c4"></span>
+            <span class="titular-m corto c c5"></span>
+            <span class="linea w-[85%] c c5"></span>
+            <span class="campo c c6"></span>
+            <span class="campo c c7"></span>
+            <span class="enviar c c8"></span>
+          </div>
+          <span class="burbuja-wa"><Icono nombre="whatsapp" tamano={18} /></span>
+        </div>
+
+        <!-- Fichas flotantes -->
+        {
+          FICHAS.map((f) => (
+            <span class:list={['ficha vidrio', f.clase]}>
+              <span class:list={['ficha-icono', f.icono === 'whatsapp' && 'es-wa']}>
+                <Icono nombre={f.icono} tamano={14} />
+              </span>
+              <span class="ficha-texto">{f.texto}</span>
+            </span>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .maqueta {
+    aspect-ratio: 1 / 1;
+    --rx: 0deg;
+    --ry: 0deg;
+  }
+  .escena {
+    position: absolute;
+    inset: 0;
+    perspective: 1600px;
+    perspective-origin: 50% 40%;
+  }
+  .enderezar,
+  .lienzo {
+    position: absolute;
+    inset: 0;
+    transform-style: preserve-3d;
+  }
+  /* Celular: giro más suave y algo más pequeño, para que nada salga del margen de 16 px. */
+  .lienzo {
+    transform: scale(0.9) rotateX(calc(6deg + var(--rx))) rotateY(calc(-9deg + var(--ry)));
+    transition: transform 0.6s var(--ease-out-expo);
+  }
+  @media (min-width: 1024px) {
+    .lienzo {
+      transform: rotateX(calc(8deg + var(--rx))) rotateY(calc(-16deg + var(--ry))) rotateZ(1deg);
+    }
+  }
+
+  /* ── Navegador ─────────────────────────────────────────────────────────── */
+  .navegador {
+    position: absolute;
+    left: 0;
+    top: 8%;
+    width: 86%;
+    aspect-ratio: 16 / 11.5;
+    border-radius: 1rem;
+    background: var(--color-surface-low, #1c1b1e);
+    box-shadow:
+      0 40px 80px -30px rgb(0 0 0 / 0.75),
+      0 0 0 1px rgb(229 225 228 / 0.04);
+    overflow: hidden;
+  }
+  .barra {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    height: 9%;
+    padding-inline: 4%;
+    background: var(--color-surface-high, #2a2a2c);
+  }
+  .punto {
+    width: 7px;
+    height: 7px;
+    border-radius: 99px;
+    background: rgb(229 225 228 / 0.22);
+  }
+  .direccion {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex: 1;
+    max-width: 55%;
+    height: 56%;
+    margin-left: 6%;
+    padding-inline: 8px;
+    border-radius: 99px;
+    background: rgb(14 14 16 / 0.7);
+    color: var(--color-online, #4ade80);
+  }
+  .pagina {
+    position: absolute;
+    inset: 9% 0 0;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    gap: 6%;
+    padding: 4% 5% 5%;
+    background:
+      radial-gradient(80% 60% at 85% 30%, rgb(99 102 241 / 0.16), transparent 70%),
+      var(--color-surface-lowest, #0e0e10);
+  }
+  .nav {
+    display: flex;
+    align-items: center;
+    gap: 4%;
+  }
+  .logo {
+    width: 9%;
+    aspect-ratio: 3 / 1;
+    border-radius: 4px;
+    background: linear-gradient(135deg, #c0c1ff, #8083ff);
+    margin-right: auto;
+  }
+  .pildora {
+    width: 14%;
+    aspect-ratio: 4 / 1;
+    border-radius: 99px;
+    background: rgb(192 193 255 / 0.25);
+    margin-left: 2%;
+  }
+  .linea {
+    display: block;
+    height: 5px;
+    border-radius: 99px;
+    background: rgb(229 225 228 / 0.14);
+  }
+  .portada {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    align-items: center;
+    gap: 6%;
+  }
+  .portada-texto {
+    display: grid;
+    gap: 9px;
+    align-content: center;
+  }
+  .titular {
+    display: block;
+    height: 13px;
+    width: 100%;
+    border-radius: 6px;
+    background: linear-gradient(90deg, #e5e1e4 0%, #c0c1ff 55%, #8083ff 100%);
+    opacity: 0.85;
+  }
+  .titular.corto {
+    width: 68%;
+    margin-bottom: 4px;
+  }
+  .botones {
+    display: flex;
+    gap: 6px;
+    margin-top: 6px;
+  }
+  .boton-a,
+  .boton-b {
+    width: 38%;
+    aspect-ratio: 3.6 / 1;
+    border-radius: 6px;
+  }
+  .boton-a {
+    background: linear-gradient(135deg, #c0c1ff, #8083ff);
+    box-shadow: 0 6px 18px -6px rgb(128 131 255 / 0.7);
+  }
+  .boton-b {
+    box-shadow: inset 0 0 0 1px rgb(229 225 228 / 0.2);
+  }
+  .portada-imagen {
+    position: relative;
+    aspect-ratio: 1 / 0.9;
+    border-radius: 10px;
+    overflow: hidden;
+    background:
+      linear-gradient(160deg, rgb(192 193 255 / 0.18), rgb(99 102 241 / 0.08)),
+      var(--color-surface-high, #2a2a2c);
+  }
+  .orbe {
+    position: absolute;
+    width: 62%;
+    aspect-ratio: 1;
+    left: 19%;
+    top: 14%;
+    border-radius: 99px;
+    background: radial-gradient(circle at 35% 30%, #e4e4ff, #8083ff 45%, #3d3fb0 80%);
+    box-shadow: 0 0 40px rgb(128 131 255 / 0.5);
+  }
+  .tarjetas {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4%;
+  }
+  .tarjeta-m {
+    display: grid;
+    gap: 6px;
+    padding: 9% 10%;
+    border-radius: 8px;
+    background: var(--color-surface-low, #1c1b1e);
+  }
+  .icono-m {
+    width: 22%;
+    aspect-ratio: 1;
+    border-radius: 5px;
+    background: rgb(192 193 255 / 0.3);
+    margin-bottom: 2px;
+  }
+
+  /* ── Celular ───────────────────────────────────────────────────────────── */
+  .telefono {
+    position: absolute;
+    right: 3%;
+    bottom: 6%;
+    width: 29%;
+    aspect-ratio: 9 / 18.5;
+    padding: 2.2%;
+    border-radius: 1.4rem;
+    background: linear-gradient(160deg, #3a393d, #1c1b1e);
+    box-shadow:
+      0 40px 70px -24px rgb(0 0 0 / 0.85),
+      inset 0 0 0 1px rgb(229 225 228 / 0.12);
+    transform: translateZ(80px);
+  }
+  .pantalla {
+    position: relative;
+    display: grid;
+    align-content: start;
+    gap: 7px;
+    height: 100%;
+    padding: 26% 10% 0;
+    border-radius: 1.1rem;
+    overflow: hidden;
+    background:
+      radial-gradient(120% 50% at 50% 0%, rgb(99 102 241 / 0.3), transparent 70%),
+      var(--color-surface-lowest, #0e0e10);
+  }
+  .muesca {
+    position: absolute;
+    top: 4%;
+    left: 50%;
+    width: 30%;
+    height: 3.5%;
+    translate: -50% 0;
+    border-radius: 99px;
+    background: #000;
+  }
+  .titular-m {
+    height: 9px;
+    border-radius: 5px;
+    background: linear-gradient(90deg, #e5e1e4, #c0c1ff);
+    opacity: 0.85;
+  }
+  .titular-m.corto {
+    width: 70%;
+    margin-bottom: 6px;
+  }
+  .campo {
+    height: 16px;
+    border-radius: 5px;
+    background: var(--color-surface-high, #2a2a2c);
+    box-shadow: inset 0 0 0 1px rgb(229 225 228 / 0.08);
+  }
+  .campo:first-of-type {
+    margin-top: 10px;
+  }
+  .enviar {
+    height: 16px;
+    border-radius: 5px;
+    background: linear-gradient(135deg, #c0c1ff, #8083ff);
+  }
+  .burbuja-wa {
+    position: absolute;
+    right: -12%;
+    bottom: 9%;
+    display: grid;
+    place-items: center;
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: 99px;
+    background: #15803d;
+    color: #fff;
+    box-shadow: 0 10px 26px -6px rgb(37 211 102 / 0.6);
+    transform: translateZ(30px);
+  }
+
+  /* ── Fichas ────────────────────────────────────────────────────────────── */
+  .ficha {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    max-width: 58%;
+    padding: 7px 12px 7px 7px;
+    border-radius: 0.875rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    line-height: 1.3;
+    color: var(--color-ink, #e5e1e4);
+    box-shadow:
+      0 18px 40px -14px rgb(0 0 0 / 0.7),
+      inset 0 0 0 1px rgb(229 225 228 / 0.12);
+  }
+  .ficha-icono {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 8px;
+    background: rgb(128 131 255 / 0.2);
+    color: var(--color-primary, #c0c1ff);
+  }
+  .ficha-icono.es-wa {
+    background: rgb(37 211 102 / 0.16);
+    color: var(--color-whatsapp, #25d366);
+  }
+  .ficha-a {
+    left: 6%;
+    top: 0;
+    transform: translateZ(120px);
+  }
+  .ficha-b {
+    right: 0;
+    top: 34%;
+    transform: translateZ(140px);
+  }
+  .ficha-c {
+    left: 3%;
+    bottom: 4%;
+    transform: translateZ(110px);
+  }
+  @media (min-width: 640px) {
+    .ficha {
+      font-size: 0.8125rem;
+    }
+  }
+
+  /* ── Movimiento (solo sin preferencia de movimiento reducido) ─────────── */
+  @media (prefers-reduced-motion: no-preference) {
+    /* La maqueta «se construye»: cada bloque aparece en orden. */
+    .c {
+      transform-origin: left center;
+      animation: maqueta-construir 0.7s var(--ease-out-expo) both;
+    }
+    .c1 { animation-delay: 0.2s; }
+    .c2 { animation-delay: 0.28s; }
+    .c3 { animation-delay: 0.36s; }
+    .c4 { animation-delay: 0.44s; }
+    .c5 { animation-delay: 0.52s; }
+    .c6 { animation-delay: 0.6s; }
+    .c7 { animation-delay: 0.66s; }
+    .c8 { animation-delay: 0.72s; }
+    .telefono {
+      animation:
+        maqueta-entrar-telefono 1s var(--ease-out-expo) 0.2s both,
+        maqueta-flotar 7s ease-in-out 1.2s infinite;
+    }
+    .ficha {
+      animation:
+        maqueta-entrar-ficha 0.9s var(--ease-out-expo) both,
+        maqueta-flotar-ficha 6s ease-in-out infinite;
+    }
+    .ficha-a { animation-delay: 0.55s, 1.5s; }
+    .ficha-b { animation-delay: 0.7s, 2s; }
+    .ficha-c { animation-delay: 0.85s, 2.5s; }
+    .orbe {
+      animation: maqueta-orbe 9s ease-in-out infinite;
+    }
+    /* Brillo que recorre el titular: un reflejo que se desplaza con translate (va por el
+       compositor; antes movía background-position y recalculaba estilos en cada cuadro). */
+    .titular {
+      position: relative;
+      overflow: hidden;
+    }
+    .titular::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent 20%, rgb(255 255 255 / 0.42) 50%, transparent 80%);
+      translate: -100% 0;
+      animation: maqueta-brillo 5s linear 2s infinite;
+    }
+    .c3.titular::after { animation-delay: 2.2s; }
+
+    /* Al salir de la pantalla, la maqueta se endereza (desplazamiento, sin JS). */
+    @supports (animation-timeline: view()) {
+      .enderezar {
+        animation-name: maqueta-enderezar;
+        animation-duration: auto;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+        animation-timeline: view();
+        animation-range: exit 0% exit 100%;
+      }
+    }
+  }
+  @keyframes maqueta-construir {
+    from {
+      opacity: 0;
+      transform: translateY(6px) scaleX(0.92);
+    }
+  }
+  /* Con translate (no transform): maqueta-flotar anima transform y, si las dos animan la misma
+     propiedad, la flotación no va por el compositor. */
+  @keyframes maqueta-entrar-telefono {
+    from {
+      opacity: 0;
+      translate: 0 40px;
+    }
+  }
+  @keyframes maqueta-flotar {
+    0%,
+    100% {
+      transform: translateZ(80px) translateY(0);
+    }
+    50% {
+      transform: translateZ(80px) translateY(-10px);
+    }
+  }
+  @keyframes maqueta-entrar-ficha {
+    from {
+      opacity: 0;
+      scale: 0.9;
+    }
+  }
+  @keyframes maqueta-flotar-ficha {
+    0%,
+    100% {
+      translate: 0 0;
+    }
+    50% {
+      translate: 0 -7px;
+    }
+  }
+  @keyframes maqueta-orbe {
+    0%,
+    100% {
+      transform: translate(0, 0) scale(1);
+    }
+    50% {
+      transform: translate(6%, -5%) scale(1.06);
+    }
+  }
+  @keyframes maqueta-brillo {
+    from {
+      translate: -100% 0;
+    }
+    60%,
+    to {
+      translate: 100% 0;
+    }
+  }
+  @keyframes maqueta-enderezar {
+    to {
+      transform: rotateX(-6deg) rotateY(12deg) translateY(-4%);
+    }
+  }
+</style>
+
+<script>
+  // Inclinación según el puntero: solo con puntero fino y sin movimiento reducido.
+  const fino = window.matchMedia('(pointer: fine)').matches;
+  const reducido = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (fino && !reducido) {
+    for (const maqueta of document.querySelectorAll<HTMLElement>('[data-maqueta]')) {
+      let cuadro = 0;
+      let x = 0;
+      let y = 0;
+      const zona = maqueta.closest('header') ?? maqueta;
+      zona.addEventListener('pointermove', (e) => {
+        const r = maqueta.getBoundingClientRect();
+        x = ((e as PointerEvent).clientX - (r.left + r.width / 2)) / window.innerWidth;
+        y = ((e as PointerEvent).clientY - (r.top + r.height / 2)) / window.innerHeight;
+        if (cuadro) return;
+        cuadro = requestAnimationFrame(() => {
+          cuadro = 0;
+          maqueta.style.setProperty('--ry', `${(x * 14).toFixed(2)}deg`);
+          maqueta.style.setProperty('--rx', `${(-y * 10).toFixed(2)}deg`);
+        });
+      });
+      zona.addEventListener('pointerleave', () => {
+        maqueta.style.setProperty('--ry', '0deg');
+        maqueta.style.setProperty('--rx', '0deg');
+      });
+    }
+  }
+</script>

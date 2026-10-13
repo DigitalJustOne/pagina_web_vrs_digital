@@ -1,0 +1,314 @@
+---
+/**
+ * Visual de la portada de /nosotros/: el retrato recortado del fundador dentro de un pequeño
+ * «laboratorio» en 3D hecho con CSS (halo, anillos en órbita y suelo con retícula) y tres fichas
+ * de vidrio a distintas profundidades: su nombre y cargo, los proyectos entregados (CIFRAS) y el
+ * aval MinTIC (AVAL). Todo sale de sitio.ts.
+ *
+ * - Relación de aspecto fija (sin saltos de diseño). La foto es .webp de ~27 KB con PNG de respaldo.
+ * - Recorte horizontal (overflow-x: clip): las piezas en 3D (anillos, suelo) nunca ensanchan la
+ *   página; las fichas y los anillos quedan dentro del ancho del retrato.
+ * - Con mouse, la escena se inclina siguiendo el puntero; las fichas, más cerca, se mueven más.
+ * - Sin JS o con «reducir movimiento»: escena quieta, todo visible.
+ * - Las fichas repiten datos que la página ya dice en texto: son decorativas para lectores de
+ *   pantalla (aria-hidden); la foto conserva su texto alternativo.
+ *
+ * <RetratoFundador slot="visual" />
+ */
+import Icono from '@/components/ui/Icono.astro';
+import { AVAL, CIFRAS, FUNDADOR } from '@/data/sitio';
+import { imagenPublica } from '@/lib/casos';
+
+interface Props {
+  class?: string;
+}
+
+const { class: clase } = Astro.props;
+const foto = imagenPublica(FUNDADOR.foto);
+const [proyectos] = CIFRAS;
+---
+<div data-retrato3d id="victor" class:list={['retrato3d relative mx-auto w-full max-w-[22rem] sm:max-w-[28rem] lg:max-w-[32rem]', clase]}>
+  <div class="plano">
+    <span aria-hidden="true" class="halo"></span>
+    <span aria-hidden="true" class="suelo"><span class="reticula"></span></span>
+    <span aria-hidden="true" class="anillo anillo-a"><span></span></span>
+    <span aria-hidden="true" class="anillo anillo-b"><span></span></span>
+
+    <picture class="foto">
+      {foto.webp && <source srcset={foto.webp} type="image/webp" />}
+      <img
+        src={FUNDADOR.foto}
+        alt={`Retrato de ${FUNDADOR.nombreCorto}, fundador de VRS Digital`}
+        width={foto.ancho}
+        height={foto.alto}
+        loading="eager"
+        decoding="async"
+      />
+    </picture>
+
+    <div aria-hidden="true" class="ficha ficha-cifra vidrio">
+      <span class="font-display text-2xl leading-none font-semibold text-primary sm:text-[1.75rem]">{proyectos.valor}</span>
+      <span class="text-xs leading-snug text-ink-soft sm:text-[0.8125rem]">{proyectos.etiqueta}</span>
+    </div>
+
+    <div aria-hidden="true" class="ficha ficha-aval vidrio">
+      <span class="sello flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-on-primary">
+        <Icono nombre="badge" tamano={17} />
+      </span>
+      <span class="text-xs leading-snug font-semibold text-ink sm:text-[0.8125rem]">{AVAL.titulo}</span>
+    </div>
+
+    <div aria-hidden="true" class="ficha ficha-nombre vidrio">
+      <span class="punto" />
+      <span class="min-w-0">
+        <span class="block font-display text-[0.9375rem] leading-tight font-semibold text-ink sm:text-base">{FUNDADOR.nombreCorto}</span>
+        <span class="mt-0.5 block text-[0.6875rem] leading-snug text-ink-soft sm:text-xs">{FUNDADOR.cargo}</span>
+      </span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .retrato3d {
+    aspect-ratio: 1 / 1.04;
+    overflow-x: clip;
+    perspective: 1100px;
+    --rx: 0deg;
+    --ry: 0deg;
+  }
+  .plano {
+    position: absolute;
+    inset: 0;
+    transform-style: preserve-3d;
+    transform: rotateX(var(--rx)) rotateY(var(--ry));
+    transition: transform 0.6s var(--ease-out-expo);
+  }
+
+  /* Halo de marca detrás de la cabeza. */
+  .halo {
+    position: absolute;
+    left: 50%;
+    top: 34%;
+    width: 78%;
+    aspect-ratio: 1;
+    border-radius: 999px;
+    background:
+      radial-gradient(circle, rgb(128 131 255 / 0.55) 0%, rgb(99 102 241 / 0.22) 38%, transparent 68%);
+    filter: blur(6px);
+    /* Centrado dentro de «transform»: el minificador descarta «translate» junto a «transform». */
+    transform: translate(-50%, -50%) translateZ(-120px);
+  }
+
+  /* Suelo del laboratorio: retícula inclinada que se pierde en el fondo. */
+  .suelo {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -4%;
+    height: 46%;
+    overflow: hidden;
+    perspective: 420px;
+    perspective-origin: 50% 0%;
+    -webkit-mask-image: radial-gradient(70% 80% at 50% 30%, #000 30%, transparent 78%);
+    mask-image: radial-gradient(70% 80% at 50% 30%, #000 30%, transparent 78%);
+    transform: translateZ(-60px);
+  }
+  /* Sobra un cuadro (36 px) por arriba para moverla con transform sin dejar borde vacío. */
+  .reticula {
+    position: absolute;
+    inset: -36px -30% -60%;
+    transform: rotateX(70deg);
+    transform-origin: 50% 36px;
+    background-image:
+      linear-gradient(rgb(192 193 255 / 0.22) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(192 193 255 / 0.18) 1px, transparent 1px);
+    background-size: 36px 36px;
+  }
+
+  /* Anillos en órbita a la altura de los hombros (elipses inclinadas). */
+  .anillo {
+    position: absolute;
+    left: 50%;
+    top: 74%;
+    width: 92%;
+    aspect-ratio: 1;
+    transform-style: preserve-3d;
+    /* Hacia atrás: el borde cercano del anillo pasa delante del retrato, pero detrás de las fichas. */
+    transform: translate(-50%, -50%) translateZ(var(--z, -110px)) rotateX(76deg);
+    pointer-events: none;
+  }
+  .anillo > span {
+    position: absolute;
+    inset: 0;
+    border-radius: 999px;
+    box-shadow:
+      inset 0 0 0 1.5px rgb(192 193 255 / 0.4),
+      0 0 14px rgb(128 131 255 / 0.35);
+  }
+  .anillo-a > span {
+    -webkit-mask-image: conic-gradient(from 0deg, #000 0 62%, transparent 62% 70%, #000 70%);
+    mask-image: conic-gradient(from 0deg, #000 0 62%, transparent 62% 70%, #000 70%);
+  }
+  .anillo-b {
+    --z: -60px;
+    width: 70%;
+    top: 78%;
+  }
+  .anillo-b > span {
+    box-shadow:
+      inset 0 0 0 1px rgb(229 225 228 / 0.18),
+      0 0 12px rgb(99 102 241 / 0.25);
+    -webkit-mask-image: conic-gradient(from 180deg, #000 0 40%, transparent 40% 52%, #000 52%);
+    mask-image: conic-gradient(from 180deg, #000 0 40%, transparent 40% 52%, #000 52%);
+  }
+
+  /* Retrato recortado: se funde con el suelo en la parte baja. */
+  .foto {
+    position: absolute;
+    inset: 0 4% 0;
+    display: block;
+    transform: translateZ(0);
+  }
+  .foto img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: 50% 100%;
+    -webkit-mask-image: linear-gradient(to bottom, #000 72%, transparent 98%);
+    mask-image: linear-gradient(to bottom, #000 72%, transparent 98%);
+    filter: drop-shadow(0 24px 40px rgb(0 0 0 / 0.45));
+  }
+
+  /* Fichas de vidrio a distintas profundidades. */
+  .ficha {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    border-radius: 0.875rem;
+    padding: 0.625rem 0.8rem;
+    box-shadow:
+      inset 0 0 0 1px rgb(192 193 255 / 0.22),
+      0 18px 40px -16px rgb(0 0 0 / 0.7);
+  }
+  .ficha-cifra {
+    left: 5%;
+    top: 20%;
+    max-width: 10.5rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.3rem;
+    transform: translateZ(90px);
+  }
+  .ficha-aval {
+    right: 5%;
+    top: 47%;
+    max-width: 12rem;
+    transform: translateZ(70px);
+  }
+  .ficha-nombre {
+    left: 6%;
+    bottom: 7%;
+    max-width: 15.5rem;
+    transform: translateZ(110px);
+  }
+  .sello {
+    background: linear-gradient(135deg, #c0c1ff 0%, #8083ff 100%);
+  }
+  .punto {
+    flex: none;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 999px;
+    background: var(--color-online, #4ade80);
+    box-shadow: 0 0 0 3px rgb(74 222 128 / 0.18);
+  }
+  @media (max-width: 639.98px) {
+    .ficha {
+      padding: 0.5rem 0.65rem;
+    }
+    .ficha-cifra {
+      max-width: 8.5rem;
+    }
+    .ficha-aval {
+      max-width: 9.5rem;
+    }
+    .ficha-nombre {
+      max-width: 12.5rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .anillo-a > span {
+      animation: retrato-girar 26s linear infinite;
+    }
+    .anillo-b > span {
+      animation: retrato-girar 34s linear infinite reverse;
+    }
+    .reticula {
+      animation: retrato-avanzar 5s linear infinite;
+      will-change: transform;
+    }
+    .ficha {
+      animation: retrato-flotar 6s ease-in-out infinite;
+    }
+    .ficha-aval {
+      animation-delay: -2s;
+    }
+    .ficha-nombre {
+      animation-delay: -4s;
+    }
+  }
+  @keyframes retrato-girar {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes retrato-avanzar {
+    from {
+      transform: rotateX(70deg) translateY(0);
+    }
+    to {
+      transform: rotateX(70deg) translateY(36px);
+    }
+  }
+  /* «translate» (no «transform») para no pisar la profundidad translateZ de cada ficha. */
+  @keyframes retrato-flotar {
+    0%,
+    100% {
+      translate: 0 0;
+    }
+    50% {
+      translate: 0 -7px;
+    }
+  }
+</style>
+
+<script>
+  // Inclinación 3D que sigue al puntero (solo mouse y sin «reducir movimiento»).
+  const fino = window.matchMedia('(pointer: fine)').matches;
+  const reducido = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (fino && !reducido) {
+    for (const el of document.querySelectorAll<HTMLElement>('[data-retrato3d]')) {
+      const zona = el.closest('header') ?? el;
+      let cuadro = 0;
+      let x = 0;
+      let y = 0;
+      zona.addEventListener('pointermove', (e) => {
+        const r = el.getBoundingClientRect();
+        x = (e.clientX - (r.left + r.width / 2)) / window.innerWidth;
+        y = (e.clientY - (r.top + r.height / 2)) / window.innerHeight;
+        if (cuadro) return;
+        cuadro = requestAnimationFrame(() => {
+          cuadro = 0;
+          el.style.setProperty('--ry', `${(x * 16).toFixed(2)}deg`);
+          el.style.setProperty('--rx', `${(-y * 10).toFixed(2)}deg`);
+        });
+      });
+      zona.addEventListener('pointerleave', () => {
+        el.style.setProperty('--ry', '0deg');
+        el.style.setProperty('--rx', '0deg');
+      });
+    }
+  }
+</script>

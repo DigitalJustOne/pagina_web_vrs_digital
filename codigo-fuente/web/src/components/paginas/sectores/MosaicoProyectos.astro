@@ -1,0 +1,281 @@
+---
+/**
+ * Visual de la portada de /proyectos/: las capturas de todos los casos (CASOS de sitio.ts) en un
+ * muro inclinado en 3D. Cada baldosa abre el sitio público del proyecto (enlace de CASOS) en una
+ * pestaña nueva y lleva su rótulo visible:
+ * «Cliente», «Producto propio» o «Plataforma» (rotuloCaso de @/lib/casos).
+ *
+ * Imágenes: medidas reales desde imagenCaso(); en .webp se usa la miniatura de 480 px
+ * (public/img/miniaturas/, miniaturaCaso()) porque las baldosas miden menos de 300 px y la
+ * captura completa retrasaba el LCP de la página. Texto alternativo vacío porque el nombre
+ * del proyecto ya está en el enlace (la descripción completa de cada captura está en su caso).
+ * Movimiento: las columnas se desplazan despacio en sentidos opuestos, el muro se inclina con el
+ * puntero y se endereza al bajar. Sin JS o con movimiento reducido: quieto. CLS 0.
+ *
+ * <MosaicoProyectos slot="visual" />
+ */
+import { textosProyectos } from '@/data/contenido/proyectos';
+import { CASOS } from '@/data/sitio';
+import { imagenCaso, miniaturaCaso, rotuloCaso } from '@/lib/casos';
+
+interface Props {
+  class?: string;
+}
+const { class: clase } = Astro.props;
+
+const baldosas = CASOS.map((c) => ({
+  caso: c,
+  img: imagenCaso(c),
+  // Baldosas de ~180 px: basta la miniatura de 480 px (un tercio del peso de la captura).
+  mini: miniaturaCaso(c.imagen),
+  rotulo: rotuloCaso(c.cliente),
+  href: c.enlace,
+  propio: c.tipo !== 'cliente',
+}));
+---
+<nav aria-label={textosProyectos.mosaico} data-mosaico class:list={['mosaico relative mx-auto w-full max-w-[34rem]', clase]}>
+  <span aria-hidden="true" class="halo"></span>
+  <div class="escena">
+    <div class="enderezar">
+      <ul role="list" class="muro">
+        {
+          baldosas.map((b, i) => (
+            <li class="baldosa" style={`--i:${i}`}>
+              <a href={b.href} class="enlace" target="_blank" rel="noopener">
+                <span class:list={['marco', b.img.ajuste === 'contain' && 'contener']}>
+                  <picture>
+                    {(b.mini ?? b.img.webp) && <source srcset={b.mini ?? b.img.webp} type="image/webp" />}
+                    <img
+                      src={b.caso.imagen}
+                      alt=""
+                      width={b.img.ancho}
+                      height={b.img.alto}
+                      loading="lazy"
+                      decoding="async"
+                      fetchpriority="low"
+                      style={`object-fit:${b.img.ajuste};object-position:${b.img.posicion}`}
+                    />
+                  </picture>
+                </span>
+                <span class="pie">
+                  <span class="nombre">{b.caso.cliente}</span>
+                  <span class="sr-only"> (se abre en una pestaña nueva)</span>
+                  <span class:list={['rotulo', b.propio && 'propio']}>{b.rotulo}</span>
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<script>
+  import { inclinar } from './inclinar';
+  inclinar('[data-mosaico]', { x: 10, y: 7 });
+</script>
+
+<style>
+  .mosaico {
+    --rx: 0deg;
+    --ry: 0deg;
+  }
+  .halo {
+    position: absolute;
+    inset: 6% 4% 6%;
+    border-radius: 999px;
+    background: radial-gradient(closest-side, rgb(99 102 241 / 0.3), transparent 75%);
+    filter: blur(30px);
+    pointer-events: none;
+  }
+  .escena {
+    position: relative;
+    perspective: 1500px;
+    perspective-origin: 50% 40%;
+  }
+  .enderezar {
+    transform-style: preserve-3d;
+  }
+  /* Celular: dos columnas (capturas y rótulos legibles); desde 480 px, tres. */
+  .muro {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+    transform-style: preserve-3d;
+    transform: rotateX(calc(10deg + var(--rx))) rotateY(calc(-10deg + var(--ry))) rotateZ(-1deg);
+    transition: transform 0.6s var(--ease-out-expo);
+  }
+  /* Muro escalonado: la segunda columna (o la central) va más arriba. */
+  .baldosa:nth-child(2n) {
+    translate: 0 -1rem;
+  }
+  .enlace {
+    display: grid;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 0.875rem;
+    background: var(--color-surface-low, #1c1b1e);
+    box-shadow:
+      0 24px 44px -22px rgb(0 0 0 / 0.85),
+      inset 0 0 0 1px rgb(229 225 228 / 0.08);
+    transition:
+      transform 0.45s var(--ease-out-expo),
+      box-shadow 0.45s;
+  }
+  .enlace:hover,
+  .enlace:focus-visible {
+    transform: translateZ(30px) translateY(-4px);
+    box-shadow:
+      0 34px 60px -24px rgb(0 0 0 / 0.9),
+      0 0 0 1px rgb(192 193 255 / 0.45);
+  }
+  .marco {
+    position: relative;
+    display: block;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: var(--color-surface-lowest, #0e0e10);
+  }
+  .marco img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .contener img {
+    padding: 14%;
+  }
+  .pie {
+    display: grid;
+    align-content: start;
+    gap: 0.3rem;
+    padding: 0.5rem 0.625rem 0.625rem;
+  }
+  .nombre {
+    font-family: var(--font-display);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--color-ink, #e5e1e4);
+  }
+  .rotulo {
+    justify-self: start;
+    white-space: nowrap;
+    padding: 0.125rem 0.45rem;
+    border-radius: 999px;
+    background: rgb(128 131 255 / 0.14);
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.625rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-primary, #c0c1ff);
+  }
+  .rotulo.propio {
+    background: rgb(229 225 228 / 0.1);
+    color: var(--color-ink-soft, #c9c5c8);
+  }
+
+  @media (min-width: 480px) {
+    .muro {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.625rem;
+    }
+    .baldosa:nth-child(2n) {
+      translate: none;
+    }
+    .baldosa:nth-child(3n + 2) {
+      translate: 0 -1.25rem;
+    }
+    .nombre {
+      font-size: 0.75rem;
+    }
+    .rotulo {
+      font-size: 0.5625rem;
+    }
+  }
+  @media (min-width: 640px) {
+    .muro {
+      gap: 0.875rem;
+    }
+    .nombre {
+      font-size: 0.8125rem;
+    }
+    .rotulo {
+      font-size: 0.625rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .muro {
+      transform: rotateX(calc(14deg + var(--rx))) rotateY(calc(-18deg + var(--ry))) rotateZ(-2deg);
+    }
+    .baldosa:nth-child(3n + 2) {
+      translate: 0 -2rem;
+    }
+  }
+
+  /* ── Movimiento ──────────────────────────────────────────────────────── */
+  @media (prefers-reduced-motion: no-preference) {
+    /* backwards (no both): al terminar, la entrada no queda retenida y el vaivén de .baldosa
+       sigue por el compositor (con both recalculaba estilos en cada cuadro). */
+    .enlace {
+      animation: mosaico-entrar 0.9s var(--ease-out-expo) backwards;
+      animation-delay: calc(0.2s + var(--i) * 0.08s);
+    }
+    /* Columnas que se mecen en sentidos opuestos. */
+    .baldosa {
+      animation: mosaico-mecer 9s ease-in-out 1.2s infinite;
+    }
+    .baldosa:nth-child(2n) {
+      animation-name: mosaico-mecer-inverso;
+    }
+    @media (min-width: 480px) {
+      .baldosa:nth-child(2n) {
+        animation-name: mosaico-mecer;
+      }
+      .baldosa:nth-child(3n + 2) {
+        animation-name: mosaico-mecer-inverso;
+      }
+    }
+    @supports (animation-timeline: view()) {
+      .enderezar {
+        animation-name: mosaico-enderezar;
+        animation-duration: auto;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+        animation-timeline: view();
+        animation-range: exit 0% exit 100%;
+      }
+    }
+  }
+  @keyframes mosaico-entrar {
+    from {
+      opacity: 0;
+      translate: 0 24px;
+      scale: 0.94;
+    }
+  }
+  @keyframes mosaico-mecer {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-8px);
+    }
+  }
+  @keyframes mosaico-mecer-inverso {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(8px);
+    }
+  }
+  @keyframes mosaico-enderezar {
+    to {
+      transform: rotateX(-6deg) rotateY(10deg) translateY(-5%);
+    }
+  }
+</style>

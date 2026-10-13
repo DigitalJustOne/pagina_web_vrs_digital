@@ -1,0 +1,161 @@
+---
+/**
+ * Sección «guias» de /recursos/: cada guía publicada en una tarjeta grande con lo que ayuda a
+ * decidir si leerla: etiqueta, título (H3, enlace estirado: toda la tarjeta es clicable con un solo
+ * enlace), resumen, los temas que trata (sus H2), fecha de actualización, minutos de lectura,
+ * número de fuentes enlazadas y de preguntas respondidas. Todo sale de la colección y del módulo.
+ *
+ * <TarjetasGuias seccion={s} guias={fichas} fondo="base" numero={1} textos={textosGuia} />
+ */
+import Icono from '@/components/ui/Icono.astro';
+import type { textosGuia } from '@/data/contenido/recursos';
+import type { SeccionGuias } from '@/data/contenido/tipos';
+import { fechaLarga } from '@/lib/paginas';
+import type { FichaGuia } from './guias';
+import MarcoEmpresa from './MarcoEmpresa.astro';
+
+interface Props {
+  seccion: SeccionGuias;
+  guias: readonly FichaGuia[];
+  textos: typeof textosGuia;
+  fondo?: 'base' | 'bajo';
+  numero?: number;
+  resaltado?: string;
+}
+
+const { seccion: s, guias, textos, fondo = 'base', numero, resaltado } = Astro.props;
+const capa = fondo === 'bajo' ? 'bg-surface-high' : 'bg-surface-low';
+/** Temas visibles por tarjeta (el resto se resume con «+N»). */
+const TEMAS = 5;
+---
+<MarcoEmpresa seccion={s} fondo={fondo} numero={numero} resaltado={resaltado}>
+  <ul role="list" class="grid gap-5 lg:grid-cols-2 lg:gap-6">
+    {
+      guias.map((g, i) => (
+        <li data-revelar style={`--retraso:${(i % 2) * 110}ms`} class:list={['tarjeta-guia group relative isolate flex flex-col overflow-hidden rounded-panel', capa]}>
+          <span aria-hidden="true" class="tarjeta-luz pointer-events-none absolute -z-10" />
+          <div class="cabecera relative flex items-center justify-between gap-4 px-6 pt-6 sm:px-8 sm:pt-8">
+            <p class="chip font-mono text-[0.6875rem] tracking-[0.12em] uppercase">{g.etiqueta}</p>
+            {g.icono && (
+              <span class="flex h-12 w-12 items-center justify-center rounded-xl bg-surface-lowest text-primary transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:rotate-[-6deg]">
+                <Icono nombre={g.icono} tamano={22} />
+              </span>
+            )}
+          </div>
+
+          <div class="flex flex-1 flex-col px-6 pb-6 sm:px-8 sm:pb-8">
+            <h3 class="mt-5 font-display text-[1.375rem] leading-snug font-semibold tracking-[-0.015em] text-ink sm:text-[1.625rem]">
+              <a href={g.href} class="enlace-guia rounded-md">
+                {g.titulo}
+              </a>
+            </h3>
+            <p class="mt-3 leading-relaxed text-ink-soft">{g.resumen}</p>
+
+            {g.temas.length > 0 && (
+              <div class="temas mt-6 rounded-card p-4 sm:p-5">
+                <p class="font-mono text-[0.6875rem] tracking-[0.16em] text-ink-soft uppercase">{textos.queEncontrara}</p>
+                <ol role="list" class="mt-3 grid gap-1.5">
+                  {g.temas.slice(0, TEMAS).map((t, j) => (
+                    <li class="flex gap-3 text-[0.9375rem] leading-snug text-ink-soft">
+                      <span aria-hidden="true" class="font-mono text-xs leading-[1.4rem] text-primary/80">
+                        {String(j + 1).padStart(2, '0')}
+                      </span>
+                      <span class="leading-[1.4rem]">{t}</span>
+                    </li>
+                  ))}
+                  {g.temas.length > TEMAS && (
+                    <li class="pl-8 text-sm text-ink-mute">{textos.masTemas(g.temas.length - TEMAS)}</li>
+                  )}
+                </ol>
+              </div>
+            )}
+
+            <dl class="mt-6 grid grid-cols-2 gap-x-4 gap-y-3 text-sm sm:grid-cols-[1.5fr_1fr_1fr_1fr]">
+              <div>
+                <dt class="text-ink-mute">{textos.actualizada}</dt>
+                <dd class="mt-0.5 font-medium text-ink">
+                  <time datetime={g.actualizado}>{fechaLarga(g.actualizado)}</time>
+                </dd>
+              </div>
+              <div>
+                <dt class="text-ink-mute">{textos.lectura}</dt>
+                <dd class="mt-0.5 font-medium text-ink">{textos.minutos(g.minutos)}</dd>
+              </div>
+              <div>
+                <dt class="text-ink-mute">{textos.fuentes}</dt>
+                <dd class="mt-0.5 font-medium text-ink">{g.fuentes}</dd>
+              </div>
+              <div>
+                <dt class="text-ink-mute">{textos.preguntas}</dt>
+                <dd class="mt-0.5 font-medium text-ink">{g.preguntas}</dd>
+              </div>
+            </dl>
+
+            <span aria-hidden="true" class="mt-7 inline-flex items-center gap-1.5 font-semibold text-primary">
+              {textos.leer}
+              <Icono nombre="arrow-right" tamano={17} class="transition-transform duration-300 group-hover:translate-x-1" />
+            </span>
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+</MarcoEmpresa>
+
+<style>
+  .tarjeta-guia {
+    box-shadow: inset 0 1px 0 rgb(229 225 228 / 0.05);
+    transition:
+      transform 0.5s var(--ease-out-expo),
+      box-shadow 0.5s;
+  }
+  .tarjeta-guia:hover {
+    box-shadow:
+      inset 0 0 0 1px rgb(192 193 255 / 0.22),
+      0 30px 60px -30px rgb(0 0 0 / 0.7);
+  }
+  .cabecera::after {
+    content: '';
+    position: absolute;
+    left: 1.5rem;
+    right: 1.5rem;
+    bottom: -0.25rem;
+    height: 1px;
+    background: linear-gradient(90deg, rgb(192 193 255 / 0.35), transparent);
+  }
+  .tarjeta-luz {
+    inset: -40% -20% auto auto;
+    width: 70%;
+    aspect-ratio: 1;
+    border-radius: 999px;
+    background: radial-gradient(circle, rgb(99 102 241 / 0.22), transparent 70%);
+    opacity: 0.7;
+    transition: opacity 0.5s;
+  }
+  .tarjeta-guia:hover .tarjeta-luz {
+    opacity: 1;
+  }
+  .temas {
+    background: rgb(14 14 16 / 0.45);
+  }
+  /* Enlace estirado: toda la tarjeta responde al clic con un solo enlace. */
+  .enlace-guia::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    border-radius: var(--radius-panel, 1.5rem);
+  }
+  .enlace-guia:focus-visible {
+    outline: none;
+  }
+  .enlace-guia:focus-visible::after {
+    outline: 2px solid var(--color-primary, #c0c1ff);
+    outline-offset: 3px;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .tarjeta-guia:hover {
+      transform: translateY(-3px);
+    }
+  }
+</style>

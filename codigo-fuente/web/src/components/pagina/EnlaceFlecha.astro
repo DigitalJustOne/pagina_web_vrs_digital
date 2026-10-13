@@ -1,0 +1,35 @@
+---
+/**
+ * Enlace de texto con flecha. Si es externo, abre en pestaña nueva y lo anuncia.
+ *
+ * <EnlaceFlecha href="/precios/" texto="Ver precios completos" />
+ * <EnlaceFlecha href="https://…" texto="Ver la página oficial de Meta" />
+ */
+import Icono from '@/components/ui/Icono.astro';
+import { esExterno } from '@/lib/paginas';
+
+interface Props {
+  href: string;
+  texto: string;
+  class?: string;
+}
+
+const { href, texto, class: clase } = Astro.props;
+const externo = esExterno(href);
+---
+<a
+  href={href}
+  target={externo ? '_blank' : undefined}
+  rel={externo ? 'noopener noreferrer' : undefined}
+  class:list={['enlace-flecha group inline-flex min-h-11 items-center rounded-md font-semibold text-primary underline-offset-4 hover:underline', clase]}
+>
+  <span>
+    {texto}{externo && <span class="sr-only"> (se abre en una pestaña nueva)</span>}
+    <!-- La flecha va dentro del texto: si el enlace ocupa dos líneas, sigue a la última palabra. -->
+    <Icono
+      nombre={externo ? 'arrow-up-right' : 'arrow-right'}
+      tamano={18}
+      class="ml-1.5 inline-block align-[-0.2em] transition-transform duration-300 group-hover:translate-x-1 motion-reduce:transition-none"
+    />
+  </span>
+</a>

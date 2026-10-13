@@ -1,5 +1,6 @@
 # pagina_web_vrs_digital
 
-Web de VRS Digital (versión compilada). Páginas web, Google y WhatsApp en Bogotá.
+Web de VRS Digital. Páginas web, Google y WhatsApp en Bogotá.
 
-Se publica con GitHub Pages desde la rama main (carpeta raíz).
+- Raíz del repositorio: la web compilada, lista para servir (incluye `.htaccess` para Hostinger).
+- `codigo-fuente/`: código fuente (Astro). `web/` es el sitio y `herramientas/` las utilidades de revisión. Sin `node_modules`: ejecute `npm install` dentro de `web/`.

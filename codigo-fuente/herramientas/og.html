@@ -1,0 +1,118 @@
+<!doctype html>
+<!--
+  Plantilla de la imagen social (Open Graph) de VRS Digital, 1200 x 630.
+  Se renderiza con: node og.mjs  →  ../web/public/img/og-vrs-digital.png
+  Fuentes y logo se leen de la web (rutas relativas a esta carpeta).
+-->
+<html lang="es-CO">
+<head>
+<meta charset="utf-8" />
+<title>Imagen social VRS Digital</title>
+<style>
+  @font-face { font-family: 'Space Grotesk'; src: url('../web/node_modules/@fontsource-variable/space-grotesk/files/space-grotesk-latin-wght-normal.woff2') format('woff2'); font-weight: 300 700; }
+  @font-face { font-family: 'Inter'; src: url('../web/node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2') format('woff2'); font-weight: 100 900; }
+  @font-face { font-family: 'JetBrains Mono'; src: url('../web/node_modules/@fontsource-variable/jetbrains-mono/files/jetbrains-mono-latin-wght-normal.woff2') format('woff2'); font-weight: 100 800; }
+
+  :root {
+    --surface: #131315; --surface-lowest: #0e0e10; --surface-low: #1c1b1e; --surface-high: #2a2a2c;
+    --ink: #e5e1e4; --ink-soft: #c9c5c8; --ink-mute: #a19da0;
+    --primary: #c0c1ff; --primary-container: #8083ff; --indigo: #6366f1;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1200px; height: 630px; overflow: hidden; background: var(--surface); }
+  body { font-family: 'Inter', sans-serif; color: var(--ink); -webkit-font-smoothing: antialiased; }
+
+  .lienzo { position: relative; width: 1200px; height: 630px; overflow: hidden; isolation: isolate;
+    background:
+      radial-gradient(620px 520px at 905px 320px, rgb(99 102 241 / 0.30), transparent 70%),
+      radial-gradient(520px 380px at 80px -40px, rgb(192 193 255 / 0.10), transparent 70%),
+      radial-gradient(700px 300px at 300px 700px, rgb(99 102 241 / 0.12), transparent 70%),
+      var(--surface);
+  }
+  /* Retícula de laboratorio, desvanecida hacia los bordes */
+  .reticula { position: absolute; inset: 0; z-index: -1;
+    background-image:
+      linear-gradient(rgb(229 225 228 / 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(229 225 228 / 0.045) 1px, transparent 1px);
+    background-size: 48px 48px; background-position: -1px -1px;
+    -webkit-mask-image: radial-gradient(620px 420px at 900px 315px, #000 0%, transparent 78%);
+  }
+
+  /* ── Columna de texto ─────────────────────────────────────────────── */
+  .texto { position: absolute; left: 76px; top: 64px; bottom: 60px; width: 690px; display: flex; flex-direction: column; }
+  .marca { display: flex; align-items: center; gap: 14px; }
+  .marca .simbolo { width: 67px; height: 44px; background: url('../web/public/img/logo.png') no-repeat; background-size: 76px 76px; background-position: -4.6px -8.8px; }
+  .marca .nombre { font-family: 'Space Grotesk'; font-size: 22px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-soft); font-weight: 500; }
+  .marca .nombre b { color: var(--ink); font-weight: 700; }
+
+  .etiqueta { margin-top: 62px; display: flex; align-items: center; gap: 14px; font-family: 'JetBrains Mono'; font-size: 15px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--primary); }
+  .etiqueta i { display: block; width: 36px; height: 2px; border-radius: 2px; background: linear-gradient(90deg, rgb(192 193 255 / 0), var(--primary)); }
+
+  h1 { margin-top: 18px; font-family: 'Space Grotesk'; font-weight: 600; font-size: 64px; line-height: 1.03; letter-spacing: -0.035em; color: var(--ink); }
+  h1 .degradado { background: linear-gradient(110deg, #e5e1e4 0%, #c0c1ff 42%, #8083ff 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+  .eslogan { margin-top: 28px; display: flex; align-items: center; gap: 16px; font-size: 27px; font-weight: 500; letter-spacing: -0.01em; color: var(--ink-soft); }
+  .eslogan b { color: var(--ink); font-weight: 600; }
+  .eslogan .barra { width: 4px; height: 34px; border-radius: 4px; background: linear-gradient(180deg, var(--primary), var(--indigo)); box-shadow: 0 0 16px rgb(128 131 255 / 0.6); }
+
+  .chips { margin-top: auto; display: flex; gap: 10px; }
+  .chip { display: inline-flex; align-items: center; gap: 9px; height: 42px; padding: 0 16px 0 13px; border-radius: 999px; font-size: 16px; font-weight: 500; color: var(--ink);
+    background: rgb(53 52 55 / 0.55); box-shadow: inset 0 0 0 1px rgb(229 225 228 / 0.08); }
+  .chip svg { width: 18px; height: 18px; stroke: var(--primary); fill: none; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* ── Instrumento: símbolo de la marca dentro de anillos ─────────────── */
+  .instrumento { position: absolute; left: 905px; top: 318px; width: 0; height: 0; }
+  .anillo { position: absolute; border-radius: 50%; transform: translate(-50%, -50%); left: 0; top: 0; }
+  .a1 { width: 500px; height: 500px; box-shadow: inset 0 0 0 1px rgb(192 193 255 / 0.10); }
+  .a2 { width: 392px; height: 392px; box-shadow: inset 0 0 0 1px rgb(192 193 255 / 0.16); }
+  .a3 { width: 292px; height: 292px; background: radial-gradient(circle, rgb(99 102 241 / 0.22), rgb(99 102 241 / 0.04) 70%, transparent 72%); box-shadow: inset 0 0 0 1px rgb(192 193 255 / 0.28), 0 0 80px rgb(99 102 241 / 0.25); }
+  /* Arco luminoso sobre el anillo exterior */
+  .arco { width: 500px; height: 500px; border-radius: 50%; position: absolute; left: 0; top: 0; transform: translate(-50%, -50%) rotate(-28deg);
+    background: conic-gradient(from 0deg, transparent 0deg, rgb(192 193 255 / 0.9) 36deg, transparent 80deg, transparent 360deg);
+    -webkit-mask: radial-gradient(circle, transparent 248px, #000 249px, #000 251px, transparent 252px); }
+  .arco.b { width: 392px; height: 392px; transform: translate(-50%, -50%) rotate(150deg);
+    background: conic-gradient(from 0deg, transparent 0deg, rgb(128 131 255 / 0.85) 50deg, transparent 100deg, transparent 360deg);
+    -webkit-mask: radial-gradient(circle, transparent 194px, #000 195px, #000 197px, transparent 198px); }
+  .punto { position: absolute; width: 9px; height: 9px; border-radius: 50%; background: #e5e1e4; box-shadow: 0 0 14px 3px rgb(192 193 255 / 0.85); transform: translate(-50%, -50%); }
+  .simbolo-grande { position: absolute; left: 0; top: 0; width: 218px; height: 144px; transform: translate(-50%, -50%);
+    background: url('../web/public/img/logo.png') no-repeat; background-size: 248.6px 248.6px; background-position: -15.1px -28.7px;
+    filter: drop-shadow(0 0 28px rgb(99 102 241 / 0.55)) drop-shadow(0 12px 30px rgb(0 0 0 / 0.5)); }
+  /* Lecturas de instrumento */
+  .lectura { position: absolute; font-family: 'JetBrains Mono'; font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-mute); white-space: nowrap; display: flex; align-items: center; gap: 8px; }
+  .lectura em { font-style: normal; color: var(--primary); }
+  .lectura .led { width: 7px; height: 7px; border-radius: 50%; background: #4ade80; box-shadow: 0 0 10px rgb(74 222 128 / 0.8); }
+</style>
+</head>
+<body>
+  <div class="lienzo">
+    <div class="reticula"></div>
+
+    <div class="instrumento" aria-hidden="true">
+      <div class="anillo a1"></div>
+      <div class="anillo a2"></div>
+      <div class="anillo a3"></div>
+      <div class="arco"></div>
+      <div class="arco b"></div>
+      <span class="punto" style="left: 178px; top: -172px"></span>
+      <span class="punto" style="left: -192px; top: 62px; width: 7px; height: 7px"></span>
+      <div class="simbolo-grande"></div>
+      <div class="lectura" style="left: 20px; top: -282px"><span class="led"></span>Google <em>·</em> IA <em>·</em> WhatsApp</div>
+      <div class="lectura" style="left: -104px; top: 266px"><em>✓</em> Empresa aliada MinTIC</div>
+    </div>
+
+    <div class="texto">
+      <div class="marca"><span class="simbolo"></span><span class="nombre"><b>VRS</b> Digital</span></div>
+
+      <p class="etiqueta"><i></i>Estudio digital en Bogotá</p>
+      <h1>Páginas web<br />para empresas<br /><span class="degradado">de servicios</span></h1>
+      <p class="eslogan"><span class="barra"></span><span><b>Más visible.</b> Mejor atendido.</span></p>
+
+      <div class="chips">
+        <span class="chip"><svg viewBox="0 0 24 24"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg>Páginas web</span>
+        <span class="chip"><svg viewBox="0 0 24 24"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>Google y asistentes de IA</span>
+        <span class="chip"><svg viewBox="0 0 24 24"><path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719"/></svg>WhatsApp Business</span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

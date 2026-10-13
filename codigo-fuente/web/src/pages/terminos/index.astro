@@ -1,0 +1,10 @@
+---
+// /terminos/ — términos y condiciones del sitio y de los servicios.
+// BORRADOR pendiente de revisión jurídica: el módulo tiene `borrador: true`, así que la
+// plantilla muestra el aviso visible de borrador y marca la página como noindex.
+// Todo el texto sale de src/data/contenido/terminos.ts; precios, pagos, condiciones y contacto,
+// de src/data/sitio.ts. Formato «documento»: índice lateral fijo y texto de lectura.
+import PlantillaPagina from '@/components/pagina/PlantillaPagina.astro';
+import { contenido } from '@/data/contenido/terminos';
+---
+<PlantillaPagina contenido={contenido} estilo="documento" />

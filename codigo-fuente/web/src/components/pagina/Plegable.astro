@@ -1,0 +1,94 @@
+---
+/**
+ * Contenido de consulta que en celular se pliega en un <details> nativo (sin JS) y desde 1024 px
+ * se ve siempre abierto, sin botón. Así las páginas no se hacen eternas en el teléfono y el texto
+ * sigue en el HTML (buscadores, asistentes de IA, «Buscar en la página» y anclas lo abren solos).
+ *
+ * Computador: ::details-content con content-visibility: visible muestra el contenido aunque el
+ * <details> esté cerrado, y el botón se oculta. Si el navegador no conoce ::details-content,
+ * el bloque queda plegado con su botón, como en celular.
+ *
+ * Sin `texto`, pinta el contenido tal cual (sin <details>).
+ *
+ * <Plegable texto="Ver lo que depende de Meta">…</Plegable>
+ */
+import Icono from '@/components/ui/Icono.astro';
+
+interface Props {
+  /** Texto del botón (en celular). Sin texto, no se pliega. */
+  texto?: string;
+  class?: string;
+}
+
+const { texto, class: clase } = Astro.props;
+---
+{
+  texto ? (
+    <details class:list={['plegable', clase]}>
+      <summary class="plegable-boton">
+        <span>{texto}</span>
+        <Icono nombre="chevron-down" tamano={20} class="plegable-flecha" />
+      </summary>
+      <div class="plegable-contenido">
+        <slot />
+      </div>
+    </details>
+  ) : (
+    <slot />
+  )
+}
+
+<style>
+  .plegable-boton {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: 3.25rem;
+    padding: 0.625rem 1.25rem;
+    border-radius: var(--radius-card, 1rem);
+    background: rgb(128 131 255 / 0.1);
+    box-shadow: inset 0 0 0 1px rgb(192 193 255 / 0.22);
+    font-weight: 600;
+    line-height: 1.35;
+    color: var(--color-ink, #e5e1e4);
+    cursor: pointer;
+    list-style: none;
+    transition: background-color 0.2s;
+  }
+  .plegable-boton::-webkit-details-marker {
+    display: none;
+  }
+  .plegable-boton:hover {
+    background: rgb(128 131 255 / 0.16);
+  }
+  .plegable-boton :global(.plegable-flecha) {
+    flex: none;
+    color: var(--color-primary, #c0c1ff);
+    transition: rotate 0.3s var(--ease-out-expo, ease-out);
+  }
+  .plegable[open] > .plegable-boton :global(.plegable-flecha) {
+    rotate: 180deg;
+  }
+  .plegable[open] > .plegable-contenido {
+    margin-top: 1.5rem;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .plegable-boton :global(.plegable-flecha) {
+      transition: none;
+    }
+  }
+  @media (min-width: 1024px) {
+    @supports selector(::details-content) {
+      .plegable > .plegable-boton {
+        display: none;
+      }
+      .plegable::details-content {
+        content-visibility: visible;
+      }
+      .plegable > .plegable-contenido {
+        margin-top: 0;
+      }
+    }
+  }
+</style>

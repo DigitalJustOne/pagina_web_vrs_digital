@@ -1,0 +1,401 @@
+---
+/**
+ * Sección #pago de /precios/: cómo se paga, con valores.
+ * La persona elige un plan y ve cuánto paga de una vez (precio anual «desde») o en 12 cuotas
+ * mensuales (cuotaMensual: 20 % más en total).
+ *
+ * Sin JavaScript: el selector son botones de opción y el cambio lo hace CSS (:has).
+ * Sin soporte de :has, se ve el plan destacado y no aparece el selector.
+ * Movimiento: las barras se llenan al entrar en pantalla (data-revelar); con movimiento reducido,
+ * quietas y completas.
+ *
+ * Textos: sección «pago» y textosPrecios.pagos (src/data/contenido/precios.ts).
+ * Valores: PLANES y cuotaMensual de sitio.ts (calculados, nunca escritos a mano).
+ *
+ * <SimuladorPago seccion={s} fondo="bajo" numero={8} resaltado="se paga" />
+ */
+import Icono from '@/components/ui/Icono.astro';
+import { textosPrecios } from '@/data/contenido/precios';
+import type { FondoSeccion, SeccionPasos } from '@/data/contenido/tipos';
+import { PAGO_EN_LINEA, PLANES, cuotaMensual, formatoCOP } from '@/data/sitio';
+import MarcoSector from './MarcoSector.astro';
+
+interface Props {
+  seccion: SeccionPasos;
+  fondo?: FondoSeccion;
+  numero?: number;
+  resaltado?: string;
+}
+
+const { seccion: s, fondo = 'bajo', numero, resaltado } = Astro.props;
+const T = textosPrecios.pagos;
+const porDefecto = PLANES.find((p) => p.destacado) ?? PLANES[0];
+const capa = fondo === 'bajo' ? 'bg-surface-high' : 'bg-surface-low';
+
+/** Nombre corto para el selector en celular: «Web + Atención Inteligente» → «Atención». */
+const corto = (nombre: string) => nombre.replace(/^Web\s*\+?\s*/i, '').split(/\s+/)[0] ?? nombre;
+
+/** Lo que paga en cada forma: el precio anual de una vez (tramo 0) o la cuota mensual (tramo 1). */
+const valorDe = (tramo: number, precioAnual: number) =>
+  tramo === 0 ? formatoCOP(precioAnual) : formatoCOP(cuotaMensual(precioAnual));
+
+const tramos = s.items;
+// La nota «Medios de pago: …» repite las fichas; como en Seccion.astro, no se muestra dos veces.
+const nota = s.medios?.length && s.nota?.startsWith('Medios de pago') ? undefined : s.nota;
+---
+<MarcoSector seccion={s} fondo={fondo} numero={numero} resaltado={resaltado} pie={{ nota, notaPrecios: true, enlace: s.enlace }}>
+  <div class="simulador">
+    <fieldset class="selector">
+      <legend class="leyenda">{T.leyenda}</legend>
+      <div class="opciones">
+        {
+          PLANES.map((p) => (
+            <label class="opcion">
+              <input type="radio" name="simulador-plan" value={p.id} checked={p.id === porDefecto.id} class="sr-only" />
+              <span aria-hidden="true" class="opcion-corto">{corto(p.nombre)}</span>
+              <span class="opcion-largo">{p.nombre}</span>
+            </label>
+          ))
+        }
+      </div>
+    </fieldset>
+
+    <p class="resumen">
+      <span class="valores">
+        {
+          PLANES.map((p) => (
+            <span class:list={['valor', p.id === porDefecto.id && 'por-defecto']}>
+              <span class="resumen-plan">{p.nombre}</span>
+              <span class="resumen-sep" aria-hidden="true">·</span>
+              <span>
+                {T.precioAnual} <strong>{formatoCOP(p.precioAnualDesde)}</strong>, {T.iva}
+              </span>
+            </span>
+          ))
+        }
+      </span>
+    </p>
+
+    <ol role="list" aria-label={s.titulo} class="tramos">
+      {
+        tramos.map((t, i) => (
+          <li class="tramo" style={`--retraso:${i * 140}ms`}>
+            <div class:list={['tarjeta-tramo rounded-card p-5 sm:p-6', capa]}>
+              <h3 class="titulo-tarjeta">{t.titulo}</h3>
+              <p class="monto">
+                <span class="monto-rotulo">{T.ustedPaga}</span>
+                <span class="valores">
+                  {PLANES.map((p) => (
+                    <span class:list={['valor', p.id === porDefecto.id && 'por-defecto']}>
+                      {valorDe(i, p.precioAnualDesde)}
+                    </span>
+                  ))}
+                </span>
+                <span class="monto-rotulo">{T.iva}</span>
+              </p>
+              <p class="mt-3 text-base leading-relaxed text-ink-soft">{t.texto}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+
+    {
+      s.medios && s.medios.length > 0 && (
+        <div class="mt-8 flex flex-wrap items-center gap-3 sm:mt-10">
+          <p class="font-mono text-xs tracking-[0.18em] text-ink-soft uppercase">Medios de pago</p>
+          <ul role="list" class="flex flex-wrap gap-2">
+            {s.medios.map((m) => (
+              <li class="chip">
+                <Icono nombre="lock" tamano={14} />
+                {m}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )
+    }
+
+    <div class="mt-6 flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:gap-5">
+      <a href={PAGO_EN_LINEA.url} target="_blank" rel="noopener" class="boton boton-primario">
+        {PAGO_EN_LINEA.texto}
+        <span class="sr-only"> (se abre en Bold, en una pestaña nueva)</span>
+        <Icono nombre="arrow-right" tamano={18} />
+      </a>
+      <p class="text-[0.9375rem] leading-snug text-ink-soft">{PAGO_EN_LINEA.ayuda}</p>
+    </div>
+  </div>
+</MarcoSector>
+
+<style>
+  /* ── Selector de plan ────────────────────────────────────────────────── */
+  .selector {
+    display: none; /* sin :has, se muestra solo el plan destacado */
+    margin: 0 0 1.5rem;
+    padding: 0;
+    border: 0;
+    min-width: 0;
+  }
+  .leyenda {
+    padding: 0;
+    margin-bottom: 0.875rem;
+    font-size: 0.9375rem;
+    color: var(--color-ink-soft, #c9c5c8);
+  }
+  .opciones {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.375rem;
+    padding: 0.375rem;
+    border-radius: 1rem;
+    background: rgb(14 14 16 / 0.6);
+    box-shadow: inset 0 0 0 1px rgb(229 225 228 / 0.08);
+  }
+  .opcion {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 0.5rem 0.5rem;
+    border-radius: 0.75rem;
+    text-align: center;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--color-ink-soft, #c9c5c8);
+    cursor: pointer;
+    transition: background-color 0.25s, color 0.25s, box-shadow 0.3s;
+  }
+  /* En celular se ve el nombre corto; el completo queda para lectores de pantalla. */
+  .opcion-largo {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  @media (min-width: 640px) {
+    .opcion-corto {
+      display: none;
+    }
+    .opcion-largo {
+      position: static;
+      width: auto;
+      height: auto;
+      overflow: visible;
+      clip-path: none;
+      white-space: normal;
+    }
+  }
+  .opcion:hover {
+    color: var(--color-ink, #e5e1e4);
+    background: rgb(255 255 255 / 0.04);
+  }
+  .opcion:has(input:checked) {
+    background: linear-gradient(135deg, #c0c1ff 0%, #8083ff 100%);
+    color: var(--color-on-primary, #0b0080);
+    box-shadow: 0 10px 30px -12px rgb(128 131 255 / 0.8);
+  }
+  .opcion:has(input:focus-visible) {
+    outline: 2px solid var(--color-primary, #c0c1ff);
+    outline-offset: 2px;
+  }
+
+  /* ── Valores por plan ────────────────────────────────────────────────── */
+  .valor {
+    display: none;
+  }
+  .valor.por-defecto {
+    display: inline-block;
+  }
+  @supports selector(:has(*)) {
+    .selector {
+      display: block;
+    }
+    .simulador:has(.opcion:nth-child(1) input:checked) .valor:nth-child(1),
+    .simulador:has(.opcion:nth-child(2) input:checked) .valor:nth-child(2),
+    .simulador:has(.opcion:nth-child(3) input:checked) .valor:nth-child(3) {
+      display: inline-block;
+    }
+    .simulador:has(.opcion:nth-child(1) input:checked) .valor:not(:nth-child(1)),
+    .simulador:has(.opcion:nth-child(2) input:checked) .valor:not(:nth-child(2)),
+    .simulador:has(.opcion:nth-child(3) input:checked) .valor:not(:nth-child(3)) {
+      display: none;
+    }
+  }
+  .resumen {
+    margin-bottom: 1.75rem;
+    font-size: 0.9375rem;
+    color: var(--color-ink-soft, #c9c5c8);
+  }
+  .resumen-plan {
+    font-weight: 600;
+    color: var(--color-ink, #e5e1e4);
+  }
+  .resumen-sep {
+    margin-inline: 0.5rem;
+    color: var(--color-ink-mute, #a19da0);
+  }
+  .resumen strong {
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--color-primary, #c0c1ff);
+  }
+
+  /* ── Tramos de pago ──────────────────────────────────────────────────── */
+  .tramos {
+    display: grid;
+    gap: 1.25rem;
+  }
+  .tramo {
+    display: grid;
+    gap: 0.75rem;
+    align-content: start;
+  }
+  .barra {
+    position: relative;
+    height: 2.75rem;
+    border-radius: 0.75rem;
+    background: rgb(192 193 255 / 0.08);
+    overflow: hidden;
+  }
+  /* En celular, cada barra mide su porcentaje del total. */
+  .barra-relleno {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: calc(var(--peso) * 1%);
+    border-radius: inherit;
+    background: linear-gradient(90deg, #c0c1ff, #8083ff 70%, #6366f1);
+    box-shadow: 0 0 24px -4px rgb(128 131 255 / 0.6);
+    transform-origin: left;
+  }
+  .barra-pct {
+    position: absolute;
+    inset: 0 auto 0 0.875rem;
+    display: flex;
+    align-items: center;
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--color-on-primary, #0b0080);
+  }
+  .tarjeta-tramo {
+    box-shadow: inset 0 1px 0 rgb(229 225 228 / 0.05);
+    height: 100%;
+  }
+  .monto {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.25rem 0.625rem;
+    margin-top: 0.875rem;
+  }
+  .monto-rotulo {
+    font-size: 0.875rem;
+    color: var(--color-ink-soft, #c9c5c8);
+  }
+  .monto .valores {
+    font-family: var(--font-display);
+    font-size: 1.75rem;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--color-ink, #e5e1e4);
+  }
+
+  .despues {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.25rem;
+    box-shadow: inset 0 0 0 1px rgb(192 193 255 / 0.22);
+    background:
+      radial-gradient(80% 120% at 100% 0%, rgb(128 131 255 / 0.12), transparent 60%),
+      rgb(14 14 16 / 0.35);
+  }
+  .despues-icono {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 0.875rem;
+    background: rgb(128 131 255 / 0.14);
+    color: var(--color-primary, #c0c1ff);
+  }
+  .despues .valores {
+    color: var(--color-primary, #c0c1ff);
+  }
+
+  /* ── Computador: las dos formas de pago lado a lado, del mismo tamaño ── */
+  @media (min-width: 1024px) {
+    .tramos {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.75rem;
+    }
+    .tramo {
+      grid-template-rows: auto 1fr;
+      gap: 0.75rem;
+    }
+    .barra-relleno {
+      width: 100%;
+    }
+    .tramo:first-child .barra {
+      border-radius: 1rem 0.375rem 0.375rem 1rem;
+    }
+    .tramo:not(:first-child):not(:last-child) .barra {
+      border-radius: 0.375rem;
+    }
+    .tramo:last-child .barra {
+      border-radius: 0.375rem 1rem 1rem 0.375rem;
+    }
+    .barra {
+      height: 3.5rem;
+    }
+    .barra-pct {
+      font-size: 1.375rem;
+    }
+    .opciones {
+      max-width: 44rem;
+    }
+    .opcion {
+      font-size: 0.9375rem;
+    }
+  }
+
+  /* Las barras se llenan al entrar en pantalla (data-revelar de movimiento.ts). */
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js) .barra[data-revelar] {
+      opacity: 1;
+      transform: none;
+    }
+    :global(.js) .barra[data-revelar] .barra-relleno {
+      transform: scaleX(0);
+      transition: transform 1.1s var(--ease-out-expo);
+      transition-delay: var(--retraso, 0ms);
+    }
+    :global(.js) .barra[data-revelar].visible .barra-relleno {
+      transform: none;
+    }
+    /* Mientras la barra está vacía, el porcentaje va claro sobre el fondo oscuro. */
+    :global(.js) .barra[data-revelar] .barra-pct {
+      color: var(--color-ink, #e5e1e4);
+      transition: color 0.4s ease;
+      transition-delay: calc(var(--retraso, 0ms) + 0.25s);
+    }
+    :global(.js) .barra[data-revelar].visible .barra-pct {
+      color: var(--color-on-primary, #0b0080);
+    }
+    .valor {
+      animation: simulador-valor 0.5s var(--ease-out-expo);
+    }
+  }
+  @keyframes simulador-valor {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+  }
+</style>

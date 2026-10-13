@@ -1,0 +1,41 @@
+---
+/**
+ * Aviso visible de borrador (módulos con `borrador: true`) y, si existe, la vigencia del
+ * documento (páginas legales). La plantilla además marca la página como noindex.
+ *
+ * <AvisoBorrador texto={c.avisoBorrador} vigencia={c.vigencia} />
+ */
+import Icono from '@/components/ui/Icono.astro';
+
+interface Props {
+  /** Texto del módulo (avisoBorrador). */
+  texto?: string;
+  vigencia?: { readonly desde: string; readonly version: string };
+  class?: string;
+}
+
+const { texto = 'Borrador en revisión. Esta página todavía no es la versión definitiva.', vigencia, class: clase } = Astro.props;
+---
+<div role="note" class:list={['aviso-borrador flex items-start gap-4 rounded-card px-5 py-4 sm:px-6', clase]}>
+  <span class="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#ffb4ab]/12 text-[#ffb4ab]">
+    <Icono nombre="alert" tamano={20} />
+  </span>
+  <div class="min-w-0">
+    <p class="font-mono text-xs tracking-[0.18em] text-[#ffb4ab] uppercase">Borrador</p>
+    <p class="mt-1 leading-relaxed text-ink">{texto}</p>
+    {
+      vigencia && (
+        <p class="mt-2 text-sm leading-relaxed text-ink-soft">
+          Versión {vigencia.version}. Vigente desde: {vigencia.desde}
+        </p>
+      )
+    }
+  </div>
+</div>
+
+<style>
+  .aviso-borrador {
+    background: rgb(255 180 171 / 0.06);
+    box-shadow: inset 0 0 0 1px rgb(255 180 171 / 0.28);
+  }
+</style>

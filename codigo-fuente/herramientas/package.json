@@ -1,0 +1,14 @@
+{
+  "name": "vrs-herramientas",
+  "private": true,
+  "type": "module",
+  "description": "Herramientas de verificación de la web de VRS Digital (capturas, Lighthouse, imagen social).",
+  "scripts": {
+    "og": "node og.mjs",
+    "capturas": "node capturas.mjs",
+    "lighthouse": "node lighthouse.mjs"
+  },
+  "dependencies": {
+    "lighthouse": "^13.5.0"
+  }
+}

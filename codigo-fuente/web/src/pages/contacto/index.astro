@@ -1,0 +1,45 @@
+---
+// /contacto/ — solicitar la revisión de presencia y atención digital (gratuita, sencilla y sin
+// compromiso): formulario (isla Formulario.tsx, sección #formulario), WhatsApp, correo, horario,
+// qué pasa después de escribir y lo que no hacemos.
+// Todo el texto sale de src/data/contenido/contacto.ts; contacto y horario, de sitio.ts.
+// La plantilla arma SEO, JSON-LD (ContactPage, migas y FAQ), preguntas, enlaces y cierre.
+//
+// Orden: el formulario sube al tercer lugar (justo después de «qué revisamos» y «qué recibe»),
+// para que quien llega a contactar no tenga que pasar por toda la página; «qué pasa después»
+// queda junto al formulario, donde responde la duda de quien acaba de enviarlo.
+// Momentos propios: portada con la revisión en acción (escaneo, cinco puntos y tres prioridades)
+// y #que-revisamos como recorrido de cinco nodos.
+import PlantillaPagina from '@/components/pagina/PlantillaPagina.astro';
+import EscanerRevision from '@/components/paginas/empresa/EscanerRevision.astro';
+import PuntosRevision from '@/components/paginas/empresa/PuntosRevision.astro';
+import { seccionDe } from '@/components/paginas/empresa/secciones';
+import { contenido } from '@/data/contenido/contacto';
+import type { ModuloPagina, Seccion } from '@/data/contenido/tipos';
+
+const ORDEN = ['que-revisamos', 'que-recibe', 'formulario', 'que-pasa-despues', 'canales', 'antes-de-escribir'];
+const secciones: readonly Seccion[] = contenido.secciones;
+const ordenadas = [...secciones].sort((a, b) => {
+  const pa = ORDEN.indexOf(a.id);
+  const pb = ORDEN.indexOf(b.id);
+  return (pa < 0 ? ORDEN.length : pa) - (pb < 0 ? ORDEN.length : pb);
+});
+const pagina: ModuloPagina = { ...contenido, secciones: ordenadas };
+
+const revisa = seccionDe(pagina, 'que-revisamos', 'tarjetas');
+const recibe = seccionDe(pagina, 'que-recibe', 'lista');
+---
+<PlantillaPagina
+  contenido={pagina}
+  resaltado="revisión digital gratuita"
+  opciones={{
+    'que-recibe': { resaltado: 'tres prioridades concretas' },
+    formulario: { resaltado: 'Cuéntenos' },
+    'que-pasa-despues': { resaltado: 'después de escribirnos' },
+    canales: { disposicion: 'apilado', resaltado: 'canales de atención' },
+    'antes-de-escribir': { resaltado: 'escribirnos' },
+  }}
+>
+  <EscanerRevision slot="visual" revisa={revisa.s} resultado={recibe.s.etiqueta} />
+  <PuntosRevision slot="seccion-que-revisamos" seccion={revisa.s} fondo={revisa.fondo} numero={revisa.numero} resaltado="su empresa" />
+</PlantillaPagina>

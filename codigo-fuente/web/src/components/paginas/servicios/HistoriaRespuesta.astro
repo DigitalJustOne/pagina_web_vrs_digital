@@ -1,0 +1,198 @@
+---
+/**
+ * Sección #como-se-arma de /posicionamiento-google-inteligencia-artificial/: narrativa fija
+ * («scroll story») de cuatro pasos. Mientras la persona baja, el esquema queda fijo y se enciende
+ * por partes: la pregunta, la búsqueda, la lectura de las páginas y la respuesta con sus citas.
+ *
+ * Usa [data-historia] de src/scripts/desplazamiento.ts (la plantilla ya lo importa):
+ *   - computador: pasos a la izquierda (el actual resaltado) y esquema a la derecha;
+ *   - celular: esquema arriba y debajo el texto del paso actual (los cuatro textos ocupan la
+ *     misma celda y solo cambia la opacidad: sin saltos de diseño).
+ * Si el bloque no cabe en la pantalla, sin JS o con movimiento reducido: lista normal de cuatro
+ * pasos y el esquema completo.
+ *
+ * <HistoriaRespuesta seccion={seccion} fondo="bajo" numero={2} resaltado="una respuesta" />
+ */
+import type { SeccionPasos } from '@/data/contenido/tipos';
+import EsquemaRespuesta from './EsquemaRespuesta.astro';
+import MarcoSeccion from './MarcoSeccion.astro';
+
+interface Props {
+  seccion: SeccionPasos;
+  fondo?: 'base' | 'bajo';
+  numero?: number;
+  resaltado?: string;
+}
+
+const { seccion: s, fondo = 'bajo', numero, resaltado } = Astro.props;
+---
+<MarcoSeccion seccion={s} fondo={fondo} numero={numero} resaltado={resaltado}>
+  <div data-historia class="relato tras-encabezado" style="--historia-tramo: 38svh">
+    <div data-historia-fijo class="fijo">
+      <div class="contenedor grilla">
+        <div class="escenario">
+          <EsquemaRespuesta modo="historia" class="esquema-relato" />
+          <span aria-hidden="true" class="progreso-movil"><span></span></span>
+        </div>
+        <div class="texto">
+          <span aria-hidden="true" class="pista"><span></span></span>
+          <ol role="list" class="pasos" aria-label={s.titulo}>
+            {
+              s.items.map((p) => (
+                <li data-historia-paso class="paso">
+                  <span aria-hidden="true" class="num">
+                    {p.paso}
+                  </span>
+                  <div class="min-w-0">
+                    <h3 class="titulo-tarjeta">{p.titulo}</h3>
+                    <p class="mt-1.5 text-base leading-relaxed text-ink-soft">{p.texto}</p>
+                  </div>
+                </li>
+              ))
+            }
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</MarcoSeccion>
+
+<style>
+  .fijo {
+    display: flex;
+    align-items: center;
+  }
+  .grilla {
+    display: grid;
+    gap: 2.5rem;
+    align-items: center;
+  }
+  .escenario {
+    position: relative;
+  }
+  .escenario :global(.esquema-relato) {
+    width: min(100%, calc((100svh - var(--alto-encabezado) - 4rem) / 1.1));
+  }
+  .texto {
+    position: relative;
+  }
+  .pasos {
+    display: grid;
+    gap: 1.75rem;
+  }
+  .paso {
+    position: relative;
+    display: flex;
+    gap: 1.25rem;
+  }
+  .num {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 0.875rem;
+    background: linear-gradient(135deg, #c0c1ff 0%, #8083ff 100%);
+    color: var(--color-on-primary, #0b0080);
+    box-shadow: 0 0 0 4px rgb(128 131 255 / 0.12), 0 10px 30px -6px rgb(128 131 255 / 0.55);
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition:
+      background 0.5s var(--ease-out-expo),
+      color 0.5s var(--ease-out-expo),
+      box-shadow 0.5s var(--ease-out-expo);
+  }
+  /* Pista vertical detrás de los números; se llena con el avance (--historia-progreso). */
+  .pista {
+    position: absolute;
+    left: calc(1.375rem - 1px);
+    top: 1.5rem;
+    bottom: 1.5rem;
+    width: 2px;
+    border-radius: 2px;
+    background: rgb(192 193 255 / 0.12);
+    overflow: hidden;
+  }
+  .pista span,
+  .progreso-movil span {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(180deg, #c0c1ff, #6366f1);
+    transform-origin: top;
+    transform: scaleY(var(--historia-progreso, 1));
+  }
+  .progreso-movil {
+    display: none;
+  }
+
+  /* Con la narrativa activa, solo el número del paso actual queda encendido. */
+  :global(.vrs-historia) .pasos .paso:not([data-activo]) .num {
+    background: var(--color-surface-high, #2a2a2c);
+    color: var(--color-primary, #c0c1ff);
+    box-shadow: none;
+  }
+
+  @media (min-width: 1024px) {
+    .grilla {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 3.5rem;
+    }
+    .escenario {
+      grid-column: 6 / span 7;
+      order: 2;
+    }
+    .texto {
+      grid-column: 1 / span 5;
+      order: 1;
+    }
+    .pasos {
+      gap: 2.25rem;
+    }
+  }
+
+  /* Celular con narrativa activa: los cuatro textos en la misma celda; solo cambia la opacidad. */
+  @media (max-width: 1023.98px) {
+    .escenario :global(.esquema-relato) {
+      width: min(100%, calc((100svh - var(--alto-encabezado) - 21rem) / 1.1));
+    }
+    /* Arriba (no centrado): deja libre la barra fija de contacto del pie en celular. */
+    :global(.vrs-historia) .fijo {
+      align-items: flex-start;
+      padding-top: 1rem;
+    }
+    :global(.vrs-historia) .grilla {
+      gap: 1.25rem;
+    }
+    :global(.vrs-historia) .pasos .paso {
+      grid-area: 1 / 1;
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    :global(.vrs-historia) .pasos .paso[data-activo] {
+      opacity: 1;
+      transform: none;
+    }
+    :global(.vrs-historia) .pista {
+      display: none;
+    }
+    :global(.vrs-historia) .progreso-movil {
+      position: relative;
+      display: block;
+      height: 3px;
+      margin: 1.25rem auto 0;
+      max-width: 12rem;
+      border-radius: 3px;
+      background: rgb(192 193 255 / 0.14);
+      overflow: hidden;
+    }
+    :global(.vrs-historia) .progreso-movil span {
+      transform-origin: left;
+      transform: scaleX(var(--historia-progreso, 0));
+      background: linear-gradient(90deg, #c0c1ff, #6366f1);
+    }
+  }
+</style>

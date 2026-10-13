@@ -1,0 +1,133 @@
+---
+/**
+ * Banda final de conversión: título, texto, botón principal y (opcional) WhatsApp.
+ * Es una sección completa con su propio contenedor; póngala al final de la página, antes del pie.
+ *
+ * <BandaCta
+ *   titulo="¿Quiere que su empresa aparezca cuando la buscan?"
+ *   texto="Le revisamos su presencia digital y le decimos por escrito qué mejorar, sin compromiso."
+ *   ctaPrincipal={CTA_PRINCIPAL}
+ *   ctaWhatsApp="Hola, vi su página de precios y quiero una revisión digital."
+ * />
+ */
+import { CONTACTO, enlaceWhatsApp } from '@/data/sitio';
+import Icono from './Icono.astro';
+
+interface Props {
+  titulo: string;
+  texto: string;
+  ctaPrincipal: { texto: string; href: string };
+  /** Mensaje prellenado para WhatsApp. Si se omite, no se muestra el botón de WhatsApp. */
+  ctaWhatsApp?: string;
+  /** Línea pequeña bajo los botones. Por defecto, el tiempo de respuesta. Pase "" para ocultarla. */
+  nota?: string;
+  etiqueta?: string;
+  nivel?: 'h2' | 'h3';
+  id?: string;
+  class?: string;
+}
+
+const {
+  titulo,
+  texto,
+  ctaPrincipal,
+  ctaWhatsApp,
+  nota = `${CONTACTO.respuestaHumana} ${CONTACTO.horario}.`,
+  etiqueta = 'Siguiente paso',
+  nivel = 'h2',
+  id = 'banda-cta-titulo',
+  class: clase,
+} = Astro.props;
+const Titulo = nivel;
+---
+<section aria-labelledby={id} class:list={['banda-cta seccion', clase]}>
+  <div class="contenedor">
+    <div data-revelar class="panel relative isolate overflow-hidden rounded-panel px-6 py-12 sm:px-10 sm:py-16 lg:px-16 lg:py-20">
+      <span aria-hidden="true" class="luz luz-a pointer-events-none absolute -z-10"></span>
+      <span aria-hidden="true" class="luz luz-b pointer-events-none absolute -z-10"></span>
+      <span aria-hidden="true" class="reticula pointer-events-none absolute inset-0 -z-10"></span>
+
+      <div class="grid gap-10 lg:grid-cols-12 lg:items-end lg:gap-12">
+        <div class="lg:col-span-7">
+          <Titulo id={id} class="titulo-banda">
+            {titulo}
+          </Titulo>
+          <p class="texto-guia mt-5">{texto}</p>
+        </div>
+
+        <div class="flex flex-col gap-3 lg:col-span-5 lg:items-end">
+          <div class="flex w-full flex-col gap-3 sm:flex-row lg:max-w-[22rem] lg:flex-col">
+            <a href={ctaPrincipal.href} class="boton boton-primario w-full sm:w-auto lg:w-full">
+              {ctaPrincipal.texto}
+              <Icono nombre="arrow-right" tamano={18} />
+            </a>
+            {
+              ctaWhatsApp && (
+                <a
+                  href={enlaceWhatsApp(ctaWhatsApp)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="boton boton-secundario w-full sm:w-auto lg:w-full"
+                >
+                  <Icono nombre="whatsapp" tamano={20} class="icono-whatsapp" />
+                  Escribir por WhatsApp
+                  <span class="sr-only">{' (se abre en una pestaña nueva)'}</span>
+                </a>
+              )
+            }
+          </div>
+          {nota && (
+            <p class="flex items-start gap-2 text-sm leading-relaxed text-ink-soft lg:max-w-[22rem] lg:text-right">
+              <Icono nombre="clock" tamano={16} class="mt-0.5 text-primary lg:hidden" />
+              {nota}
+            </p>
+          )}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .panel {
+    background:
+      radial-gradient(90% 120% at 0% 100%, rgb(99 102 241 / 0.2), transparent 55%),
+      radial-gradient(70% 90% at 100% 0%, rgb(192 193 255 / 0.12), transparent 60%),
+      var(--color-surface-low, #1c1b1e);
+  }
+  .luz {
+    border-radius: 999px;
+    filter: blur(60px);
+  }
+  .luz-a {
+    width: 28rem;
+    height: 28rem;
+    left: -8rem;
+    bottom: -14rem;
+    background: rgb(99 102 241 / 0.35);
+  }
+  .luz-b {
+    width: 22rem;
+    height: 22rem;
+    right: -6rem;
+    top: -12rem;
+    background: rgb(192 193 255 / 0.16);
+  }
+  .reticula {
+    background-image:
+      linear-gradient(rgb(229 225 228 / 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(229 225 228 / 0.035) 1px, transparent 1px);
+    background-size: 48px 48px;
+    -webkit-mask-image: radial-gradient(80% 80% at 70% 30%, #000, transparent 75%);
+    mask-image: radial-gradient(80% 80% at 70% 30%, #000, transparent 75%);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .luz-a {
+      animation: banda-flotar 14s ease-in-out infinite alternate;
+    }
+  }
+  @keyframes banda-flotar {
+    from { transform: translate3d(0, 0, 0); }
+    to { transform: translate3d(3rem, -2rem, 0); }
+  }
+</style>

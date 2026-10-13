@@ -4,9 +4,9 @@
   "description": "Páginas web, posicionamiento y atención por WhatsApp para empresas de servicios en Bogotá. Más visible. Mejor atendido.",
   "lang": "es-CO",
   "dir": "ltr",
-  "id": "./",
-  "start_url": "./",
-  "scope": "./",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
   "display": "minimal-ui",
   "background_color": "#131315",
   "theme_color": "#131315",
@@ -16,19 +16,19 @@
   ],
   "icons": [
     {
-      "src": "./icono-192.png",
+      "src": "/icono-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "./icono-512.png",
+      "src": "/icono-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "./icono-enmascarable-512.png",
+      "src": "/icono-enmascarable-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"

@@ -1,0 +1,39 @@
+---
+// /posicionamiento-google-inteligencia-artificial/ — SEO, AEO y GEO en palabras sencillas.
+// Todo el texto sale de src/data/contenido/posicionamiento-google-inteligencia-artificial.ts y
+// los precios de sitio.ts. La plantilla arma SEO, JSON-LD (página, migas, FAQ y servicio con su
+// oferta), secciones, preguntas y cierre.
+// Momentos propios de la página:
+//   - Portada: esquema 3D «cómo se arma una respuesta con IA» (se arma solo al cargar).
+//   - #como-se-arma: narrativa fija que recorre ese mismo esquema paso a paso al desplazarse.
+import PlantillaPagina from '@/components/pagina/PlantillaPagina.astro';
+import EsquemaRespuesta from '@/components/paginas/servicios/EsquemaRespuesta.astro';
+import HistoriaRespuesta from '@/components/paginas/servicios/HistoriaRespuesta.astro';
+import { contenido } from '@/data/contenido/posicionamiento-google-inteligencia-artificial';
+import type { SeccionPasos } from '@/data/contenido/tipos';
+
+const indice = contenido.secciones.findIndex((s) => s.id === 'como-se-arma');
+const comoSeArma = contenido.secciones[indice] as SeccionPasos;
+---
+<PlantillaPagina
+  contenido={contenido}
+  resaltado="Google y asistentes de IA"
+  opciones={{
+    siglas: { resaltado: 'cada sigla' },
+    'que-dice-google': { resaltado: 'inteligencia artificial', plegar: 'Leer las citas de Google' },
+    'que-hacemos': { resaltado: 'entiendan su empresa' },
+    'que-no-garantizamos': { resaltado: 'nadie puede' },
+    'como-medimos': { resaltado: 'el avance', plegar: 'Ver cómo medimos' },
+    proceso: { resaltado: 'el posicionamiento', plegar: 'Ver las etapas' },
+    'perfil-google': { iluminar: true, plegar: 'Ver la respuesta' },
+  }}
+>
+  <EsquemaRespuesta slot="visual" />
+  <HistoriaRespuesta
+    slot="seccion-como-se-arma"
+    seccion={comoSeArma}
+    fondo={indice % 2 === 0 ? 'base' : 'bajo'}
+    numero={indice + 1}
+    resaltado="una respuesta"
+  />
+</PlantillaPagina>

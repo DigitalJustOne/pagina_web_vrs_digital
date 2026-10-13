@@ -1,0 +1,46 @@
+---
+/**
+ * Migas de pan visibles. El último elemento es la página actual (aria-current, sin enlace).
+ * Para el JSON-LD use migas() de @/lib/schema con los mismos items.
+ *
+ * <Migas items={[
+ *   { nombre: 'Inicio', ruta: '/' },
+ *   { nombre: 'Servicios', ruta: '/paginas-web-bogota/' },
+ *   { nombre: 'Posicionamiento en Google', ruta: '/posicionamiento-google-inteligencia-artificial/' },
+ * ]} />
+ */
+import Icono from './Icono.astro';
+
+interface Props {
+  items: readonly { nombre: string; ruta: string }[];
+  class?: string;
+}
+
+const { items, class: clase } = Astro.props;
+const ultimo = items.length - 1;
+---
+<nav aria-label="Migas de pan" class:list={['migas', clase]}>
+  <ol class="flex flex-wrap items-center gap-x-1 text-sm text-ink-mute">
+    {
+      items.map((item, i) => (
+        <li class="flex min-w-0 items-center gap-1">
+          {i === ultimo ? (
+            <span aria-current="page" class="inline-flex min-h-11 items-center px-1 font-medium text-ink-soft">
+              {item.nombre}
+            </span>
+          ) : (
+            <>
+              <a
+                href={item.ruta}
+                class="inline-flex min-h-11 min-w-11 items-center justify-center rounded-md px-1 underline-offset-4 transition-colors hover:text-primary hover:underline"
+              >
+                {item.nombre}
+              </a>
+              <Icono nombre="chevron-right" tamano={14} class="text-ink-mute/70" />
+            </>
+          )}
+        </li>
+      ))
+    }
+  </ol>
+</nav>

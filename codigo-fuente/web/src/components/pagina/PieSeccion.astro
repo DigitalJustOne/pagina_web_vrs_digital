@@ -1,0 +1,38 @@
+---
+/**
+ * Pie de una sección: párrafos extra, nota, nota de precios («IVA incluido») y enlace.
+ * Seccion.astro decide qué mostrar; este componente solo lo ordena.
+ *
+ * <PieSeccion parrafos={['…']} nota="…" notaPrecios enlace={{ texto: 'Ver precios', href: '/precios/' }} />
+ */
+import { NOTA_PRECIOS } from '@/lib/paginas';
+import type { Enlace } from '@/data/contenido/tipos';
+import EnlaceFlecha from './EnlaceFlecha.astro';
+import Nota from './Nota.astro';
+
+interface Props {
+  parrafos?: readonly string[];
+  nota?: string;
+  /** Agrega NOTA_PRECIOS (la sección muestra un precio de VRS Digital). */
+  notaPrecios?: boolean;
+  enlace?: Enlace;
+  class?: string;
+}
+
+const { parrafos = [], nota, notaPrecios = false, enlace, class: clase } = Astro.props;
+const hayAlgo = parrafos.length > 0 || Boolean(nota) || notaPrecios || Boolean(enlace);
+---
+{
+  hayAlgo && (
+    <div class:list={['pie-seccion mt-8 grid justify-items-start gap-4 sm:mt-10', clase]}>
+      {parrafos.length > 0 && (
+        <div class="grid max-w-3xl gap-3 text-[1.0625rem] leading-relaxed text-ink-soft">
+          {parrafos.map((p) => <p>{p}</p>)}
+        </div>
+      )}
+      {nota && <Nota texto={nota} />}
+      {notaPrecios && <Nota texto={NOTA_PRECIOS} icono="calculator" />}
+      {enlace && <EnlaceFlecha href={enlace.href} texto={enlace.texto} />}
+    </div>
+  )
+}

@@ -1,0 +1,29 @@
+---
+// /paginas-web-bogota/ — página de servicio principal (diseño de páginas web en Bogotá).
+// Todo el texto sale de src/data/contenido/paginas-web-bogota.ts y los precios de sitio.ts.
+// La plantilla arma SEO, JSON-LD (página, migas, FAQ y servicio), secciones, preguntas y cierre.
+import MaquetaWeb from '@/components/pagina/MaquetaWeb.astro';
+import PlantillaPagina from '@/components/pagina/PlantillaPagina.astro';
+import Insignias from '@/components/ui/Insignias.astro';
+import { contenido } from '@/data/contenido/paginas-web-bogota';
+---
+<PlantillaPagina
+  contenido={contenido}
+  resaltado="páginas web en Bogotá"
+  opciones={{
+    'para-quien': { resaltado: 'explicarlos bien' },
+    'que-incluye': { resaltado: 'su página web' },
+    entregables: { plegar: 'Ver todo lo que recibe' },
+    'velocidad-seguridad': { resaltado: 'menos riesgos', plegar: 'Ver cómo la cuidamos' },
+    proceso: { resaltado: 'paso a paso', plegar: 'Ver las cinco etapas' },
+    tiempos: { resaltado: 'depende del alcance', plegar: 'Ver qué cambia el plazo' },
+    'como-comparar': { resaltado: 'cotizaciones', plegar: 'Ver las cuatro preguntas' },
+    quien: { retrato: true, iluminar: true },
+    proyectos: { resaltado: 'hemos construido' },
+  }}
+>
+  <MaquetaWeb slot="visual" />
+  <div slot="antes-secciones" class="contenedor -mt-6 pb-6 lg:-mt-8">
+    <Insignias />
+  </div>
+</PlantillaPagina>

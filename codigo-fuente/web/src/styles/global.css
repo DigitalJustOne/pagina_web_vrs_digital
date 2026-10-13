@@ -1,0 +1,294 @@
+/* ════════════════════════════════════════════════════════════════════════════
+   VRS Digital — sistema visual "The Kinetic Laboratory"
+   Fuente: app/DESIGN VRS DIGITAL.md y recursos-marca/LEEME-MARCA.md
+   ════════════════════════════════════════════════════════════════════════════ */
+@import 'tailwindcss';
+
+/* ── Fuentes ──────────────────────────────────────────────────────────────────
+   Solo el subconjunto latino (cubre tildes, ñ, ¿, ¡, «», — y …): son los mismos archivos que
+   precarga Base.astro. Los demás subconjuntos de @fontsource (cirílico, griego, vietnamita)
+   no se usan en español y solo agrandaban el CSS que bloquea el primer pintado.
+   font-display: optional (no swap): las dos fuentes se precargan (Base.astro), así que en una
+   visita normal llegan antes del primer pintado y se usan. Si la red es tan lenta que no llegan a
+   tiempo, la página se queda con el respaldo hasta la siguiente visita (ya en caché) y nunca
+   cambia de fuente a medio leer: con swap, el cambio partía títulos y párrafos en otro número de
+   líneas y movía el contenido (CLS de 0,12 a 0,24 a 384-414 px, y en Android el respaldo real es
+   Roboto, no Arial). El respaldo conserva métricas ajustadas (medidas con Chromium contra Arial /
+   Liberation Sans) para que esa primera visita lenta se vea casi igual. */
+@font-face {
+  font-family: 'Inter Variable';
+  font-style: normal;
+  font-display: optional;
+  font-weight: 100 900;
+  src: url('../../node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2') format('woff2-variations');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Space Grotesk Variable';
+  font-style: normal;
+  font-display: optional;
+  font-weight: 300 700;
+  src: url('../../node_modules/@fontsource-variable/space-grotesk/files/space-grotesk-latin-wght-normal.woff2') format('woff2-variations');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Inter Respaldo';
+  src: local('Arial'), local('ArialMT'), local('Liberation Sans'), local('LiberationSans'), local('Roboto'), local('Roboto-Regular');
+  font-weight: 100 500;
+  size-adjust: 106.15%;
+  ascent-override: 91.38%;
+  descent-override: 22.61%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Inter Respaldo';
+  src: local('Arial Bold'), local('Arial-BoldMT'), local('Liberation Sans Bold'), local('LiberationSans-Bold'), local('Roboto Bold'), local('Roboto-Bold');
+  font-weight: 600 900;
+  size-adjust: 101.26%;
+  ascent-override: 95.79%;
+  descent-override: 23.70%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Space Grotesk Respaldo';
+  src: local('Arial'), local('ArialMT'), local('Liberation Sans'), local('LiberationSans'), local('Roboto'), local('Roboto-Regular');
+  font-weight: 100 500;
+  size-adjust: 108.52%;
+  ascent-override: 90.31%;
+  descent-override: 26.72%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Space Grotesk Respaldo';
+  src: local('Arial Bold'), local('Arial-BoldMT'), local('Liberation Sans Bold'), local('LiberationSans-Bold'), local('Roboto Bold'), local('Roboto-Bold');
+  font-weight: 600 900;
+  size-adjust: 101.66%;
+  ascent-override: 96.40%;
+  descent-override: 28.53%;
+  line-gap-override: 0%;
+}
+
+@theme {
+  /* Superficies (de más profunda a más elevada) */
+  --color-surface: #131315;
+  --color-surface-lowest: #0e0e10;
+  --color-surface-low: #1c1b1e;
+  --color-surface-high: #2a2a2c;
+  --color-surface-highest: #353437;
+
+  /* Texto */
+  --color-ink: #e5e1e4;          /* texto principal, nunca blanco puro */
+  --color-ink-soft: #c9c5c8;     /* secundario con contraste AA sobre surface */
+  --color-ink-mute: #a19da0;     /* terciario, solo para metadatos */
+
+  /* Marca */
+  --color-primary: #c0c1ff;
+  --color-primary-container: #8083ff;
+  --color-indigo: #6366f1;
+  --color-on-primary: #0b0080;
+  --color-navy: #0f172a;
+  --color-online: #4ade80;
+  --color-whatsapp: #25d366;
+
+  --font-display: 'Space Grotesk Variable', 'Space Grotesk Respaldo', system-ui, sans-serif;
+  --font-sans: 'Inter Variable', 'Inter Respaldo', system-ui, sans-serif;
+  /* Etiquetas pequeñas: monoespaciada del sistema (sin descarga ni cambio de fuente al cargar). */
+  --font-mono: ui-monospace, 'SFMono-Regular', 'SF Mono', Menlo, Consolas, 'Liberation Mono', 'Roboto Mono', monospace;
+
+  --radius-card: 1rem;       /* tarjetas e items */
+  --radius-panel: 1.5rem;    /* contenedores grandes: planes, formulario, bandas */
+  --radius-control: 0.75rem; /* botones, campos e iconos encapsulados */
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@layer base {
+  /* Alto del encabezado fijo (Encabezado.astro): la primera sección deja este espacio. */
+  :root { --alto-encabezado: 4.5rem; }
+  @media (min-width: 1024px) { :root { --alto-encabezado: 5rem; } }
+  html {
+    color-scheme: dark;
+    background: var(--color-surface);
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: calc(var(--alto-encabezado) + 1.5rem);
+  }
+  /* Celular: la barra fija inferior (BarraMovil, 5,5rem) no debe tapar el elemento enfocado. */
+  @media (max-width: 767.98px) and (min-height: 31.0625rem) {
+    html { scroll-padding-bottom: calc(5.5rem + env(safe-area-inset-bottom)); }
+  }
+  /* Sin scroll-behavior: smooth a propósito. Las secciones usan content-visibility: auto (al final
+     de este archivo) y su alto provisional es 900 px: un desplazamiento suave calcula el destino
+     con esos altos y se detiene lejos de la sección cuando se pintan con su alto real. El salto
+     es instantáneo y src/scripts/anclas.ts lo realinea si el contenido de arriba cambia de alto
+     justo después (índices «En esta página» y enlaces con #ancla). */
+  body {
+    background: var(--color-surface);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: clip;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    text-wrap: balance;
+  }
+  p { text-wrap: pretty; }
+  ::selection { background: rgb(128 131 255 / 0.4); color: #fff; }
+  :focus-visible { outline: 2px solid var(--color-primary); outline-offset: 3px; border-radius: 6px; }
+  img, svg, video, canvas { max-width: 100%; }
+}
+
+@layer components {
+  .contenedor { width: 100%; max-width: 80rem; margin-inline: auto; padding-inline: 1rem; }
+  @media (min-width: 640px) { .contenedor { padding-inline: 1.5rem; } }
+  @media (min-width: 1024px) { .contenedor { padding-inline: 2rem; } }
+
+  /* Celular: 3.5rem (las páginas largas no se alargan con aire); tableta 5rem; computador 7rem. */
+  .seccion { padding-block: 3.5rem; }
+  @media (min-width: 640px) { .seccion { padding-block: 5rem; } }
+  @media (min-width: 1024px) { .seccion { padding-block: 7rem; } }
+
+  /* Primera sección de una página sin portada propia: deja el espacio del encabezado fijo.
+     Combínela con .seccion (gana el padding superior de esta clase). */
+  .bajo-encabezado { padding-top: calc(var(--alto-encabezado) + 2.5rem); }
+  @media (min-width: 1024px) { .bajo-encabezado { padding-top: calc(var(--alto-encabezado) + 4rem); } }
+
+  .etiqueta {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-primary);
+  }
+
+  /* Escala tipográfica de títulos (una sola fuente de verdad):
+     .titulo-pagina  → H1 de cada página (portada incluida). 36 px en celular, 68 px en computador.
+     .titulo-banda   → H2 de cierre o de una sección protagonista (BandaCta).
+     .titulo-seccion → H2 de sección. 28 → 40 px.
+     .titulo-tarjeta → H3 dentro de tarjetas, pasos y casos. 20 px. */
+  .titulo-pagina {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(2.25rem, 1.35rem + 4.2vw, 4.25rem);
+    line-height: 1.04;
+    letter-spacing: -0.03em;
+    color: var(--color-ink);
+  }
+  .titulo-banda {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(2rem, 1.3rem + 3vw, 3.25rem);
+    line-height: 1.06;
+    letter-spacing: -0.03em;
+    color: var(--color-ink);
+  }
+  .titulo-seccion {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(1.75rem, 1.2rem + 2.2vw, 2.5rem);
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    color: var(--color-ink);
+  }
+  .titulo-tarjeta {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.25rem;
+    line-height: 1.375;
+    letter-spacing: -0.01em;
+    color: var(--color-ink);
+  }
+
+  /* Distancia estándar entre el encabezado de una sección y su contenido. */
+  .tras-encabezado { margin-top: 2rem; }
+  @media (min-width: 640px) { .tras-encabezado { margin-top: 3rem; } }
+  @media (min-width: 1024px) { .tras-encabezado { margin-top: 4rem; } }
+
+  .texto-guia { font-size: 1.0625rem; line-height: 1.7; color: var(--color-ink-soft); max-width: 42rem; }
+  @media (min-width: 640px) { .texto-guia { font-size: 1.125rem; } }
+
+  .degradado-texto {
+    background: linear-gradient(120deg, #e5e1e4 0%, #c0c1ff 45%, #8083ff 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+
+  .tarjeta { background: var(--color-surface-high); border-radius: var(--radius-card); }
+  .vidrio {
+    background: rgb(53 52 55 / 0.6);
+    -webkit-backdrop-filter: blur(24px) saturate(140%);
+    backdrop-filter: blur(24px) saturate(140%);
+  }
+  .borde-fantasma { box-shadow: inset 0 0 0 1px rgb(70 69 84 / 0.35); }
+  .borde-luz {
+    position: relative; isolation: isolate;
+  }
+  .borde-luz::before {
+    content: ''; position: absolute; inset: 0; border-radius: inherit; padding: 1px; z-index: -1;
+    background: linear-gradient(135deg, rgb(192 193 255 / 0.7), rgb(128 131 255 / 0.15) 40%, rgb(99 102 241 / 0.6));
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude;
+  }
+
+  .boton {
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+    min-height: 48px; padding: 0.75rem 1.5rem; border-radius: 0.75rem;
+    font-weight: 600; font-size: 1rem; line-height: 1.2; text-align: center;
+    transition: transform 0.2s var(--ease-out-expo), box-shadow 0.3s, background-color 0.2s;
+  }
+  .boton-primario {
+    background: linear-gradient(135deg, #c0c1ff 0%, #8083ff 100%);
+    color: var(--color-on-primary);
+  }
+  .boton-primario:hover { box-shadow: 0 0 0 1px rgb(192 193 255 / 0.4), 0 10px 40px -8px rgb(128 131 255 / 0.6); transform: translateY(-1px); }
+  .boton-secundario { background: rgb(255 255 255 / 0.06); color: var(--color-ink); box-shadow: inset 0 0 0 1px rgb(229 225 228 / 0.14); }
+  .boton-secundario:hover { background: rgb(255 255 255 / 0.1); }
+  /* Glifo de WhatsApp en un botón secundario (pareja del botón primario). */
+  .icono-whatsapp { color: var(--color-whatsapp); flex: none; }
+  /* Verde de WhatsApp oscurecido para texto blanco AA (5,0:1). El verde de marca (#25d366)
+     queda para iconos y acentos sobre fondo oscuro. */
+  .boton-whatsapp { background: #15803d; color: #fff; }
+  .boton-whatsapp:hover { background: #166534; box-shadow: 0 10px 32px -10px rgb(37 211 102 / 0.45); transform: translateY(-1px); }
+
+  .chip {
+    display: inline-flex; align-items: center; gap: 0.375rem; border-radius: 9999px;
+    padding: 0.375rem 0.75rem; font-size: 0.8125rem; font-weight: 500;
+    background: rgb(128 131 255 / 0.12); color: var(--color-primary);
+  }
+
+  .prosa { color: var(--color-ink-soft); font-size: 1.0625rem; line-height: 1.75; }
+  .prosa h2 { color: var(--color-ink); font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2rem); margin: 2.5rem 0 1rem; font-weight: 600; }
+  .prosa h3 { color: var(--color-ink); font-size: 1.25rem; margin: 2rem 0 0.75rem; font-weight: 600; }
+  .prosa p, .prosa ul, .prosa ol, .prosa table { margin-block: 1rem; }
+  .prosa ul { list-style: disc; padding-left: 1.25rem; }
+  .prosa ol { list-style: decimal; padding-left: 1.75rem; }
+  .prosa li { margin-block: 0.375rem; }
+  .prosa a { color: var(--color-primary); text-decoration: underline; text-underline-offset: 3px; }
+  .prosa strong { color: var(--color-ink); }
+  .prosa table { width: 100%; border-collapse: collapse; font-size: 0.95rem; display: block; overflow-x: auto; }
+  .prosa th, .prosa td { text-align: left; padding: 0.75rem; background: var(--color-surface-low); }
+  .prosa tr:nth-child(even) td { background: var(--color-surface-high); }
+  .prosa th { color: var(--color-ink); background: var(--color-surface-highest); }
+}
+
+/* ── Movimiento al desplazarse ─────────────────────────────────────────────
+   [data-revelar] aparece al entrar en pantalla (scripts/movimiento.ts).
+   Sin JS o con movimiento reducido, todo queda visible. */
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-revelar] { opacity: 0; transform: translateY(12px); transition: opacity 0.45s var(--ease-out-expo), transform 0.45s var(--ease-out-expo); transition-delay: var(--retraso, 0ms); }
+  .js [data-revelar].visible { opacity: 1; transform: none; }
+}
+
+/* ── Rendimiento: lo que está lejos de la pantalla no se maqueta ni se pinta ─────
+   content-visibility: auto en las secciones y el pie; «auto» recuerda el alto real una vez
+   pintadas. Ninguna de estas secciones tiene hijos con position: fixed. */
+.seccion-pagina:not(.documento),
+section.seccion,
+footer.pie {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 900px;
+}

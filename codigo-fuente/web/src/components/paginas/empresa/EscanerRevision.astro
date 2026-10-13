@@ -1,0 +1,208 @@
+---
+/**
+ * Visual de la portada de /contacto/: la revisión digital en acción. Un panel de vidrio con una
+ * web esquemática que recorre una línea de escaneo, los cinco puntos que se revisan (se marcan
+ * uno a uno) y el resultado: tres prioridades numeradas.
+ *
+ * Los textos salen del módulo de /contacto/ (títulos e iconos de «que-revisamos» y la etiqueta de
+ * «que-recibe»). Es una imagen para lectores de pantalla (role="img" con la lista de puntos).
+ * Contenido estático (sin saltos de diseño); sin JS funciona igual (todo es CSS); con «reducir movimiento»
+ * se ve el estado final, sin escaneo.
+ *
+ * <EscanerRevision slot="visual" revisa={seccionRevisa} resultado="Resultado" />
+ */
+import Icono from '@/components/ui/Icono.astro';
+import type { SeccionTarjetas } from '@/data/contenido/tipos';
+
+interface Props {
+  revisa: SeccionTarjetas;
+  /** Rótulo del bloque de resultado (etiqueta de la sección «que-recibe»). */
+  resultado: string;
+  class?: string;
+}
+
+const { revisa, resultado, class: clase } = Astro.props;
+const puntos = revisa.items;
+const etiqueta = `${revisa.titulo}: ${puntos.map((p) => p.titulo).join(', ').replace(/, ([^,]*)$/, ' y $1')}.`;
+---
+<div role="img" aria-label={etiqueta} class:list={['escaner relative mx-auto w-full max-w-[26rem] lg:max-w-[30rem]', clase]}>
+  <span aria-hidden="true" class="escaner-luz pointer-events-none absolute -z-10"></span>
+  <div class="panel vidrio borde-luz relative isolate overflow-hidden rounded-panel">
+    <!-- Barra del navegador -->
+    <div class="flex items-center gap-2 px-4 py-3">
+      <span class="h-2.5 w-2.5 rounded-full bg-ink/15"></span>
+      <span class="h-2.5 w-2.5 rounded-full bg-ink/15"></span>
+      <span class="h-2.5 w-2.5 rounded-full bg-ink/15"></span>
+      <span class="url ml-3 flex h-6 flex-1 items-center gap-2 rounded-md px-2.5">
+        <Icono nombre="lock" tamano={11} class="text-primary" />
+        <span class="h-1.5 w-28 rounded-full bg-ink/15"></span>
+      </span>
+    </div>
+
+    <!-- Web esquemática con la línea de escaneo -->
+    <div class="pantalla relative mx-4 overflow-hidden rounded-xl p-4">
+      <span class="block h-2 w-1/3 rounded-full bg-primary/50"></span>
+      <span class="mt-3 block h-3.5 w-4/5 rounded-full bg-ink/25"></span>
+      <span class="mt-2 block h-3.5 w-3/5 rounded-full bg-ink/25"></span>
+      <span class="mt-3 block h-2 w-11/12 rounded-full bg-ink/10"></span>
+      <span class="mt-1.5 block h-2 w-10/12 rounded-full bg-ink/10"></span>
+      <span class="mt-4 flex gap-2">
+        <span class="h-6 w-24 rounded-md bg-primary/45"></span>
+        <span class="h-6 w-20 rounded-md bg-ink/12"></span>
+      </span>
+      <span class="linea-escaneo"></span>
+    </div>
+
+    <!-- Lo que se revisa -->
+    <ol class="mt-4 grid gap-1 px-4">
+      {
+        puntos.map((p, i) => (
+          <li class="punto flex items-center gap-3 rounded-lg px-2.5 py-2" style={`--i:${i}`}>
+            <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-surface-lowest text-primary">
+              {p.icono && <Icono nombre={p.icono} tamano={15} />}
+            </span>
+            <span class="min-w-0 flex-1 truncate text-[0.8125rem] font-medium text-ink sm:text-sm">{p.titulo}</span>
+            <span class="marca flex h-5 w-5 shrink-0 items-center justify-center rounded-full">
+              <Icono nombre="tick" tamano={12} />
+            </span>
+          </li>
+        ))
+      }
+    </ol>
+
+    <!-- Resultado: tres prioridades -->
+    <div class="resultado m-4 mt-3 rounded-xl p-4">
+      <p class="font-mono text-[0.6875rem] tracking-[0.18em] text-primary uppercase">{resultado}</p>
+      <div class="mt-3 grid gap-2">
+        {
+          [0.92, 0.74, 0.56].map((ancho, i) => (
+            <span class="prioridad flex items-center gap-3" style={`--i:${i}`}>
+              <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-md font-mono text-xs font-semibold text-on-primary">
+                {i + 1}
+              </span>
+              <span class="h-2 rounded-full" style={`width:${ancho * 100}%`} />
+            </span>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Alto según el contenido (todo es estático: no hay saltos de diseño). */
+  .panel {
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 40px 80px -40px rgb(0 0 0 / 0.8);
+  }
+  /* Dentro del ancho del panel: el desenfoque la extiende sin ensanchar la página. */
+  .escaner-luz {
+    inset: 10% 0 auto;
+    height: 70%;
+    border-radius: 999px;
+    background: radial-gradient(circle, rgb(99 102 241 / 0.35), transparent 65%);
+    filter: blur(30px);
+  }
+  .url {
+    background: rgb(14 14 16 / 0.6);
+  }
+  .pantalla {
+    background: rgb(14 14 16 / 0.55);
+    box-shadow: inset 0 0 0 1px rgb(229 225 228 / 0.06);
+  }
+  .linea-escaneo {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 2.5rem;
+    background: linear-gradient(180deg, transparent, rgb(128 131 255 / 0.28) 85%, rgb(192 193 255 / 0.9) 100%);
+    border-bottom: 1px solid rgb(192 193 255 / 0.9);
+    translate: 0 -100%;
+    opacity: 0;
+  }
+  .punto {
+    background: rgb(255 255 255 / 0.025);
+  }
+  .marca {
+    color: var(--color-on-primary, #0b0080);
+    background: linear-gradient(135deg, #c0c1ff, #8083ff);
+  }
+  .resultado {
+    margin-top: auto;
+    background: linear-gradient(135deg, rgb(128 131 255 / 0.16), rgb(14 14 16 / 0.4));
+    box-shadow: inset 0 0 0 1px rgb(192 193 255 / 0.2);
+  }
+  .prioridad > span:first-child {
+    background: linear-gradient(135deg, #c0c1ff, #8083ff);
+  }
+  .prioridad > span:last-child {
+    background: linear-gradient(90deg, rgb(192 193 255 / 0.55), rgb(128 131 255 / 0.2));
+    transform-origin: 0 50%;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .linea-escaneo {
+      animation: escaner-barrer 3.4s cubic-bezier(0.45, 0, 0.55, 1) 0.4s infinite;
+    }
+    /* Cada punto se marca después del anterior (una sola vez). */
+    .marca {
+      animation: escaner-marcar 0.5s var(--ease-out-expo) both;
+      animation-delay: calc(0.8s + var(--i) * 0.45s);
+    }
+    .punto {
+      animation: escaner-punto 0.9s ease-out both;
+      animation-delay: calc(0.8s + var(--i) * 0.45s - 0.25s);
+    }
+    .prioridad > span:last-child {
+      animation: escaner-crecer 0.9s var(--ease-out-expo) both;
+      animation-delay: calc(3.2s + var(--i) * 0.2s);
+    }
+  }
+  @keyframes escaner-barrer {
+    0% {
+      translate: 0 -100%;
+      opacity: 0;
+    }
+    10% {
+      opacity: 1;
+    }
+    85% {
+      opacity: 1;
+    }
+    100% {
+      translate: 0 420%;
+      opacity: 0;
+    }
+  }
+  @keyframes escaner-marcar {
+    from {
+      scale: 0;
+      opacity: 0;
+    }
+    to {
+      scale: 1;
+      opacity: 1;
+    }
+  }
+  @keyframes escaner-punto {
+    0% {
+      background: rgb(255 255 255 / 0.025);
+    }
+    40% {
+      background: rgb(128 131 255 / 0.16);
+    }
+    100% {
+      background: rgb(255 255 255 / 0.025);
+    }
+  }
+  @keyframes escaner-crecer {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+</style>

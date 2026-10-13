@@ -1,0 +1,1147 @@
+---
+/**
+ * Visual de la portada de /paginas-web-empresas-servicios/: la web de una empresa de servicios
+ * «antes y después» de ordenarla, en una ventana de navegador con una división deslizable.
+ *   - Antes (izquierda): una web de las de siempre, en grises: menú apretado, foto genérica, un
+ *     muro de texto con todos los servicios, un formulario largo y un WhatsApp diminuto.
+ *   - Después (derecha): respuesta directa arriba, una tarjeta por servicio con su «desde», los
+ *     pasos de trabajo y un botón de WhatsApp a la vista.
+ *   Las notas de cada lado son textos de la página (antesDespues en el módulo): las fallas
+ *   resumen #problema y las mejoras son títulos de #estructura. La web es ficticia y no tiene
+ *   texto inventado: se dibuja con bloques.
+ *
+ * Interacción: la división se mueve con el control deslizante de debajo (teclado y lector de
+ * pantalla, con aria-valuetext) o arrastrando sobre la ilustración (ratón, lápiz o dedo en
+ * horizontal; el desplazamiento vertical de la página no se bloquea). Al cargar, si no hay
+ * movimiento reducido, la división hace un recorrido corto para mostrar los dos lados.
+ * Sin JS: la ilustración queda partida a la mitad, quieta, y el control no se muestra (sin
+ * saltos: la clase .js existe antes de pintar). Espacio reservado con aspect-ratio (CLS 0).
+ *
+ * <AntesDespues slot="visual" />
+ */
+import Icono from '@/components/ui/Icono.astro';
+import { antesDespues as A } from '@/data/contenido/paginas-web-empresas-servicios';
+
+interface Props {
+  class?: string;
+}
+const { class: clase } = Astro.props;
+
+const [pistaBase, ...pistaResto] = A.pista.split(' · ');
+const pistaAccion = pistaResto.join(' · ');
+const [fallaServicios, fallaPrecio, fallaFormulario, fallaWhatsApp] = A.fallas;
+const [mejoraRespuesta, mejoraServicio, mejoraPrecio, mejoraContacto] = A.mejoras;
+const valorTexto = (v: number) => `${A.antes} ${v} %, ${A.despues} ${100 - v} %`;
+
+// Bloques de relleno (anchos en % de su columna), fijos para que la ilustración sea estable.
+const lineasMuro = [
+  [96, 88, 93, 70, 95, 84, 90, 62],
+  [92, 97, 80, 94, 86, 91, 74, 88],
+];
+const servicios = [
+  { icono: 'file', titulo: 62 },
+  { icono: 'chart', titulo: 74 },
+  { icono: 'shield', titulo: 56 },
+] as const;
+---
+<figure data-antes-despues class:list={['antes-despues relative mx-auto w-full', clase]}>
+  <div data-marco role="img" aria-label={A.etiqueta} class="marco">
+    <span class="halo halo-antes" aria-hidden="true"></span>
+    <span class="halo halo-despues" aria-hidden="true"></span>
+
+    <div class="ventana" aria-hidden="true">
+      <!-- Barra del navegador (igual en los dos lados) -->
+      <div class="navegador">
+        <span class="puntos"><span></span><span></span><span></span></span>
+        <span class="direccion"><Icono nombre="lock" tamano={10} /><span></span></span>
+      </div>
+
+      <div class="pagina">
+        <!-- ══ ANTES ══════════════════════════════════════════════════════ -->
+        <div class="capa antes">
+          <div class="a-nav">
+            <span class="a-logo"></span>
+            <span class="a-enlaces">{Array.from({ length: 7 }, () => <span />)}</span>
+          </div>
+          <div class="a-banner">
+            <span class="a-sol"></span>
+            <span class="a-montes"></span>
+            <span class="a-titular"></span>
+            <span class="a-subtitular"></span>
+          </div>
+          <div class="a-muro">
+            {
+              lineasMuro.map((col) => (
+                <span class="a-columna">
+                  <span class="a-subtitulo" />
+                  {col.map((w) => (
+                    <span class="a-linea" style={`width:${w}%`} />
+                  ))}
+                </span>
+              ))
+            }
+          </div>
+          <div class="a-formulario">
+            {
+              Array.from({ length: 6 }, (_, i) => (
+                <span class="a-campo">
+                  <span style={`width:${[34, 46, 28, 52, 40, 30][i]}%`} />
+                </span>
+              ))
+            }
+            <span class="a-campo alto"><span style="width:44%"></span></span>
+            <span class="a-enviar"></span>
+          </div>
+          <div class="a-lateral">
+            <span class="a-foto"></span>
+            {[90, 74, 84, 60].map((w) => <span class="a-linea" style={`width:${w}%`} />)}
+            <span class="a-foto chica"></span>
+            {[86, 70].map((w) => <span class="a-linea" style={`width:${w}%`} />)}
+          </div>
+          <div class="a-pie">
+            <span class="a-copy"></span>
+            <span class="a-whatsapp"><Icono nombre="whatsapp" tamano={8} /></span>
+          </div>
+
+          <span class="nota falla n-servicios" style="--n:0">
+            <span class="nota-icono"><Icono nombre="x" tamano={10} trazo={2.5} /></span>{fallaServicios}
+          </span>
+          <span class="nota falla n-formulario" style="--n:1">
+            <span class="nota-icono"><Icono nombre="x" tamano={10} trazo={2.5} /></span>{fallaFormulario}
+          </span>
+          <span class="nota falla n-precio" style="--n:2">
+            <span class="nota-icono"><Icono nombre="x" tamano={10} trazo={2.5} /></span>{fallaPrecio}
+          </span>
+          <span class="nota falla n-whatsapp" style="--n:3">
+            <span class="nota-icono"><Icono nombre="x" tamano={10} trazo={2.5} /></span>{fallaWhatsApp}
+          </span>
+        </div>
+
+        <!-- ══ DESPUÉS ════════════════════════════════════════════════════ -->
+        <div class="capa despues">
+          <div class="d-nav">
+            <span class="d-logo"><span></span></span>
+            <span class="d-enlaces"><span></span><span></span><span></span></span>
+            <span class="d-wa"><Icono nombre="whatsapp" tamano={12} /><span></span></span>
+          </div>
+          <div class="d-respuesta">
+            <span class="d-rotulo"></span>
+            <span class="d-titulo" style="width:86%"></span>
+            <span class="d-titulo" style="width:58%"></span>
+            <span class="d-texto" style="width:94%"></span>
+            <span class="d-texto" style="width:72%"></span>
+            <span class="d-acciones">
+              <span class="d-boton"><span></span><Icono nombre="arrow-right" tamano={12} trazo={2.25} /></span>
+              <span class="d-desde grande">desde <span></span></span>
+            </span>
+          </div>
+          <div class="d-servicios">
+            {
+              servicios.map((s) => (
+                <span class="d-tarjeta">
+                  <span class="d-icono">
+                    <Icono nombre={s.icono} tamano={14} />
+                  </span>
+                  <span class="d-tarjeta-titulo" style={`width:${s.titulo}%`} />
+                  <span class="d-texto" style="width:92%" />
+                  <span class="d-texto" style="width:70%" />
+                  <span class="d-desde">
+                    desde <span />
+                  </span>
+                </span>
+              ))
+            }
+          </div>
+          <div class="d-pasos">
+            {
+              [1, 2, 3, 4].map((n) => (
+                <span class="d-paso">
+                  <span class="d-paso-num">{n}</span>
+                  <span class="d-paso-linea" />
+                </span>
+              ))
+            }
+          </div>
+          <div class="d-contacto">
+            <span class="d-mini-form">
+              <span class="d-campo"></span>
+              <span class="d-campo"></span>
+              <span class="d-enviar"></span>
+            </span>
+            <span class="d-wa-grande"><Icono nombre="whatsapp" tamano={18} /><span></span></span>
+          </div>
+
+          <span class="nota mejora n-respuesta" style="--n:0">
+            <span class="nota-icono"><Icono nombre="tick" tamano={10} trazo={2.75} /></span>{mejoraRespuesta}
+          </span>
+          <span class="nota mejora n-servicio" style="--n:1">
+            <span class="nota-icono"><Icono nombre="tick" tamano={10} trazo={2.75} /></span>{mejoraServicio}
+          </span>
+          <span class="nota mejora n-contacto" style="--n:2">
+            <span class="nota-icono"><Icono nombre="tick" tamano={10} trazo={2.75} /></span>{mejoraContacto}
+          </span>
+          <span class="nota mejora n-cotizar" style="--n:3">
+            <span class="nota-icono"><Icono nombre="tick" tamano={10} trazo={2.75} /></span>{mejoraPrecio}
+          </span>
+        </div>
+
+        <!-- División: capa del ancho total desplazada con transform (sin recalcular diseño). -->
+        <span class="division">
+          <span class="sello sello-antes">{A.antes}</span>
+          <span class="sello sello-despues">{A.despues}</span>
+          <span class="asa">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m9 7-5 5 5 5" /><path d="m15 7 5 5-5 5" />
+            </svg>
+          </span>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="control">
+    <input
+      data-control
+      type="range"
+      min="0"
+      max="100"
+      step="1"
+      value="50"
+      aria-label={A.control}
+      aria-valuetext={valorTexto(50)}
+      data-antes={A.antes}
+      data-despues={A.despues}
+    />
+  </div>
+  <figcaption class="pista">
+    {pistaBase}{pistaAccion && <span class="solo-js"> · {pistaAccion}</span>}
+  </figcaption>
+</figure>
+
+<style>
+  /* Posición de la división (0 % = todo «después»; 100 % = todo «antes»). */
+  @property --ad-corte {
+    syntax: '<percentage>';
+    inherits: true;
+    initial-value: 50%;
+  }
+  .antes-despues {
+    --ad-corte: 50%;
+    max-width: 34rem;
+  }
+  .marco {
+    position: relative;
+    aspect-ratio: 100 / 112;
+    container-type: inline-size;
+    touch-action: pan-y;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  :global(.js) .marco {
+    cursor: ew-resize;
+  }
+  .halo {
+    position: absolute;
+    top: 12%;
+    width: 60%;
+    height: 70%;
+    border-radius: 999px;
+    filter: blur(40px);
+    pointer-events: none;
+  }
+  /* Dentro del ancho de la figura: el desenfoque no crea desbordamiento, la caja sí. */
+  .halo-antes {
+    left: 0;
+    background: radial-gradient(closest-side, rgb(255 180 171 / 0.14), transparent 75%);
+  }
+  .halo-despues {
+    right: 0;
+    background: radial-gradient(closest-side, rgb(99 102 241 / 0.4), transparent 75%);
+  }
+
+  /* ── Ventana del navegador ─────────────────────────────────────────── */
+  .ventana {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    border-radius: 3.4cqi;
+    background: #0e0e10;
+    box-shadow:
+      inset 0 0 0 1px rgb(229 225 228 / 0.1),
+      0 40px 80px -30px rgb(0 0 0 / 0.9),
+      0 0 0 1px rgb(0 0 0 / 0.4);
+  }
+  .navegador {
+    position: absolute;
+    inset: 0 0 auto;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    height: 8cqi;
+    padding: 0 3.4cqi;
+    background: linear-gradient(180deg, #2a2a2c, #1f1e21);
+    box-shadow: inset 0 -1px 0 rgb(0 0 0 / 0.5);
+  }
+  .puntos {
+    display: flex;
+    gap: 1.2cqi;
+  }
+  .puntos span {
+    width: 1.7cqi;
+    height: 1.7cqi;
+    border-radius: 999px;
+    background: rgb(229 225 228 / 0.2);
+  }
+  .direccion {
+    display: flex;
+    align-items: center;
+    gap: 1.4cqi;
+    width: 48%;
+    height: 4.2cqi;
+    margin: 0 auto;
+    padding: 0 2.4cqi;
+    border-radius: 999px;
+    background: rgb(14 14 16 / 0.7);
+    color: rgb(229 225 228 / 0.45);
+    translate: -3cqi 0;
+  }
+  .direccion :global(svg) {
+    width: 2.2cqi;
+    height: 2.2cqi;
+  }
+  .direccion span {
+    width: 55%;
+    height: 1cqi;
+    border-radius: 99px;
+    background: rgb(229 225 228 / 0.22);
+  }
+  .pagina {
+    position: absolute;
+    inset: 8cqi 0 0;
+  }
+  .capa {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+  /* Cada lado es su propio contexto de apilamiento: las notas del «antes» no asoman encima. */
+  .antes {
+    z-index: 0;
+  }
+  .despues {
+    z-index: 1;
+  }
+
+  /* ══ ANTES: grises, apretado, sin jerarquía ═════════════════════════ */
+  .antes {
+    background: #d5d1c9;
+    --a-barra: #b0aba2;
+    --a-oscuro: #8b867d;
+  }
+  .antes > * {
+    position: absolute;
+  }
+  .a-nav {
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 7cqi;
+    padding: 0 4cqi;
+    background: #c6c1b8;
+    border-bottom: 1px solid #b5b0a7;
+  }
+  .a-logo {
+    width: 13cqi;
+    height: 3cqi;
+    border-radius: 0.4cqi;
+    background: var(--a-oscuro);
+  }
+  .a-enlaces {
+    display: flex;
+    gap: 1.6cqi;
+  }
+  .a-enlaces span {
+    width: 5.6cqi;
+    height: 1cqi;
+    background: #6f7ca6;
+    box-shadow: 0 0.5cqi 0 -0.2cqi #6f7ca6;
+  }
+  .a-enlaces span:nth-child(even) {
+    width: 7.4cqi;
+  }
+  .a-banner {
+    top: 9.5cqi;
+    left: 4cqi;
+    right: 4cqi;
+    height: 21cqi;
+    overflow: hidden;
+    background: linear-gradient(180deg, #a9b4c1 0%, #c3c9cf 70%);
+  }
+  .a-sol {
+    top: 3cqi;
+    right: 12cqi;
+    width: 7cqi;
+    height: 7cqi;
+    border-radius: 999px;
+    background: #e3dcc4;
+    position: absolute;
+  }
+  .a-montes {
+    position: absolute;
+    inset: auto 0 0;
+    height: 12cqi;
+    background: #8e9aa8;
+    clip-path: polygon(0 100%, 0 55%, 18% 20%, 34% 62%, 52% 10%, 70% 58%, 84% 30%, 100% 64%, 100% 100%);
+  }
+  .a-titular,
+  .a-subtitular {
+    position: absolute;
+    left: 50%;
+    border-radius: 0.4cqi;
+    background: rgb(255 255 255 / 0.8);
+    translate: -50% 0;
+  }
+  .a-titular {
+    top: 6.5cqi;
+    width: 46%;
+    height: 2.6cqi;
+  }
+  .a-subtitular {
+    top: 10.6cqi;
+    width: 30%;
+    height: 1.2cqi;
+    background: rgb(255 255 255 / 0.6);
+  }
+  .a-muro {
+    top: 33.5cqi;
+    left: 4cqi;
+    right: 4cqi;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3cqi;
+  }
+  .a-columna {
+    display: grid;
+    gap: 1.15cqi;
+    align-content: start;
+  }
+  .a-subtitulo {
+    width: 48%;
+    height: 1.7cqi;
+    margin-bottom: 0.4cqi;
+    background: var(--a-oscuro);
+  }
+  .a-linea {
+    display: block;
+    height: 0.95cqi;
+    background: var(--a-barra);
+  }
+  .a-formulario {
+    top: 59cqi;
+    left: 4cqi;
+    width: 52%;
+    display: grid;
+    gap: 1cqi;
+  }
+  .a-campo {
+    display: flex;
+    align-items: center;
+    height: 3.3cqi;
+    padding: 0 1.2cqi;
+    background: #ebe8e2;
+    box-shadow: inset 0 0 0 1px #a8a39a;
+  }
+  .a-campo.alto {
+    height: 6cqi;
+    align-items: flex-start;
+    padding-top: 1.1cqi;
+  }
+  .a-campo span {
+    height: 0.9cqi;
+    background: #c4bfb6;
+  }
+  .a-enviar {
+    width: 30%;
+    height: 3.6cqi;
+    margin-top: 0.6cqi;
+    background: #a29d94;
+    box-shadow: inset 0 -0.4cqi 0 rgb(0 0 0 / 0.12);
+  }
+  .a-lateral {
+    top: 59cqi;
+    right: 4cqi;
+    width: 34%;
+    display: grid;
+    gap: 1.1cqi;
+    padding: 2cqi;
+    background: #cbc7bf;
+    box-shadow: inset 0 0 0 1px #b8b3aa;
+  }
+  .a-foto {
+    height: 9cqi;
+    background: linear-gradient(135deg, #b6bdc4, #a4adb6);
+  }
+  .a-foto.chica {
+    height: 5cqi;
+    margin-top: 0.8cqi;
+  }
+  .a-pie {
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 6cqi;
+    padding: 0 4cqi;
+    background: #c6c1b8;
+    border-top: 1px solid #b5b0a7;
+  }
+  .a-copy {
+    width: 30%;
+    height: 0.9cqi;
+    background: var(--a-barra);
+  }
+  /* El WhatsApp que nadie ve: diminuto y sin contraste. */
+  .a-whatsapp {
+    display: grid;
+    place-items: center;
+    width: 2.6cqi;
+    height: 2.6cqi;
+    border-radius: 999px;
+    background: #b9c4b9;
+    color: #d5d1c9;
+  }
+  .a-whatsapp :global(svg) {
+    width: 1.6cqi;
+    height: 1.6cqi;
+  }
+
+  /* ══ DESPUÉS: marca, jerarquía y contacto a la vista ═══════════════ */
+  .despues {
+    clip-path: inset(0 0 0 var(--ad-corte));
+    background:
+      radial-gradient(rgb(192 193 255 / 0.05) 1px, transparent 1px) 0 0 / 3.2cqi 3.2cqi,
+      radial-gradient(120% 60% at 80% 0%, rgb(99 102 241 / 0.16), transparent 60%),
+      linear-gradient(180deg, #161618 0%, #111113 100%);
+  }
+  .despues > * {
+    position: absolute;
+  }
+  .d-nav {
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    gap: 3cqi;
+    height: 7cqi;
+    padding: 0 4cqi;
+    border-bottom: 1px solid rgb(229 225 228 / 0.06);
+  }
+  .d-logo {
+    display: flex;
+    align-items: center;
+    gap: 1.4cqi;
+  }
+  .d-logo::before {
+    content: '';
+    width: 3.2cqi;
+    height: 3.2cqi;
+    border-radius: 1cqi;
+    background: linear-gradient(135deg, #c0c1ff, #6366f1);
+  }
+  .d-logo span {
+    width: 9cqi;
+    height: 1.4cqi;
+    border-radius: 99px;
+    background: #e5e1e4;
+  }
+  .d-enlaces {
+    display: flex;
+    gap: 2.4cqi;
+    margin-left: auto;
+  }
+  .d-enlaces span {
+    width: 5.4cqi;
+    height: 1cqi;
+    border-radius: 99px;
+    background: rgb(229 225 228 / 0.4);
+  }
+  .d-wa {
+    display: flex;
+    align-items: center;
+    gap: 1cqi;
+    height: 4.4cqi;
+    padding: 0 2cqi 0 1.4cqi;
+    border-radius: 999px;
+    background: #25d366;
+    color: #0b2a17;
+  }
+  .d-wa :global(svg) {
+    width: 2.4cqi;
+    height: 2.4cqi;
+  }
+  .d-wa span {
+    width: 6cqi;
+    height: 1cqi;
+    border-radius: 99px;
+    background: rgb(11 42 23 / 0.7);
+  }
+  .d-respuesta {
+    top: 10cqi;
+    left: 4cqi;
+    right: 4cqi;
+    display: grid;
+    gap: 1.3cqi;
+    padding: 3.6cqi;
+    border-radius: 2.6cqi;
+    background: linear-gradient(160deg, rgb(128 131 255 / 0.14), rgb(128 131 255 / 0.04));
+    box-shadow:
+      inset 0 0 0 1px rgb(192 193 255 / 0.2),
+      0 20px 40px -24px rgb(99 102 241 / 0.6);
+  }
+  .d-rotulo {
+    width: 18cqi;
+    height: 1cqi;
+    margin-bottom: 0.6cqi;
+    border-radius: 99px;
+    background: #8083ff;
+  }
+  .d-titulo {
+    height: 2.8cqi;
+    border-radius: 0.8cqi;
+    background: linear-gradient(90deg, #e5e1e4, #c0c1ff);
+  }
+  .d-texto {
+    display: block;
+    height: 1cqi;
+    border-radius: 99px;
+    background: rgb(229 225 228 / 0.28);
+  }
+  .d-titulo + .d-texto {
+    margin-top: 0.8cqi;
+  }
+  .d-acciones {
+    display: flex;
+    align-items: center;
+    gap: 2.4cqi;
+    margin-top: 1.4cqi;
+  }
+  .d-boton {
+    display: flex;
+    align-items: center;
+    gap: 1.4cqi;
+    height: 5cqi;
+    padding: 0 2.4cqi;
+    border-radius: 1.4cqi;
+    background: linear-gradient(135deg, #c0c1ff, #8083ff);
+    color: #0b0080;
+  }
+  .d-boton span {
+    width: 12cqi;
+    height: 1.1cqi;
+    border-radius: 99px;
+    background: rgb(11 0 128 / 0.55);
+  }
+  .d-boton :global(svg) {
+    width: 2.4cqi;
+    height: 2.4cqi;
+  }
+  /* Pastilla «desde»: el precio de partida a la vista (sin cifra: es una ilustración). */
+  .d-desde {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8cqi;
+    width: max-content;
+    height: 3.4cqi;
+    padding: 0 1.6cqi;
+    border-radius: 999px;
+    background: rgb(74 222 128 / 0.12);
+    box-shadow: inset 0 0 0 1px rgb(74 222 128 / 0.3);
+    color: #4ade80;
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 1.9cqi;
+    line-height: 1;
+  }
+  .d-desde span {
+    width: 5cqi;
+    height: 1cqi;
+    border-radius: 99px;
+    background: rgb(74 222 128 / 0.75);
+  }
+  .d-desde.grande {
+    height: 4.2cqi;
+    font-size: 2.3cqi;
+  }
+  .d-desde.grande span {
+    width: 8cqi;
+  }
+  .d-servicios {
+    top: 45cqi;
+    left: 4cqi;
+    right: 4cqi;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2cqi;
+  }
+  .d-tarjeta {
+    display: grid;
+    gap: 1.1cqi;
+    align-content: start;
+    padding: 2.4cqi;
+    border-radius: 2cqi;
+    background: #1f1e21;
+    box-shadow: inset 0 1px 0 rgb(229 225 228 / 0.06);
+  }
+  .d-icono {
+    display: grid;
+    place-items: center;
+    width: 5cqi;
+    height: 5cqi;
+    margin-bottom: 0.6cqi;
+    border-radius: 1.3cqi;
+    background: rgb(128 131 255 / 0.18);
+    color: #c0c1ff;
+  }
+  .d-icono :global(svg) {
+    width: 2.8cqi;
+    height: 2.8cqi;
+  }
+  .d-tarjeta-titulo {
+    height: 1.5cqi;
+    border-radius: 99px;
+    background: #e5e1e4;
+  }
+  .d-tarjeta .d-texto {
+    height: 0.85cqi;
+  }
+  .d-tarjeta .d-desde {
+    margin-top: 0.8cqi;
+  }
+  .d-pasos {
+    top: 72cqi;
+    left: 4cqi;
+    right: 4cqi;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .d-paso {
+    position: relative;
+    display: grid;
+    justify-items: start;
+    gap: 1.2cqi;
+  }
+  /* Línea que une los pasos. */
+  .d-paso:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    top: 2cqi;
+    left: 4cqi;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, rgb(192 193 255 / 0.5), rgb(192 193 255 / 0.12));
+  }
+  .d-paso-num {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 4cqi;
+    height: 4cqi;
+    border-radius: 999px;
+    background: #2a2a2c;
+    box-shadow: inset 0 0 0 1px rgb(192 193 255 / 0.4);
+    color: #c0c1ff;
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 1.9cqi;
+    font-weight: 600;
+    line-height: 1;
+  }
+  .d-paso-linea {
+    width: 72%;
+    height: 0.9cqi;
+    border-radius: 99px;
+    background: rgb(229 225 228 / 0.3);
+  }
+  .d-contacto {
+    top: 86cqi;
+    left: 4cqi;
+    right: 4cqi;
+    display: flex;
+    gap: 2cqi;
+  }
+  .d-wa-grande {
+    display: flex;
+    flex: 1.35;
+    align-items: center;
+    gap: 1.8cqi;
+    height: 9cqi;
+    padding: 0 3cqi;
+    border-radius: 2cqi;
+    background: #25d366;
+    color: #0b2a17;
+    box-shadow: 0 14px 30px -14px rgb(37 211 102 / 0.8);
+  }
+  .d-wa-grande :global(svg) {
+    width: 4cqi;
+    height: 4cqi;
+  }
+  .d-wa-grande span {
+    width: 46%;
+    height: 1.4cqi;
+    border-radius: 99px;
+    background: rgb(11 42 23 / 0.75);
+  }
+  .d-mini-form {
+    display: grid;
+    flex: 1;
+    gap: 0.9cqi;
+    align-content: center;
+    padding: 1.6cqi;
+    border-radius: 2cqi;
+    background: #1f1e21;
+  }
+  .d-campo {
+    height: 2cqi;
+    border-radius: 0.6cqi;
+    background: #2a2a2c;
+    box-shadow: inset 0 0 0 1px rgb(229 225 228 / 0.08);
+  }
+  .d-enviar {
+    width: 50%;
+    height: 2cqi;
+    border-radius: 0.6cqi;
+    background: #8083ff;
+  }
+
+  /* ── Notas (fallas y mejoras) ──────────────────────────────────────── */
+  .nota {
+    z-index: 2;
+    display: flex;
+    align-items: flex-start;
+    gap: 1.4cqi;
+    max-width: 41%;
+    padding: 1.3cqi 2.2cqi 1.3cqi 1.3cqi;
+    border-radius: 2.2cqi;
+    background: rgb(28 27 30 / 0.94);
+    color: #e5e1e4;
+    font-family: var(--font-display, system-ui);
+    font-size: clamp(11px, 2.75cqi, 13px);
+    font-weight: 600;
+    line-height: 1.25;
+    box-shadow: 0 14px 30px -12px rgb(0 0 0 / 0.7);
+  }
+  .nota-icono {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: max(16px, 4.2cqi);
+    height: max(16px, 4.2cqi);
+    border-radius: 999px;
+  }
+  .nota-icono :global(svg) {
+    width: 60%;
+    height: 60%;
+  }
+  .falla {
+    box-shadow:
+      inset 0 0 0 1px rgb(255 180 171 / 0.45),
+      0 14px 30px -12px rgb(0 0 0 / 0.55);
+  }
+  .falla .nota-icono {
+    background: #ffb4ab;
+    color: #690005;
+  }
+  .mejora {
+    box-shadow:
+      inset 0 0 0 1px rgb(74 222 128 / 0.4),
+      0 14px 30px -12px rgb(0 0 0 / 0.8);
+  }
+  .mejora .nota-icono {
+    background: #4ade80;
+    color: #05391a;
+  }
+  /* Antes: dos a la izquierda (visibles con la división al centro) y dos a la derecha. */
+  .n-servicios {
+    top: 31cqi;
+    left: 2.5cqi;
+  }
+  .n-formulario {
+    top: 76cqi;
+    left: 2.5cqi;
+  }
+  .n-precio {
+    top: 43cqi;
+    right: 2.5cqi;
+  }
+  .n-whatsapp {
+    right: 2.5cqi;
+    bottom: 8cqi;
+  }
+  /* Después: tres a la derecha y una a la izquierda. */
+  .n-respuesta {
+    top: 7.6cqi;
+    right: 2.5cqi;
+  }
+  .n-servicio {
+    top: 39.5cqi;
+    right: 2.5cqi;
+  }
+  .n-contacto {
+    top: 78.5cqi;
+    right: 2.5cqi;
+  }
+  .n-cotizar {
+    top: 68cqi;
+    left: 2.5cqi;
+  }
+
+  /* ── División ─────────────────────────────────────────────────────── */
+  .division {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    transform: translateX(var(--ad-corte));
+    pointer-events: none;
+  }
+  .division::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -1px;
+    width: 2px;
+    background: #e5e1e4;
+    box-shadow: 0 0 12px rgb(192 193 255 / 0.8);
+  }
+  .asa {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    display: grid;
+    place-items: center;
+    width: max(36px, 9cqi);
+    height: max(36px, 9cqi);
+    border-radius: 999px;
+    background: #e5e1e4;
+    color: #0b0080;
+    transform: translate(-50%, -50%);
+    box-shadow:
+      0 0 0 4px rgb(192 193 255 / 0.25),
+      0 10px 24px -6px rgb(0 0 0 / 0.7);
+  }
+  .asa::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: inherit;
+    box-shadow: 0 0 0 2px rgb(192 193 255 / 0.5);
+    opacity: 0;
+  }
+  .sello {
+    position: absolute;
+    top: 2.2cqi;
+    padding: 0.9cqi 2cqi;
+    border-radius: 999px;
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: clamp(11px, 2.2cqi, 12px);
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    line-height: 1.2;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .sello-antes {
+    right: calc(100% + 2.2cqi);
+    background: rgb(28 27 30 / 0.9);
+    color: #ffb4ab;
+    box-shadow: inset 0 0 0 1px rgb(255 180 171 / 0.35);
+  }
+  .sello-despues {
+    left: 2.2cqi;
+    background: rgb(128 131 255 / 0.22);
+    color: #c0c1ff;
+    box-shadow: inset 0 0 0 1px rgb(192 193 255 / 0.35);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+  }
+
+  /* ── Control deslizante ───────────────────────────────────────────── */
+  .control {
+    margin-top: 1rem;
+  }
+  :global(html:not(.js)) .control,
+  :global(html:not(.js)) .solo-js {
+    display: none;
+  }
+  .control input {
+    display: block;
+    width: 100%;
+    height: 44px;
+    margin: 0;
+    background: transparent;
+    cursor: ew-resize;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  .control input::-webkit-slider-runnable-track {
+    height: 4px;
+    border-radius: 4px;
+    background: linear-gradient(90deg, rgb(255 180 171 / 0.55) 0 var(--ad-corte), rgb(128 131 255 / 0.7) var(--ad-corte) 100%);
+  }
+  .control input::-moz-range-track {
+    height: 4px;
+    border-radius: 4px;
+    background: linear-gradient(90deg, rgb(255 180 171 / 0.55) 0 var(--ad-corte), rgb(128 131 255 / 0.7) var(--ad-corte) 100%);
+  }
+  .control input::-webkit-slider-thumb {
+    width: 24px;
+    height: 24px;
+    margin-top: -10px;
+    border: 0;
+    border-radius: 999px;
+    background: #e5e1e4;
+    box-shadow:
+      0 0 0 5px rgb(192 193 255 / 0.22),
+      0 4px 12px rgb(0 0 0 / 0.5);
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  .control input::-moz-range-thumb {
+    width: 24px;
+    height: 24px;
+    border: 0;
+    border-radius: 999px;
+    background: #e5e1e4;
+    box-shadow:
+      0 0 0 5px rgb(192 193 255 / 0.22),
+      0 4px 12px rgb(0 0 0 / 0.5);
+  }
+  .pista {
+    margin-top: 0.25rem;
+    text-align: center;
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    color: var(--color-ink-mute, #a19da0);
+  }
+  .control + .pista {
+    margin-top: 0;
+  }
+  :global(html:not(.js)) .pista {
+    margin-top: 1rem;
+  }
+
+  /* ── Movimiento ───────────────────────────────────────────────────── */
+  @media (prefers-reduced-motion: no-preference) {
+    .nota {
+      animation: ad-nota 0.7s var(--ease-out-expo) both;
+      animation-delay: calc(700ms + var(--n) * 140ms);
+    }
+    :global(.js) .antes-despues:not(.tocado) .asa::after {
+      animation: ad-latido 2.4s ease-out 3.8s infinite;
+    }
+  }
+  @keyframes ad-nota {
+    from {
+      opacity: 0;
+      transform: translateY(6px) scale(0.94);
+    }
+  }
+  @keyframes ad-latido {
+    0% {
+      opacity: 0.9;
+      transform: scale(1);
+    }
+    70%,
+    100% {
+      opacity: 0;
+      transform: scale(1.45);
+    }
+  }
+</style>
+
+<script>
+  // División deslizable: control de rango (teclado, lector de pantalla) y arrastre sobre la
+  // ilustración. Al cargar, un recorrido corto muestra los dos lados (salvo movimiento reducido).
+  const reducido = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  for (const figura of document.querySelectorAll<HTMLElement>('[data-antes-despues]')) {
+    const marco = figura.querySelector<HTMLElement>('[data-marco]');
+    const control = figura.querySelector<HTMLInputElement>('[data-control]');
+    if (!marco || !control) continue;
+    const antes = control.dataset.antes ?? '';
+    const despues = control.dataset.despues ?? '';
+    let recorrido = 0;
+
+    const pintar = (valor: number) => {
+      const v = Math.min(100, Math.max(0, valor));
+      figura.style.setProperty('--ad-corte', `${v.toFixed(2)}%`);
+      const entero = Math.round(v);
+      control.value = String(entero);
+      control.setAttribute('aria-valuetext', `${antes} ${entero} %, ${despues} ${100 - entero} %`);
+    };
+    const tocar = () => {
+      if (recorrido) cancelAnimationFrame(recorrido);
+      recorrido = 0;
+      figura.classList.add('tocado');
+    };
+
+    control.addEventListener('input', () => {
+      tocar();
+      pintar(Number(control.value));
+    });
+
+    // Arrastre: ratón y lápiz desde el primer toque; con el dedo solo el gesto horizontal
+    // (touch-action: pan-y deja el desplazamiento vertical al navegador).
+    let arrastrando = false;
+    const desdePuntero = (e: PointerEvent) => {
+      const r = marco.getBoundingClientRect();
+      pintar(((e.clientX - r.left) / r.width) * 100);
+    };
+    marco.addEventListener('pointerdown', (e) => {
+      if (e.button !== 0) return;
+      arrastrando = true;
+      tocar();
+      if (e.pointerType !== 'touch') {
+        marco.setPointerCapture(e.pointerId);
+        desdePuntero(e);
+      }
+    });
+    marco.addEventListener('pointermove', (e) => {
+      if (arrastrando) desdePuntero(e);
+    });
+    const soltar = () => {
+      arrastrando = false;
+    };
+    marco.addEventListener('pointerup', soltar);
+    marco.addEventListener('pointercancel', soltar);
+    marco.addEventListener('lostpointercapture', soltar);
+
+    // Recorrido de presentación: 50 → 76 → 26 → 50 (muestra el «antes» y luego el «después»).
+    if (!reducido) {
+      const puntos = [50, 76, 26, 50];
+      const tramo = 1100;
+      const suave = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2);
+      window.setTimeout(() => {
+        if (figura.classList.contains('tocado')) return;
+        const inicio = performance.now();
+        const paso = (ahora: number) => {
+          const t = (ahora - inicio) / tramo;
+          const i = Math.floor(t);
+          if (i >= puntos.length - 1) {
+            pintar(50);
+            recorrido = 0;
+            return;
+          }
+          pintar(puntos[i] + (puntos[i + 1] - puntos[i]) * suave(t - i));
+          recorrido = requestAnimationFrame(paso);
+        };
+        recorrido = requestAnimationFrame(paso);
+      }, 1400);
+    }
+  }
+</script>

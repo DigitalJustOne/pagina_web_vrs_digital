@@ -1,0 +1,90 @@
+---
+/**
+ * Tarjetas de guías publicadas (sección «guias» de /recursos/). Toda la tarjeta es clicable
+ * con un solo enlace (en el título H3). Muestra la fecha de actualización con <time>.
+ *
+ * <Guias items={s.items} />
+ */
+import Icono from '@/components/ui/Icono.astro';
+import { fechaLarga } from '@/lib/paginas';
+import type { ResumenGuia } from '@/data/contenido/tipos';
+
+interface Props {
+  items: readonly ResumenGuia[];
+  fondo?: 'base' | 'bajo';
+  class?: string;
+}
+
+const { items, fondo = 'base', class: clase } = Astro.props;
+const capa = fondo === 'bajo' ? 'bg-surface-high hover:bg-surface-highest' : 'bg-surface-low hover:bg-surface-high';
+---
+<ul role="list" class:list={['guias grid gap-5 md:grid-cols-2', clase]}>
+  {
+    items.map((g, i) => (
+      <li
+        data-revelar
+        style={`--retraso:${(i % 2) * 110}ms`}
+        class:list={['guia group relative isolate flex flex-col overflow-hidden rounded-panel p-6 transition-colors duration-300 sm:p-8', capa]}
+      >
+        <span aria-hidden="true" class="guia-luz pointer-events-none absolute -z-10" />
+        <div class="flex items-center justify-between gap-3">
+          <p class="chip font-mono text-[0.6875rem] tracking-[0.12em] uppercase">{g.etiqueta}</p>
+          {g.icono && (
+            <span class="flex h-12 w-12 items-center justify-center rounded-xl bg-surface-lowest text-primary">
+              <Icono nombre={g.icono} tamano={22} />
+            </span>
+          )}
+        </div>
+        <h3 class="mt-6 font-display text-[1.375rem] leading-snug font-semibold tracking-[-0.015em] text-ink sm:text-2xl">
+          <a href={g.href} class="enlace-guia rounded-md">
+            {g.titulo}
+          </a>
+        </h3>
+        <p class="mt-3 flex-1 leading-relaxed text-ink-soft">{g.resumen}</p>
+        <div class="mt-6 flex flex-wrap items-center justify-between gap-3 text-sm">
+          {g.actualizado && (
+            <p class="text-ink-mute">
+              Actualizada el <time datetime={g.actualizado}>{fechaLarga(g.actualizado)}</time>
+            </p>
+          )}
+          <span aria-hidden="true" class="inline-flex items-center gap-1.5 font-semibold text-primary">
+            Leer la guía
+            <Icono nombre="arrow-right" tamano={16} class="transition-transform duration-300 group-hover:translate-x-1" />
+          </span>
+        </div>
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .guia {
+    box-shadow: inset 0 1px 0 rgb(229 225 228 / 0.05);
+  }
+  .guia-luz {
+    inset: auto -30% -60% auto;
+    width: 70%;
+    aspect-ratio: 1;
+    border-radius: 999px;
+    background: radial-gradient(circle, rgb(99 102 241 / 0.18), transparent 70%);
+    opacity: 0.6;
+    transition: opacity 0.5s;
+  }
+  .guia:hover .guia-luz {
+    opacity: 1;
+  }
+  /* Enlace estirado: toda la tarjeta responde al clic con un solo enlace. */
+  .enlace-guia::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-panel, 1.5rem);
+  }
+  .enlace-guia:focus-visible {
+    outline: none;
+  }
+  .enlace-guia:focus-visible::after {
+    outline: 2px solid var(--color-primary, #c0c1ff);
+    outline-offset: 3px;
+  }
+</style>

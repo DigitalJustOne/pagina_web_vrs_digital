@@ -1,0 +1,294 @@
+---
+/**
+ * Plantilla estándar de las páginas interiores. Recibe un módulo de src/data/contenido/*.ts
+ * y arma la página completa:
+ *
+ *   Base (SEO, canónica, JSON-LD, noindex si es borrador)
+ *   → HeroPagina (migas + H1)            → aviso de borrador
+ *   → Respuesta directa + índice «En esta página»
+ *   → slot «antes-secciones»
+ *   → cada sección (Seccion.astro), con fondos alternos; slots «seccion-<id>» y «despues-<id>»
+ *   → slot «despues-secciones»
+ *   → Preguntas frecuentes (#preguntas) → «Siga leyendo», fuentes y fecha
+ *   → slot «antes-cta» → BandaCta (si el módulo tiene `cta`)
+ *
+ * Uso mínimo:
+ *   import { contenido } from '@/data/contenido/precios';
+ *   <PlantillaPagina contenido={contenido} />
+ *
+ * Con visual propio en la portada y opciones por sección:
+ *   <PlantillaPagina contenido={contenido} resaltado="páginas web en Bogotá" opciones={{ quien: { retrato: true } }}>
+ *     <MaquetaWeb slot="visual" />
+ *     <div slot="antes-secciones" class="contenedor pb-4"><Insignias /></div>
+ *   </PlantillaPagina>
+ *
+ * Los slots «seccion-<id>» reemplazan la sección con ese id (conserve id y aria-labelledby en
+ * su marcado); «despues-<id>» agrega contenido justo después de ella.
+ */
+import Base from '@/layouts/Base.astro';
+import BandaCta from '@/components/ui/BandaCta.astro';
+import EncabezadoSeccion from '@/components/ui/EncabezadoSeccion.astro';
+import Icono from '@/components/ui/Icono.astro';
+import Preguntas from '@/components/ui/Preguntas.astro';
+import RespuestaDirecta from '@/components/ui/RespuestaDirecta.astro';
+import { CONTACTO, enlaceWhatsApp } from '@/data/sitio';
+import { NOTA_PRECIOS, fechaLarga, grafoPagina, muestraPrecio } from '@/lib/paginas';
+import type { FondoSeccion, ModuloPagina, OpcionesSeccion, TipoSeccion } from '@/data/contenido/tipos';
+import AvisoBorrador from './AvisoBorrador.astro';
+import HeroPagina from './HeroPagina.astro';
+import IndicePagina from './IndicePagina.astro';
+import Relacionados from './Relacionados.astro';
+import Seccion from './Seccion.astro';
+
+interface TarjetaVisual {
+  titulo: string;
+  detalle: string;
+}
+
+interface Props {
+  contenido: ModuloPagina;
+  /** visual: texto + visual a la derecha (por defecto) · compacto: solo texto. */
+  hero?: 'visual' | 'compacto';
+  /** editorial: secciones a todo el ancho (por defecto) · documento: índice lateral fijo y texto (legales). */
+  estilo?: 'editorial' | 'documento';
+  /** Fragmento exacto del H1 que se pinta con el degradado. */
+  resaltado?: string;
+  /** Sin slot «visual»: HeroVisual con la escena 3D real (pesada). Por defecto solo el póster. */
+  escena3d?: boolean;
+  /** Textos de HeroVisual cuando no hay slot «visual». */
+  visual?: { etiqueta?: string; consulta?: TarjetaVisual | false; respuesta?: TarjetaVisual | false };
+  /** Opciones de presentación por id de sección (fondo, resaltado, disposición, iluminar, retrato…). */
+  opciones?: Readonly<Record<string, OpcionesSeccion>>;
+  /** Índice «En esta página». Por defecto, si hay 4 secciones o más. */
+  indice?: boolean;
+  /** Título H2 de las preguntas frecuentes. */
+  tituloPreguntas?: string;
+  /** Tipo schema.org del nodo de la página (por defecto según la ruta). */
+  tipoPagina?: string;
+  /** Nodos JSON-LD propios de la página (se suman al grafo). */
+  jsonldExtra?: readonly object[];
+  /** Imagen para redes (Open Graph). */
+  imagen?: string;
+  /** Fondo de la primera sección; luego alternan. */
+  fondoInicial?: 'base' | 'bajo';
+  /** Números grandes y tenues al fondo de cada sección (solo computador). */
+  numerar?: boolean;
+  /** noindex. Por defecto, igual a `borrador` del módulo. */
+  noIndexar?: boolean;
+}
+
+const {
+  contenido: c,
+  hero = 'visual',
+  estilo = 'editorial',
+  resaltado,
+  escena3d = false,
+  visual,
+  opciones = {},
+  indice,
+  tituloPreguntas = 'Preguntas frecuentes',
+  tipoPagina,
+  jsonldExtra,
+  imagen,
+  fondoInicial = 'base',
+  numerar = estilo === 'editorial',
+  noIndexar = Boolean(c.borrador),
+} = Astro.props;
+
+const documento = estilo === 'documento';
+const jsonld = grafoPagina(c, { tipo: tipoPagina, extra: jsonldExtra });
+
+// ── Fondos alternos ─────────────────────────────────────────────────────────
+const contrario = (f: 'base' | 'bajo') => (f === 'base' ? 'bajo' : 'base');
+/** Tipos que, cuando les toca fondo base, llevan luces de marca. */
+const CON_BRILLO: readonly TipoSeccion[] = ['planes', 'formulario'];
+const secciones = c.secciones.map((s, i) => {
+  const turno = i % 2 === 0 ? fondoInicial : contrario(fondoInicial);
+  const op = opciones[s.id] ?? {};
+  const fondo: FondoSeccion = op.fondo ?? (turno === 'base' && CON_BRILLO.includes(s.tipo) ? 'brillo' : turno);
+  return {
+    s,
+    op,
+    fondo,
+    ancla: s.tipo === 'formulario' ? 'formulario' : s.id,
+    reemplazo: `seccion-${s.id}`,
+    despues: `despues-${s.id}`,
+  };
+});
+const fondoPreguntas = secciones.length % 2 === 0 ? fondoInicial : contrario(fondoInicial);
+const hayPreguntas = Boolean(c.preguntas?.length);
+const fondoRelacionados = hayPreguntas ? contrario(fondoPreguntas) : fondoPreguntas;
+
+// ── Índice «En esta página» ─────────────────────────────────────────────────
+const itemsIndice = [
+  ...secciones.map(({ s, ancla }) => ({ texto: s.etiqueta, href: `#${ancla}` })),
+  ...(hayPreguntas ? [{ texto: 'Preguntas frecuentes', href: '#preguntas' }] : []),
+];
+const conIndice = indice ?? secciones.length >= 4;
+
+// ── Bajo la respuesta directa: nota de precios, verificación y vigencia ────
+const precioEnRespuesta = muestraPrecio(c.respuestaDirecta);
+const vigenciaVisible = !c.borrador && c.vigencia;
+
+const mensajeWhatsApp = c.cta?.ctaWhatsApp;
+---
+<Base titulo={c.seo.titulo} descripcion={c.seo.descripcion} ruta={c.ruta} imagen={imagen} jsonld={jsonld} noIndexar={noIndexar} pieCompacto={Boolean(c.cta)}>
+  <HeroPagina
+    hero={c.hero}
+    migas={c.ruta === '/' ? [] : c.migas}
+    variante={documento ? 'compacto' : hero}
+    resaltado={resaltado}
+    conVisual={Astro.slots.has('visual')}
+    escena3d={escena3d}
+    visual={visual}
+  >
+    <slot name="visual" slot="visual" />
+  </HeroPagina>
+
+  {
+    c.borrador && (
+      <div class="contenedor -mt-4 mb-10 lg:mb-12">
+        <AvisoBorrador texto={c.avisoBorrador} vigencia={c.vigencia} />
+      </div>
+    )
+  }
+
+  {
+    // Documento: índice lateral fijo y contenido a la derecha.
+    documento ? (
+      <div class="contenedor grid gap-10 pb-16 lg:grid-cols-12 lg:gap-14">
+        <aside class="lg:col-span-3">
+          <div class="lg:sticky lg:top-[calc(var(--alto-encabezado)+2rem)]">
+            <IndicePagina items={itemsIndice} variante="lateral" />
+          </div>
+        </aside>
+        <div class="min-w-0 lg:col-span-9">
+          <RespuestaDirecta texto={c.respuestaDirecta} class="mb-12">
+            {precioEnRespuesta && <p class="relative mt-4 text-sm text-ink-soft">{NOTA_PRECIOS}</p>}
+            {vigenciaVisible && (
+              <p class="relative mt-4 text-sm text-ink-soft">
+                Versión {c.vigencia?.version}. Vigente desde: {c.vigencia?.desde}
+              </p>
+            )}
+          </RespuestaDirecta>
+          <slot name="antes-secciones" />
+          {secciones.map(({ s, op, reemplazo, despues }) => (
+            <>
+              {Astro.slots.has(reemplazo) ? <slot name={reemplazo} /> : <Seccion seccion={s} opciones={op} marco="documento" />}
+              {Astro.slots.has(despues) && <slot name={despues} />}
+            </>
+          ))}
+          <slot name="despues-secciones" />
+        </div>
+      </div>
+    ) : (
+      <>
+        <div class="contenedor pb-12 sm:pb-16 lg:pb-20">
+          <div class:list={['grid gap-4 lg:gap-6', conIndice && 'lg:grid-cols-12']}>
+            <RespuestaDirecta texto={c.respuestaDirecta} class:list={[conIndice && 'lg:col-span-8']}>
+              {(precioEnRespuesta || c.verificado || vigenciaVisible) && (
+                <div class="relative mt-5 flex flex-wrap gap-x-6 gap-y-2 text-sm text-ink-soft">
+                  {precioEnRespuesta && (
+                    <p class="flex items-center gap-2">
+                      <Icono nombre="calculator" tamano={16} class="text-primary" />
+                      {NOTA_PRECIOS}
+                    </p>
+                  )}
+                  {c.verificado && (
+                    <p class="flex items-center gap-2">
+                      <Icono nombre="calendar" tamano={16} class="text-primary" />
+                      <span>Información verificada el <time datetime={c.verificado}>{fechaLarga(c.verificado)}</time></span>
+                    </p>
+                  )}
+                  {vigenciaVisible && (
+                    <p>
+                      Versión {c.vigencia?.version}. Vigente desde: {c.vigencia?.desde}
+                    </p>
+                  )}
+                </div>
+              )}
+            </RespuestaDirecta>
+            {conIndice && <IndicePagina items={itemsIndice} class="lg:col-span-4" />}
+          </div>
+        </div>
+
+        <slot name="antes-secciones" />
+
+        {secciones.map(({ s, op, fondo, reemplazo, despues }, i) => (
+          <>
+            {Astro.slots.has(reemplazo) ? (
+              <slot name={reemplazo} />
+            ) : (
+              <Seccion seccion={s} fondo={fondo} opciones={op} numero={numerar ? i + 1 : undefined} />
+            )}
+            {Astro.slots.has(despues) && <slot name={despues} />}
+          </>
+        ))}
+
+        <slot name="despues-secciones" />
+      </>
+    )
+  }
+
+  {
+    hayPreguntas && c.preguntas && (
+      <section
+        id="preguntas"
+        aria-labelledby="preguntas-titulo"
+        class:list={['seccion relative isolate', fondoPreguntas === 'bajo' && 'fondo-bajo bg-surface-low']}
+      >
+        <div class="contenedor grid gap-10 lg:grid-cols-12 lg:gap-14">
+          <div class="lg:col-span-4">
+            <div class="lg:sticky lg:top-[calc(var(--alto-encabezado)+2.5rem)]">
+              <EncabezadoSeccion etiqueta="Dudas comunes" titulo={tituloPreguntas} id="preguntas-titulo" />
+              {mensajeWhatsApp && (
+                <div class="mt-8 max-w-sm">
+                  <p class="leading-relaxed text-ink-soft">¿Tiene otra pregunta? {CONTACTO.respuestaHumana}</p>
+                  <a
+                    href={enlaceWhatsApp(mensajeWhatsApp)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="boton boton-secundario mt-4 w-full sm:w-auto"
+                  >
+                    <Icono nombre="whatsapp" tamano={20} class="icono-whatsapp" />
+                    Preguntar por WhatsApp
+                    <span class="sr-only"> (se abre en una pestaña nueva)</span>
+                  </a>
+                </div>
+              )}
+            </div>
+          </div>
+          <div class="min-w-0 lg:col-span-8">
+            <Preguntas preguntas={c.preguntas} fondo={fondoPreguntas} />
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <Relacionados enlaces={c.enlacesInternos} fuentes={c.fuentes} actualizado={c.actualizado} fondo={fondoRelacionados} />
+
+  <slot name="antes-cta" />
+
+  {
+    c.cta && (
+      <BandaCta titulo={c.cta.titulo} texto={c.cta.texto} ctaPrincipal={c.cta.ctaPrincipal} ctaWhatsApp={c.cta.ctaWhatsApp} />
+    )
+  }
+</Base>
+
+<script>
+  // Parallax, contadores, texto que se ilumina y narrativas fijas (data-parallax, data-contar…).
+  import '@/scripts/desplazamiento';
+</script>
+
+<style>
+  /* (El progreso de lectura ya lo muestra el encabezado: .enc-progreso.) */
+  .fondo-bajo::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgb(192 193 255 / 0.28) 30%, rgb(128 131 255 / 0.22) 70%, transparent);
+  }
+</style>

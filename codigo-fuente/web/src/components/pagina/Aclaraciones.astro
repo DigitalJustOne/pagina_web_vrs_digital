@@ -1,0 +1,31 @@
+---
+/**
+ * Aclaraciones cortas en tarjetas (título H3 + texto): límites, dependencias de terceros, datos.
+ *
+ * <Aclaraciones items={[{ titulo: 'Es una función de Meta', texto: '…' }]} />
+ */
+import Icono from '@/components/ui/Icono.astro';
+import type { BloqueTitulado } from '@/data/contenido/tipos';
+
+interface Props {
+  items: readonly BloqueTitulado[];
+  fondo?: 'base' | 'bajo';
+  class?: string;
+}
+
+const { items, fondo = 'base', class: clase } = Astro.props;
+const capa = fondo === 'bajo' ? 'bg-surface-high' : 'bg-surface-low';
+---
+<ul role="list" class:list={['aclaraciones grid gap-4 sm:grid-cols-2 lg:grid-cols-3', clase]}>
+  {
+    items.map((a, i) => (
+      <li data-revelar style={`--retraso:${Math.min(i, 5) * 60}ms`} class:list={['borde-fantasma rounded-card p-5 sm:p-6', capa]}>
+        <h3 class="flex items-start gap-2.5 font-display text-[1.0625rem] leading-snug font-semibold text-ink">
+          <Icono nombre="info" tamano={18} class="mt-0.5 text-primary" />
+          {a.titulo}
+        </h3>
+        <p class="mt-2.5 text-[0.9375rem] leading-relaxed text-ink-soft">{a.texto}</p>
+      </li>
+    ))
+  }
+</ul>

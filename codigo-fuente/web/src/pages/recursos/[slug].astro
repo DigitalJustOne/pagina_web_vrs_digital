@@ -1,0 +1,164 @@
+---
+// /recursos/<slug>/ — una guía de src/content/recursos/<slug>.md (colección «recursos»).
+//
+// Orden: portada (migas, H1, firma y ficha) → «En resumen» (el `resumen` del frontmatter, la
+// respuesta directa para Google y asistentes de IA) → índice fijo + texto de la guía → autor →
+// preguntas frecuentes → servicios relacionados → siga leyendo, fuentes y fecha → cierre.
+// JSON-LD: página (con speakable), migas, Article (autor = fundador, fuentes como citation) y FAQPage.
+// Rótulos y enlaces de la página: src/data/contenido/recursos.ts (textosGuia, serviciosPorGuia).
+import type { GetStaticPaths } from 'astro';
+import Base from '@/layouts/Base.astro';
+import Relacionados from '@/components/pagina/Relacionados.astro';
+import Seccion from '@/components/pagina/Seccion.astro';
+import BandaCta from '@/components/ui/BandaCta.astro';
+import Icono from '@/components/ui/Icono.astro';
+import RespuestaDirecta from '@/components/ui/RespuestaDirecta.astro';
+import AutorGuia from '@/components/paginas/empresa/AutorGuia.astro';
+import CuerpoGuia from '@/components/paginas/empresa/CuerpoGuia.astro';
+import EncabezadoGuia from '@/components/paginas/empresa/EncabezadoGuia.astro';
+import PreguntasGuia from '@/components/paginas/empresa/PreguntasGuia.astro';
+import { guiasPublicadas, isoFecha, prepararGuia, rutaGuia, verificarAutor, type Guia } from '@/components/paginas/empresa/guias';
+import { contenido as recursos, serviciosPorGuia, textosGuia } from '@/data/contenido/recursos';
+import type { Enlace, Seccion as DatosSeccion, SeccionGuias, SeccionTarjetas } from '@/data/contenido/tipos';
+import { NOTA_PRECIOS, fechaLarga, muestraPrecio, respuestaConNota } from '@/lib/paginas';
+import { articulo, grafo, migas as migasSchema, pagina, preguntasFrecuentes, urlAbsoluta } from '@/lib/schema';
+
+export const getStaticPaths = (async () => {
+  const guias = await guiasPublicadas();
+  return guias.map((guia) => ({ params: { slug: guia.id }, props: { guia, todas: guias } }));
+}) satisfies GetStaticPaths;
+
+interface Props {
+  guia: Guia;
+  todas: Guia[];
+}
+
+const { guia, todas } = Astro.props;
+const d = guia.data;
+verificarAutor(guia);
+const preparada = prepararGuia(guia);
+const ruta = rutaGuia(guia.id);
+const publicado = isoFecha(d.publicado);
+const actualizado = isoFecha(d.actualizado);
+
+// ── Datos del módulo de /recursos/ ─────────────────────────────────────────
+const secciones: readonly DatosSeccion[] = recursos.secciones;
+const seccionGuias = secciones.find((s): s is SeccionGuias => s.tipo === 'guias');
+const resumenModulo = seccionGuias?.items.find((g) => g.slug === guia.id);
+const seccionServicios = secciones.find((s): s is SeccionTarjetas => s.id === 'servicios' && s.tipo === 'tarjetas');
+const ordenServicios = serviciosPorGuia[guia.id];
+const servicios: SeccionTarjetas | undefined = seccionServicios && {
+  ...seccionServicios,
+  id: 'servicios-relacionados',
+  items: ordenServicios
+    ? ordenServicios.map((href) => seccionServicios.items.find((it) => it.href === href)).filter((it) => it !== undefined)
+    : seccionServicios.items,
+};
+
+// ── Migas, índice y enlaces ─────────────────────────────────────────────────
+const migas = [
+  ...recursos.migas,
+  { nombre: d.titulo, ruta },
+];
+const indice: Enlace[] = [
+  ...preparada.titulos.filter((t) => t.nivel === 2).map((t) => ({ texto: t.texto, href: `#${t.id}` })),
+  ...(d.preguntas.length ? [{ texto: textosGuia.preguntasTitulo, href: '#preguntas' }] : []),
+];
+const otrasGuias: Enlace[] = todas
+  .filter((g) => g.id !== guia.id)
+  .map((g) => {
+    const enModulo = recursos.enlacesInternos.find((e) => e.href === rutaGuia(g.id));
+    return enModulo ?? { texto: g.data.h1, href: rutaGuia(g.id) };
+  });
+const siga: Enlace[] = [
+  ...otrasGuias,
+  textosGuia.todasLasGuias,
+  ...recursos.enlacesInternos.filter((e) => !e.href.startsWith('/recursos/')),
+];
+
+const etiqueta = resumenModulo ? `${textosGuia.etiqueta} · ${resumenModulo.etiqueta}` : textosGuia.etiqueta;
+const ficha = [
+  { rotulo: textosGuia.publicada, valor: fechaLarga(publicado), fecha: publicado, icono: 'calendar' as const },
+  { rotulo: textosGuia.actualizada, valor: fechaLarga(actualizado), fecha: actualizado, icono: 'refresh' as const },
+  { rotulo: textosGuia.lectura, valor: textosGuia.minutos(preparada.minutos), icono: 'clock' as const },
+  { rotulo: textosGuia.fuentes, valor: String(d.fuentes.length), icono: 'file' as const },
+  { rotulo: textosGuia.preguntas, valor: String(d.preguntas.length), icono: 'chat' as const },
+];
+
+// ── JSON-LD ─────────────────────────────────────────────────────────────────
+const nodoPagina = {
+  ...pagina({ ruta, titulo: d.titulo, descripcion: d.descripcion, fechaModificacion: actualizado }),
+  speakable: { '@type': 'SpeakableSpecification', cssSelector: ['#titulo-pagina', '[data-respuesta-directa]'] },
+};
+const nodoArticulo = {
+  ...articulo({ ruta, titulo: d.h1, descripcion: d.descripcion, publicado, modificado: actualizado }),
+  alternativeHeadline: d.titulo,
+  abstract: d.resumen,
+  keywords: [d.palabraClave, ...d.secundarias].join(', '),
+  wordCount: preparada.palabras,
+  timeRequired: `PT${preparada.minutos}M`,
+  isPartOf: { '@id': urlAbsoluta(ruta) + '#pagina' },
+  citation: d.fuentes.map((f) => ({ '@type': 'CreativeWork', name: f.titulo, url: f.url })),
+};
+const jsonld = grafo(
+  nodoPagina,
+  migasSchema(migas),
+  nodoArticulo,
+  ...(d.preguntas.length ? [preguntasFrecuentes(d.preguntas.map((p) => ({ pregunta: p.pregunta, respuesta: respuestaConNota(p) })))] : []),
+);
+
+const precioEnResumen = muestraPrecio(d.resumen);
+const cta = recursos.cta;
+---
+<Base titulo={d.titulo} descripcion={d.descripcion} ruta={ruta} tipo="article" jsonld={jsonld} publicado={publicado} modificado={actualizado} pieCompacto>
+  <article aria-labelledby="titulo-pagina">
+    <EncabezadoGuia
+      titulo={d.h1}
+      bajada={d.descripcion}
+      etiqueta={etiqueta}
+      migas={migas}
+      firma={preparada.firma}
+      rotuloFicha={textosGuia.ficha}
+      ficha={ficha}
+    />
+
+    <div class="contenedor pb-12 lg:pb-16">
+      <RespuestaDirecta texto={d.resumen} class="lg:max-w-[58rem]">
+        {
+          precioEnResumen && (
+            <p class="relative mt-5 flex items-center gap-2 text-sm text-ink-soft">
+              <Icono nombre="calculator" tamano={16} class="text-primary" />
+              {NOTA_PRECIOS}
+            </p>
+          )
+        }
+      </RespuestaDirecta>
+    </div>
+
+    <CuerpoGuia html={preparada.html} indice={indice} tituloIndice={textosGuia.indice} class="pb-6" />
+
+    <AutorGuia etiqueta={textosGuia.autorEtiqueta} titulo={textosGuia.autorTitulo} enlace={textosGuia.autorEnlace} />
+  </article>
+
+  {
+    d.preguntas.length > 0 && (
+      <PreguntasGuia
+        preguntas={d.preguntas}
+        etiqueta={textosGuia.preguntasEtiqueta}
+        titulo={textosGuia.preguntasTitulo}
+        mensajeWhatsApp={cta.ctaWhatsApp}
+      />
+    )
+  }
+
+  {servicios && servicios.items.length > 0 && <Seccion seccion={servicios} fondo="base" opciones={{ resaltado: 'por usted' }} />}
+
+  <Relacionados enlaces={siga} fuentes={d.fuentes} actualizado={actualizado} fondo="bajo" />
+
+  <BandaCta titulo={cta.titulo} texto={cta.texto} ctaPrincipal={cta.ctaPrincipal} ctaWhatsApp={cta.ctaWhatsApp} />
+</Base>
+
+<script>
+  // Texto que se ilumina, contadores y parallax de las secciones compartidas.
+  import '@/scripts/desplazamiento';
+</script>

@@ -1,0 +1,145 @@
+---
+/**
+ * Preguntas frecuentes con <details>/<summary> nativo: funciona sin JS, con teclado y lector de pantalla.
+ * La altura se anima con interpolate-size y ::details-content donde existan; si no, abre sin animación.
+ * Para el JSON-LD use preguntasFrecuentes() de @/lib/schema con las mismas preguntas (texto idéntico).
+ *
+ * <Preguntas titulo="Preguntas frecuentes" idTitulo="preguntas-titulo" preguntas={[
+ *   { pregunta: '¿Cuánto cuesta una página web?', respuesta: 'Desde $1.200.000…' },
+ * ]} />
+ *
+ * Párrafos: separe con una línea en blanco (\n\n) dentro de `respuesta`.
+ * Si una respuesta muestra un precio de VRS Digital, se agrega NOTA_PRECIOS («IVA incluido») debajo
+ * (desactívelo con notaPrecios={false}). En el JSON-LD use respuestaConNota() de @/lib/paginas.
+ */
+import Icono from './Icono.astro';
+import { NOTA_PRECIOS, muestraPrecio } from '@/lib/paginas';
+
+interface Props {
+  preguntas: readonly { pregunta: string; respuesta: string }[];
+  /** Si se da, se muestra como encabezado sobre la lista. */
+  titulo?: string;
+  nivelTitulo?: 'h2' | 'h3';
+  idTitulo?: string;
+  /** Abre la primera pregunta al cargar. */
+  abrirPrimera?: boolean;
+  /** Solo una abierta a la vez (atributo name de <details>). */
+  exclusivo?: boolean;
+  /** Superficie de la sección: 'base' → items surface-low; 'bajo' → items surface-high. */
+  fondo?: 'base' | 'bajo';
+  /** Nota de IVA bajo las respuestas que muestran un precio. Por defecto sí. */
+  notaPrecios?: boolean;
+  class?: string;
+}
+
+const {
+  preguntas,
+  titulo,
+  nivelTitulo = 'h2',
+  idTitulo,
+  abrirPrimera = false,
+  exclusivo = false,
+  fondo = 'base',
+  notaPrecios = true,
+  class: clase,
+} = Astro.props;
+
+const Titulo = nivelTitulo;
+const grupo = exclusivo ? `preguntas-${Math.random().toString(36).slice(2, 8)}` : undefined;
+const parrafos = (texto: string) => texto.split(/\n\s*\n/).map((t) => t.trim()).filter(Boolean);
+---
+<div class:list={['preguntas', fondo === 'bajo' && 'sobre-bajo', clase]}>
+  {titulo && <Titulo id={idTitulo} class="titulo-seccion mb-8">{titulo}</Titulo>}
+  <div class="grid gap-3">
+    {
+      preguntas.map((p, i) => (
+        <details class="pregunta group" name={grupo} open={abrirPrimera && i === 0 ? true : undefined}>
+          <summary class="flex min-h-14 cursor-pointer list-none items-center gap-4 rounded-card px-5 py-4 sm:px-6">
+            <span class="flex-1 font-display text-[1.0625rem] leading-snug font-medium tracking-[-0.01em] text-ink sm:text-lg">
+              {p.pregunta}
+            </span>
+            <span
+              aria-hidden="true"
+              class="icono flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-surface-lowest text-primary"
+            >
+              <Icono nombre="chevron-down" tamano={18} />
+            </span>
+          </summary>
+          <div class="respuesta px-5 pb-5 sm:px-6 sm:pb-6">
+            {parrafos(p.respuesta).map((t) => (
+              <p class="max-w-3xl text-base leading-relaxed text-ink-soft [&+p]:mt-3">{t}</p>
+            ))}
+            {notaPrecios && muestraPrecio(p.respuesta) && (
+              <p class="mt-3 flex items-start gap-2 text-sm leading-snug text-ink-mute">
+                <Icono nombre="info" tamano={16} class="mt-px text-primary" />
+                {NOTA_PRECIOS}
+              </p>
+            )}
+          </div>
+        </details>
+      ))
+    }
+  </div>
+</div>
+
+<style>
+  .pregunta {
+    border-radius: var(--radius-card, 1rem);
+    background: var(--color-surface-low, #1c1b1e);
+    transition: background-color 0.25s;
+  }
+  .pregunta:hover,
+  .pregunta[open] {
+    background: var(--color-surface-high, #2a2a2c);
+  }
+  .sobre-bajo .pregunta {
+    background: var(--color-surface-high, #2a2a2c);
+  }
+  .sobre-bajo .pregunta:hover,
+  .sobre-bajo .pregunta[open] {
+    background: var(--color-surface-highest, #353437);
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+  summary:focus-visible {
+    outline: 2px solid var(--color-primary, #c0c1ff);
+    outline-offset: 2px;
+  }
+  .icono {
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.25s;
+  }
+  .pregunta[open] .icono {
+    transform: rotate(180deg);
+    background: rgb(128 131 255 / 0.16);
+  }
+
+  /* Animación de altura: solo donde el navegador la soporta. */
+  @supports (interpolate-size: allow-keywords) and selector(::details-content) {
+    @media (prefers-reduced-motion: no-preference) {
+      .pregunta {
+        interpolate-size: allow-keywords;
+      }
+      .pregunta::details-content {
+        block-size: 0;
+        overflow-y: clip;
+        opacity: 0;
+        transition:
+          block-size 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+          opacity 0.3s,
+          content-visibility 0.4s allow-discrete;
+      }
+      .pregunta[open]::details-content {
+        block-size: auto;
+        opacity: 1;
+      }
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .icono,
+    .pregunta {
+      transition: none;
+    }
+  }
+</style>

@@ -1,0 +1,79 @@
+---
+// /precios/ — planes, precios «desde» (IVA incluido), qué incluye y qué no, forma de pago y
+// condiciones. Todo el texto sale de src/data/contenido/precios.ts y todos los valores de
+// src/data/sitio.ts (PLANES, PLAN_ENTRADA, FORMA_DE_PAGO, CONDICIONES, MEDIOS_PAGO).
+// La plantilla arma SEO, JSON-LD (página, migas y FAQ), secciones, preguntas y cierre.
+// Momentos propios de la página:
+//   - Portada: los tres planes como capas de vidrio en 3D (cada una enlaza a su detalle) y el
+//     Plan Emprendedor aparte.
+//   - #comparar: tabla punto por punto con el encabezado de planes fijo (cómoda en celular).
+//   - #pago: elija un plan y vea cuánto paga de una vez o en 12 cuotas; botón «Pagar en línea» (Bold).
+// JSON-LD propio: catálogo de ofertas (contenido.ofertas) con precios «desde» e IVA incluido.
+import PlantillaPagina from '@/components/pagina/PlantillaPagina.astro';
+import ComparadorPlanes from '@/components/paginas/sectores/ComparadorPlanes.astro';
+import PilaPlanes from '@/components/paginas/sectores/PilaPlanes.astro';
+import SimuladorPago from '@/components/paginas/sectores/SimuladorPago.astro';
+import { contenido } from '@/data/contenido/precios';
+import type { FondoSeccion, SeccionPasos, SeccionTabla } from '@/data/contenido/tipos';
+import { PLAN_ENTRADA, SITIO } from '@/data/sitio';
+import { especificacionPrecio, urlAbsoluta } from '@/lib/schema';
+
+/** Sección por id, con su posición (para el fondo alterno y el número de orden). */
+function seccion<T>(id: string) {
+  const i = contenido.secciones.findIndex((s) => s.id === id);
+  const fondo: FondoSeccion = i % 2 === 0 ? 'base' : 'bajo';
+  return { s: contenido.secciones[i] as T, fondo, numero: i + 1 };
+}
+const comparar = seccion<SeccionTabla>('comparar');
+const pago = seccion<SeccionPasos>('pago');
+
+// ── JSON-LD: catálogo de ofertas (los mismos valores que se ven en la página) ───────────
+const ID_ORG = urlAbsoluta('/#organizacion');
+const catalogo = {
+  '@type': 'OfferCatalog',
+  '@id': urlAbsoluta(contenido.ruta) + '#catalogo',
+  name: `Planes de ${SITIO.nombre}`,
+  url: urlAbsoluta(contenido.ruta),
+  itemListElement: contenido.ofertas.map((o) => {
+    const ancla = o.id === 'emprendedor' ? '#emprendedor' : `#plan-${o.id}`;
+    return {
+      '@type': 'Offer',
+      '@id': urlAbsoluta(contenido.ruta) + ancla,
+      name: o.nombre,
+      description: o.descripcion,
+      url: urlAbsoluta(contenido.ruta) + ancla,
+      seller: { '@id': ID_ORG },
+      areaServed: { '@type': 'Country', name: 'Colombia' },
+      priceCurrency: 'COP',
+      itemOffered: { '@type': 'Service', name: o.nombre, description: o.descripcion, provider: { '@id': ID_ORG } },
+      priceSpecification: [
+        // La Landing Page es pago único de valor fijo; el Plan Emprendedor, un valor fijo al mes; los
+        // planes web, precio anual «desde» y cuota mensual si paga en 12 cuotas. Todos con IVA incluido.
+        ...(o.precioDesde !== null
+          ? [especificacionPrecio(o.cuotaDesde === null ? 'Pago único' : 'Precio anual', o.precioDesde, { desde: o.cuotaDesde !== null })]
+          : []),
+        ...(o.cuotaDesde !== null
+          ? [especificacionPrecio(o.precioDesde === null ? 'Mensualidad' : 'Cuota en 12 cuotas', o.cuotaDesde, { desde: o.precioDesde !== null, mensual: true })]
+          : []),
+      ],
+    };
+  }),
+};
+---
+<PlantillaPagina
+  contenido={contenido}
+  resaltado="Precios"
+  jsonldExtra={[catalogo]}
+  opciones={{
+    planes: { resaltado: 'Una landing' },
+    aparte: { resaltado: 'aparte', plegar: 'Ver qué se paga aparte' },
+    factores: { resaltado: '«desde»', plegar: 'Ver qué puede subir el precio' },
+    condiciones: { resaltado: 'Condiciones claras', plegar: 'Ver las condiciones' },
+    emprendedor: { resaltado: PLAN_ENTRADA.nombre, plegar: 'Ver en qué consiste' },
+    'sin-acceso-whatsapp': { resaltado: 'el agente de IA', plegar: 'Ver qué pasa en ese caso' },
+  }}
+>
+  <PilaPlanes slot="visual" />
+  <ComparadorPlanes slot="seccion-comparar" seccion={comparar.s} fondo={comparar.fondo} numero={comparar.numero} resaltado="punto por punto" />
+  <SimuladorPago slot="seccion-pago" seccion={pago.s} fondo={pago.fondo} numero={pago.numero} resaltado="se paga" />
+</PlantillaPagina>

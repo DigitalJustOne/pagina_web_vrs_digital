@@ -1,0 +1,418 @@
+---
+/**
+ * Visual de la portada de /precios/: los tres planes como capas de vidrio que se apilan en 3D,
+ * de la más sencilla (atrás) a la oferta principal (adelante). Cada capa «incluye la anterior».
+ * Debajo, aparte, el Plan Emprendedor, y la nota «IVA incluido».
+ *
+ * Es contenido real (no una imagen): cada capa es un enlace al detalle del plan (#plan-<id>) y el
+ * Plan Emprendedor lleva a #emprendedor. Precios: PLANES y PLAN_ENTRADA de sitio.ts.
+ * Textos: textosPrecios.pila (src/data/contenido/precios.ts).
+ *
+ * Movimiento: las capas suben en orden al cargar, flotan despacio, se inclinan con el puntero y
+ * se enderezan al bajar. Sin JS o con movimiento reducido: quietas. Sin cambios de tamaño (CLS 0).
+ *
+ * <PilaPlanes slot="visual" />
+ */
+import Icono from '@/components/ui/Icono.astro';
+import { textosPrecios } from '@/data/contenido/precios';
+import { NOTA_PRECIOS, PLANES, PLAN_ENTRADA, cuotaMensual, formatoCOP } from '@/data/sitio';
+
+interface Props {
+  class?: string;
+}
+const { class: clase } = Astro.props;
+const T = textosPrecios.pila;
+const n = PLANES.length;
+---
+<div data-pila class:list={['pila relative mx-auto w-full max-w-[34rem]', clase]}>
+  <span aria-hidden="true" class="suelo"></span>
+  <nav aria-label={T.etiqueta} class="escena">
+    <div class="enderezar">
+      <ol role="list" class="capas">
+        {
+          PLANES.map((p, i) => (
+            <li class="capa-li" style={`--i:${i};--z:${i - (n - 1) / 2}`}>
+              {i > 0 && (
+                <span aria-hidden="true" class="union">
+                  <Icono nombre="plus" tamano={12} trazo={2.5} />
+                  <span class="union-texto">{T.suma}</span>
+                </span>
+              )}
+              <a href={`#plan-${p.id}`} class:list={['capa', p.destacado && 'destacado borde-luz']}>
+                <span aria-hidden="true" class="canto" />
+                <span class="capa-cabeza">
+                  <span class="capa-num">Plan {String(i + 1).padStart(2, '0')}</span>
+                  {p.etiqueta && (
+                    <span class="capa-chip">
+                      <Icono nombre="spark" tamano={12} />
+                      {p.etiqueta}
+                    </span>
+                  )}
+                </span>
+                <span class="capa-cuerpo">
+                  <span class="capa-nombre">{p.nombre}</span>
+                  <span class="capa-precio">
+                    <span class="capa-rotulo">{T.precioAnual}</span>
+                    <span class="capa-valor">{formatoCOP(p.precioAnualDesde)}</span>
+                  </span>
+                </span>
+                <span class="capa-mes">
+                  {T.cuotas} <strong>{formatoCOP(cuotaMensual(p.precioAnualDesde))}</strong> {T.alMes}
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+
+      <a href="#emprendedor" class="aparte vidrio">
+        <span class="aparte-chip">{T.aparte}</span>
+        <span class="aparte-nombre">{PLAN_ENTRADA.nombre}</span>
+        <span class="aparte-valor">
+          {formatoCOP(PLAN_ENTRADA.mensualidad)} <span>{T.alMes}</span>
+        </span>
+      </a>
+    </div>
+  </nav>
+  <p class="nota">
+    <Icono nombre="calculator" tamano={16} class="text-primary" />
+    {NOTA_PRECIOS}
+  </p>
+</div>
+
+<script>
+  import { inclinar } from './inclinar';
+  inclinar('[data-pila]', { x: 12, y: 8 });
+</script>
+
+<style>
+  .pila {
+    --rx: 0deg;
+    --ry: 0deg;
+  }
+  .suelo {
+    position: absolute;
+    left: 6%;
+    right: 6%;
+    top: 30%;
+    height: 50%;
+    border-radius: 999px;
+    background: radial-gradient(closest-side, rgb(99 102 241 / 0.34), transparent 75%);
+    filter: blur(30px);
+    pointer-events: none;
+  }
+  .escena {
+    position: relative;
+    perspective: 1400px;
+    perspective-origin: 50% 30%;
+  }
+  .enderezar {
+    transform-style: preserve-3d;
+  }
+  .capas {
+    display: grid;
+    gap: 0.625rem;
+    transform-style: preserve-3d;
+    transform: rotateX(calc(7deg + var(--rx))) rotateY(calc(-9deg + var(--ry)));
+    transition: transform 0.6s var(--ease-out-expo);
+  }
+  .capa-li {
+    position: relative;
+    display: grid;
+    gap: 0.625rem;
+    width: 92%;
+    transform-style: preserve-3d;
+    /* Escalera: cada capa un poco más a la derecha y más cerca (sin pasar del ancho del visual). */
+    transform: translateX(calc(var(--i) * 4%)) translateZ(calc(var(--z) * 30px));
+  }
+  .union {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    margin-left: 1.25rem;
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.6875rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-ink-mute, #a19da0);
+  }
+  .union :global(svg) {
+    display: block;
+    padding: 3px;
+    width: 18px;
+    height: 18px;
+    border-radius: 999px;
+    background: rgb(128 131 255 / 0.18);
+    color: var(--color-primary, #c0c1ff);
+  }
+  .capa {
+    position: relative;
+    display: grid;
+    gap: 0.75rem;
+    padding: 1rem 1.125rem 1rem;
+    border-radius: 1.125rem;
+    background:
+      linear-gradient(160deg, rgb(255 255 255 / 0.07), rgb(255 255 255 / 0.01) 60%),
+      rgb(42 42 44 / 0.78);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    backdrop-filter: blur(18px) saturate(140%);
+    box-shadow:
+      0 28px 50px -26px rgb(0 0 0 / 0.85),
+      inset 0 1px 0 rgb(255 255 255 / 0.08),
+      inset 0 0 0 1px rgb(229 225 228 / 0.08);
+    color: var(--color-ink, #e5e1e4);
+    transition: transform 0.45s var(--ease-out-expo), box-shadow 0.45s;
+  }
+  .capa:hover,
+  .capa:focus-visible {
+    transform: translateZ(26px) translateY(-3px);
+    box-shadow:
+      0 36px 60px -24px rgb(0 0 0 / 0.9),
+      0 0 0 1px rgb(192 193 255 / 0.35),
+      inset 0 1px 0 rgb(255 255 255 / 0.1);
+  }
+  /* Canto de la capa: da grosor de vidrio bajo cada tarjeta. */
+  .canto {
+    position: absolute;
+    left: 6%;
+    right: 6%;
+    bottom: -7px;
+    height: 7px;
+    border-radius: 0 0 14px 14px;
+    background: linear-gradient(180deg, rgb(128 131 255 / 0.3), rgb(99 102 241 / 0.05));
+    filter: blur(1px);
+  }
+  .destacado {
+    background:
+      radial-gradient(120% 90% at 100% 0%, rgb(128 131 255 / 0.3), transparent 60%),
+      linear-gradient(160deg, rgb(255 255 255 / 0.08), rgb(255 255 255 / 0.01) 60%),
+      rgb(42 42 44 / 0.86);
+    box-shadow:
+      0 34px 70px -24px rgb(99 102 241 / 0.55),
+      0 30px 50px -26px rgb(0 0 0 / 0.85),
+      inset 0 1px 0 rgb(255 255 255 / 0.1);
+  }
+  .capa-cabeza {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+  .capa-num {
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.6875rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-ink-mute, #a19da0);
+  }
+  .capa-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    background: rgb(128 131 255 / 0.18);
+    color: var(--color-primary, #c0c1ff);
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.625rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .capa-cuerpo {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 0.5rem 1rem;
+  }
+  .capa-nombre {
+    flex: 1 1 9rem;
+    font-family: var(--font-display);
+    font-size: 1.1875rem;
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+  .capa-precio {
+    display: grid;
+    justify-items: end;
+    text-align: right;
+  }
+  .capa-rotulo {
+    font-size: 0.6875rem;
+    color: var(--color-ink-soft, #c9c5c8);
+  }
+  .capa-valor {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+  }
+  .destacado .capa-valor {
+    background: linear-gradient(120deg, #e5e1e4 0%, #c0c1ff 55%, #a5a7ff 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .capa-mes {
+    padding-top: 0.625rem;
+    box-shadow: inset 0 1px 0 rgb(229 225 228 / 0.08);
+    font-size: 0.8125rem;
+    color: var(--color-ink-soft, #c9c5c8);
+  }
+  .capa-mes strong {
+    font-weight: 600;
+    color: var(--color-primary, #c0c1ff);
+  }
+
+  .aparte {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.375rem 0.75rem;
+    width: fit-content;
+    max-width: 100%;
+    min-height: 44px;
+    margin-top: 1.5rem;
+    padding: 0.625rem 1rem 0.625rem 0.625rem;
+    border-radius: 999px;
+    box-shadow:
+      0 18px 40px -16px rgb(0 0 0 / 0.7),
+      inset 0 0 0 1px rgb(229 225 228 / 0.12);
+    font-size: 0.875rem;
+    color: var(--color-ink, #e5e1e4);
+    transform: translateZ(40px);
+    transition: box-shadow 0.3s;
+  }
+  .aparte:hover {
+    box-shadow:
+      0 18px 40px -16px rgb(0 0 0 / 0.7),
+      inset 0 0 0 1px rgb(192 193 255 / 0.4);
+  }
+  .aparte-chip {
+    padding: 0.25rem 0.625rem;
+    border-radius: 999px;
+    background: rgb(229 225 228 / 0.1);
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.625rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-ink-soft, #c9c5c8);
+  }
+  .aparte-nombre {
+    font-weight: 600;
+  }
+  .aparte-valor {
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--color-primary, #c0c1ff);
+  }
+  .aparte-valor span {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 0.8125rem;
+    color: var(--color-ink-soft, #c9c5c8);
+  }
+  .nota {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    font-size: 0.8125rem;
+    color: var(--color-ink-soft, #c9c5c8);
+  }
+
+  @media (min-width: 640px) {
+    .capa {
+      padding: 1.125rem 1.375rem 1.125rem;
+    }
+    .capa-nombre {
+      font-size: 1.3125rem;
+    }
+    .capa-valor {
+      font-size: 1.75rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .capas {
+      transform: rotateX(calc(10deg + var(--rx))) rotateY(calc(-16deg + var(--ry))) rotateZ(0.5deg);
+    }
+    .capa-li {
+      width: 88%;
+      transform: translateX(calc(var(--i) * 6%)) translateZ(calc(var(--z) * 48px));
+    }
+  }
+
+  /* ── Movimiento ──────────────────────────────────────────────────────── */
+  @media (prefers-reduced-motion: no-preference) {
+    .capa {
+      animation: pila-subir 1s var(--ease-out-expo) both;
+      animation-delay: calc(0.25s + var(--i) * 0.14s);
+    }
+    /* La pila flota entera: con la flotación en cada capa (que ya anima translate al subir) la
+       animación no iba por el compositor y recalculaba estilos en cada cuadro. */
+    .capas {
+      animation: pila-flotar 7s ease-in-out 1.4s infinite;
+    }
+    .union {
+      animation: pila-aparecer 0.8s var(--ease-out-expo) both;
+      animation-delay: calc(0.45s + var(--i) * 0.14s);
+    }
+    .aparte {
+      animation: pila-aparecer 0.9s var(--ease-out-expo) 0.8s both;
+    }
+    .suelo {
+      animation: pila-respirar 8s ease-in-out infinite;
+    }
+    @supports (animation-timeline: view()) {
+      .enderezar {
+        animation-name: pila-enderezar;
+        animation-duration: auto;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+        animation-timeline: view();
+        animation-range: exit 0% exit 100%;
+      }
+    }
+  }
+  @keyframes pila-subir {
+    from {
+      opacity: 0;
+      translate: 0 34px;
+      scale: 0.96;
+    }
+  }
+  @keyframes pila-flotar {
+    0%,
+    100% {
+      translate: 0 0;
+    }
+    50% {
+      translate: 0 -5px;
+    }
+  }
+  @keyframes pila-aparecer {
+    from {
+      opacity: 0;
+      translate: 0 10px;
+    }
+  }
+  @keyframes pila-respirar {
+    0%,
+    100% {
+      opacity: 0.85;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.06);
+    }
+  }
+  @keyframes pila-enderezar {
+    to {
+      transform: rotateX(-8deg) rotateY(10deg) translateY(-6%);
+    }
+  }
+</style>

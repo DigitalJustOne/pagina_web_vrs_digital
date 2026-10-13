@@ -1,0 +1,98 @@
+---
+/**
+ * Retrato de una persona (por defecto, el fundador desde FUNDADOR de sitio.ts) en un marco de luz.
+ * Sirve el .webp hermano si existe en public/ (ej. /img/hero-image.webp).
+ *
+ * <Retrato />
+ * <Retrato foto={persona.foto} alt={persona.altFoto} nombre={persona.nombre} cargo={persona.cargo} enlaces={persona.enlaces} />
+ */
+import Icono from '@/components/ui/Icono.astro';
+import { FUNDADOR } from '@/data/sitio';
+import { imagenPublica } from '@/lib/casos';
+import type { Enlace } from '@/data/contenido/tipos';
+
+interface Props {
+  foto?: string;
+  alt?: string;
+  nombre?: string;
+  cargo?: string;
+  enlaces?: readonly Enlace[];
+  /** Carga inmediata (solo si está en la primera pantalla). */
+  prioridad?: boolean;
+  class?: string;
+}
+
+const {
+  foto = FUNDADOR.foto,
+  alt = `Retrato de ${FUNDADOR.nombreCorto}, fundador de VRS Digital`,
+  nombre = FUNDADOR.nombreCorto,
+  cargo = FUNDADOR.cargo,
+  enlaces = [],
+  prioridad = false,
+  class: clase,
+} = Astro.props;
+const img = imagenPublica(foto);
+---
+<figure class:list={['retrato borde-luz relative isolate overflow-hidden rounded-panel', clase]}>
+  <span aria-hidden="true" class="retrato-luz pointer-events-none absolute inset-0 -z-10"></span>
+  <span aria-hidden="true" class="retrato-reticula pointer-events-none absolute inset-0 -z-10"></span>
+  <picture>
+    {img.webp && <source srcset={img.webp} type="image/webp" />}
+    <img
+      src={foto}
+      alt={alt}
+      width={img.ancho}
+      height={img.alto}
+      loading={prioridad ? 'eager' : 'lazy'}
+      decoding="async"
+      class="aspect-square w-full object-cover object-top"
+    />
+  </picture>
+  <figcaption class="retrato-pie relative -mt-20 px-5 pt-14 pb-5 sm:px-6 sm:pb-6">
+    <p class="font-display text-xl leading-tight font-semibold text-ink">{nombre}</p>
+    <p class="mt-1 text-sm leading-snug text-ink-soft">{cargo}</p>
+    {
+      enlaces.length > 0 && (
+        <ul role="list" class="mt-3 flex flex-wrap gap-x-4">
+          {enlaces.map((e) => (
+            <li>
+              <a
+                href={e.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-primary underline-offset-4 hover:underline"
+              >
+                {e.texto}
+                <span class="sr-only"> de {nombre} (se abre en una pestaña nueva)</span>
+                <Icono nombre="arrow-up-right" tamano={15} />
+              </a>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </figcaption>
+</figure>
+
+<style>
+  .retrato {
+    background: var(--color-surface-low, #1c1b1e);
+    box-shadow: 0 30px 60px -30px rgb(0 0 0 / 0.7);
+  }
+  .retrato-luz {
+    background:
+      radial-gradient(60% 50% at 50% 38%, rgb(128 131 255 / 0.32), transparent 70%),
+      radial-gradient(80% 60% at 50% 100%, rgb(99 102 241 / 0.18), transparent 70%);
+  }
+  .retrato-reticula {
+    background-image:
+      linear-gradient(rgb(229 225 228 / 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(229 225 228 / 0.04) 1px, transparent 1px);
+    background-size: 32px 32px;
+    -webkit-mask-image: radial-gradient(70% 60% at 50% 35%, #000, transparent 80%);
+    mask-image: radial-gradient(70% 60% at 50% 35%, #000, transparent 80%);
+  }
+  .retrato-pie {
+    background: linear-gradient(180deg, transparent, rgb(19 19 21 / 0.92) 45%);
+  }
+</style>

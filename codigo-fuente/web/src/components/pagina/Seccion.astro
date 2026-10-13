@@ -1,0 +1,438 @@
+---
+/**
+ * Pinta UNA sección de un módulo de contenido según su `tipo` (ver src/data/contenido/tipos.ts).
+ * La usa PlantillaPagina.astro, pero también puede usarse sola en una página propia:
+ *
+ * <Seccion seccion={contenido.secciones[0]} fondo="bajo" opciones={{ resaltado: 'paso a paso' }} />
+ *
+ * Estructura común:
+ *   <section id aria-labelledby="<id>-titulo">  → encabezado (etiqueta + H2 + introducción)
+ *   → cuerpo según el tipo → pie: párrafos, nota, nota de precios (si hay un precio) y enlace.
+ *
+ * Disposición (opciones.disposicion):
+ *   dividido → en computador, encabezado fijo a la izquierda (5 columnas) y cuerpo a la derecha (7).
+ *              Por defecto en lista, texto, conversacion, contacto y formulario.
+ *   apilado  → encabezado arriba (título a la izquierda, introducción a la derecha) y cuerpo debajo.
+ *
+ * Fondo: base (#131315), bajo (surface-low con filo de luz arriba) o brillo (base con luces de
+ * marca que se desplazan con parallax). Los componentes internos ajustan su capa al fondo.
+ *
+ * marco="documento": sin contenedor ni fondos (páginas legales dentro de su propia grilla).
+ */
+import ConversacionWhatsApp from '@/components/ui/ConversacionWhatsApp.astro';
+import EncabezadoSeccion from '@/components/ui/EncabezadoSeccion.astro';
+import GaleriaCasos from '@/components/ui/GaleriaCasos.astro';
+import Icono from '@/components/ui/Icono.astro';
+import Insignias from '@/components/ui/Insignias.astro';
+import Pasos from '@/components/ui/Pasos.astro';
+import PlanesPrecios from '@/components/ui/PlanesPrecios.astro';
+import Tarjetas from '@/components/ui/Tarjetas.astro';
+import Formulario from '@/components/islas/Formulario';
+import { NOTA_PRECIOS, fechaLarga, idTitulo, muestraPrecio } from '@/lib/paginas';
+import type { FondoSeccion, OpcionesSeccion, Seccion, TipoSeccion } from '@/data/contenido/tipos';
+import Aclaraciones from './Aclaraciones.astro';
+import Aval from './Aval.astro';
+import Canales from './Canales.astro';
+import CasosDetalle from './CasosDetalle.astro';
+import Cifras from './Cifras.astro';
+import Citas from './Citas.astro';
+import Comparacion from './Comparacion.astro';
+import EnlaceFlecha from './EnlaceFlecha.astro';
+import Guias from './Guias.astro';
+import ListaPuntos from './ListaPuntos.astro';
+import Nota from './Nota.astro';
+import Perfil from './Perfil.astro';
+import PieSeccion from './PieSeccion.astro';
+import Plegable from './Plegable.astro';
+import Retrato from './Retrato.astro';
+import Tabla from './Tabla.astro';
+
+interface Props {
+  seccion: Seccion;
+  /** Superficie que le asigna la plantilla (alterna base/bajo). opciones.fondo tiene prioridad. */
+  fondo?: FondoSeccion;
+  opciones?: OpcionesSeccion;
+  marco?: 'completo' | 'documento';
+  /** Número de orden: se pinta enorme y tenue al fondo (solo computador, decorativo). */
+  numero?: number;
+  class?: string;
+}
+
+const { seccion: s, fondo = 'base', opciones = {}, marco = 'completo', numero, class: clase } = Astro.props;
+
+const documento = marco === 'documento';
+const superficie: FondoSeccion = documento ? 'base' : (opciones.fondo ?? fondo);
+/** Capa de los componentes internos: tarjetas más claras sobre 'bajo'. */
+const tono = superficie === 'bajo' ? 'bajo' : 'base';
+
+const DIVIDIDOS: readonly TipoSeccion[] = ['lista', 'texto', 'conversacion', 'contacto', 'formulario'];
+const listaConTitulos = s.tipo === 'lista' && s.items.some((it) => typeof it !== 'string');
+const dividido = documento
+  ? false
+  : (opciones.disposicion ?? (DIVIDIDOS.includes(s.tipo) && !listaConTitulos ? 'dividido' : 'apilado')) === 'dividido';
+
+// La sección del formulario siempre es #formulario (BarraMovil y los enlaces «#formulario» la buscan).
+const idSeccion = s.tipo === 'formulario' ? 'formulario' : s.id;
+const idT = idTitulo(s.id);
+
+// ── Pie de sección ──────────────────────────────────────────────────────────
+// Párrafos extra (en texto, perfil y contacto son el cuerpo); nota (salvo la de medios de pago,
+// que ya se ve como fichas, y la del formulario, que va junto al título); nota de precios.
+const parrafosPie = s.tipo === 'texto' || s.tipo === 'perfil' || s.tipo === 'contacto' ? [] : (s.parrafos ?? []);
+const notaPie =
+  s.tipo === 'formulario' || (s.tipo === 'pasos' && s.medios?.length && s.nota?.startsWith('Medios de pago')) ? undefined : s.nota;
+// PlanesPrecios ya trae NOTA_PRECIOS al pie.
+const pie = { parrafos: parrafosPie, nota: notaPie, notaPrecios: s.tipo !== 'planes' && muestraPrecio(s), enlace: s.enlace };
+/** En «conversacion», las aclaraciones van a todo el ancho bajo el teléfono, y el pie tras ellas. */
+const aclaracionesAbajo = s.tipo === 'conversacion' && Boolean(s.aclaraciones?.length);
+
+// ── Datos por tipo ──────────────────────────────────────────────────────────
+const parrafosTexto = s.tipo === 'texto' ? s.parrafos : [];
+const [entrada, ...restoTexto] = parrafosTexto;
+const escalonado =
+  s.tipo === 'tarjetas' && (opciones.escalonado ?? ((s.columnas ?? 3) === 3 && s.items.length === 3));
+// Plan Emprendedor: se muestra si el módulo lo pide (planEntrada) o en la versión completa.
+const sinEmprendedor =
+  s.tipo === 'planes' ? (opciones.sinEmprendedor ?? !(s.planEntrada || s.compacto === false)) : true;
+// Plegado en celular (opciones.plegar): nunca en el formulario ni en la conversación (su orden en
+// celular depende de display: contents) ni en las páginas legales.
+const textoPlegar = documento || s.tipo === 'formulario' || s.tipo === 'conversacion' ? undefined : opciones.plegar;
+// Si el título o la introducción muestran un precio, «IVA incluido» queda a la vista, fuera del pliegue.
+const ivaFuera = Boolean(textoPlegar) && pie.notaPrecios && (muestraPrecio(s.titulo) || muestraPrecio(s.introduccion ?? ''));
+const piePlegado = ivaFuera ? { ...pie, notaPrecios: false } : pie;
+---
+<section
+  id={idSeccion}
+  aria-labelledby={idT}
+  data-tipo={s.tipo}
+  class:list={[
+    'seccion-pagina relative isolate',
+    documento ? 'documento py-10 first:pt-0 lg:py-12' : 'seccion',
+    !documento && `fondo-${superficie}`,
+    clase,
+  ]}
+>
+  {
+    superficie === 'brillo' && (
+      <div aria-hidden="true" class="luces pointer-events-none absolute inset-0 -z-10">
+        <span data-parallax="0.18" class="luz luz-a" />
+        <span data-parallax="-0.12" class="luz luz-b" />
+      </div>
+    )
+  }
+  {
+    numero !== undefined && !documento && (
+      <span aria-hidden="true" class="numero pointer-events-none absolute top-0 right-6 -z-10 hidden font-display select-none lg:block xl:right-[max(2rem,calc((100vw-80rem)/2+2rem))]">
+        {String(numero).padStart(2, '0')}
+      </span>
+    )
+  }
+
+  <div class:list={[!documento && 'contenedor']}>
+    <div class:list={['grid', dividido && 'gap-10 lg:grid-cols-12 lg:gap-x-14', s.tipo === 'conversacion' && 'conv-orden']}>
+      <!-- Encabezado (y, en disposición dividida, lo que acompaña al título) -->
+      <div class:list={['col-encabezado min-w-0', dividido && 'lg:col-span-5']}>
+        <div class:list={[dividido && 'lg:sticky lg:top-[calc(var(--alto-encabezado)+2.5rem)]']}>
+          <EncabezadoSeccion
+            etiqueta={s.etiqueta}
+            titulo={s.titulo}
+            resaltado={opciones.resaltado}
+            introduccion={s.introduccion}
+            id={idT}
+            dividido={!dividido && !documento}
+          />
+
+          {
+            s.tipo === 'conversacion' && (s.puntos?.length || s.verificado) && (
+              <div class="conv-puntos mt-8">
+                {s.puntos && s.puntos.length > 0 && (
+                  <ul role="list" class="grid gap-3">
+                    {s.puntos.map((p) => (
+                      <li class="flex items-start gap-3 leading-relaxed text-ink">
+                        <span class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary/12 text-primary">
+                          <Icono nombre="tick" tamano={14} />
+                        </span>
+                        <span>{p}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                {s.verificado && (
+                  <p class="mt-6 flex items-center gap-2 text-sm text-ink-mute">
+                    <Icono nombre="calendar" tamano={16} class="text-primary" />
+                    <span>Información verificada el <time datetime={s.verificado}>{fechaLarga(s.verificado)}</time></span>
+                  </p>
+                )}
+              </div>
+            )
+          }
+
+          {
+            s.tipo === 'formulario' && (
+              <div class="mt-8 grid gap-5">
+                {s.nota && <Nota texto={s.nota} icono="lock" />}
+                {s.enlacePrivacidad && <EnlaceFlecha href={s.enlacePrivacidad.href} texto={s.enlacePrivacidad.texto} />}
+                <Insignias variante="compacta" />
+              </div>
+            )
+          }
+
+          {s.tipo === 'texto' && opciones.retrato && dividido && <Retrato class="mt-10 max-w-[24rem] lg:max-w-[22rem]" />}
+        </div>
+      </div>
+
+      <!-- Cuerpo según el tipo (con opciones.plegar, plegado en celular) -->
+      <div class:list={['cuerpo min-w-0', dividido ? 'lg:col-span-7' : 'tras-encabezado']}>
+        {ivaFuera && <Nota texto={NOTA_PRECIOS} icono="calculator" class="mb-5" />}
+        <Plegable texto={textoPlegar}>
+        {
+          s.tipo === 'lista' && (
+            <ListaPuntos items={s.items} variante={s.variante} ejemplo={s.ejemplo} fondo={tono} />
+          )
+        }
+
+        {
+          s.tipo === 'texto' && (
+            <div class="texto">
+              {entrada && (
+                <p
+                  data-revelar-texto={opciones.iluminar ? 'desplazamiento' : undefined}
+                  class:list={[
+                    documento
+                      ? 'text-lg leading-relaxed text-ink'
+                      : 'font-display text-[1.375rem] leading-snug font-medium tracking-[-0.01em] text-ink sm:text-[1.75rem] sm:leading-[1.3]',
+                  ]}
+                >
+                  {entrada}
+                </p>
+              )}
+              {restoTexto.length > 0 && (
+                <div class="mt-6 grid gap-4 text-[1.0625rem] leading-relaxed text-ink-soft sm:text-lg">
+                  {restoTexto.map((p) => <p>{p}</p>)}
+                </div>
+              )}
+              {s.destacado && (
+                <div data-revelar class="vidrio borde-luz mt-8 rounded-panel p-6 sm:p-7">
+                  <p class="font-display text-lg font-semibold text-ink">{s.destacado.titulo}</p>
+                  <p class="mt-2 leading-relaxed text-ink-soft">{s.destacado.texto}</p>
+                </div>
+              )}
+              {s.cifras && s.cifras.length > 0 && <Cifras cifras={s.cifras} fondo={tono} class="mt-10" />}
+              {opciones.retrato && !dividido && <Retrato class="mt-10 max-w-[24rem]" />}
+            </div>
+          )
+        }
+
+        {
+          s.tipo === 'tarjetas' && (
+            <Tarjetas items={s.items} columnas={s.columnas ?? 3} fondo={tono} escalonado={escalonado} />
+          )
+        }
+
+        {
+          s.tipo === 'pasos' && (
+            <>
+              <Pasos pasos={s.items} etiqueta={s.titulo} />
+              {s.medios && s.medios.length > 0 && (
+                <div class="mt-12 flex flex-wrap items-center gap-3">
+                  <p class="font-mono text-xs tracking-[0.18em] text-ink-soft uppercase">Medios de pago</p>
+                  <ul role="list" class="flex flex-wrap gap-2">
+                    {s.medios.map((m) => (
+                      <li class="chip">
+                        <Icono nombre="lock" tamano={14} />
+                        {m}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </>
+          )
+        }
+
+        {
+          s.tipo === 'planes' && (
+            <PlanesPrecios compacto={s.compacto ?? false} fondo={tono} recomendado={s.recomendado} sinEmprendedor={sinEmprendedor} />
+          )
+        }
+
+        {
+          s.tipo === 'comparacion' && (
+            <>
+              <Comparacion
+                incluye={s.incluye}
+                noIncluye={s.noIncluye}
+                etiquetaIncluye={s.etiquetaIncluye}
+                etiquetaNoIncluye={s.etiquetaNoIncluye}
+                fondo={tono}
+              />
+              {s.aclaraciones && s.aclaraciones.length > 0 && <Aclaraciones items={s.aclaraciones} fondo={tono} class="mt-8" />}
+            </>
+          )
+        }
+
+        {s.tipo === 'tabla' && <Tabla columnas={s.columnas} filas={s.filas} etiquetadaPor={idT} fondo={tono} />}
+
+        {
+          s.tipo === 'conversacion' && (
+            <ConversacionWhatsApp
+              titulo={s.conversacion.titulo}
+              mensajes={s.conversacion.mensajes}
+              estado={s.conversacion.estado}
+              nota={s.conversacion.nota}
+              class="mx-auto lg:mr-0"
+            />
+          )
+        }
+
+        {
+          s.tipo === 'casos' && (
+            <>
+              <GaleriaCasos clientes={s.clientes} limite={s.limite} fondo={tono} />
+              {s.cifras && s.cifras.length > 0 && <Cifras cifras={s.cifras} fondo={tono} class="mt-10" />}
+              {s.aval && <Aval aval={s.aval} class="mt-10" />}
+            </>
+          )
+        }
+
+        {s.tipo === 'casos-detalle' && <CasosDetalle items={s.items} rotulos={s.rotulos} fondo={tono} />}
+        {s.tipo === 'citas' && <Citas items={s.items} fondo={tono} />}
+        {s.tipo === 'aval' && <Aval aval={s.aval} />}
+        {s.tipo === 'insignias' && <Insignias />}
+        {
+          s.tipo === 'perfil' && (
+            <Perfil persona={s.persona} parrafos={s.parrafos} cifras={s.cifras} fondo={tono} iluminar={opciones.iluminar} />
+          )
+        }
+        {s.tipo === 'guias' && <Guias items={s.items} fondo={tono} />}
+        {
+          s.tipo === 'contacto' && (
+            <Canales
+              canales={s.canales}
+              horario={s.horario}
+              respuestaHumana={s.respuestaHumana}
+              redes={s.redes}
+              parrafos={s.parrafos}
+              fondo={tono}
+            />
+          )
+        }
+        <!-- client:idle: en /contacto/ el formulario es el objetivo; se hidrata en reposo tras la carga
+             y no sobre el primer toque de quien salta a él con «Ir al formulario». -->
+        {
+          s.tipo === 'formulario' && (
+            <Formulario client:idle id="formulario-solicitud" planInicial={s.planInicial} fondo={tono} />
+          )
+        }
+
+        <!-- Pie (en conversación con aclaraciones va después de ellas, a todo el ancho) -->
+        {!aclaracionesAbajo && <PieSeccion {...piePlegado} />}
+        </Plegable>
+      </div>
+    </div>
+
+    {
+      aclaracionesAbajo && s.tipo === 'conversacion' && (
+        <>
+          <Aclaraciones items={s.aclaraciones ?? []} fondo={tono} class="mt-14 lg:mt-20" />
+          <PieSeccion {...pie} />
+        </>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  /* clip (no hidden): recorta luces y número sin romper los títulos fijos (sticky). */
+  .seccion-pagina:not(.documento) {
+    overflow: clip;
+  }
+  .fondo-bajo {
+    background: var(--color-surface-low, #1c1b1e);
+  }
+  /* Filo de luz en el borde superior de las secciones 'bajo'. */
+  .fondo-bajo::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgb(192 193 255 / 0.28) 30%, rgb(128 131 255 / 0.22) 70%, transparent);
+  }
+  .documento + .documento {
+    box-shadow: inset 0 1px 0 rgb(229 225 228 / 0.07);
+  }
+  .luz {
+    position: absolute;
+    border-radius: 999px;
+    filter: blur(70px);
+  }
+  .luz-a {
+    width: min(42rem, 90vw);
+    aspect-ratio: 1;
+    left: -14rem;
+    top: 8%;
+    background: radial-gradient(circle, rgb(99 102 241 / 0.28), transparent 65%);
+  }
+  .luz-b {
+    width: min(34rem, 80vw);
+    aspect-ratio: 1;
+    right: -10rem;
+    bottom: 0;
+    background: radial-gradient(circle, rgb(192 193 255 / 0.14), transparent 65%);
+  }
+  /* Conversación en celular: el teléfono va justo después del título (la demostración se ve
+     antes que la lista de puntos), y el pie de la sección al final. */
+  @media (max-width: 1023.98px) {
+    .conv-orden > .col-encabezado,
+    .conv-orden > .col-encabezado > div,
+    .conv-orden > .cuerpo {
+      display: contents;
+    }
+    .conv-orden :global(.conversacion) {
+      order: 1;
+    }
+    .conv-orden .conv-puntos {
+      order: 2;
+      margin-top: 0;
+    }
+    .conv-orden > .cuerpo > :global(.pie-seccion) {
+      order: 3;
+      margin-top: 0;
+    }
+  }
+  /* Número de orden: baja desde el borde superior de la sección y queda entero en el espacio del relleno. */
+  /* Cabe completo en el relleno superior de la sección (7rem en computador): nunca se lee cortado. */
+  .numero {
+    font-size: clamp(5rem, 7vw, 6.25rem);
+    line-height: 1;
+    font-weight: 600;
+    letter-spacing: -0.06em;
+    translate: 0 0.25rem;
+    background: linear-gradient(180deg, rgb(192 193 255 / 0.03) 40%, rgb(192 193 255 / 0.12));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-stroke: 1px rgb(192 193 255 / 0.13);
+  }
+  /* Al entrar la sección, el número sube desde el borde (ligado al desplazamiento, sin JS). */
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .numero {
+        animation-name: numero-asomar;
+        animation-duration: auto;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+        animation-timeline: view();
+        animation-range: entry 10% entry 90%;
+      }
+    }
+  }
+  @keyframes numero-asomar {
+    from {
+      translate: 0 -100%;
+    }
+    to {
+      translate: 0 0.25rem;
+    }
+  }
+</style>

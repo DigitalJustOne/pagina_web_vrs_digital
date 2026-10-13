@@ -1,0 +1,28 @@
+---
+// / — Página de inicio. Todo el texto sale de src/data/contenido/inicio.ts y los precios,
+// casos, cifras, aval y proceso de src/data/sitio.ts.
+// La plantilla arma SEO, JSON-LD (organización, fundador, sitio, página y preguntas frecuentes),
+// secciones, preguntas y cierre. Propio de la portada:
+//   - HeroVisual con la escena 3D real (la única página que la carga; el póster SVG va primero).
+//   - Recorrido: historia fija «encuentran → entienden → reciben respuesta» tras «El problema».
+import PlantillaPagina from '@/components/pagina/PlantillaPagina.astro';
+import Recorrido from '@/components/paginas/inicio/Recorrido.astro';
+import { contenido, visualHero } from '@/data/contenido/inicio';
+---
+<PlantillaPagina
+  contenido={contenido}
+  resaltado="reciban respuesta"
+  escena3d
+  visual={visualHero}
+  opciones={{
+    problema: { resaltado: 'no da abasto' },
+    servicios: { resaltado: 'una sola estrategia' },
+    diferenciador: { resaltado: 'gracias a la IA', plegar: 'Ver cómo trabajamos distinto' },
+    whatsapp: { resaltado: 'agente de IA' },
+    prueba: { resaltado: 'puede verificar' },
+    planes: { resaltado: 'precio publicado' },
+    proceso: { resaltado: 'paso a paso', plegar: 'Ver las cinco etapas' },
+  }}
+>
+  <Recorrido slot="despues-problema" />
+</PlantillaPagina>

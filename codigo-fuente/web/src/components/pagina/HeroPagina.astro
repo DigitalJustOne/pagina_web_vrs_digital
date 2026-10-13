@@ -1,0 +1,266 @@
+---
+/**
+ * Portada de una página interior: migas, etiqueta, H1 (el único de la página), subtítulo,
+ * botones y datos cortos. Fondo: suelo en perspectiva (retícula 3D en CSS) y luces de marca.
+ *
+ * Variantes:
+ *   visual   → texto a la izquierda (7 columnas) y visual a la derecha (5). El visual es el slot
+ *              «visual» si conVisual es true; si no, HeroVisual en modo póster (sin three.js),
+ *              salvo escena3d.
+ *   compacto → solo texto, más bajo (páginas legales, contacto, listados).
+ *
+ * <HeroPagina hero={contenido.hero} migas={contenido.migas} resaltado="páginas web en Bogotá" conVisual>
+ *   <MaquetaWeb slot="visual" />
+ * </HeroPagina>
+ *
+ * El H1, el subtítulo y las migas no se animan (son candidatos a LCP).
+ *
+ * hero.precio (opcional): ficha «Desde $X · IVA incluido» bajo el subtítulo, para que el precio
+ * se vea en la primera pantalla. En celular (< 640 px) se ocultan los puntos con visto (repiten
+ * las insignias de más abajo) y se acortan los espacios, para que el visual asome antes.
+ */
+import HeroVisual from '@/components/HeroVisual.astro';
+import Icono from '@/components/ui/Icono.astro';
+import Migas from '@/components/ui/Migas.astro';
+import { esExterno, partirResaltado } from '@/lib/paginas';
+import type { HeroPagina as DatosHero, Miga } from '@/data/contenido/tipos';
+
+interface TarjetaVisual {
+  titulo: string;
+  detalle: string;
+}
+
+interface Props {
+  hero: DatosHero;
+  /** Migas visibles (se omiten si hay menos de dos). */
+  migas?: readonly Miga[];
+  variante?: 'visual' | 'compacto';
+  /** Fragmento exacto del H1 que se pinta con el degradado. */
+  resaltado?: string;
+  /** true: el visual llega por el slot «visual». */
+  conVisual?: boolean;
+  /** Solo con HeroVisual: monta la escena 3D real (pesada). Por defecto, solo el póster. */
+  escena3d?: boolean;
+  /** Textos de HeroVisual (etiqueta accesible y tarjetas de vidrio). */
+  visual?: { etiqueta?: string; consulta?: TarjetaVisual | false; respuesta?: TarjetaVisual | false };
+  /** id del H1. */
+  idTitulo?: string;
+}
+
+const {
+  hero,
+  migas = [],
+  variante = 'visual',
+  resaltado,
+  conVisual = false,
+  escena3d = false,
+  visual = {},
+  idTitulo = 'titulo-pagina',
+} = Astro.props;
+
+const compacto = variante === 'compacto';
+const partes = partirResaltado(hero.titulo, resaltado);
+const esWhatsApp = (href: string) => href.includes('wa.me/');
+---
+<header
+  aria-labelledby={idTitulo}
+  class:list={[
+    'hero-pagina relative isolate',
+    compacto
+      ? 'pt-[calc(var(--alto-encabezado)+1.75rem)] pb-12 lg:pt-[calc(var(--alto-encabezado)+3rem)] lg:pb-16'
+      : 'pt-[calc(var(--alto-encabezado)+1.75rem)] pb-14 lg:pt-[calc(var(--alto-encabezado)+2.5rem)] lg:pb-24',
+  ]}
+>
+  <!-- Fondo: luces y suelo en perspectiva (decorativo) -->
+  <div aria-hidden="true" class="hero-fondo pointer-events-none absolute inset-0 -z-10">
+    <span class="hero-luz hero-luz-a"></span>
+    <span class="hero-luz hero-luz-b"></span>
+    <span class="hero-suelo"><span class="hero-reticula"></span></span>
+  </div>
+
+  <div class="contenedor">
+    {migas.length > 1 && <Migas items={migas} class="-ml-1 mb-4 lg:mb-8" />}
+
+    <div class:list={['grid gap-8 sm:gap-12', !compacto && 'lg:grid-cols-12 lg:items-center lg:gap-10']}>
+      <div class:list={['min-w-0', compacto ? 'max-w-4xl' : 'lg:col-span-7']}>
+        <h1 id={idTitulo} class="titulo-pagina">
+          {partes.map((p) => (p.resaltar ? <span class="degradado-texto">{p.texto}</span> : p.texto))}
+        </h1>
+        <p class="texto-guia mt-6 sm:text-xl sm:leading-relaxed">{hero.subtitulo}</p>
+        {
+          hero.precio && (
+            <p class="precio-hero hero-entra mt-5 inline-flex items-start gap-2.5 rounded-2xl px-4 py-2.5 text-[0.9375rem] leading-snug text-ink-soft sm:items-center sm:rounded-full sm:py-2" style="--d:60ms">
+              <Icono nombre="calculator" tamano={16} class="mt-0.5 shrink-0 text-primary sm:mt-0" />
+              <span><span class="font-semibold text-ink">{hero.precio}</span> ·&nbsp;IVA incluido</span>
+            </p>
+          )
+        }
+
+        {
+          (hero.ctaPrincipal || hero.ctaSecundario) && (
+            <div class="hero-entra mt-7 flex flex-col gap-3 sm:mt-9 sm:flex-row sm:flex-wrap" style="--d:120ms">
+              {hero.ctaPrincipal && (
+                <a href={hero.ctaPrincipal.href} class="boton boton-primario w-full sm:w-auto">
+                  {hero.ctaPrincipal.texto}
+                  <Icono nombre="arrow-right" tamano={18} />
+                </a>
+              )}
+              {hero.ctaSecundario && (
+                <a
+                  href={hero.ctaSecundario.href}
+                  target={esExterno(hero.ctaSecundario.href) ? '_blank' : undefined}
+                  rel={esExterno(hero.ctaSecundario.href) ? 'noopener noreferrer' : undefined}
+                  class="boton boton-secundario w-full sm:w-auto"
+                >
+                  {esWhatsApp(hero.ctaSecundario.href) && <Icono nombre="whatsapp" tamano={20} class="icono-whatsapp" />}
+                  {hero.ctaSecundario.texto}
+                  {esExterno(hero.ctaSecundario.href) && <span class="sr-only"> (se abre en una pestaña nueva)</span>}
+                </a>
+              )}
+            </div>
+          )
+        }
+
+        {
+          hero.puntos && hero.puntos.length > 0 && (
+            <ul role="list" class="hero-entra mt-8 hidden gap-x-6 gap-y-3 sm:flex sm:flex-row sm:flex-wrap" style="--d:220ms">
+              {hero.puntos.map((p) => (
+                <li class="flex items-center gap-2.5 text-[0.9375rem] leading-snug text-ink-soft">
+                  <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary/12 text-primary">
+                    <Icono nombre="tick" tamano={14} />
+                  </span>
+                  {p}
+                </li>
+              ))}
+            </ul>
+          )
+        }
+      </div>
+
+      {
+        !compacto && (
+          <div class="hero-visual hero-entra relative min-w-0 lg:col-span-5" style="--d:160ms">
+            {conVisual ? (
+              <slot name="visual" />
+            ) : (
+              <HeroVisual
+                escena={escena3d}
+                etiqueta={visual.etiqueta}
+                consulta={visual.consulta}
+                respuesta={visual.respuesta}
+                class="mx-auto w-full max-w-[34rem]"
+              />
+            )}
+          </div>
+        )
+      }
+    </div>
+  </div>
+</header>
+
+<style>
+  .hero-fondo {
+    overflow: clip;
+  }
+  .precio-hero {
+    background: rgb(128 131 255 / 0.1);
+    box-shadow: inset 0 0 0 1px rgb(192 193 255 / 0.18);
+  }
+  .hero-luz {
+    position: absolute;
+    border-radius: 999px;
+    filter: blur(80px);
+  }
+  .hero-luz-a {
+    width: min(48rem, 120vw);
+    aspect-ratio: 1;
+    left: -18rem;
+    top: -22rem;
+    background: radial-gradient(circle, rgb(99 102 241 / 0.32), transparent 65%);
+  }
+  .hero-luz-b {
+    width: min(36rem, 90vw);
+    aspect-ratio: 1;
+    right: -12rem;
+    top: 10%;
+    background: radial-gradient(circle, rgb(192 193 255 / 0.13), transparent 65%);
+  }
+  /* Suelo en perspectiva: un plano con retícula inclinado hacia el fondo. */
+  .hero-suelo {
+    position: absolute;
+    inset: auto 0 0;
+    height: 62%;
+    perspective: 520px;
+    perspective-origin: 50% 0%;
+    -webkit-mask-image: linear-gradient(to top, #000 10%, transparent 92%);
+    mask-image: linear-gradient(to top, #000 10%, transparent 92%);
+  }
+  /* La capa sobra 64 px (un cuadro) por arriba: al moverla con transform en la animación
+     nunca queda un borde vacío. El giro sigue sobre la línea original (transform-origin). */
+  .hero-reticula {
+    position: absolute;
+    left: -50%;
+    right: -50%;
+    top: -64px;
+    height: calc(200% + 64px);
+    transform: rotateX(72deg);
+    transform-origin: 50% 64px;
+    background-image:
+      linear-gradient(rgb(192 193 255 / 0.16) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(192 193 255 / 0.12) 1px, transparent 1px);
+    background-size: 64px 64px;
+  }
+  .pulso::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 999px;
+    box-shadow: 0 0 0 1px rgb(192 193 255 / 0.5);
+    opacity: 0;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    /* La retícula avanza hacia quien mira: sensación de profundidad sin JS.
+       Se mueve con transform (lo pinta el compositor, no el hilo principal). */
+    .hero-reticula {
+      animation: hero-avanzar 7s linear infinite;
+      will-change: transform;
+    }
+    .pulso::after {
+      animation: hero-pulso 2.4s var(--ease-out-expo) infinite;
+    }
+    /* Entrada escalonada de lo que no es LCP (etiqueta, botones, puntos y visual). */
+    .hero-entra {
+      animation: hero-entrar 0.9s var(--ease-out-expo) both;
+      animation-delay: var(--d, 0ms);
+    }
+  }
+  @keyframes hero-avanzar {
+    from {
+      transform: rotateX(72deg) translateY(0);
+    }
+    to {
+      transform: rotateX(72deg) translateY(64px);
+    }
+  }
+  @keyframes hero-pulso {
+    0% {
+      opacity: 0.9;
+      transform: scale(0.6);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(2.2);
+    }
+  }
+  @keyframes hero-entrar {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+</style>

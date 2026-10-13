@@ -1,0 +1,161 @@
+---
+/**
+ * Tabla de datos adaptable.
+ * - Computador y tableta (≥ 768 px): tabla normal con encabezado y filas alternas.
+ * - Celular: cada fila se vuelve una tarjeta (la primera celda es su título y cada dato lleva
+ *   el nombre de su columna en la misma línea, para que la tarjeta sea corta). Nunca desborda la página.
+ * Los roles ARIA explícitos conservan la semántica de tabla aunque cambie el display.
+ *
+ * <Tabla columnas={['Plan', 'Desde']} filas={[['Web Esencial', '$1.200.000']]} etiquetadaPor="resumen-titulo" />
+ */
+interface Props {
+  columnas: readonly string[];
+  filas: readonly (readonly string[])[];
+  /** id del título que nombra la tabla (aria-labelledby). */
+  etiquetadaPor?: string;
+  fondo?: 'base' | 'bajo';
+  class?: string;
+}
+
+const { columnas, filas, etiquetadaPor, fondo = 'base', class: clase } = Astro.props;
+---
+<div data-revelar class:list={['tabla-adaptable', fondo === 'bajo' && 'sobre-bajo', clase]}>
+  <table role="table" aria-labelledby={etiquetadaPor}>
+    <thead role="rowgroup">
+      <tr role="row">
+        {columnas.map((c) => <th role="columnheader" scope="col">{c}</th>)}
+      </tr>
+    </thead>
+    <tbody role="rowgroup">
+      {
+        filas.map((fila) => (
+          <tr role="row">
+            {fila.map((celda, i) =>
+              i === 0 ? (
+                <th role="rowheader" scope="row">{celda}</th>
+              ) : (
+                <td role="cell">
+                  <span aria-hidden="true" class="col-movil">{columnas[i]}</span>
+                  {celda}
+                </td>
+              ),
+            )}
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</div>
+
+<style>
+  .tabla-adaptable table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+  }
+  .tabla-adaptable th,
+  .tabla-adaptable td {
+    text-align: left;
+    vertical-align: top;
+  }
+  .tabla-adaptable td {
+    color: var(--color-ink-soft, #c9c5c8);
+  }
+  .tabla-adaptable tbody th {
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--color-ink, #e5e1e4);
+  }
+
+  /* ── Celular: cada fila es una tarjeta ── */
+  @media (max-width: 767.98px) {
+    .tabla-adaptable table,
+    .tabla-adaptable thead,
+    .tabla-adaptable tbody,
+    .tabla-adaptable tr,
+    .tabla-adaptable th,
+    .tabla-adaptable td {
+      display: block;
+    }
+    .tabla-adaptable thead tr {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
+    .tabla-adaptable tbody {
+      display: grid;
+      gap: 0.75rem;
+    }
+    .tabla-adaptable tbody tr {
+      border-radius: var(--radius-card, 1rem);
+      background: var(--color-surface-low, #1c1b1e);
+      box-shadow: inset 0 1px 0 rgb(229 225 228 / 0.05);
+      padding: 1rem 1.125rem 0.375rem;
+    }
+    .sobre-bajo tbody tr {
+      background: var(--color-surface-high, #2a2a2c);
+    }
+    .tabla-adaptable tbody th {
+      font-size: 1.0625rem;
+      line-height: 1.35;
+      padding-bottom: 0.5rem;
+    }
+    .tabla-adaptable td {
+      padding: 0.5rem 0;
+      box-shadow: inset 0 1px 0 rgb(229 225 228 / 0.07);
+    }
+    /* Nombre de la columna en la misma línea que el dato. */
+    .col-movil {
+      display: inline;
+      margin-right: 0.5rem;
+      font-family: var(--font-mono, ui-monospace, monospace);
+      font-size: 0.6875rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-ink-mute, #a19da0);
+    }
+  }
+
+  /* ── Tableta y computador: tabla ── */
+  @media (min-width: 768px) {
+    .tabla-adaptable {
+      overflow-x: auto;
+      border-radius: var(--radius-panel, 1.5rem);
+      background: var(--color-surface-low, #1c1b1e);
+      box-shadow: inset 0 0 0 1px rgb(70 69 84 / 0.35);
+    }
+    .sobre-bajo.tabla-adaptable {
+      background: var(--color-surface-high, #2a2a2c);
+    }
+    .tabla-adaptable thead th {
+      padding: 1rem 1.25rem;
+      background: rgb(14 14 16 / 0.6);
+      font-family: var(--font-mono, ui-monospace, monospace);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-primary, #c0c1ff);
+    }
+    .tabla-adaptable tbody th,
+    .tabla-adaptable tbody td {
+      padding: 1.125rem 1.25rem;
+      box-shadow: inset 0 1px 0 rgb(229 225 228 / 0.06);
+    }
+    .tabla-adaptable tbody tr:hover th,
+    .tabla-adaptable tbody tr:hover td {
+      background: rgb(128 131 255 / 0.05);
+    }
+    .tabla-adaptable tbody th {
+      min-width: 11rem;
+    }
+    .col-movil {
+      display: none;
+    }
+  }
+</style>

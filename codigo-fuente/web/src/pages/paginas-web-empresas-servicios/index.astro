@@ -1,0 +1,38 @@
+---
+// /paginas-web-empresas-servicios/ — página web para empresas de servicios profesionales.
+// Todo el texto sale de src/data/contenido/paginas-web-empresas-servicios.ts y los precios de
+// sitio.ts. La plantilla arma SEO, JSON-LD (página, migas, FAQ y servicio con su oferta desde
+// PLANES), secciones, preguntas y cierre.
+// Momentos propios de la página:
+//   - Portada: la web de una empresa de servicios «antes y después», con división deslizable.
+//   - #estructura: anatomía de la página; el esquema queda fijo y se ilumina la parte que se lee.
+import PlantillaPagina from '@/components/pagina/PlantillaPagina.astro';
+import AnatomiaPagina from '@/components/paginas/servicios/AnatomiaPagina.astro';
+import AntesDespues from '@/components/paginas/servicios/AntesDespues.astro';
+import { contenido } from '@/data/contenido/paginas-web-empresas-servicios';
+import type { SeccionLista } from '@/data/contenido/tipos';
+
+const indice = contenido.secciones.findIndex((s) => s.id === 'estructura');
+const estructura = contenido.secciones[indice] as SeccionLista;
+---
+<PlantillaPagina
+  contenido={contenido}
+  resaltado="empresas de servicios"
+  opciones={{
+    problema: { resaltado: 'una web distinta' },
+    sectores: { resaltado: 'trabajamos' },
+    whatsapp: { resaltado: 'una persona para lo importante', plegar: 'Ver qué responde el agente y qué no' },
+    proceso: { resaltado: 'paso a paso', plegar: 'Ver las cinco etapas' },
+    precio: { resaltado: 'Cuánto cuesta' },
+    'que-no-hacemos': { resaltado: 'no incluye' },
+  }}
+>
+  <AntesDespues slot="visual" />
+  <AnatomiaPagina
+    slot="seccion-estructura"
+    seccion={estructura}
+    fondo={indice % 2 === 0 ? 'base' : 'bajo'}
+    numero={indice + 1}
+    resaltado="empresa de servicios"
+  />
+</PlantillaPagina>

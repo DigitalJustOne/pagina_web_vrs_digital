@@ -1,0 +1,84 @@
+---
+/**
+ * Dos columnas: lo que incluye (o puede hacer) frente a lo que no. Títulos H3.
+ *
+ * <Comparacion incluye={[…]} noIncluye={[…]} etiquetaIncluye="El agente puede" etiquetaNoIncluye="Siempre pasa a una persona" />
+ */
+import Icono from '@/components/ui/Icono.astro';
+
+interface Props {
+  incluye: readonly string[];
+  noIncluye: readonly string[];
+  etiquetaIncluye?: string;
+  etiquetaNoIncluye?: string;
+  fondo?: 'base' | 'bajo';
+  class?: string;
+}
+
+const {
+  incluye,
+  noIncluye,
+  etiquetaIncluye = 'Qué incluye',
+  etiquetaNoIncluye = 'Qué no incluye',
+  fondo = 'base',
+  class: clase,
+} = Astro.props;
+const capa = fondo === 'bajo' ? 'bg-surface-high' : 'bg-surface-low';
+---
+<div class:list={['comparacion grid gap-5 lg:grid-cols-12 lg:gap-6', clase]}>
+  <div data-revelar class="col-si borde-luz relative isolate overflow-hidden rounded-panel p-6 sm:p-8 lg:col-span-7">
+    <span aria-hidden="true" class="col-si-luz pointer-events-none absolute -z-10"></span>
+    <h3 class="flex items-center gap-3 font-display text-xl font-semibold tracking-[-0.01em] text-ink sm:text-2xl">
+      <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/15 text-primary">
+        <Icono nombre="tick" tamano={20} />
+      </span>
+      {etiquetaIncluye}
+    </h3>
+    <ul role="list" class:list={['mt-6 grid gap-x-8 gap-y-3.5', incluye.length > 6 && 'xl:grid-cols-2']}>
+      {
+        incluye.map((t) => (
+          <li class="flex items-start gap-3 leading-snug text-ink">
+            <Icono nombre="tick" tamano={18} class="mt-0.5 text-primary" />
+            <span>{t}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+
+  <div data-revelar style="--retraso:120ms" class:list={['col-no borde-fantasma rounded-panel p-6 sm:p-8 lg:col-span-5', capa]}>
+    <h3 class="flex items-center gap-3 font-display text-xl font-semibold tracking-[-0.01em] text-ink sm:text-2xl">
+      <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/[0.06] text-ink-soft">
+        <Icono nombre="x" tamano={20} />
+      </span>
+      {etiquetaNoIncluye}
+    </h3>
+    <ul role="list" class="mt-6 grid gap-3.5">
+      {
+        noIncluye.map((t) => (
+          <li class="flex items-start gap-3 leading-snug text-ink-soft">
+            <Icono nombre="minus" tamano={18} class="mt-0.5 text-ink-mute" />
+            <span>{t}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</div>
+
+<style>
+  .col-si {
+    background:
+      radial-gradient(120% 70% at 0% 0%, rgb(128 131 255 / 0.14), transparent 60%),
+      var(--color-surface-high, #2a2a2c);
+    box-shadow: 0 30px 60px -30px rgb(0 0 0 / 0.6);
+  }
+  .col-si-luz {
+    right: -6rem;
+    bottom: -8rem;
+    width: 18rem;
+    height: 18rem;
+    border-radius: 999px;
+    background: radial-gradient(circle, rgb(99 102 241 / 0.22), transparent 70%);
+  }
+</style>

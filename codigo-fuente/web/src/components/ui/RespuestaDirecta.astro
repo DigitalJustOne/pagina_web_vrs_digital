@@ -1,0 +1,75 @@
+---
+/**
+ * Respuesta directa: 2 a 4 frases que responden la pregunta principal de la página.
+ * Va justo debajo del H1 para que Google y los asistentes de IA la puedan citar tal cual.
+ * Escriba el texto autocontenido (que se entienda sin el resto de la página) e incluya
+ * el dato clave: quién, qué, dónde, cuánto.
+ *
+ * <RespuestaDirecta
+ *   texto="VRS Digital crea páginas web para empresas de servicios en Bogotá desde $1.200.000 de implementación…"
+ *   puntos={['Entrega en 3 a 6 semanas', 'Atención directa con el fundador']}
+ * />
+ *
+ * El atributo data-respuesta-directa sirve como selector para SpeakableSpecification
+ * (cssSelector: '[data-respuesta-directa]') si se quiere marcar en el JSON-LD.
+ */
+import Icono from './Icono.astro';
+
+interface Props {
+  texto: string;
+  /** Rótulo visible de la caja. Por defecto "En resumen". */
+  titulo?: string;
+  /** Datos clave en viñetas (opcional, máximo 4 recomendados). */
+  puntos?: readonly string[];
+  /** Elemento del rótulo: párrafo (por defecto, no altera los encabezados) o h2. */
+  nivelTitulo?: 'p' | 'h2';
+  /** Animación de entrada. Por defecto no: suele estar en la primera pantalla y no debe retrasar el LCP. */
+  revelar?: boolean;
+  class?: string;
+}
+
+const { texto, titulo = 'En resumen', puntos = [], nivelTitulo = 'p', revelar = false, class: clase } = Astro.props;
+const Rotulo = nivelTitulo;
+const idRotulo = `rd-${Math.random().toString(36).slice(2, 8)}`;
+---
+<section
+  aria-labelledby={idRotulo}
+  data-respuesta-directa
+  data-revelar={revelar ? '' : undefined}
+  class:list={[
+    'respuesta-directa borde-luz relative overflow-hidden rounded-panel bg-surface-low p-6 sm:p-8',
+    clase,
+  ]}
+>
+  <span aria-hidden="true" class="brillo pointer-events-none absolute -top-24 -left-16 h-56 w-56 rounded-full"></span>
+  <Rotulo id={idRotulo} class="etiqueta relative flex items-center gap-2.5">
+    <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-primary/12 text-primary">
+      <Icono nombre="spark" tamano={16} />
+    </span>
+    {titulo}
+  </Rotulo>
+  <p class="relative mt-4 text-lg leading-relaxed text-ink sm:text-xl sm:leading-relaxed">{texto}</p>
+  {
+    puntos.length > 0 && (
+      <ul class="relative mt-6 grid gap-3 sm:grid-cols-2">
+        {puntos.map((punto) => (
+          <li class="flex items-start gap-3 rounded-xl bg-surface-lowest/70 px-4 py-3 text-base leading-snug text-ink-soft">
+            <Icono nombre="tick" tamano={18} class="mt-0.5 text-primary" />
+            <span>{punto}</span>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+  <slot />
+</section>
+
+<style>
+  .respuesta-directa {
+    box-shadow: 0 20px 40px rgb(0 0 0 / 0.35);
+  }
+  .brillo {
+    background: radial-gradient(circle, rgb(128 131 255 / 0.22), transparent 70%);
+    filter: blur(8px);
+  }
+</style>

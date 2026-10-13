@@ -1,0 +1,213 @@
+---
+/**
+ * Línea de tiempo del proceso. Vertical en celular, horizontal en computador (≥1024 px).
+ * La línea de progreso se llena al desplazarse con CSS (animation-timeline: view()), sin JS.
+ * Sin soporte o con movimiento reducido, la línea se muestra completa y estática.
+ *
+ * import { PROCESO } from '@/data/sitio';
+ * <Pasos pasos={PROCESO} />
+ */
+interface Paso {
+  paso: string;
+  titulo: string;
+  texto: string;
+}
+
+interface Props {
+  pasos: readonly Paso[];
+  nivelTitulo?: 'h2' | 'h3' | 'h4';
+  /** Etiqueta accesible de la lista (por defecto "Pasos del proceso"). */
+  etiqueta?: string;
+  class?: string;
+}
+
+const { pasos, nivelTitulo = 'h3', etiqueta = 'Pasos del proceso', class: clase } = Astro.props;
+const Titulo = nivelTitulo;
+const n = pasos.length;
+---
+<div class:list={['pasos relative', clase]} style={`--n:${n}`}>
+  <div aria-hidden="true" class="pista-h">
+    <span class="relleno relleno-h"></span>
+  </div>
+  <ol aria-label={etiqueta} class="lista" role="list">
+    {
+      pasos.map((p, i) => (
+        <li class="paso" style={`--f:${n > 1 ? i / (n - 1) : 0}`}>
+          {i < n - 1 && (
+            <span aria-hidden="true" class="pista-v">
+              <span class="relleno relleno-v" />
+            </span>
+          )}
+          <span aria-hidden="true" class="nodo">
+            <span class="nodo-num">{p.paso}</span>
+            <span class="nodo-luz">{p.paso}</span>
+          </span>
+          <div class="min-w-0 pt-1 lg:pt-0">
+            <Titulo class="titulo-tarjeta">{p.titulo}</Titulo>
+            <p class="mt-2 text-base leading-relaxed text-ink-soft">{p.texto}</p>
+          </div>
+        </li>
+      ))
+    }
+  </ol>
+</div>
+
+<style>
+  .pasos {
+    --nodo: 3rem;
+    --hueco: 2rem;
+    --pista: rgb(192 193 255 / 0.12);
+    --luz: linear-gradient(135deg, #c0c1ff 0%, #8083ff 100%);
+  }
+  .lista {
+    display: grid;
+    gap: 0;
+  }
+  .paso {
+    position: relative;
+    display: flex;
+    gap: 1.25rem;
+    padding-bottom: 2.5rem;
+    view-timeline-name: --paso;
+  }
+  .paso:last-child {
+    padding-bottom: 0;
+  }
+
+  /* Nodo con el número: capa base + capa luminosa que aparece (solo opacidad). */
+  .nodo {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: var(--nodo);
+    height: var(--nodo);
+    border-radius: 0.875rem;
+    background: var(--color-surface-high, #2a2a2c);
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.9375rem;
+    font-weight: 600;
+  }
+  .nodo-num {
+    color: var(--color-primary, #c0c1ff);
+  }
+  .nodo-luz {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    border-radius: inherit;
+    background: var(--luz);
+    color: var(--color-on-primary, #0b0080);
+    box-shadow: 0 0 0 4px rgb(128 131 255 / 0.12), 0 10px 30px -6px rgb(128 131 255 / 0.55);
+    opacity: 1;
+  }
+
+  /* Pistas: vertical por paso (celular) y una horizontal (computador). */
+  .pista-v {
+    position: absolute;
+    left: calc(var(--nodo) / 2 - 1px);
+    top: calc(var(--nodo) + 0.5rem);
+    bottom: 0.5rem;
+    width: 2px;
+    border-radius: 2px;
+    background: var(--pista);
+    overflow: hidden;
+  }
+  .pista-h {
+    display: none;
+  }
+  .relleno {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+  }
+  .relleno-v {
+    background: linear-gradient(180deg, #c0c1ff, #6366f1);
+    transform-origin: top;
+  }
+  .relleno-h {
+    background: linear-gradient(90deg, #c0c1ff, #8083ff 60%, #6366f1);
+    transform-origin: left;
+  }
+
+  @media (min-width: 1024px) {
+    .pasos {
+      view-timeline-name: --pasos;
+    }
+    .lista {
+      grid-template-columns: repeat(var(--n), minmax(0, 1fr));
+      column-gap: var(--hueco);
+    }
+    .paso {
+      flex-direction: column;
+      gap: 1.5rem;
+      padding-bottom: 0;
+    }
+    .pista-v {
+      display: none;
+    }
+    .pista-h {
+      display: block;
+      position: absolute;
+      top: calc(var(--nodo) / 2 - 1px);
+      left: calc(var(--nodo) / 2);
+      /* Termina en el centro del último nodo. */
+      right: calc((100% - (var(--n) - 1) * var(--hueco)) / var(--n) - var(--nodo) / 2);
+      height: 2px;
+      border-radius: 2px;
+      background: var(--pista);
+      overflow: hidden;
+    }
+  }
+
+  /* Progreso ligado al desplazamiento: solo con soporte y sin preferencia de movimiento reducido.
+     Se usan propiedades individuales (no el atajo "animation"): el minificador las fusionaría con
+     animation-timeline en un atajo inválido y el navegador descartaría la regla. */
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .relleno-v,
+      .relleno-h,
+      .nodo-luz {
+        animation-duration: auto;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+      }
+      .relleno-v {
+        animation-name: pasos-llenar-y;
+        animation-timeline: --paso;
+        animation-range: cover 30% cover 60%;
+      }
+      .nodo-luz {
+        animation-name: pasos-encender;
+        animation-timeline: --paso;
+        animation-range: cover 22% cover 32%;
+      }
+      @media (min-width: 1024px) {
+        .relleno-h {
+          animation-name: pasos-llenar-x;
+          animation-timeline: --pasos;
+          animation-range: cover 25% cover 55%;
+        }
+        .nodo-luz {
+          animation-timeline: --pasos;
+          animation-range: cover calc(24% + 30% * var(--f)) cover calc(27% + 30% * var(--f));
+        }
+      }
+    }
+  }
+
+  @keyframes pasos-llenar-y {
+    from { transform: scaleY(0); }
+    to { transform: scaleY(1); }
+  }
+  @keyframes pasos-llenar-x {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
+  @keyframes pasos-encender {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+</style>

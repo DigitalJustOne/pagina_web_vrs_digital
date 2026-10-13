@@ -1,0 +1,145 @@
+---
+/**
+ * Cierre editorial de la página: «Siga leyendo» (enlaces internos), «Fuentes consultadas»
+ * (enlaces externos) y la fecha de actualización. Cada bloque aparece solo si tiene datos.
+ *
+ * <Relacionados enlaces={c.enlacesInternos} fuentes={c.fuentes} actualizado={c.actualizado} />
+ *
+ * En celular, con tres fuentes o más, la lista de fuentes se pliega (Plegable.astro); en
+ * computador se ve abierta.
+ */
+import Icono from '@/components/ui/Icono.astro';
+import { fechaLarga } from '@/lib/paginas';
+import type { Enlace, Fuente } from '@/data/contenido/tipos';
+import Plegable from './Plegable.astro';
+
+interface Props {
+  enlaces?: readonly Enlace[];
+  fuentes?: readonly Fuente[];
+  /** AAAA-MM-DD */
+  actualizado?: string;
+  fondo?: 'base' | 'bajo';
+  class?: string;
+}
+
+const { enlaces = [], fuentes = [], actualizado, fondo = 'base', class: clase } = Astro.props;
+const capa = fondo === 'bajo' ? 'bg-surface-high hover:bg-surface-highest' : 'bg-surface-low hover:bg-surface-high';
+const hayEnlaces = enlaces.length > 0;
+const hayFuentes = fuentes.length > 0 || Boolean(actualizado);
+const idT = hayEnlaces ? 'siga-leyendo-titulo' : 'fuentes-titulo';
+/** Título de una fuente: si está en inglés, el título va con lang="en" y el medio entre paréntesis
+ *  del final, que está en español («(Centro de ayuda de WhatsApp)»), queda fuera. */
+const partesFuente = (f: Fuente) => {
+  const m = f.idioma ? /^(.*\S)(\s\([^()]*\))$/.exec(f.titulo) : null;
+  return { titulo: m ? m[1] : f.titulo, medio: m ? m[2] : '' };
+};
+/** Con tres fuentes o más, la lista se pliega en celular. */
+const plegarFuentes = fuentes.length >= 3;
+/** Sin enlaces ni fuentes: solo la fecha, sin sección. */
+const soloFecha = !hayEnlaces && fuentes.length === 0 && Boolean(actualizado);
+---
+{
+  soloFecha && actualizado && (
+    <div class:list={['contenedor pb-12', clase]}>
+      <p class="flex items-center gap-2.5 text-sm text-ink-mute">
+        <Icono nombre="calendar" tamano={16} class="text-primary" />
+        <span>
+          Actualizado el <time datetime={actualizado}>{fechaLarga(actualizado)}</time>
+        </span>
+      </p>
+    </div>
+  )
+}
+{
+  !soloFecha && (hayEnlaces || hayFuentes) && (
+    <section
+      id={hayEnlaces ? 'siga-leyendo' : 'fuentes'}
+      aria-labelledby={idT}
+      class:list={['relacionados seccion relative', fondo === 'bajo' && 'bg-surface-low', clase]}
+    >
+      <div class="contenedor grid gap-10 sm:gap-12 lg:grid-cols-12 lg:gap-14">
+        {hayEnlaces && (
+          <div class:list={['min-w-0', hayFuentes ? 'lg:col-span-7' : 'lg:col-span-12']}>
+            <h2 id="siga-leyendo-titulo" class="titulo-seccion">
+              Siga leyendo
+            </h2>
+            <ul role="list" class:list={['mt-6 grid gap-2 sm:mt-8 sm:gap-3', hayFuentes ? 'sm:grid-cols-2' : 'sm:grid-cols-2 lg:grid-cols-3']}>
+              {enlaces.map((e, i) => (
+                <li data-revelar style={`--retraso:${Math.min(i, 5) * 60}ms`}>
+                  <a
+                    href={e.href}
+                    class:list={['enlace-relacionado group flex h-full min-h-14 items-center justify-between gap-4 rounded-card px-5 py-3 transition-colors duration-300 sm:min-h-16 sm:py-4', capa]}
+                  >
+                    <span class="font-medium leading-snug text-ink">{e.texto}</span>
+                    <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary transition-transform duration-300 group-hover:translate-x-1">
+                      <Icono nombre="arrow-right" tamano={17} />
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {hayFuentes && (
+          <div class:list={['min-w-0', hayEnlaces ? 'lg:col-span-5' : 'lg:col-span-8']}>
+            <div class="fuentes borde-fantasma rounded-panel p-6 sm:p-8">
+              {fuentes.length > 0 && (
+                <>
+                  {hayEnlaces ? (
+                    <h2 class="flex items-center gap-2.5 font-mono text-xs tracking-[0.18em] text-ink-soft uppercase">
+                      <Icono nombre="file" tamano={16} class="text-primary" />
+                      Fuentes consultadas
+                    </h2>
+                  ) : (
+                    <h2 id="fuentes-titulo" class="flex items-center gap-2.5 font-mono text-xs tracking-[0.18em] text-ink-soft uppercase">
+                      <Icono nombre="file" tamano={16} class="text-primary" />
+                      Fuentes consultadas
+                    </h2>
+                  )}
+                  <Plegable texto={plegarFuentes ? `Ver las ${fuentes.length} fuentes` : undefined} class="mt-4">
+                  <ul role="list" class:list={['grid gap-1', !plegarFuentes && 'mt-4']}>
+                    {fuentes.map((f) => (
+                      <li>
+                        <a
+                          href={f.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="group flex min-h-11 items-start gap-2.5 rounded-md py-2 text-[0.9375rem] leading-snug text-ink-soft hover:text-ink"
+                        >
+                          <Icono nombre="arrow-up-right" tamano={16} class="mt-0.5 shrink-0 text-primary" />
+                          <span class="underline decoration-ink-mute/40 underline-offset-4 group-hover:decoration-primary">
+                            {f.idioma ? <><span lang={f.idioma}>{partesFuente(f).titulo}</span>{partesFuente(f).medio}</> : f.titulo}
+                            <span class="sr-only"> (se abre en una pestaña nueva)</span>
+                          </span>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                  </Plegable>
+                </>
+              )}
+              {actualizado && (
+                <p class:list={['flex items-center gap-2.5 text-sm text-ink-mute', fuentes.length > 0 && 'mt-6 border-t border-ink/8 pt-5']}>
+                  <Icono nombre="calendar" tamano={16} class="text-primary" />
+                  <span>
+                    Actualizado el <time datetime={actualizado}>{fechaLarga(actualizado)}</time>
+                  </span>
+                </p>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .enlace-relacionado {
+    box-shadow: inset 0 1px 0 rgb(229 225 228 / 0.05);
+  }
+  .fuentes {
+    background: rgb(14 14 16 / 0.5);
+  }
+</style>

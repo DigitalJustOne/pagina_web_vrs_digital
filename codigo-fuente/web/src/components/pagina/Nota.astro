@@ -1,0 +1,28 @@
+---
+/**
+ * Nota corta al pie de una sección: aclaración, condición o nota de precios.
+ *
+ * <Nota texto="Dominio y licencias se identifican por separado." />
+ * <Nota texto={NOTA_PRECIOS} icono="calculator" />
+ */
+import Icono from '@/components/ui/Icono.astro';
+import type { NombreIcono } from '@/components/ui/iconos';
+
+interface Props {
+  texto: string;
+  icono?: NombreIcono;
+  class?: string;
+}
+
+const { texto, icono = 'info', class: clase } = Astro.props;
+---
+<p class:list={['nota borde-fantasma flex max-w-3xl items-start gap-3 rounded-card px-4 py-3.5 text-[0.9375rem] leading-relaxed text-ink-soft', clase]}>
+  <Icono nombre={icono} tamano={18} class="mt-0.5 text-primary" />
+  <span>{texto}</span>
+</p>
+
+<style>
+  .nota {
+    background: rgb(14 14 16 / 0.55);
+  }
+</style>

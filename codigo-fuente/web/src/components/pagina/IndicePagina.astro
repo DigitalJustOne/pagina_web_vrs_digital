@@ -1,0 +1,123 @@
+---
+/**
+ * Índice «En esta página» con enlaces a las secciones (#id).
+ * - caja (por defecto): panel junto a la respuesta directa. En celular se pliega en un <details>.
+ * - lateral: lista fija a la izquierda (páginas legales). Marca la sección visible con aria-current.
+ * Sin JS funciona igual (son anclas); el script solo resalta la sección actual.
+ *
+ * <IndicePagina items={[{ texto: 'Para quién', href: '#para-quien' }]} />
+ */
+import Icono from '@/components/ui/Icono.astro';
+import type { Enlace } from '@/data/contenido/tipos';
+
+interface Props {
+  items: readonly Enlace[];
+  titulo?: string;
+  variante?: 'caja' | 'lateral';
+  class?: string;
+}
+
+const { items, titulo = 'En esta página', variante = 'caja', class: clase } = Astro.props;
+const numero = (i: number) => String(i + 1).padStart(2, '0');
+const lateral = variante === 'lateral';
+---
+<nav aria-label={titulo} data-indice class:list={['indice', lateral ? 'indice-lateral' : 'indice-caja', clase]}>
+  <!-- Celular: plegado -->
+  <details class="indice-movil borde-fantasma rounded-card bg-surface-low lg:hidden">
+    <summary class="flex min-h-12 cursor-pointer list-none items-center justify-between gap-3 px-4 font-mono text-xs tracking-[0.18em] text-ink-soft uppercase">
+      <span class="flex items-center gap-2.5">
+        <Icono nombre="layers" tamano={16} class="text-primary" />
+        {titulo}
+        <span class="text-ink-mute">({items.length})</span>
+      </span>
+      <Icono nombre="chevron-down" tamano={18} class="flecha text-primary" />
+    </summary>
+    <ol role="list" class="grid px-2 pb-2">
+      {
+        items.map((it, i) => (
+          <li>
+            <a href={it.href} class="flex min-h-11 items-center gap-3 rounded-lg px-2 text-[0.9375rem] text-ink-soft hover:bg-surface-high hover:text-ink">
+              <span aria-hidden="true" class="font-mono text-xs text-primary/80">{numero(i)}</span>
+              {it.texto}
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+  </details>
+
+  <!-- Computador -->
+  <div class:list={['hidden lg:block', !lateral && 'borde-fantasma h-full rounded-panel bg-surface-low/60 p-6']}>
+    <p class="flex items-center gap-2.5 font-mono text-xs tracking-[0.18em] text-ink-soft uppercase">
+      <Icono nombre="layers" tamano={16} class="text-primary" />
+      {titulo}
+    </p>
+    <ol role="list" class:list={['mt-3', lateral ? 'grid' : 'grid grid-cols-2 gap-x-4']}>
+      {
+        items.map((it, i) => (
+          <li class="min-w-0">
+            <a
+              href={it.href}
+              class="enlace-indice group flex min-h-11 items-center gap-2.5 rounded-lg text-sm leading-snug text-ink-soft transition-colors hover:text-ink"
+            >
+              <span aria-hidden="true" class="font-mono text-[0.6875rem] text-ink-mute transition-colors group-hover:text-primary">{numero(i)}</span>
+              <span class="min-w-0">{it.texto}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</nav>
+
+<style>
+  .indice-movil[open] .flecha {
+    transform: rotate(180deg);
+  }
+  .flecha {
+    transition: transform 0.3s var(--ease-out-expo);
+  }
+  .indice-movil summary::-webkit-details-marker {
+    display: none;
+  }
+  .enlace-indice[aria-current='location'] {
+    color: var(--color-ink, #e5e1e4);
+  }
+  .enlace-indice[aria-current='location'] > span:first-child {
+    color: var(--color-primary, #c0c1ff);
+  }
+  .indice-lateral .enlace-indice {
+    padding-left: 0.75rem;
+    box-shadow: inset 2px 0 0 rgb(229 225 228 / 0.08);
+  }
+  .indice-lateral .enlace-indice[aria-current='location'] {
+    box-shadow: inset 2px 0 0 var(--color-primary, #c0c1ff);
+  }
+</style>
+
+<script>
+  // Resalta en el índice la sección que se está leyendo (aria-current="location").
+  function iniciarIndice() {
+    for (const indice of document.querySelectorAll<HTMLElement>('[data-indice]')) {
+      const enlaces = [...indice.querySelectorAll<HTMLAnchorElement>('.enlace-indice[href^="#"]')];
+      const destinos = new Map<Element, HTMLAnchorElement>();
+      for (const a of enlaces) {
+        const destino = document.getElementById(decodeURIComponent(a.hash.slice(1)));
+        if (destino) destinos.set(destino, a);
+      }
+      if (!destinos.size || !('IntersectionObserver' in window)) continue;
+      const obs = new IntersectionObserver(
+        (entradas) => {
+          for (const e of entradas) {
+            if (!e.isIntersecting) continue;
+            enlaces.forEach((a) => a.removeAttribute('aria-current'));
+            destinos.get(e.target)?.setAttribute('aria-current', 'location');
+          }
+        },
+        { rootMargin: '-35% 0px -60% 0px' },
+      );
+      destinos.forEach((_, destino) => obs.observe(destino));
+    }
+  }
+  iniciarIndice();
+</script>

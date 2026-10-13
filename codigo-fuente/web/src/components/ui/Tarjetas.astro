@@ -1,0 +1,162 @@
+---
+/**
+ * Grilla de tarjetas con icono, título y texto. Separación por superficie, sin bordes.
+ *
+ * <Tarjetas
+ *   columnas={3}
+ *   items={[
+ *     { titulo: 'Páginas web profesionales', texto: '…', icono: 'monitor', href: '/paginas-web-bogota/' },
+ *     { titulo: 'Posicionamiento', texto: '…', icono: 'search' },
+ *   ]}
+ * />
+ *
+ * - `fondo`: superficie de la sección donde se ponen. 'base' (#131315) → tarjetas surface-low;
+ *   'bajo' (sección surface-low) → tarjetas surface-high. Así siempre hay contraste de capa.
+ * - Con `href`, toda la tarjeta es clicable (un solo enlace, en el título).
+ * - `escalonado` desplaza la columna central en computador (asimetría editorial; solo con 3 columnas).
+ * - Celular: el icono va a la izquierda del título (no encima), para que cada tarjeta sea más corta.
+ */
+import Icono from './Icono.astro';
+import type { NombreIconoTarjeta } from './iconos';
+
+export interface ItemTarjeta {
+  titulo: string;
+  texto: string;
+  icono?: NombreIconoTarjeta;
+  href?: string;
+  /** Texto pequeño sobre el título (ej. "01" o "Sector"). */
+  antetitulo?: string;
+}
+
+interface Props {
+  items: readonly ItemTarjeta[];
+  columnas?: 2 | 3 | 4;
+  fondo?: 'base' | 'bajo';
+  nivelTitulo?: 'h2' | 'h3' | 'h4';
+  escalonado?: boolean;
+  class?: string;
+}
+
+const { items, columnas = 3, fondo = 'base', nivelTitulo = 'h3', escalonado = false, class: clase } = Astro.props;
+const Titulo = nivelTitulo;
+
+const grilla = {
+  2: 'sm:grid-cols-2',
+  3: 'sm:grid-cols-2 lg:grid-cols-3',
+  4: 'sm:grid-cols-2 lg:grid-cols-4',
+}[columnas];
+
+const superficie =
+  fondo === 'bajo' ? 'bg-surface-high hover:bg-surface-highest' : 'bg-surface-low hover:bg-surface-high';
+---
+<ul class:list={['tarjetas grid gap-4 sm:gap-5', grilla, escalonado && columnas === 3 && 'escalonado', clase]} role="list">
+  {
+    items.map((item, i) => (
+      <li
+        data-revelar
+        style={`--retraso:${Math.min(i, 5) * 70}ms`}
+        class:list={[
+          'tarjeta-item group relative isolate flex flex-col rounded-card p-5 transition-colors duration-300 sm:p-7',
+          superficie,
+          item.href && 'focus-within:bg-surface-high',
+          item.icono && !item.antetitulo && 'con-icono',
+        ]}
+      >
+        <span aria-hidden="true" class="halo pointer-events-none absolute inset-0 -z-10 rounded-card opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+        {item.icono && (
+          <span
+            class:list={[
+              'icono-tarjeta flex h-12 w-12 items-center justify-center rounded-xl bg-surface-lowest text-primary transition-transform duration-500 group-hover:-translate-y-0.5',
+            ]}
+          >
+            <Icono nombre={item.icono} tamano={22} />
+          </span>
+        )}
+        {item.antetitulo && <p class:list={['etiqueta', item.icono ? 'mt-6' : '']}>{item.antetitulo}</p>}
+        <Titulo
+          class:list={[
+            'titulo-tarjeta',
+            item.antetitulo ? 'mt-2' : item.icono ? 'mt-6' : '',
+          ]}
+        >
+          {item.href ? (
+            <a href={item.href} class="enlace-tarjeta rounded-md outline-offset-4 focus-visible:outline-2">
+              {item.titulo}
+            </a>
+          ) : (
+            item.titulo
+          )}
+        </Titulo>
+        <p class="mt-3 text-base leading-relaxed text-ink-soft">{item.texto}</p>
+        {item.href && (
+          <span
+            aria-hidden="true"
+            class="pointer-events-none mt-auto inline-flex items-center gap-1.5 pt-5 text-sm font-semibold text-primary"
+          >
+            Ver más
+            <Icono nombre="arrow-right" tamano={16} class="transition-transform duration-300 group-hover:translate-x-1" />
+          </span>
+        )}
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .tarjeta-item {
+    box-shadow: inset 0 1px 0 rgb(229 225 228 / 0.05);
+  }
+  .halo {
+    background: radial-gradient(120% 80% at 0% 0%, rgb(128 131 255 / 0.1), transparent 60%);
+  }
+  /* Enlace estirado: toda la tarjeta responde al clic, pero hay un solo enlace para el lector de pantalla.
+     Ningún elemento interno debe tener position, para que ::after se mida contra la tarjeta. */
+  .enlace-tarjeta::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 1rem;
+  }
+  .enlace-tarjeta:focus-visible {
+    outline: none;
+  }
+  .enlace-tarjeta:focus-visible::after {
+    outline: 2px solid var(--color-primary, #c0c1ff);
+    outline-offset: 3px;
+  }
+  /* Celular: icono a la izquierda del título; el texto y «Ver más» ocupan todo el ancho. */
+  @media (max-width: 639.98px) {
+    .con-icono {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      column-gap: 1rem;
+      align-items: center;
+    }
+    .con-icono > :global(*) {
+      grid-column: 1 / -1;
+    }
+    .con-icono > .icono-tarjeta {
+      grid-column: 1;
+      width: 2.75rem;
+      height: 2.75rem;
+    }
+    .con-icono > :global(.titulo-tarjeta) {
+      grid-column: 2;
+      margin-top: 0;
+    }
+  }
+  @media (min-width: 1024px) {
+    .escalonado > :nth-child(3n + 2) {
+      translate: 0 2.5rem;
+    }
+    .escalonado {
+      padding-bottom: 2.5rem;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .tarjeta-item,
+    .tarjeta-item * {
+      transition: none !important;
+    }
+  }
+</style>
