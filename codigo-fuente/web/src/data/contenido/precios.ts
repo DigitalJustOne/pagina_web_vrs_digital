@@ -85,14 +85,8 @@ export const textosPrecios = {
   comparador: {
     incluido: INCLUIDO,
     noIncluido: NO_INCLUIDO,
-    /** Encabezado de cada grupo de filas, según el primer plan que incluye el punto. */
-    grupos: PLANES.map((p, i) =>
-      i === 0
-        ? 'En los tres planes'
-        : i === PLANES.length - 1
-          ? `Solo en ${p.nombre}`
-          : `En ${PLANES.slice(i).map((q) => q.nombre).join(' y ')}`,
-    ),
+    /** Encabezado de cada grupo de filas: la base común y lo que agrega cada plan. */
+    grupos: PLANES.map((p, i) => (i === 0 ? 'La base de los tres planes' : `Lo que agrega ${p.nombre}`)),
     precioAnual: 'Precio anual desde',
     cuotas: 'O en 12 cuotas de',
     alMes: 'al mes',
@@ -152,7 +146,7 @@ export const contenido = {
       id: 'comparar',
       etiqueta: 'Comparar',
       titulo: 'Qué incluye cada plan, punto por punto',
-      introduccion: 'Cada plan suma lo del anterior. Recorra la lista y vea en qué planes está cada punto.',
+      introduccion: `Cada plan suma lo del anterior: ${atencion.nombre} lo incluye todo.`,
       tipo: 'tabla',
       columnas: ['Qué incluye', ...PLANES.map((p) => p.nombre)],
       filas: FILAS_COMPARAR,
