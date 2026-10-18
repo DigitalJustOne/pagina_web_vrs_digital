@@ -302,7 +302,7 @@ export const contenido = {
     {
       pregunta: '¿Con qué tipo de empresas trabajan?',
       respuesta:
-        'Con empresas y profesionales de servicios que necesitan explicar bien lo que ofrecen y reciben muchas preguntas por WhatsApp. Hoy nos enfocamos en firmas contables y tributarias, y en consultores y capacitadores. También atendemos otras empresas de servicios, como firmas jurídicas pequeñas, inmobiliarias o servicios técnicos, con la misma estructura adaptada. Si su caso no encaja, se lo decimos.',
+        'Con empresas y profesionales de servicios que necesitan explicar bien lo que ofrecen y reciben muchas preguntas por WhatsApp. Si su caso no encaja, se lo decimos.',
     },
     {
       pregunta: '¿Usan inteligencia artificial para hacer las páginas?',
@@ -335,7 +335,6 @@ export const contenido = {
     { texto: 'Diseño de páginas web en Bogotá para empresas', href: '/paginas-web-bogota/' },
     { texto: 'Posicionamiento en Google y asistentes de IA', href: '/posicionamiento-google-inteligencia-artificial/' },
     { texto: 'Configuración del agente de IA de WhatsApp Business', href: '/asistente-whatsapp-business/' },
-    { texto: 'Páginas web para contadores y firmas contables', href: '/paginas-web-contadores/' },
     { texto: 'Precios y qué incluye cada plan', href: '/precios/' },
     { texto: 'Guía: cuánto cuesta una página web en Bogotá', href: '/recursos/cuanto-cuesta-una-pagina-web-en-bogota/' },
   ],

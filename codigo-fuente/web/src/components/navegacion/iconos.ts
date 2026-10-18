@@ -4,7 +4,7 @@ import { RUTA_WHATSAPP } from '../ui/iconos';
 export type NombreIcono =
   | 'flecha-abajo' | 'flecha-derecha' | 'flecha-diagonal' | 'cerrar'
   | 'monitor' | 'buscar' | 'mensaje' | 'actualizar'
-  | 'calculadora' | 'presentacion' | 'maletin'
+  | 'calculadora' | 'presentacion' | 'maletin' | 'casa'
   | 'etiqueta' | 'cuadricula' | 'libro' | 'personas'
   | 'correo' | 'ubicacion' | 'reloj' | 'insignia' | 'revision'
   | 'instagram' | 'facebook' | 'linkedin' | 'github' | 'whatsapp';
@@ -22,6 +22,7 @@ export const TRAZOS: Record<Exclude<NombreIcono, 'whatsapp'>, string> = {
   calculadora:
     '<rect width="16" height="20" x="4" y="2" rx="2"/><path d="M8 6h8"/><path d="M16 14v4"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/>',
   presentacion: '<path d="M2 3h20"/><path d="M21 3v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V3"/><path d="m7 21 5-5 5 5"/>',
+  casa: '<path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',
   maletin: '<path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect width="20" height="14" x="2" y="6" rx="2"/>',
   etiqueta:
     '<path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/>',

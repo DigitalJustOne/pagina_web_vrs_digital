@@ -43,8 +43,6 @@ const sencillos = menu.filter((i) => !i.hijos?.length);
 
 const ICONO_SERVICIO: Record<string, NombreIcono> = { monitor: 'monitor', search: 'buscar', message: 'mensaje', refresh: 'actualizar' };
 const ICONO_RUTA: Record<string, NombreIcono> = {
-  '/paginas-web-contadores/': 'calculadora',
-  '/paginas-web-consultores/': 'presentacion',
   '/paginas-web-empresas-servicios/': 'maletin',
   '/precios/': 'etiqueta',
   '/proyectos/': 'cuadricula',
@@ -62,7 +60,6 @@ const iconoDe = (href: string): NombreIcono => {
 const precioDesde = formatoCOP(PRECIO_MINIMO);
 const PIE_DESPLEGABLE: Record<string, { texto: string; detalle: string; href: string }> = {
   Servicios: { texto: 'Planes y precios', detalle: `Desde ${precioDesde} · IVA incluido`, href: '/precios/' },
-  Sectores: { texto: '¿Su sector no aparece?', detalle: 'Cuéntenos sobre su empresa', href: CTA_PRINCIPAL.href },
 };
 
 const idDe = (nombre: string) =>

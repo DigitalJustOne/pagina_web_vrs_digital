@@ -147,7 +147,7 @@ ${AVAL.texto} Verificación: ${AVAL.enlace}
 
 ${servicios}
 
-## Sectores que atendemos
+## Páginas para empresas de servicios
 
 ${lista(SECTORES.map((s) => `${s.nombre}: ${urlAbsoluta(`/${s.slug}/`)}`))}
 

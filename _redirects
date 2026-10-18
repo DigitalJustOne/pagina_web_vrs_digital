@@ -1,0 +1,8 @@
+# Redirecciones 301 para Cloudflare Pages (Hostinger usa public/.htaccess).
+# Páginas por sector retiradas el 2026-10-18 (sin menú por mercado).
+/paginas-web-contadores    /paginas-web-empresas-servicios/  301
+/paginas-web-contadores/   /paginas-web-empresas-servicios/  301
+/paginas-web-consultores   /paginas-web-empresas-servicios/  301
+/paginas-web-consultores/  /paginas-web-empresas-servicios/  301
+/paginas-web-construccion  /paginas-web-empresas-servicios/  301
+/paginas-web-construccion/ /paginas-web-empresas-servicios/  301

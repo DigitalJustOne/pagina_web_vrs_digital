@@ -1,1 +1,0 @@
-import{t as e}from"./inclinar.CoG-yTew.js";e(`[data-calendario]`,{x:12,y:8});

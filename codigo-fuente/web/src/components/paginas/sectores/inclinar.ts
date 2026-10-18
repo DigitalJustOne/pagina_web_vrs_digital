@@ -1,6 +1,6 @@
 // ─────────────────────────────────────────────────────────────────────────────
 //  Inclinación 3D que sigue al puntero, para los visuales de portada del grupo «sectores»
-//  (PilaPlanes, CalendarioTributario, MetodoConsultor, MosaicoProyectos).
+//  (PilaPlanes, MosaicoProyectos).
 //  Escribe --rx y --ry (grados) en el elemento; el CSS de cada visual decide cómo usarlos.
 //  Solo con puntero fino (mouse) y sin «reducir movimiento». Sin JS, el visual queda quieto.
 // ─────────────────────────────────────────────────────────────────────────────

@@ -16,8 +16,6 @@ import { contenido as contacto } from './contenido/contacto';
 import { contenido as inicio } from './contenido/inicio';
 import { contenido as nosotros } from './contenido/nosotros';
 import { contenido as paginasWebBogota } from './contenido/paginas-web-bogota';
-import { contenido as paginasWebConsultores } from './contenido/paginas-web-consultores';
-import { contenido as paginasWebContadores } from './contenido/paginas-web-contadores';
 import { contenido as paginasWebEmpresasServicios } from './contenido/paginas-web-empresas-servicios';
 import { contenido as politicaDePrivacidad } from './contenido/politica-de-privacidad';
 import { contenido as posicionamiento } from './contenido/posicionamiento-google-inteligencia-artificial';
@@ -48,8 +46,6 @@ export const ACTUALIZADO: Readonly<Record<string, string>> = Object.fromEntries(
     posicionamiento,
     asistenteWhatsApp,
     paginasWebEmpresasServicios,
-    paginasWebContadores,
-    paginasWebConsultores,
     precios,
     proyectos,
     recursos,

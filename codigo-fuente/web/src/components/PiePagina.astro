@@ -8,7 +8,7 @@
 import Marca from './navegacion/Marca.astro';
 import Icono from './navegacion/Icono.astro';
 import type { NombreIcono } from './navegacion/iconos';
-import { SITIO, CONTACTO, FUNDADOR, AVAL, MENU, SERVICIOS, SECTORES, CTA_PRINCIPAL, enlaceWhatsApp } from '@/data/sitio';
+import { SITIO, CONTACTO, FUNDADOR, AVAL, MENU, SERVICIOS, CTA_PRINCIPAL, enlaceWhatsApp } from '@/data/sitio';
 
 interface Props {
   /** Opcional: ruta actual para marcar el enlace activo. Si falta, se usa la URL de la página. */
@@ -36,7 +36,6 @@ const empresa: Enlace[] = [
 ];
 const columnas: { titulo: string; enlaces: Enlace[] }[] = [
   { titulo: 'Servicios', enlaces: SERVICIOS.map((s) => ({ nombre: s.nombre, href: `/${s.slug}/` })) },
-  { titulo: 'Sectores', enlaces: SECTORES.map((s) => ({ nombre: s.nombre, href: `/${s.slug}/` })) },
   { titulo: 'Empresa', enlaces: empresa },
   {
     titulo: 'Legal',

@@ -6,11 +6,9 @@
 //  Precios, proceso, condiciones y contacto salen de sitio.ts: no los copie a mano.
 //
 //  REGLAS DE ESTA PÁGINA:
-//  - No prometer especialización que no existe: las páginas por sector y los ejemplos de VRS se
-//    concentran en firmas contables y consultores. Para abogados, inmobiliarias, servicios
-//    técnicos y empresas B2B se adapta la misma estructura; se dice así, sin rodeos.
+//  - No prometer especialización que no existe. Sin menú ni páginas por mercado (Víctor, 2026-10-18).
+//    Para abogados, inmobiliarias, servicios técnicos y empresas B2B se adapta la misma estructura.
 //  - Sin cifras de mercado ni casos de esos sectores: no hay casos documentados de VRS en ellos.
-//  - SST se trata en /paginas-web-consultores/#sst (una sola URL por intención).
 //  EDICIÓN FINAL (2026-10-06): H1 y descripción sin «en Bogotá» para no competir con
 //  /paginas-web-bogota/ («diseño de páginas web Bogotá»). Se quitaron las preguntas de precio
 //  y de «sin acceso al agente», que ya responden /paginas-web-bogota/ y /asistente-whatsapp-business/.
@@ -93,7 +91,7 @@ export const contenido = {
     { nombre: 'Empresas de servicios', ruta: '/paginas-web-empresas-servicios/' },
   ],
   hero: {
-    etiqueta: 'Sectores',
+    etiqueta: 'Empresas de servicios',
     titulo: 'Páginas web para empresas de servicios profesionales',
     subtitulo:
       'Un servicio no se ve ni se toca. Su web debe explicar qué hace, para quién, cómo trabaja y cuánto cuesta empezar, y facilitar que le escriban. Nosotros la diseñamos, la preparamos para Google y ordenamos su atención por WhatsApp.',
@@ -123,30 +121,17 @@ export const contenido = {
     },
     {
       id: 'sectores',
-      etiqueta: 'Sectores',
-      titulo: 'Sectores que atendemos',
+      etiqueta: 'Con qué empresas',
+      titulo: 'Con qué empresas trabajamos',
       introduccion:
-        'Nuestras páginas por sector se dirigen a firmas contables y consultores. También atendemos otras empresas de servicios: partimos de la misma estructura y la adaptamos con su información. No le vendemos una especialización que no tenemos.',
+        'Partimos de una misma estructura y la adaptamos con la información de su empresa. No le vendemos una especialización que no tenemos. Algunos ejemplos:',
       tipo: 'tarjetas',
       columnas: 3,
       items: [
         {
-          titulo: 'Firmas contables y tributarias',
-          texto: 'Servicios para personas y empresas, contenido para cada temporada tributaria y consultas por WhatsApp ordenadas.',
-          icono: icono('calculator'),
-          href: '/paginas-web-contadores/',
-        },
-        {
-          titulo: 'Consultores y capacitadores',
-          texto: 'Especialidad, método, entregables y casos reales, con una forma sencilla de pedir propuesta.',
-          icono: icono('briefcase'),
-          href: '/paginas-web-consultores/',
-        },
-        {
           titulo: 'Seguridad y salud en el trabajo (SST)',
           texto: 'Licencia visible, estándares mínimos explicados y contenido antes de cada fecha de registro.',
           icono: icono('shield'),
-          href: '/paginas-web-consultores/#sst',
         },
         {
           titulo: 'Abogados y firmas jurídicas pequeñas',
@@ -250,7 +235,7 @@ export const contenido = {
     {
       pregunta: '¿Trabajan con abogados, inmobiliarias o empresas de servicios técnicos?',
       respuesta:
-        'Sí. Nuestras páginas por sector y nuestros ejemplos se concentran en firmas contables y consultores, pero la estructura de una buena web de servicios es la misma. La adaptamos con la información de su empresa y usted revisa que el contenido cumpla las reglas de su profesión. En el diagnóstico le decimos con franqueza si nuestro servicio le sirve.',
+        'Sí. La estructura de una buena web de servicios es la misma. La adaptamos con la información de su empresa y usted revisa que el contenido cumpla las reglas de su profesión. En el diagnóstico le decimos con franqueza si nuestro servicio le sirve.',
     },
     {
       pregunta: '¿El agente de WhatsApp puede dar orientación legal o técnica a mis clientes?',
@@ -278,8 +263,6 @@ export const contenido = {
   },
   enlacesInternos: [
     { texto: 'Diseño de páginas web en Bogotá para empresas', href: '/paginas-web-bogota/' },
-    { texto: 'Páginas web para contadores y firmas contables', href: '/paginas-web-contadores/' },
-    { texto: 'Páginas web para consultores, capacitadores y asesores SST', href: '/paginas-web-consultores/' },
     { texto: 'Configuración del agente de IA de WhatsApp Business', href: '/asistente-whatsapp-business/' },
     { texto: 'Precios, condiciones y formas de pago', href: '/precios/' },
     { texto: 'Guía: cuánto cuesta una página web en Bogotá', href: '/recursos/cuanto-cuesta-una-pagina-web-en-bogota/' },

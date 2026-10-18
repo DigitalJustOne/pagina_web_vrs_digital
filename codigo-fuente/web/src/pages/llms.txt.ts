@@ -13,7 +13,7 @@ import { paginasLlms, fechaActualizacion, respuestaTexto, type GrupoLlms, type P
 const SECCIONES: { titulo: string; grupos: GrupoLlms[] }[] = [
   { titulo: 'Empresa', grupos: ['empresa'] },
   { titulo: 'Servicios', grupos: ['servicios'] },
-  { titulo: 'Sectores que atendemos', grupos: ['sectores'] },
+  { titulo: 'Empresas de servicios', grupos: ['sectores'] },
   { titulo: 'Planes y precios', grupos: ['precios'] },
   { titulo: 'Guías y recursos', grupos: ['recursos', 'guias'] },
   { titulo: 'Optional', grupos: ['otras'] },

@@ -458,7 +458,6 @@ export const contenido = {
     { texto: 'Precios del plan Web + Atención Inteligente', href: '/precios/' },
     { texto: 'Diseño de páginas web en Bogotá para empresas', href: '/paginas-web-bogota/' },
     { texto: 'Posicionamiento en Google y asistentes de IA', href: '/posicionamiento-google-inteligencia-artificial/' },
-    { texto: 'Páginas web para contadores y firmas contables', href: '/paginas-web-contadores/' },
     { texto: 'Guía: qué puede hacer el agente de IA de WhatsApp Business', href: '/recursos/agente-ia-whatsapp-business/' },
   ],
   fuentes: [

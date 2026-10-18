@@ -94,11 +94,6 @@ export const contenido = {
         'No forman parte de nuestra oferta actual. Beauty Manager es un producto propio para centros de estética que se puede adquirir; las demás son proyectos anteriores de diseño y desarrollo. Hoy nos concentramos en páginas web, posicionamiento en Google y asistentes de IA, configuración del agente de IA de WhatsApp Business y mantenimiento. Un desarrollo a medida solo se evalúa de forma excepcional y con un alcance controlado.',
     },
     {
-      pregunta: '¿Tienen proyectos de firmas contables o de consultores?',
-      respuesta:
-        'Todavía no publicamos un caso de esos sectores. Son nuestro enfoque actual y, cuando tengamos uno con autorización del cliente, lo mostraremos con su contexto y sus resultados. Mientras tanto, la revisión digital gratuita le muestra tres mejoras concretas para la web y el WhatsApp de su empresa.',
-    },
-    {
       pregunta: '¿Mi empresa obtendrá los mismos resultados que estos proyectos?',
       respuesta:
         'No podemos garantizarlo. Los resultados dependen de su negocio, su mercado, su operación y el tiempo. Lo que sí definimos con usted es el alcance, lo que se entrega y cómo se revisa el avance. Si contrata el seguimiento mensual, revisamos datos reales cada mes para decidir las siguientes mejoras.',
@@ -119,8 +114,7 @@ export const contenido = {
   },
   enlacesInternos: [
     { texto: 'Diseño de páginas web en Bogotá para empresas', href: '/paginas-web-bogota/' },
-    { texto: 'Páginas web para contadores y firmas contables', href: '/paginas-web-contadores/' },
-    { texto: 'Páginas web para consultores y capacitadores', href: '/paginas-web-consultores/' },
+    { texto: 'Páginas web para empresas de servicios', href: '/paginas-web-empresas-servicios/' },
     { texto: 'Precios y qué incluye cada plan', href: '/precios/' },
     { texto: 'Quién está detrás de VRS Digital', href: '/nosotros/' },
   ],

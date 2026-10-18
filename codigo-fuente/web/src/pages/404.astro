@@ -6,7 +6,7 @@ import Base from '@/layouts/Base.astro';
 import Icono from '@/components/ui/Icono.astro';
 import EncabezadoSeccion from '@/components/ui/EncabezadoSeccion.astro';
 import type { NombreIcono } from '@/components/ui/iconos';
-import { CONTACTO, CTA_PRINCIPAL, SECTORES, SERVICIOS, enlaceWhatsApp } from '@/data/sitio';
+import { CONTACTO, CTA_PRINCIPAL, SERVICIOS, enlaceWhatsApp } from '@/data/sitio';
 
 const servicio = (slug: string) => SERVICIOS.find((s) => s.slug === slug)!;
 
@@ -115,21 +115,6 @@ const mensajeWhatsApp = 'Hola, llegué a una página de su web que no existe. Es
           ))
         }
       </ul>
-
-      <nav aria-label="Páginas por sector" class="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
-        <span class="text-sm text-ink-soft">Páginas web por sector:</span>
-        <ul class="flex flex-wrap gap-2" role="list">
-          {
-            SECTORES.map((s) => (
-              <li>
-                <a href={`/${s.slug}/`} class="chip-sector inline-flex min-h-11 items-center rounded-full px-4 text-sm font-medium text-primary">
-                  {s.nombre}
-                </a>
-              </li>
-            ))
-          }
-        </ul>
-      </nav>
     </div>
   </section>
 </Base>

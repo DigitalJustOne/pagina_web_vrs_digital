@@ -43,10 +43,8 @@ URL: https://goldenrod-bee-973005.hostingersite.com/precios/
 
 Mantenemos su información actualizada y mejoramos la web mes a mes, con un alcance definido.
 
-## Sectores que atendemos
+## Páginas para empresas de servicios
 
-- Firmas contables y tributarias: https://goldenrod-bee-973005.hostingersite.com/paginas-web-contadores/
-- Consultores y capacitadores: https://goldenrod-bee-973005.hostingersite.com/paginas-web-consultores/
 - Empresas de servicios: https://goldenrod-bee-973005.hostingersite.com/paginas-web-empresas-servicios/
 
 ## Planes y precios
@@ -405,22 +403,6 @@ Configuramos el agente de IA que Meta ofrece en WhatsApp Business: datos de su n
 
 En resumen: Meta ofrece dentro de la app WhatsApp Business un agente de inteligencia artificial (Meta Business Agent) que responde a sus clientes con la información que usted le da. VRS Digital no creó esa tecnología: verificamos si su cuenta tiene acceso, organizamos la información de su negocio, lo configuramos, lo probamos y definimos cuándo debe pasarle la conversación a usted.
 
-### Páginas web para contadores y firmas contables
-
-URL: https://goldenrod-bee-973005.hostingersite.com/paginas-web-contadores/
-
-Páginas web para contadores en Bogotá: servicios claros, contenido para cada temporada tributaria y consultas por WhatsApp ordenadas. Vea la estructura.
-
-En resumen: La web de una firma contable debe responder rápido tres cosas: qué servicios ofrece a personas y a empresas, cuándo vencen las obligaciones de sus clientes y cómo empezar. VRS Digital crea ese sitio, lo prepara para Google y configura el agente de IA de WhatsApp Business para las preguntas repetidas. La asesoría tributaria siempre pasa a un contador.
-
-### Páginas web para consultores y capacitadores
-
-URL: https://goldenrod-bee-973005.hostingersite.com/paginas-web-consultores/
-
-Páginas web para consultores, capacitadores y asesores SST: explique su método, muestre casos reales y reciba solicitudes de propuesta claras por WhatsApp.
-
-En resumen: Un consultor vende confianza antes que horas. Su web debe mostrar en qué problema se especializa, cómo trabaja paso a paso, qué entrega, casos reales autorizados y cómo pedir una propuesta. VRS Digital crea esa web, la prepara para Google y configura WhatsApp Business para ordenar las solicitudes antes de que usted intervenga.
-
 ### Página web para empresas de servicios y pymes
 
 URL: https://goldenrod-bee-973005.hostingersite.com/paginas-web-empresas-servicios/
@@ -455,7 +437,7 @@ Fuente: https://goldenrod-bee-973005.hostingersite.com/
 
 ### ¿Con qué tipo de empresas trabajan?
 
-Con empresas y profesionales de servicios que necesitan explicar bien lo que ofrecen y reciben muchas preguntas por WhatsApp. Hoy nos enfocamos en firmas contables y tributarias, y en consultores y capacitadores. También atendemos otras empresas de servicios, como firmas jurídicas pequeñas, inmobiliarias o servicios técnicos, con la misma estructura adaptada. Si su caso no encaja, se lo decimos.
+Con empresas y profesionales de servicios que necesitan explicar bien lo que ofrecen y reciben muchas preguntas por WhatsApp. Si su caso no encaja, se lo decimos.
 
 Fuente: https://goldenrod-bee-973005.hostingersite.com/
 
@@ -522,12 +504,6 @@ Fuente: https://goldenrod-bee-973005.hostingersite.com/proyectos/
 ### ¿Todavía desarrollan plataformas a medida?
 
 No forman parte de nuestra oferta actual. Beauty Manager es un producto propio para centros de estética que se puede adquirir; las demás son proyectos anteriores de diseño y desarrollo. Hoy nos concentramos en páginas web, posicionamiento en Google y asistentes de IA, configuración del agente de IA de WhatsApp Business y mantenimiento. Un desarrollo a medida solo se evalúa de forma excepcional y con un alcance controlado.
-
-Fuente: https://goldenrod-bee-973005.hostingersite.com/proyectos/
-
-### ¿Tienen proyectos de firmas contables o de consultores?
-
-Todavía no publicamos un caso de esos sectores. Son nuestro enfoque actual y, cuando tengamos uno con autorización del cliente, lo mostraremos con su contexto y sus resultados. Mientras tanto, la revisión digital gratuita le muestra tres mejoras concretas para la web y el WhatsApp de su empresa.
 
 Fuente: https://goldenrod-bee-973005.hostingersite.com/proyectos/
 
@@ -711,102 +687,6 @@ Le hacemos de 25 a 40 preguntas de prueba: normales, ambiguas, fuera de alcance,
 
 Fuente: https://goldenrod-bee-973005.hostingersite.com/asistente-whatsapp-business/
 
-### ¿Qué debe tener la página web de un contador o una firma contable?
-
-Debe explicar sus servicios para personas y para empresas, cada uno con su página o sección; mostrar cómo se cotiza y qué documentos se necesitan; publicar el equipo con número de tarjeta profesional; tener contenido para cada temporada tributaria con enlaces a la DIAN, y facilitar el contacto por WhatsApp y por un formulario corto, con política de tratamiento de datos.
-
-Fuente: https://goldenrod-bee-973005.hostingersite.com/paginas-web-contadores/
-
-### ¿Pueden tener la web lista antes de la temporada de renta?
-
-Depende del alcance y de nuestra disponibilidad: trabajamos con máximo dos proyectos a la vez y asignamos la fecha de inicio según cupo. Para la renta de personas naturales, que en 2026 va del 12 de agosto al 26 de octubre, conviene empezar con varios meses de anticipación para publicar en julio. La fecha estimada de entrega queda por escrito en la propuesta.
-
-Fuente: https://goldenrod-bee-973005.hostingersite.com/paginas-web-contadores/
-
-### ¿El agente de WhatsApp puede responder preguntas tributarias?
-
-Solo información general que su firma apruebe, como servicios, documentos que suele pedir, horarios o fechas del calendario de la DIAN con su enlace. No da asesoría: si alguien pregunta si debe declarar, cuánto pagará o qué hacer con un requerimiento, el agente le pasa la conversación a un contador. Probamos esos límites antes de activarlo.
-
-Fuente: https://goldenrod-bee-973005.hostingersite.com/paginas-web-contadores/
-
-### ¿Es seguro que mis clientes envíen documentos por WhatsApp si el agente está activo?
-
-No lo recomendamos. Meta informa que usa los mensajes de los chats donde el agente está activo para mejorar su inteligencia artificial, incluso si usted lo silencia. Por eso configuramos el agente para pedir que no se envíen extractos, certificados ni estados financieros por ese chat. El contador le indica al cliente un canal adecuado.
-
-Fuente: https://goldenrod-bee-973005.hostingersite.com/paginas-web-contadores/
-
-### ¿Debo publicar mis honorarios en la web?
-
-Es su decisión. Un valor «desde» y la explicación de qué lo hace variar, como el tipo de cliente, los ingresos o el número de soportes, ayudan a que le escriban personas que ya saben qué esperar. Si prefiere no publicar cifras, la web puede explicar cómo se cotiza y cuánto tarda en recibir una propuesta.
-
-Fuente: https://goldenrod-bee-973005.hostingersite.com/paginas-web-contadores/
-
-### ¿Cuánto cuesta una página web para una firma contable?
-
-Para una firma con muchas preguntas repetidas en temporada, recomendamos Web + Atención Inteligente: desde $3.000.000 al año, o en 12 cuotas de $300.000 al mes, con la configuración del agente de IA de WhatsApp Business. Si su prioridad es aparecer en Google con una página por servicio, Web Visible empieza en $2.200.000. La web sola, Web Esencial, desde $1.200.000. Los costos de Meta van aparte. Precios en pesos colombianos, IVA incluido.
-
-Fuente: https://goldenrod-bee-973005.hostingersite.com/paginas-web-contadores/
-
-### ¿La web o el agente se conectan con mi programa contable o de facturación?
-
-No. Las integraciones con programas contables, de facturación electrónica, inventario u otros sistemas están fuera de nuestro alcance. La web y el agente de WhatsApp Business trabajan con la información que su firma aprueba: servicios, horarios, documentos que suele pedir y honorarios «desde». Así el servicio es más simple, más rápido de entregar y más fácil de mantener.
-
-Fuente: https://goldenrod-bee-973005.hostingersite.com/paginas-web-contadores/
-
-### ¿Quién escribe y revisa el contenido tributario de la web?
-
-Preparamos los borradores con la información de su firma y con fuentes oficiales, como la DIAN. Pero VRS Digital no es asesor tributario: un contador de su firma revisa y aprueba cada dato técnico antes de publicarlo. Cada guía lleva autor, fecha de actualización y enlace a la fuente, y las fechas y la UVT se verifican de nuevo cada año.
-
-Fuente: https://goldenrod-bee-973005.hostingersite.com/paginas-web-contadores/
-
-### ¿Qué debe tener la página web de un consultor?
-
-Debe mostrar en qué problema se especializa, para quién trabaja, cómo es su método paso a paso, qué entrega, cuánto tarda y en qué modalidad. También casos reales autorizados, credenciales que se puedan verificar y una forma sencilla de pedir propuesta: un formulario corto o WhatsApp. Lo ideal es una página por cada servicio o programa.
-
-Fuente: https://goldenrod-bee-973005.hostingersite.com/paginas-web-consultores/
-
-### ¿Debo publicar mis precios de consultoría?
-
-Es su decisión. Muchos consultores cotizan cada proyecto, pero un valor «desde» o un rango, con lo que lo hace variar, filtra solicitudes y ahorra reuniones. Si prefiere no publicar cifras, explique su modelo de cobro, por proyecto, por hora o por mes, y cuánto tarda en enviar una propuesta.
-
-Fuente: https://goldenrod-bee-973005.hostingersite.com/paginas-web-consultores/
-
-### ¿Cómo muestro casos si mis clientes piden confidencialidad?
-
-Con casos anonimizados: sector, tamaño de la empresa, problema, qué hizo y qué cambió, sin nombres. Si incluye una cifra, indique cómo y en qué periodo se midió. Pida autorización por escrito y conserve la evidencia. Nunca publique casos o testimonios inventados: la ley exige información veraz y verificable.
-
-Fuente: https://goldenrod-bee-973005.hostingersite.com/paginas-web-consultores/
-
-### ¿Puedo decir que mis cursos dan certificado?
-
-Depende del tipo de curso. Según el Ministerio de Educación, los cursos de educación informal, de menos de 160 horas, solo dan lugar a una constancia de asistencia, y su publicidad debe aclarar que no conducen a título ni a certificado de aptitud ocupacional. En ese caso, en su web escribimos «constancia de asistencia», no «certificado».
-
-Fuente: https://goldenrod-bee-973005.hostingersite.com/paginas-web-consultores/
-
-### ¿Sirve para asesores y empresas de seguridad y salud en el trabajo?
-
-Sí. La web puede mostrar su licencia en SST y la entidad que la expidió, explicar los estándares mínimos que aplican según el número de trabajadores y publicar contenido antes de cada fecha de registro de la autoevaluación del SG-SST. Por WhatsApp, el agente puede preguntar tamaño, sector y necesidad antes de pasarle la solicitud.
-
-Fuente: https://goldenrod-bee-973005.hostingersite.com/paginas-web-consultores/
-
-### ¿El agente de WhatsApp puede agendar reuniones con mis clientes?
-
-Meta anunció que el agente puede agendar citas, pero esa función depende de lo que Meta habilite en cada cuenta. La verificamos en el diagnóstico antes de incluirla. Si no está disponible, el agente pide los datos del cliente y la fecha que prefiere, y usted confirma la reunión personalmente en su horario.
-
-Fuente: https://goldenrod-bee-973005.hostingersite.com/paginas-web-consultores/
-
-### ¿Cuánto cuesta una página web para un consultor?
-
-Para que lo encuentren en Google con una página por servicio o programa, recomendamos Web Visible: desde $2.200.000 al año, o en 12 cuotas de $220.000 al mes, con seguimiento mensual. Si además quiere ordenar las solicitudes por WhatsApp con el agente de IA, Web + Atención Inteligente empieza en $3.000.000. Una web más sencilla, Web Esencial, desde $1.200.000. Los costos de Meta van aparte. Precios en pesos colombianos, IVA incluido.
-
-Fuente: https://goldenrod-bee-973005.hostingersite.com/paginas-web-consultores/
-
-### ¿Puedo ver un ejemplo antes de contratar?
-
-Sí. En esta página está la estructura que proponemos y una conversación de ejemplo. En la revisión digital le explicamos cómo se aplicaría a su web y le entregamos tres prioridades concretas.
-
-Fuente: https://goldenrod-bee-973005.hostingersite.com/paginas-web-consultores/
-
 ### ¿Qué debe tener la página web de una empresa de servicios?
 
 Una respuesta clara arriba: qué hace, para quién, dónde y desde cuánto. Luego, una página por servicio con lo que incluye y lo que no, cómo trabaja, cómo se cotiza, pruebas reales, quién está detrás, preguntas frecuentes y un contacto visible por WhatsApp y formulario. Así el cliente entiende qué recibe antes de escribirle.
@@ -815,7 +695,7 @@ Fuente: https://goldenrod-bee-973005.hostingersite.com/paginas-web-empresas-serv
 
 ### ¿Trabajan con abogados, inmobiliarias o empresas de servicios técnicos?
 
-Sí. Nuestras páginas por sector y nuestros ejemplos se concentran en firmas contables y consultores, pero la estructura de una buena web de servicios es la misma. La adaptamos con la información de su empresa y usted revisa que el contenido cumpla las reglas de su profesión. En el diagnóstico le decimos con franqueza si nuestro servicio le sirve.
+Sí. La estructura de una buena web de servicios es la misma. La adaptamos con la información de su empresa y usted revisa que el contenido cumpla las reglas de su profesión. En el diagnóstico le decimos con franqueza si nuestro servicio le sirve.
 
 Fuente: https://goldenrod-bee-973005.hostingersite.com/paginas-web-empresas-servicios/
 

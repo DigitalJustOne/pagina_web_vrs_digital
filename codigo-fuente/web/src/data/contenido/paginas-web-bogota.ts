@@ -81,37 +81,6 @@ export const contenido = {
   respuestaDirecta: `Diseñamos páginas web para empresas de servicios en Bogotá. El plan ${esencial.nombre} cuesta desde ${desde('esencial')} al año, o en 12 cuotas de ${cuotaDesde('esencial')} al mes, e incluye hasta cinco secciones adaptadas a celular, botón de WhatsApp, formulario y optimización inicial para Google. Usted trata directamente con ${FUNDADOR.nombreCorto}, quien dirige y revisa cada proyecto.`,
   secciones: [
     {
-      id: 'para-quien',
-      etiqueta: 'Para quién',
-      titulo: 'Para empresas que venden servicios y necesitan explicarlos bien',
-      introduccion:
-        'Un servicio no se ve ni se toca. Por eso su web debe decir qué hace, para quién, cómo trabaja y cuánto cuesta empezar. Nos concentramos en estos sectores:',
-      tipo: 'tarjetas',
-      columnas: 3,
-      items: [
-        {
-          titulo: 'Firmas contables y tributarias',
-          texto:
-            'Servicios para personas y empresas explicados con claridad, contenido para cada temporada de declaración y consultas por WhatsApp ordenadas.',
-          icono: icono('calculator'),
-          href: '/paginas-web-contadores/',
-        },
-        {
-          titulo: 'Consultores y capacitadores',
-          texto: 'Su especialidad, su método, lo que entrega y sus casos reales, con una forma sencilla de pedirle una propuesta.',
-          icono: icono('briefcase'),
-          href: '/paginas-web-consultores/',
-        },
-        {
-          titulo: 'Otras empresas de servicios',
-          texto:
-            'Seguridad y salud en el trabajo (SST), firmas jurídicas pequeñas, inmobiliarias, servicios técnicos y empresas que venden a otras empresas.',
-          icono: icono('users'),
-          href: '/paginas-web-empresas-servicios/',
-        },
-      ],
-    },
-    {
       id: 'que-incluye',
       etiqueta: 'Qué incluye',
       titulo: 'Qué incluye su página web',
@@ -294,7 +263,6 @@ export const contenido = {
     { texto: 'Precios, condiciones y formas de pago', href: '/precios/' },
     { texto: 'Posicionamiento en Google y asistentes de IA', href: '/posicionamiento-google-inteligencia-artificial/' },
     { texto: 'Configuración del agente de IA de WhatsApp Business', href: '/asistente-whatsapp-business/' },
-    { texto: 'Páginas web para contadores y firmas contables', href: '/paginas-web-contadores/' },
     { texto: 'Proyectos realizados por VRS Digital', href: '/proyectos/' },
     { texto: 'Guía: cuánto cuesta una página web en Bogotá', href: '/recursos/cuanto-cuesta-una-pagina-web-en-bogota/' },
   ],

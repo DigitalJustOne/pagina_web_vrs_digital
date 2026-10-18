@@ -85,7 +85,6 @@ export const contenido = {
       items: [
         'WhatsApp Business tradicional frente a la atención con inteligencia artificial: cuándo conviene cada una.',
         'Cómo preparar su web para Google y los asistentes de IA, según la documentación oficial de Google.',
-        'Las preguntas que debe responder la web de una firma contable.',
         'Errores que hacen perder consultas por WhatsApp.',
       ],
     },

@@ -48,6 +48,8 @@ ErrorDocument 404 /404.html
   RewriteRule ^contacto\.html$             https://%{HTTP_HOST}/contacto/            [R=301,L]
   RewriteRule ^proyectos\.html$            https://%{HTTP_HOST}/proyectos/           [R=301,L]
   # /proyectos y /contacto (sin barra) los resuelve la regla 5c.
+  # Páginas por sector retiradas el 2026-10-18 (sin menú por mercado) → empresas de servicios.
+  RewriteRule ^paginas-web-(contadores|consultores|construccion)(/.*)?$  https://%{HTTP_HOST}/paginas-web-empresas-servicios/ [R=301,L]
 
   # ── 4b. Forzar HTTPS ────────────────────────────────────────────────────────
   # Redirige http:// a https:// con 301. La segunda condición evita bucles si

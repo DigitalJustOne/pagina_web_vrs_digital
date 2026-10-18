@@ -263,8 +263,6 @@ export const SERVICIOS = [
 ] as const;
 
 export const SECTORES = [
-  { slug: 'paginas-web-contadores', nombre: 'Firmas contables y tributarias' },
-  { slug: 'paginas-web-consultores', nombre: 'Consultores y capacitadores' },
   { slug: 'paginas-web-empresas-servicios', nombre: 'Empresas de servicios' },
 ] as const;
 
@@ -416,15 +414,7 @@ export const MENU = [
       { nombre: 'Atención inteligente en WhatsApp', href: '/asistente-whatsapp-business/' },
     ],
   },
-  {
-    nombre: 'Sectores',
-    href: '/paginas-web-empresas-servicios/',
-    hijos: [
-      { nombre: 'Firmas contables', href: '/paginas-web-contadores/' },
-      { nombre: 'Consultores', href: '/paginas-web-consultores/' },
-      { nombre: 'Empresas de servicios', href: '/paginas-web-empresas-servicios/' },
-    ],
-  },
+  // Sin menú «Sectores» (Víctor, 2026-10-18): no quiere páginas ni menú por mercado.
   { nombre: 'Precios', href: '/precios/' },
   { nombre: 'Proyectos', href: '/proyectos/' },
   { nombre: 'Recursos', href: '/recursos/' },

@@ -422,7 +422,6 @@ export const contenido = {
     { texto: 'Precios del plan Web Visible y de los demás planes', href: '/precios/' },
     { texto: 'Guía: cuánto cuesta una página web en Bogotá', href: '/recursos/cuanto-cuesta-una-pagina-web-en-bogota/' },
     { texto: 'Páginas web para empresas de servicios', href: '/paginas-web-empresas-servicios/' },
-    { texto: 'Páginas web para contadores y firmas contables', href: '/paginas-web-contadores/' },
   ],
   fuentes: [
     {
