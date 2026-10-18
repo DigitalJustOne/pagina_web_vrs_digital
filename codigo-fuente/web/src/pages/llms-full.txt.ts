@@ -93,7 +93,7 @@ Tipo: ${rotuloCaso(c.cliente)}.
 
 ${c.resumen}
 
-${c.tipo === 'cliente' ? 'Logros:' : 'Qué ofrece:'}
+Qué ofrece:
 
 ${lista(c.logros)}
 
@@ -215,7 +215,7 @@ ${lista(CONDICIONES)}
 
 ## Proyectos
 
-Proyectos reales con enlace público. Los resultados de cada proyecto dependen del negocio, su mercado y su operación; no garantizan los mismos resultados en otra empresa.
+Proyectos con enlace público. Los resultados de cada proyecto dependen del negocio, su mercado y su operación; no garantizan los mismos resultados en otra empresa.
 
 ${casos}
 

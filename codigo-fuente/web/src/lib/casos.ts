@@ -8,9 +8,13 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { CASOS, type Caso } from '@/data/sitio';
 
-/** Medidas reales de cada imagen (px), medidas el 2026-10-06 (Beauty Manager, el 2026-10-11). */
+/** Medidas reales de cada imagen (px), medidas el 2026-10-06 (Beauty Manager, el 2026-10-11; La Casa de las Tejas y MG Power Electric, el 2026-10-18). */
 const MEDIDAS: Record<string, { ancho: number; alto: number }> = {
   '/img/beautymanager-agenda.png': { ancho: 1280, alto: 800 },
+  '/img/tejas.png': { ancho: 1280, alto: 720 },
+  '/img/tejas-standing.png': { ancho: 1280, alto: 720 },
+  '/img/tejas-panel.png': { ancho: 1280, alto: 720 },
+  '/img/mg-power-electric.png': { ancho: 1280, alto: 720 },
   '/img/dec-preview.png': { ancho: 800, alto: 500 },
   '/img/delis-broaster.png': { ancho: 1024, alto: 580 },
   '/img/vitalcarga.png': { ancho: 1024, alto: 532 },
@@ -26,6 +30,10 @@ const PRESENTACION: Record<string, { alt: string; ajuste?: 'cover' | 'contain'; 
     alt: 'Ilustración del panel de Beauty Manager con la agenda de citas y el registro de clientes, con datos de ejemplo',
     rotulo: 'Producto propio',
   },
+  'La Casa de las Tejas': { alt: 'Página de inicio de La Casa de las Tejas con el título «Tejas y cubiertas en Bogotá» y el cotizador', posicion: 'left top' },
+  'La Casa de las Tejas: teja Standing Seam': { alt: 'Landing page de la teja Standing Seam de La Casa de las Tejas', posicion: 'center top' },
+  'La Casa de las Tejas: panel sándwich': { alt: 'Landing page de cubiertas en panel sándwich de La Casa de las Tejas', posicion: 'center top' },
+  'MG Power Electric': { alt: 'Página de inicio de MG Power Electric, contratista eléctrico de Colorado, con el botón para pedir presupuesto', posicion: 'left top' },
   'Equipos y Componentes DEC': { alt: 'Logo de Equipos y Componentes DEC', ajuste: 'contain' },
   'Delis Broaster': { alt: 'Página de inicio de Delis Broaster con su logo y el botón para pedir domicilio', posicion: 'left center' },
   Vitalcarga: { alt: 'Página de inicio de Vitalcarga con los botones para rastrear guías y cotizar envíos' },
@@ -38,7 +46,7 @@ const PRESENTACION: Record<string, { alt: string; ajuste?: 'cover' | 'contain'; 
   },
 };
 
-const ROTULO_TIPO: Record<Caso['tipo'], string> = { cliente: 'Cliente', producto: 'Producto propio' };
+const ROTULO_TIPO: Record<Caso['tipo'], string> = { cliente: 'Cliente', proyecto: 'Proyecto', producto: 'Producto propio' };
 
 /** Medidas, versión .webp (si existe en public/) y medidas de cualquier imagen de public/. */
 export function imagenPublica(ruta: string) {

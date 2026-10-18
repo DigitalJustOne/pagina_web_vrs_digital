@@ -1,9 +1,9 @@
 ---
 /**
- * Visual de la portada de /proyectos/: las capturas de todos los casos (CASOS de sitio.ts) en un
+ * Visual de la portada de /proyectos/: las capturas de los seis primeros casos (CASOS de sitio.ts) en un
  * muro inclinado en 3D. Cada baldosa abre el sitio público del proyecto (enlace de CASOS) en una
  * pestaña nueva y lleva su rótulo visible:
- * «Cliente», «Producto propio» o «Plataforma» (rotuloCaso de @/lib/casos).
+ * «Cliente», «Proyecto», «Producto propio» o «Plataforma» (rotuloCaso de @/lib/casos).
  *
  * Imágenes: medidas reales desde imagenCaso(); en .webp se usa la miniatura de 480 px
  * (public/img/miniaturas/, miniaturaCaso()) porque las baldosas miden menos de 300 px y la
@@ -23,7 +23,9 @@ interface Props {
 }
 const { class: clase } = Astro.props;
 
-const baldosas = CASOS.map((c) => ({
+// Seis baldosas como máximo (dos filas de tres): con más, el muro inclinado se sale de la pantalla en
+// celular. Son los primeros de CASOS (los más recientes); la lista completa está debajo, en la página.
+const baldosas = CASOS.slice(0, 6).map((c) => ({
   caso: c,
   img: imagenCaso(c),
   // Baldosas de ~180 px: basta la miniatura de 480 px (un tercio del peso de la captura).

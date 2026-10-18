@@ -46,7 +46,7 @@ export const contenido = {
     ctaSecundario: { texto: 'Ver proyectos', href: '/proyectos/' },
   },
   respuestaDirecta:
-    'VRS Digital es un estudio digital de Bogotá dirigido por Víctor Alfonso Ramírez Sepúlveda, su fundador y responsable de cada proyecto. Trabaja solo, apoyado por inteligencia artificial para acelerar la investigación, los textos y el desarrollo, y revisa personalmente cada entrega. Suma más de 3 años de experiencia.',
+    'VRS Digital es un estudio digital de Bogotá dirigido por Víctor Alfonso Ramírez Sepúlveda, su fundador y responsable de cada proyecto. Trabaja solo, apoyado por inteligencia artificial para acelerar la investigación, los textos y el desarrollo, y revisa personalmente cada entrega.',
   secciones: [
     {
       id: 'responsable',
@@ -66,7 +66,7 @@ export const contenido = {
       },
       parrafos: [
         `${FUNDADOR.nombre} fundó VRS Digital y es el responsable de cada proyecto. Atiende el diagnóstico, define la estrategia, diseña, desarrolla, revisa y presenta las entregas. Cuando usted escribe, le responde la misma persona que hace el trabajo.`,
-        'Tiene más de 3 años de experiencia en desarrollo de producto digital y proyectos entregados: sitios y plataformas para industria eléctrica, restaurantes, logística y bienestar, además de Beauty Manager, el producto propio de VRS Digital para centros de estética.',
+        'Ha desarrollado una web corporativa de 54 páginas y landing pages para campañas de Google Ads para una empresa de tejas y cubiertas, además de sitios y plataformas de restaurantes, logística, bienestar e industria eléctrica, que puede revisar en la página de proyectos, y Beauty Manager, el producto propio de VRS Digital para centros de estética.',
         'VRS Digital no tiene departamentos ni empleados, y no los aparenta. Preferimos que usted sepa desde el principio con quién trabaja y quién responde por el resultado.',
       ],
       cifras: CIFRAS,
@@ -231,7 +231,7 @@ export const contenido = {
     enlaceWhatsApp: enlaceWhatsApp('Hola, Víctor. Quiero una revisión digital gratuita para mi empresa.'),
   },
   enlacesInternos: [
-    { texto: 'Proyectos reales de páginas web y plataformas', href: '/proyectos/' },
+    { texto: 'Proyectos de páginas web y plataformas', href: '/proyectos/' },
     { texto: 'Precios y qué incluye cada plan', href: '/precios/' },
     { texto: 'Configuración del agente de IA de WhatsApp Business', href: '/asistente-whatsapp-business/' },
     { texto: 'Solicitar una revisión digital gratuita', href: '/contacto/' },

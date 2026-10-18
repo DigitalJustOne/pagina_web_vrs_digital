@@ -244,9 +244,9 @@ export const contenido = {
     {
       id: 'prueba',
       etiqueta: 'Proyectos y respaldo',
-      titulo: 'Proyectos reales y un respaldo que puede verificar',
+      titulo: 'Proyectos que puede revisar y un respaldo que puede verificar',
       introduccion:
-        'Llevamos más de 3 años de experiencia y varios proyectos entregados. Estos son algunos, con enlace público para que usted los revise. Algunos son plataformas a medida que hicimos antes de concentrar nuestra oferta, como Vitalcarga; hoy no vendemos software a medida ni CRM.',
+        'Estos son proyectos de VRS Digital con enlace público, para que usted los revise. Algunos son plataformas a medida hechas antes de concentrar la oferta, como Vitalcarga; hoy no vendemos software a medida ni CRM.',
       tipo: 'casos',
       limite: 4,
       cifras: CIFRAS,
@@ -302,7 +302,7 @@ export const contenido = {
     {
       pregunta: '¿Con qué tipo de empresas trabajan?',
       respuesta:
-        'Con empresas y profesionales de servicios que necesitan explicar bien lo que ofrecen y reciben muchas preguntas por WhatsApp. Hoy nos concentramos en firmas contables y tributarias, y en consultores y capacitadores. También trabajamos con otras empresas de servicios, como firmas jurídicas pequeñas, inmobiliarias o servicios técnicos, con la misma estructura adaptada. Si su caso no encaja, se lo decimos.',
+        'Con empresas y profesionales de servicios que necesitan explicar bien lo que ofrecen y reciben muchas preguntas por WhatsApp. Hoy nos enfocamos en firmas contables y tributarias, y en consultores y capacitadores. También atendemos otras empresas de servicios, como firmas jurídicas pequeñas, inmobiliarias o servicios técnicos, con la misma estructura adaptada. Si su caso no encaja, se lo decimos.',
     },
     {
       pregunta: '¿Usan inteligencia artificial para hacer las páginas?',

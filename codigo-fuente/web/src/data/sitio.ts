@@ -56,9 +56,8 @@ export function enlaceWhatsApp(mensaje = 'Hola, quiero solicitar una revisión d
   return `https://wa.me/${CONTACTO.whatsappNumero}?text=${encodeURIComponent(mensaje)}`;
 }
 
-/** Cifras verificadas (contexto/negocio.md). No agregar cifras sin fuente. */
+/** Cifras confirmadas. Víctor (2026-10-18): está empezando; no publicar años de experiencia ni número de clientes. */
 export const CIFRAS = [
-  { valor: '3+', etiqueta: 'años de experiencia' },
   { valor: '2', etiqueta: 'proyectos activos como máximo, para cuidar la calidad' },
 ] as const;
 
@@ -269,7 +268,10 @@ export const SECTORES = [
   { slug: 'paginas-web-empresas-servicios', nombre: 'Empresas de servicios' },
 ] as const;
 
-// ── Casos reales (memoria/MEMORIA.md) ───────────────────────────────────────
+// ── Proyectos (memoria/MEMORIA.md) ──────────────────────────────────────────
+// Víctor (2026-10-18): está empezando; solo ha tenido un par de clientes de páginas web y el resto
+// son proyectos propios o personales. No confirmó cuáles fueron clientes: por eso ninguno se rotula
+// como «Cliente» ni muestra resultados, solo «Proyecto» y lo que ofrece cada sitio.
 export interface Caso {
   cliente: string;
   sector: string;
@@ -278,11 +280,54 @@ export interface Caso {
   logros: string[];
   enlace: string;
   destacado?: boolean;
-  /** 'cliente' = trabajo entregado a un cliente; 'producto' = producto propio de VRS Digital. */
-  tipo: 'cliente' | 'producto';
+  /** 'cliente' = trabajo para un cliente (solo si Víctor lo confirma); 'proyecto' = trabajo de Víctor sin
+   *  confirmar si fue para un cliente; 'producto' = producto propio de VRS Digital. */
+  tipo: 'cliente' | 'proyecto' | 'producto';
 }
 
 export const CASOS: Caso[] = [
+  // Víctor (2026-10-18): sus últimos proyectos. Contenido de La Casa de las Tejas revisado en sus sitios
+  // públicos el 2026-10-18; las 54 páginas y las campañas de Google Ads, dichas por Víctor.
+  {
+    cliente: 'La Casa de las Tejas',
+    sector: 'Tejas y cubiertas, Bogotá',
+    imagen: '/img/tejas.png',
+    resumen: 'Web corporativa de 54 páginas internas para una empresa que vende e instala tejas y cubiertas, con cotizador en línea.',
+    logros: ['54 páginas internas', 'Cotizador en línea que envía la solicitud por WhatsApp', 'Guías y comparador de productos'],
+    enlace: 'https://lacasadelastejas.com.co/',
+    tipo: 'proyecto',
+    destacado: true,
+  },
+  {
+    cliente: 'La Casa de las Tejas: teja Standing Seam',
+    sector: 'Landing page para Google Ads',
+    imagen: '/img/tejas-standing.png',
+    resumen: 'Landing page de un producto, hecha para campañas de Google Ads, que prepara una propuesta de obra por WhatsApp.',
+    logros: ['Un solo producto y un solo llamado a la acción', 'Propuesta de obra enviada por WhatsApp'],
+    enlace: 'https://standing.lacasadelastejas.com.co/',
+    tipo: 'proyecto',
+  },
+  {
+    cliente: 'MG Power Electric',
+    sector: 'Contratista eléctrico, Colorado (EE. UU.)',
+    imagen: '/img/mg-power-electric.png',
+    // Víctor (2026-10-18): lista, se publica en mgpowerelectric.com cuando el cliente confirme el pago.
+    // Mientras tanto se enlaza la dirección temporal; cambiarla al dominio cuando esté en línea.
+    // Contenido tomado de la captura de la web (2026-10-18).
+    resumen: 'Página web en inglés para un contratista eléctrico de Colorado, Estados Unidos, lista para publicarse en mgpowerelectric.com.',
+    logros: ['Web en inglés', 'Solicitud de presupuesto y llamada directa'],
+    enlace: 'https://mgpowerelectric.surge.sh',
+    tipo: 'cliente',
+  },
+  {
+    cliente: 'La Casa de las Tejas: panel sándwich',
+    sector: 'Landing page para Google Ads',
+    imagen: '/img/tejas-panel.png',
+    resumen: 'Landing page de cubiertas en panel sándwich, hecha para campañas de Google Ads, con cotizador de material y flete.',
+    logros: ['Cotizador de material y flete', 'Solicitud enviada por WhatsApp a un asesor'],
+    enlace: 'https://panel.lacasadelastejas.com.co/',
+    tipo: 'proyecto',
+  },
   // Orden y destacado: primero los casos con captura real de la web. DEC solo tiene su logo
   // (falta una captura de su sitio): no se destaca hasta tenerla.
   {
@@ -290,10 +335,9 @@ export const CASOS: Caso[] = [
     sector: 'Restaurantes',
     imagen: '/img/delis-broaster.png',
     resumen: 'Menú digital y pedidos en línea sin pagar comisiones a aplicaciones externas.',
-    logros: ['Marca renovada', 'Pedidos directos desde la web'],
+    logros: ['Menú digital', 'Pedidos directos desde la web'],
     enlace: 'https://delisbroastersocorro.com/',
-    tipo: 'cliente',
-    destacado: true,
+    tipo: 'proyecto',
   },
   {
     cliente: 'Vitalcarga',
@@ -302,7 +346,7 @@ export const CASOS: Caso[] = [
     resumen: 'Plataforma logística con consulta de guías nacionales e internacionales.',
     logros: ['Consulta de guías en línea', 'Información clara para clientes'],
     enlace: 'https://vitalcarga.com',
-    tipo: 'cliente',
+    tipo: 'proyecto',
   },
   {
     cliente: 'Longevity Therapy',
@@ -311,16 +355,16 @@ export const CASOS: Caso[] = [
     resumen: 'Portal de programas de bienestar con agendamiento de sesiones.',
     logros: ['Programas explicados con claridad', 'Agendamiento de sesiones'],
     enlace: 'https://digitaljustone.github.io/longevity-therapy-web/',
-    tipo: 'cliente',
+    tipo: 'proyecto',
   },
   {
     cliente: 'Equipos y Componentes DEC',
     sector: 'Industria eléctrica',
     imagen: '/img/dec-preview.png',
-    resumen: 'Catálogo técnico digital que recibe solicitudes de cotización directas de clientes industriales.',
-    logros: ['Catálogo industrial en línea', 'Cotizaciones directas desde la web'],
+    resumen: 'Catálogo técnico digital con solicitud de cotización desde la web.',
+    logros: ['Catálogo industrial en línea', 'Solicitud de cotización desde la web'],
     enlace: 'https://olive-swallow-164735.hostingersite.com',
-    tipo: 'cliente',
+    tipo: 'proyecto',
   },
   {
     // Confirmado por la Dirección (2026-10-06): Beauty Manager no es un cliente, es un producto
@@ -341,8 +385,8 @@ export const CASOS: Caso[] = [
     resumen: 'Gestión de citas, clientes e inventario para centros de belleza.',
     logros: ['Citas, clientes e inventario en un solo lugar'],
     enlace: 'https://darkgreen-barracuda-813471.hostingersite.com/',
-    // Sin confirmar si fue para un cliente; se rotula como plataforma, sin llamarlo cliente.
-    tipo: 'producto',
+    // Sin confirmar si fue para un cliente; se rotula «Plataforma» (PRESENTACION de @/lib/casos).
+    tipo: 'proyecto',
   },
 ];
 

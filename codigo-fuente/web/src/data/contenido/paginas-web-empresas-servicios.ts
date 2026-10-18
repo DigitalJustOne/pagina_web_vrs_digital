@@ -124,9 +124,9 @@ export const contenido = {
     {
       id: 'sectores',
       etiqueta: 'Sectores',
-      titulo: 'Sectores con los que trabajamos',
+      titulo: 'Sectores que atendemos',
       introduccion:
-        'Nuestras páginas por sector y nuestros ejemplos se concentran en firmas contables y consultores. También trabajamos con otras empresas de servicios: partimos de la misma estructura y la adaptamos con su información. No le vendemos una especialización que no tenemos.',
+        'Nuestras páginas por sector se dirigen a firmas contables y consultores. También atendemos otras empresas de servicios: partimos de la misma estructura y la adaptamos con su información. No le vendemos una especialización que no tenemos.',
       tipo: 'tarjetas',
       columnas: 3,
       items: [

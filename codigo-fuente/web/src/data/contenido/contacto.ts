@@ -227,7 +227,7 @@ export const contenido = {
   enlacesInternos: [
     { texto: 'Precios y qué incluye cada plan', href: '/precios/' },
     { texto: 'Configuración del agente de IA de WhatsApp Business', href: '/asistente-whatsapp-business/' },
-    { texto: 'Proyectos reales de páginas web y plataformas', href: '/proyectos/' },
+    { texto: 'Proyectos de páginas web y plataformas', href: '/proyectos/' },
     { texto: 'Quién está detrás de VRS Digital', href: '/nosotros/' },
   ],
   actualizado: '2026-10-11',

@@ -11,7 +11,6 @@ Este archivo reúne el contenido esencial de https://goldenrod-bee-973005.hostin
 - Eslogan: «Más visible. Mejor atendido.»
 - Ubicación: Bogotá, Colombia
 - Fundador: Víctor Alfonso Ramírez Sepúlveda (Víctor Ramírez), fundador y responsable de cada proyecto. Perfil profesional: https://www.linkedin.com/in/victor-alfonso-ramirez-sepulveda/
-- 3+ años de experiencia
 - 2 proyectos activos como máximo, para cuidar la calidad
 
 ### Empresa aliada MinTIC
@@ -206,28 +205,81 @@ Condiciones:
 
 ## Proyectos
 
-Proyectos reales con enlace público. Los resultados de cada proyecto dependen del negocio, su mercado y su operación; no garantizan los mismos resultados en otra empresa.
+Proyectos con enlace público. Los resultados de cada proyecto dependen del negocio, su mercado y su operación; no garantizan los mismos resultados en otra empresa.
 
-### Delis Broaster (Restaurantes)
+### La Casa de las Tejas (Tejas y cubiertas, Bogotá)
+
+Tipo: Proyecto.
+
+Web corporativa de 54 páginas internas para una empresa que vende e instala tejas y cubiertas, con cotizador en línea.
+
+Qué ofrece:
+
+- 54 páginas internas
+- Cotizador en línea que envía la solicitud por WhatsApp
+- Guías y comparador de productos
+
+Enlace público: https://lacasadelastejas.com.co/
+
+### La Casa de las Tejas: teja Standing Seam (Landing page para Google Ads)
+
+Tipo: Proyecto.
+
+Landing page de un producto, hecha para campañas de Google Ads, que prepara una propuesta de obra por WhatsApp.
+
+Qué ofrece:
+
+- Un solo producto y un solo llamado a la acción
+- Propuesta de obra enviada por WhatsApp
+
+Enlace público: https://standing.lacasadelastejas.com.co/
+
+### MG Power Electric (Contratista eléctrico, Colorado (EE. UU.))
 
 Tipo: Cliente.
 
+Página web en inglés para un contratista eléctrico de Colorado, Estados Unidos, lista para publicarse en mgpowerelectric.com.
+
+Qué ofrece:
+
+- Web en inglés
+- Solicitud de presupuesto y llamada directa
+
+Enlace público: https://mgpowerelectric.surge.sh
+
+### La Casa de las Tejas: panel sándwich (Landing page para Google Ads)
+
+Tipo: Proyecto.
+
+Landing page de cubiertas en panel sándwich, hecha para campañas de Google Ads, con cotizador de material y flete.
+
+Qué ofrece:
+
+- Cotizador de material y flete
+- Solicitud enviada por WhatsApp a un asesor
+
+Enlace público: https://panel.lacasadelastejas.com.co/
+
+### Delis Broaster (Restaurantes)
+
+Tipo: Proyecto.
+
 Menú digital y pedidos en línea sin pagar comisiones a aplicaciones externas.
 
-Logros:
+Qué ofrece:
 
-- Marca renovada
+- Menú digital
 - Pedidos directos desde la web
 
 Enlace público: https://delisbroastersocorro.com/
 
 ### Vitalcarga (Transporte y logística)
 
-Tipo: Cliente.
+Tipo: Proyecto.
 
 Plataforma logística con consulta de guías nacionales e internacionales.
 
-Logros:
+Qué ofrece:
 
 - Consulta de guías en línea
 - Información clara para clientes
@@ -236,11 +288,11 @@ Enlace público: https://vitalcarga.com
 
 ### Longevity Therapy (Salud y bienestar)
 
-Tipo: Cliente.
+Tipo: Proyecto.
 
 Portal de programas de bienestar con agendamiento de sesiones.
 
-Logros:
+Qué ofrece:
 
 - Programas explicados con claridad
 - Agendamiento de sesiones
@@ -249,14 +301,14 @@ Enlace público: https://digitaljustone.github.io/longevity-therapy-web/
 
 ### Equipos y Componentes DEC (Industria eléctrica)
 
-Tipo: Cliente.
+Tipo: Proyecto.
 
-Catálogo técnico digital que recibe solicitudes de cotización directas de clientes industriales.
+Catálogo técnico digital con solicitud de cotización desde la web.
 
-Logros:
+Qué ofrece:
 
 - Catálogo industrial en línea
-- Cotizaciones directas desde la web
+- Solicitud de cotización desde la web
 
 Enlace público: https://olive-swallow-164735.hostingersite.com
 
@@ -311,15 +363,15 @@ URL: https://goldenrod-bee-973005.hostingersite.com/nosotros/
 
 Conozca a Víctor Ramírez, fundador y responsable de VRS Digital: cómo usa la IA con revisión humana, por qué atiende pocos proyectos y su aval MinTIC.
 
-En resumen: VRS Digital es un estudio digital de Bogotá dirigido por Víctor Alfonso Ramírez Sepúlveda, su fundador y responsable de cada proyecto. Trabaja solo, apoyado por inteligencia artificial para acelerar la investigación, los textos y el desarrollo, y revisa personalmente cada entrega. Suma más de 3 años de experiencia.
+En resumen: VRS Digital es un estudio digital de Bogotá dirigido por Víctor Alfonso Ramírez Sepúlveda, su fundador y responsable de cada proyecto. Trabaja solo, apoyado por inteligencia artificial para acelerar la investigación, los textos y el desarrollo, y revisa personalmente cada entrega.
 
-### Proyectos reales de páginas web y plataformas
+### Proyectos de páginas web y plataformas
 
 URL: https://goldenrod-bee-973005.hostingersite.com/proyectos/
 
-Proyectos de VRS Digital con enlace público: webs y plataformas para industria, restaurantes, logística y bienestar, y productos propios. Revise qué se hizo.
+Proyectos de VRS Digital con enlace público: web corporativa y landing pages para Google Ads, webs y plataformas, y productos propios. Revise qué se hizo.
 
-En resumen: Estos son los proyectos de VRS Digital con enlace público: webs y plataformas para industria, restaurantes, logística, bienestar y belleza, además de un producto propio. Cada uno tiene su enlace para revisarlo.
+En resumen: Estos son los proyectos de VRS Digital con enlace público: una web corporativa y landing pages para campañas de Google Ads de una empresa de tejas y cubiertas, y webs y plataformas para industria, restaurantes, logística, bienestar y belleza, además de un producto propio. Cada uno tiene su enlace para revisarlo.
 
 ### Revisión digital gratuita para su empresa
 
@@ -403,7 +455,7 @@ Fuente: https://goldenrod-bee-973005.hostingersite.com/
 
 ### ¿Con qué tipo de empresas trabajan?
 
-Con empresas y profesionales de servicios que necesitan explicar bien lo que ofrecen y reciben muchas preguntas por WhatsApp. Hoy nos concentramos en firmas contables y tributarias, y en consultores y capacitadores. También trabajamos con otras empresas de servicios, como firmas jurídicas pequeñas, inmobiliarias o servicios técnicos, con la misma estructura adaptada. Si su caso no encaja, se lo decimos.
+Con empresas y profesionales de servicios que necesitan explicar bien lo que ofrecen y reciben muchas preguntas por WhatsApp. Hoy nos enfocamos en firmas contables y tributarias, y en consultores y capacitadores. También atendemos otras empresas de servicios, como firmas jurídicas pequeñas, inmobiliarias o servicios técnicos, con la misma estructura adaptada. Si su caso no encaja, se lo decimos.
 
 Fuente: https://goldenrod-bee-973005.hostingersite.com/
 
@@ -461,15 +513,15 @@ VRS Digital es un estudio de Bogotá que trabaja de forma remota. Nuestro enfoqu
 
 Fuente: https://goldenrod-bee-973005.hostingersite.com/nosotros/
 
-### ¿Los proyectos de VRS Digital son reales?
+### ¿Puedo ver estos proyectos funcionando?
 
-Sí. Cada uno tiene un enlace público para que usted lo revise, y está marcado como trabajo para un cliente o producto propio de VRS Digital.
+Sí. Cada uno tiene un enlace público para que usted lo revise.
 
 Fuente: https://goldenrod-bee-973005.hostingersite.com/proyectos/
 
 ### ¿Todavía desarrollan plataformas a medida?
 
-No forman parte de nuestra oferta actual. Beauty Manager es un producto propio para centros de estética que se puede adquirir; las demás plataformas son trabajos anteriores que muestran experiencia en diseño y desarrollo. Hoy nos concentramos en páginas web, posicionamiento en Google y asistentes de IA, configuración del agente de IA de WhatsApp Business y mantenimiento. Un desarrollo a medida solo se evalúa de forma excepcional y con un alcance controlado.
+No forman parte de nuestra oferta actual. Beauty Manager es un producto propio para centros de estética que se puede adquirir; las demás son proyectos anteriores de diseño y desarrollo. Hoy nos concentramos en páginas web, posicionamiento en Google y asistentes de IA, configuración del agente de IA de WhatsApp Business y mantenimiento. Un desarrollo a medida solo se evalúa de forma excepcional y con un alcance controlado.
 
 Fuente: https://goldenrod-bee-973005.hostingersite.com/proyectos/
 

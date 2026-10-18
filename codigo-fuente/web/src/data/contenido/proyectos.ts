@@ -16,6 +16,7 @@
 //  proyecto en esta página?»: el precio ya se responde en /precios/ y en /paginas-web-bogota/.
 // ─────────────────────────────────────────────────────────────────────────────
 import { CASOS, CTA_PRINCIPAL, enlaceWhatsApp } from '@/data/sitio';
+import { rotuloCaso } from '@/lib/casos';
 import type { NombreIconoTarjeta } from '@/components/ui/iconos';
 import type { ModuloPagina } from './tipos';
 
@@ -26,7 +27,7 @@ const PROYECTOS = CASOS.map((c) => ({
   cliente: c.cliente,
   sector: c.sector,
   enlace: c.enlace,
-  tipo: c.tipo === 'producto' ? 'Producto propio' : 'Trabajo para cliente',
+  tipo: rotuloCaso(c.cliente),
 }));
 
 const MENSAJE_WHATSAPP = 'Hola, vi sus proyectos y quiero una revisión digital gratuita para mi empresa.';
@@ -42,9 +43,9 @@ export const textosProyectos = {
 export const contenido = {
   ruta: '/proyectos/',
   seo: {
-    titulo: 'Proyectos reales de páginas web y plataformas',
+    titulo: 'Proyectos de páginas web y plataformas',
     descripcion:
-      'Proyectos de VRS Digital con enlace público: webs y plataformas para industria, restaurantes, logística y bienestar, y productos propios. Revise qué se hizo.',
+      'Proyectos de VRS Digital con enlace público: web corporativa y landing pages para Google Ads, webs y plataformas, y productos propios. Revise qué se hizo.',
     palabraClave: 'proyectos de páginas web',
     secundarias: [
       'portafolio de páginas web Bogotá',
@@ -58,19 +59,19 @@ export const contenido = {
   ],
   hero: {
     etiqueta: 'Proyectos',
-    titulo: 'Proyectos reales de páginas web y plataformas digitales',
+    titulo: 'Proyectos de páginas web y plataformas digitales',
     subtitulo:
-      'Trabajos para clientes y productos propios de VRS Digital. Cada uno tiene su enlace público para que usted lo revise.',
+      'Proyectos desarrollados por Víctor Ramírez y productos propios de VRS Digital. Cada uno tiene su enlace público para que usted lo revise.',
     ctaPrincipal: CTA_PRINCIPAL,
     ctaSecundario: { texto: 'Ver planes y precios', href: '/precios/' },
   },
-  respuestaDirecta: `Estos son los proyectos de VRS Digital con enlace público: webs y plataformas para industria, restaurantes, logística, bienestar y belleza, además de un producto propio. Cada uno tiene su enlace para revisarlo.`,
+  respuestaDirecta: `Estos son los proyectos de VRS Digital con enlace público: una web corporativa y landing pages para campañas de Google Ads de una empresa de tejas y cubiertas, y webs y plataformas para industria, restaurantes, logística, bienestar y belleza, además de un producto propio. Cada uno tiene su enlace para revisarlo.`,
   secciones: [
     {
       id: 'portafolio',
       etiqueta: 'Portafolio',
       titulo: 'Proyectos con enlace público',
-      introduccion: 'Cada proyecto tiene un enlace para que usted lo revise. Al lado está el sector y si es trabajo para un cliente o un producto propio de VRS Digital.',
+      introduccion: 'Cada proyecto tiene un enlace para que usted lo revise. Al lado está el sector de cada uno.',
       tipo: 'tarjetas',
       columnas: 3,
       items: PROYECTOS.map((p) => ({
@@ -83,14 +84,14 @@ export const contenido = {
   ],
   preguntas: [
     {
-      pregunta: '¿Los proyectos de VRS Digital son reales?',
+      pregunta: '¿Puedo ver estos proyectos funcionando?',
       respuesta:
-        'Sí. Cada uno tiene un enlace público para que usted lo revise, y está marcado como trabajo para un cliente o producto propio de VRS Digital.',
+        'Sí. Cada uno tiene un enlace público para que usted lo revise.',
     },
     {
       pregunta: '¿Todavía desarrollan plataformas a medida?',
       respuesta:
-        'No forman parte de nuestra oferta actual. Beauty Manager es un producto propio para centros de estética que se puede adquirir; las demás plataformas son trabajos anteriores que muestran experiencia en diseño y desarrollo. Hoy nos concentramos en páginas web, posicionamiento en Google y asistentes de IA, configuración del agente de IA de WhatsApp Business y mantenimiento. Un desarrollo a medida solo se evalúa de forma excepcional y con un alcance controlado.',
+        'No forman parte de nuestra oferta actual. Beauty Manager es un producto propio para centros de estética que se puede adquirir; las demás son proyectos anteriores de diseño y desarrollo. Hoy nos concentramos en páginas web, posicionamiento en Google y asistentes de IA, configuración del agente de IA de WhatsApp Business y mantenimiento. Un desarrollo a medida solo se evalúa de forma excepcional y con un alcance controlado.',
     },
     {
       pregunta: '¿Tienen proyectos de firmas contables o de consultores?',

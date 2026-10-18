@@ -100,7 +100,7 @@ const RESPALDO: Record<string, { titulo: string; descripcion: string }> = {
     titulo: 'Planes y precios',
     descripcion: 'Planes con precio publicado: precio anual, cuotas, qué incluye y qué no incluye cada uno.',
   },
-  '/proyectos/': { titulo: 'Proyectos', descripcion: 'Proyectos reales entregados por VRS Digital, con enlace público y resultados verificables.' },
+  '/proyectos/': { titulo: 'Proyectos', descripcion: 'Proyectos de VRS Digital con enlace público.' },
   '/recursos/': { titulo: 'Recursos y guías', descripcion: 'Guías prácticas sobre páginas web, visibilidad en Google y asistentes de IA, y atención por WhatsApp.' },
   '/nosotros/': { titulo: 'Nosotros', descripcion: 'Quién está detrás de VRS Digital, cómo trabajamos y el aval como empresa aliada MinTIC.' },
   '/contacto/': { titulo: 'Contacto', descripcion: 'Solicite una revisión digital de su empresa por formulario, WhatsApp o correo.' },
