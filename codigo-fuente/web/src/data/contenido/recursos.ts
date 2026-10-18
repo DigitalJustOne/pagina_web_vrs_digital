@@ -25,10 +25,10 @@ const MENSAJE_WHATSAPP = 'Hola, leí una guía de VRS Digital y tengo una pregun
 export const contenido = {
   ruta: '/recursos/',
   seo: {
-    // 44 caracteres + « | VRS Digital» (Seo.astro) = 58.
-    titulo: 'Guías: páginas web, Google y WhatsApp con IA',
+    // 37 caracteres + « | VRS Digital» (Seo.astro) = 51.
+    titulo: 'Guías sobre páginas web para empresas',
     descripcion:
-      'Guías claras para empresas de servicios: cuánto cuesta una página web en Bogotá y qué puede hacer el agente de IA de WhatsApp Business. Con fuentes oficiales.',
+      'Guías claras para empresas de servicios: cuánto cuesta una página web en Bogotá, qué se paga aparte y cómo comparar cotizaciones. Con fuentes.',
     palabraClave: 'guías de páginas web, Google y WhatsApp para empresas',
     // Las búsquedas de cada tema las atiende su guía; esta página solo agrupa.
     secundarias: ['guías para empresas de servicios', 'recursos sobre páginas web y WhatsApp Business'],
@@ -45,7 +45,7 @@ export const contenido = {
     ctaPrincipal: { texto: 'Ver las guías', href: '#guias' },
     ctaSecundario: CTA_PRINCIPAL,
   },
-  respuestaDirecta: `En Recursos, VRS Digital publica guías prácticas para dueños de empresas de servicios en Colombia: cuánto cuesta una página web en Bogotá y qué puede hacer el agente de IA de WhatsApp Business. Cada guía lleva la firma de ${FUNDADOR.nombreCorto}, cita fuentes oficiales o públicas y se revisa cuando cambian los datos.`,
+  respuestaDirecta: `En Recursos, VRS Digital publica guías prácticas para dueños de empresas de servicios en Colombia: cuánto cuesta una página web en Bogotá, qué se paga aparte y cómo comparar cotizaciones. Cada guía lleva la firma de ${FUNDADOR.nombreCorto}, cita fuentes oficiales o públicas y se revisa cuando cambian los datos.`,
   secciones: [
     {
       id: 'guias',
@@ -61,17 +61,7 @@ export const contenido = {
           resumen:
             'Los precios que publican las agencias de Bogotá, por qué varían tanto, los costos que se pagan aparte y una lista para comparar cotizaciones.',
           icono: icono('calculator'),
-          actualizado: '2026-10-11',
-        },
-        {
-          slug: 'agente-ia-whatsapp-business',
-          href: '/recursos/agente-ia-whatsapp-business/',
-          etiqueta: 'WhatsApp',
-          titulo: '¿Qué puede hacer el agente de IA de WhatsApp Business?',
-          resumen:
-            'Qué hace el agente de Meta, de qué aprende, qué controla usted, cuánto cuesta, si está disponible, sus riesgos y cuándo no conviene usarlo.',
-          icono: icono('message'),
-          actualizado: '2026-10-06',
+          actualizado: '2026-10-18',
         },
       ],
     },
@@ -83,7 +73,6 @@ export const contenido = {
         'Publicamos una guía cuando cada dato está verificado, por eso no anunciamos fechas. Estos son los próximos temas:',
       tipo: 'lista',
       items: [
-        'WhatsApp Business tradicional frente a la atención con inteligencia artificial: cuándo conviene cada una.',
         'Cómo preparar su web para Google y los asistentes de IA, según la documentación oficial de Google.',
         'Errores que hacen perder consultas por WhatsApp.',
       ],
@@ -113,7 +102,7 @@ export const contenido = {
           icono: icono('eye'),
         },
       ],
-      nota: 'Somos parte interesada: vendemos páginas web y configuramos el agente de IA de WhatsApp Business. Por eso separamos nuestros precios de los datos de terceros y enlazamos cada fuente.',
+      nota: 'Somos parte interesada: vendemos páginas web y atención inteligente en WhatsApp. Por eso separamos nuestros precios de los datos de terceros y enlazamos cada fuente.',
     },
     {
       id: 'servicios',
@@ -135,8 +124,8 @@ export const contenido = {
           href: '/posicionamiento-google-inteligencia-artificial/',
         },
         {
-          titulo: 'Agente de IA de WhatsApp Business',
-          texto: 'Configuramos el agente que Meta ofrece en la app, lo probamos y definimos cuándo le pasa la conversación a usted.',
+          titulo: 'Atención inteligente en WhatsApp Business',
+          texto: 'Su WhatsApp Business responde a sus clientes a cualquier hora y le pasa a usted los casos que necesitan una persona.',
           icono: icono('message'),
           href: '/asistente-whatsapp-business/',
         },
@@ -149,14 +138,9 @@ export const contenido = {
       respuesta: `Las firma ${FUNDADOR.nombreCorto}, fundador de VRS Digital y responsable de cada proyecto. Él decide los temas, revisa cada dato contra su fuente y aprueba el texto final. Cada guía muestra su fecha de publicación y de última actualización, y enlaza las fuentes oficiales o públicas que usa.`,
     },
     {
-      pregunta: '¿Usan inteligencia artificial para escribir las guías?',
-      respuesta:
-        'Sí, como apoyo para investigar y redactar. La inteligencia artificial acelera el trabajo, pero no publica nada por su cuenta: cada dato se verifica contra su fuente y una persona aprueba el texto. No compartimos qué herramientas usamos, pero sí las fuentes de cada afirmación, para que usted pueda comprobarlas.',
-    },
-    {
       pregunta: '¿Cada cuánto se actualizan las guías?',
       respuesta:
-        'Las revisamos cada trimestre y cuando cambia un dato importante, como los precios del mercado o las condiciones de Meta para WhatsApp Business. Cada guía muestra la fecha de su última actualización. Si encuentra un dato desactualizado, escríbanos por WhatsApp o por correo y lo revisamos.',
+        'Las revisamos cada trimestre y cuando cambia un dato importante, como los precios del mercado o las condiciones de WhatsApp Business. Cada guía muestra la fecha de su última actualización. Si encuentra un dato desactualizado, escríbanos por WhatsApp o por correo y lo revisamos.',
     },
     {
       pregunta: '¿Las guías reemplazan la asesoría de un profesional?',
@@ -179,7 +163,6 @@ export const contenido = {
   },
   enlacesInternos: [
     { texto: 'Guía: cuánto cuesta una página web en Bogotá', href: '/recursos/cuanto-cuesta-una-pagina-web-en-bogota/' },
-    { texto: 'Guía: qué puede hacer el agente de IA de WhatsApp Business', href: '/recursos/agente-ia-whatsapp-business/' },
     { texto: 'Precios, condiciones y formas de pago', href: '/precios/' },
     { texto: 'Quién está detrás de VRS Digital', href: '/nosotros/' },
   ],
@@ -229,10 +212,5 @@ export const serviciosPorGuia: Readonly<Record<string, readonly string[]>> = {
     '/paginas-web-bogota/',
     '/posicionamiento-google-inteligencia-artificial/',
     '/asistente-whatsapp-business/',
-  ],
-  'agente-ia-whatsapp-business': [
-    '/asistente-whatsapp-business/',
-    '/paginas-web-bogota/',
-    '/posicionamiento-google-inteligencia-artificial/',
   ],
 };

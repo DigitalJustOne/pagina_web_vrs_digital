@@ -3,7 +3,7 @@
 //  Palabra clave principal: «precios de páginas web en Bogotá».
 //  Fuentes: informe del Director (2026-10-05: «Precios orientativos», decisión 14 sobre el Plan
 //  Emprendedor) y src/data/sitio.ts (PLANES, PLAN_ENTRADA, LANDING, DOMINIO_HOSTING, CUOTAS,
-//  MEDIOS_PAGO). Costos de Meta verificados el 2026-10-06.
+//  MEDIOS_PAGO). Desde 2026-10-18 no se nombra a Meta ni se explica cómo se presta el servicio (Víctor).
 //  Todos los valores se calculan desde sitio.ts: un cambio de precio se refleja aquí solo.
 //  Se publica solo el valor «desde» de cada rango (decisión de la Dirección, 2026-10-05).
 //
@@ -56,8 +56,6 @@ const EMPRENDEDOR_PRECIO = `${formatoCOP(PLAN_ENTRADA.mensualidad)} al mes`;
 
 const LANDING_PRECIO = formatoCOP(LANDING.precio);
 const DH_PRECIO = `${formatoCOP(DOMINIO_HOSTING.precioAnual)} al año`;
-
-const URL_META_ONE = 'https://whatsappbusiness.com/products/business-app-meta-one/';
 
 const MENSAJE_WHATSAPP = 'Hola, vi la página de precios de VRS Digital y quiero una revisión digital de mi empresa.';
 
@@ -115,7 +113,7 @@ export const contenido = {
     descripcion: `Planes web desde ${desde('esencial')} al año, o en 12 cuotas. Landing desde ${LANDING_PRECIO}, pago único. IVA incluido.`,
     // «cuánto cuesta una página web en Bogotá» (búsqueda informativa) la atiende la guía de /recursos/.
     palabraClave: 'planes y precios de páginas web VRS Digital',
-    secundarias: ['precio de página web para empresa', 'precio de posicionamiento web', 'precio del agente de IA de WhatsApp Business', 'pagar página web en cuotas'],
+    secundarias: ['precio de página web para empresa', 'precio de posicionamiento web', 'precio de atención inteligente en WhatsApp', 'pagar página web en cuotas'],
   },
   migas: [
     { nombre: 'Inicio', ruta: '/' },
@@ -191,12 +189,12 @@ export const contenido = {
           texto: 'Si su web necesita algún servicio de terceros, se lo indicamos en la propuesta con su costo, antes de empezar.',
         },
         {
-          titulo: 'Costos de Meta',
+          titulo: 'Plan de pago de WhatsApp, si lo necesita',
           texto:
-            'Según Meta, hoy el agente de IA incluye un cupo mensual de respuestas sin costo. Si su empresa necesita más, Meta ofrece planes de pago (Meta One) que usted contrata y paga directamente a Meta. Ese costo no está en nuestros precios y Meta puede cambiarlo.',
+            'WhatsApp incluye cada mes un cupo de respuestas automáticas sin costo. Si su empresa necesita más, WhatsApp cobra un plan aparte, que usted paga directamente. Ese costo no está en nuestros precios y se lo informamos antes.',
         },
       ],
-      enlace: { texto: 'Cómo funcionan los costos de Meta', href: '/asistente-whatsapp-business/#depende-de-meta' },
+      enlace: { texto: 'Lo que debe saber antes de contratar', href: '/asistente-whatsapp-business/#antes-de-contratar' },
     },
     {
       id: 'factores',
@@ -253,18 +251,18 @@ export const contenido = {
       parrafos: [
         PLAN_ENTRADA.descripcion,
         'No se compara con los tres planes empresariales: es un producto distinto, estandarizado, para quien necesita estar en internet con lo básico.',
-        `No incluye ${EMPRENDEDOR_NO_INCLUYE}. Si quiere su propio dominio, se agrega con el paquete ${DOMINIO_HOSTING.nombre} (${DH_PRECIO}). Si su empresa necesita una página por servicio, aparecer mejor en Google o el agente de WhatsApp, le conviene uno de los tres planes.`,
+        `No incluye ${EMPRENDEDOR_NO_INCLUYE}. Si quiere su propio dominio, se agrega con el paquete ${DOMINIO_HOSTING.nombre} (${DH_PRECIO}). Si su empresa necesita una página por servicio, aparecer mejor en Google o atención inteligente en WhatsApp, le conviene uno de los tres planes.`,
       ],
       enlace: { texto: `Solicitar el ${PLAN_ENTRADA.nombre}`, href: `${CTA_PRINCIPAL.href}?plan=emprendedor` },
     },
     {
       id: 'sin-acceso-whatsapp',
       etiqueta: 'WhatsApp',
-      titulo: 'Si su WhatsApp aún no tiene el agente de IA',
+      titulo: 'Si su WhatsApp aún no es compatible',
       tipo: 'texto',
       parrafos: [
-        'Meta está habilitando su agente de IA de forma gradual, por país y por cuenta. En el diagnóstico revisamos si su WhatsApp Business ya tiene acceso.',
-        `Si no lo tiene, entregamos la web y el posicionamiento, y el valor del agente dentro del plan ${atencion.nombre} se descuenta o se pospone: usted no paga por algo que su cuenta no tiene. Mientras tanto, configuramos las funciones clásicas de la app: mensaje de bienvenida, mensaje de ausencia, respuestas rápidas, etiquetas y catálogo.`,
+        'No todas las cuentas de WhatsApp Business tienen todavía la atención inteligente. En el diagnóstico revisamos la suya.',
+        `Si aún no la tiene, entregamos la web y el posicionamiento, y el valor de la atención inteligente dentro del plan ${atencion.nombre} se descuenta o se pospone: usted no paga por algo que su cuenta no tiene. Mientras tanto, dejamos listas las respuestas básicas: mensaje de bienvenida, mensaje de ausencia, respuestas rápidas, etiquetas y catálogo.`,
       ],
       enlace: { texto: 'Ver el servicio de WhatsApp Business', href: '/asistente-whatsapp-business/' },
     },
@@ -285,11 +283,11 @@ export const contenido = {
     {
       pregunta: '¿Por qué los precios dicen «desde»?',
       respuesta:
-        'Porque cada empresa necesita un alcance distinto. El precio publicado es el valor mínimo de cada plan. Lo que más lo cambia es el número de páginas, si hay que preparar los textos, la migración de una web anterior, los idiomas, el tamaño del catálogo y la cantidad de información para el agente de WhatsApp. El valor final queda por escrito antes de empezar.',
+        'Porque cada empresa necesita un alcance distinto. El precio publicado es el valor mínimo de cada plan. Lo que más lo cambia es el número de páginas, si hay que preparar los textos, la migración de una web anterior, los idiomas, el tamaño del catálogo y la cantidad de información para la atención inteligente de WhatsApp. El valor final queda por escrito antes de empezar.',
     },
     {
       pregunta: '¿Qué se paga aparte?',
-      respuesta: `El dominio y el hosting de la ${LANDING.nombre} y del ${PLAN_ENTRADA.nombre} (${DH_PRECIO}). Las licencias y las suscripciones externas se identifican por separado en la propuesta. Si usa el agente de IA de WhatsApp y necesita más respuestas que el cupo gratuito de Meta, el plan de pago lo contrata y lo paga usted directamente a Meta. Los servicios que no estén en su plan se cotizan aparte.`,
+      respuesta: `El dominio y el hosting de la ${LANDING.nombre} y del ${PLAN_ENTRADA.nombre} (${DH_PRECIO}). Las licencias y las suscripciones externas se identifican por separado en la propuesta. Si usa la atención inteligente de WhatsApp y necesita más respuestas que el cupo gratuito, el plan de pago de WhatsApp lo paga usted directamente. Los servicios que no estén en su plan se cotizan aparte.`,
     },
     {
       pregunta: '¿Cómo se paga?',
@@ -297,7 +295,7 @@ export const contenido = {
     },
     {
       pregunta: `¿En qué se diferencia el ${PLAN_ENTRADA.nombre}?`,
-      respuesta: `Es una página de una sola sección, estandarizada, con alojamiento (hosting) y agenda básica incluidos, por ${EMPRENDEDOR_PRECIO}. Está pensada para microempresas que empiezan. No incluye ${EMPRENDEDOR_NO_INCLUYE}. Si su empresa necesita una página por servicio, aparecer mejor en Google o atención con el agente de IA, le conviene uno de los tres planes empresariales.`,
+      respuesta: `Es una página de una sola sección, estandarizada, con alojamiento (hosting) y agenda básica incluidos, por ${EMPRENDEDOR_PRECIO}. Está pensada para microempresas que empiezan. No incluye ${EMPRENDEDOR_NO_INCLUYE}. Si su empresa necesita una página por servicio, aparecer mejor en Google o atención inteligente en WhatsApp, le conviene uno de los tres planes empresariales.`,
     },
   ],
   cta: {
@@ -311,18 +309,10 @@ export const contenido = {
   enlacesInternos: [
     { texto: 'Diseño de páginas web en Bogotá para empresas', href: '/paginas-web-bogota/' },
     { texto: 'Posicionamiento en Google y asistentes de IA', href: '/posicionamiento-google-inteligencia-artificial/' },
-    { texto: 'Configuración del agente de IA de WhatsApp Business', href: '/asistente-whatsapp-business/' },
+    { texto: 'Atención inteligente en WhatsApp Business', href: '/asistente-whatsapp-business/' },
     { texto: 'Proyectos realizados por VRS Digital', href: '/proyectos/' },
     { texto: 'Guía: cuánto cuesta una página web en Bogotá', href: '/recursos/cuanto-cuesta-una-pagina-web-en-bogota/' },
     { texto: 'Solicitar una revisión digital', href: '/contacto/' },
-  ],
-  fuentes: [
-    { titulo: 'Meta One on WhatsApp Business App (página oficial de WhatsApp Business)', url: URL_META_ONE, idioma: 'en' },
-    {
-      titulo: 'Be There for Every Customer With Meta Business Agent (Meta Newsroom, 3 de junio de 2026)',
-      url: 'https://about.fb.com/news/2026/06/meta-business-agent/',
-      idioma: 'en',
-    },
   ],
   /** Ofertas para el JSON-LD (Service u Offer por plan). Precios idénticos a los visibles; sin AggregateRating. */
   ofertas: [

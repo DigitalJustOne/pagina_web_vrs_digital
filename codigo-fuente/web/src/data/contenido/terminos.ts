@@ -36,7 +36,9 @@ const PENDIENTE = '[pendiente de confirmar por la Dirección]';
 const FORMA_PAGO_TEXTO = FORMA_DE_PAGO.map((f) => `${f.porcentaje}\u00a0% ${f.momento}`).join(', ').replace(/, ([^,]*)$/, ' y $1');
 const MEDIOS_PAGO_TEXTO = MEDIOS_PAGO.map(minuscula).join(', ').replace(/, ([^,]*)$/, ' o $1');
 
-/** Texto contractual recomendado por el informe del Director. No modificar sin aprobación. */
+/** Texto contractual recomendado por el informe del Director. No modificar sin aprobación.
+ *  Se mantiene la mención de Meta solo aquí y en límites de responsabilidad: protege a VRS si
+ *  WhatsApp cambia la función. El resto del sitio no explica cómo se presta el servicio (2026-10-18). */
 const CLAUSULA_META =
   'El servicio utiliza funciones inteligentes disponibles en la cuenta de WhatsApp Business del cliente. Su activación, continuidad, características y costos futuros dependen de las condiciones de Meta. El alcance contratado no incluye chatbot desarrollado a medida, API, CRM ni integraciones con sistemas externos.';
 
@@ -52,7 +54,7 @@ export const contenido = {
     // 44 caracteres + « | VRS Digital» (Seo.astro) = 58.
     titulo: 'Términos y condiciones de nuestros servicios',
     descripcion:
-      'Condiciones de VRS Digital: qué incluye cada servicio, forma de pago, dos rondas de cambios, dependencia de Meta y límites de la inteligencia artificial.',
+      'Condiciones de VRS Digital: qué incluye cada servicio, forma de pago, dos rondas de cambios, dependencia de terceros y límites de la inteligencia artificial.',
     palabraClave: 'términos y condiciones VRS Digital',
     secundarias: ['condiciones del servicio de páginas web', 'alcance del servicio de WhatsApp Business', 'forma de pago'],
   },
@@ -64,9 +66,9 @@ export const contenido = {
     etiqueta: 'Documento legal',
     titulo: 'Términos y condiciones',
     subtitulo:
-      'Las reglas de nuestros servicios en lenguaje claro: qué incluye y qué no, cómo se paga, cuántos cambios incluye, qué depende de Meta y de Google, y cuáles son los límites de la inteligencia artificial.',
+      'Las reglas de nuestros servicios en lenguaje claro: qué incluye y qué no, cómo se paga, cuántos cambios incluye, qué depende de terceros, y cuáles son los límites de la inteligencia artificial.',
   },
-  respuestaDirecta: `${SITIO.nombre} diseña páginas web, las prepara para Google y asistentes de IA, configura el agente de IA de Meta en WhatsApp Business y ofrece mantenimiento mensual. El alcance y el valor final quedan en una propuesta escrita. Incluye dos rondas de cambios. No incluye CRM, API, chatbots a medida ni integraciones, y no garantiza posiciones en Google.`,
+  respuestaDirecta: `${SITIO.nombre} diseña páginas web, las prepara para Google y asistentes de IA, ofrece atención inteligente en WhatsApp Business y mantenimiento mensual. El alcance y el valor final quedan en una propuesta escrita. Incluye dos rondas de cambios. No incluye CRM, API, chatbots a medida ni integraciones, y no garantiza posiciones en Google.`,
   vigencia: {
     desde: PENDIENTE,
     version: '0.1 (borrador)',
@@ -94,9 +96,9 @@ export const contenido = {
           texto: 'Estructura, contenido, datos estructurados y seguimiento para que Google y los asistentes de IA puedan entender la web del cliente.',
         },
         {
-          titulo: 'Configuración del agente de IA de WhatsApp Business',
+          titulo: 'Atención inteligente en WhatsApp Business',
           texto:
-            'Preparación de la información, configuración, pruebas y ajustes del agente de IA que Meta ofrece dentro de la app WhatsApp Business. Es una función de Meta: VRS Digital no creó esa tecnología.',
+            'Preparación de la información, pruebas y ajustes de la atención inteligente en la cuenta de WhatsApp Business del cliente.',
         },
         {
           titulo: 'Mantenimiento mensual',
@@ -117,8 +119,8 @@ export const contenido = {
         'Integraciones con facturación, inventario, ERP u otro software externo.',
         'Envíos masivos de mensajes y automatización en varios canales.',
         'Garantía de respuestas perfectas del agente de IA.',
-        'Garantía de que Meta mantenga disponible la función del agente.',
-        'Recuperación de cuentas suspendidas y soporte interno de Meta.',
+        'Garantía de que WhatsApp mantenga disponible la función.',
+        'Recuperación de cuentas suspendidas y soporte técnico de WhatsApp.',
         'Garantía de posiciones en Google o de menciones en asistentes de IA.',
         'Soporte ilimitado.',
       ],
@@ -131,7 +133,7 @@ export const contenido = {
       parrafos: [
         'Los precios publicados en este sitio son valores iniciales («desde») e incluyen IVA. El valor final depende del número de páginas, los textos, la migración, el catálogo y la cantidad de información, y queda por escrito en la propuesta, con IVA incluido, antes de cualquier pago.',
         ...CONDICIONES.filter((c) => c.includes('Dominio') || c.includes('Licencias')),
-        'Los costos que cobra Meta por el agente de IA de WhatsApp Business, cuando apliquen, los paga el cliente directamente a Meta y no están incluidos en nuestros precios.',
+        'Los planes de pago de WhatsApp Business para más respuestas automáticas, cuando apliquen, los paga el cliente directamente y no están incluidos en nuestros precios.',
       ],
     },
     {
@@ -167,17 +169,17 @@ export const contenido = {
         'Tener los derechos sobre los textos, logos, fotos y documentos que entregue.',
         'Revisar que el contenido cumpla las reglas de su profesión o sector antes de aprobarlo.',
         'Cumplir sus propias obligaciones de protección de datos frente a sus clientes, incluida su política de tratamiento de datos.',
-        'Mantener activa su cuenta de WhatsApp Business, cumplir las condiciones de Meta y supervisar las conversaciones que el agente le transfiera.',
+        'Mantener activa su cuenta de WhatsApp Business, cumplir sus condiciones de uso y supervisar las conversaciones que el agente le transfiera.',
       ],
     },
     {
-      id: 'meta',
-      etiqueta: 'Dependencia de Meta',
-      titulo: '8. Servicio de WhatsApp Business y dependencia de Meta',
+      id: 'whatsapp',
+      etiqueta: 'WhatsApp Business',
+      titulo: '8. Servicio de WhatsApp Business y dependencia de terceros',
       tipo: 'texto',
-      destacado: { titulo: 'Cláusula sobre Meta', texto: CLAUSULA_META },
+      destacado: { titulo: 'Cláusula sobre WhatsApp Business', texto: CLAUSULA_META },
       parrafos: [
-        'Antes de cobrar este componente, verificamos si la cuenta del cliente tiene acceso al agente. Si no lo tiene, entregamos la web y el posicionamiento, descontamos o posponemos el valor del agente, configuramos las funciones clásicas de la app (perfil, catálogo, mensajes de bienvenida y de ausencia, respuestas rápidas y etiquetas) y activamos el agente cuando Meta lo habilite.',
+        'Antes de cobrar este componente, revisamos si la cuenta del cliente es compatible. Si no lo es, entregamos la web y el posicionamiento, descontamos o posponemos ese valor, dejamos listas las respuestas básicas (perfil, catálogo, mensajes de bienvenida y de ausencia, respuestas rápidas y etiquetas) y activamos la atención inteligente cuando la cuenta la tenga.',
         `El agente puede responder a cualquier hora. Esa disponibilidad es del agente y del sitio, no de nuestro soporte humano, que funciona de ${minuscula(CONTACTO.horario)}. ${CONTACTO.respuestaHumana}`,
       ],
     },
@@ -187,9 +189,7 @@ export const contenido = {
       titulo: '9. Limitación de responsabilidad sobre la inteligencia artificial',
       tipo: 'texto',
       destacado: { titulo: 'Cláusula sobre inteligencia artificial', texto: CLAUSULA_IA },
-      parrafos: [
-        `${SITIO.nombre} también usa inteligencia artificial para acelerar la investigación, la redacción y el desarrollo de sus entregas. Una persona revisa cada entrega antes de presentarla al cliente.`,
-      ],
+      parrafos: [],
     },
     {
       id: 'posicionamiento',
@@ -230,7 +230,7 @@ export const contenido = {
       tipo: 'texto',
       parrafos: [
         `El cliente es responsable de los datos personales de sus propios clientes. Cuando ${SITIO.nombre} trate esos datos para prestar el servicio, lo hará por cuenta del cliente, según sus instrucciones y solo para esa finalidad.`,
-        'Meta informa que usa los mensajes de los chats donde el agente de IA está activo para mejorar su inteligencia artificial. Por eso recomendamos no usar el agente en conversaciones con información de salud, financiera o jurídica sensible.',
+        'WhatsApp informa que puede usar los mensajes de los chats donde la inteligencia artificial está activa para mejorar sus servicios. Por eso recomendamos no usar el agente en conversaciones con información de salud, financiera o jurídica sensible.',
         'El tratamiento de los datos de quienes nos contactan se rige por nuestra política de privacidad.',
       ],
       enlace: { texto: 'Ver la política de privacidad', href: '/politica-de-privacidad/' },
@@ -288,9 +288,9 @@ export const contenido = {
       respuesta: `${SITIO.nombre} puede pausar el trabajo hasta recibir el pago, y las fechas acordadas se ajustan en la misma proporción. Por eso cada pago va ligado a un avance que usted puede ver: ${FORMA_PAGO_TEXTO}. La mensualidad empieza desde la publicación.`,
     },
     {
-      pregunta: '¿Qué pasa si Meta cambia o retira el agente de IA de WhatsApp Business?',
+      pregunta: '¿Qué pasa si WhatsApp cambia o retira la atención inteligente?',
       respuesta:
-        'El agente es una función de Meta: su activación, continuidad, características y costos dependen de Meta, y así lo dice el contrato. Si la cuenta no tiene acceso, entregamos la web y el posicionamiento, descontamos o posponemos ese componente y configuramos las funciones clásicas de la app. No ofrecemos una API como reemplazo.',
+        'Su activación, continuidad, características y costos dependen de las condiciones de WhatsApp Business, y así lo dice el contrato. Si la cuenta no es compatible, entregamos la web y el posicionamiento, descontamos o posponemos ese componente y dejamos listas las respuestas básicas. No ofrecemos una API como reemplazo.',
     },
     {
       pregunta: '¿VRS Digital responde por los errores del agente de IA?',
@@ -301,11 +301,10 @@ export const contenido = {
   enlacesInternos: [
     { texto: 'Política de privacidad y tratamiento de datos', href: '/politica-de-privacidad/' },
     { texto: 'Precios, condiciones y formas de pago', href: '/precios/' },
-    { texto: 'Configuración del agente de IA de WhatsApp Business', href: '/asistente-whatsapp-business/' },
+    { texto: 'Atención inteligente en WhatsApp Business', href: '/asistente-whatsapp-business/' },
   ],
   fuentes: [
     { titulo: 'Estatuto del Consumidor, Ley 1480 de 2011 (Secretaría del Senado)', url: 'https://www.secretariasenado.gov.co/senado/basedoc/ley_1480_2011.html' },
-    { titulo: 'Meta Business Agent en WhatsApp (página oficial, español)', url: 'https://whatsappbusiness.com/es-la/products/business-app-ai-agent/' },
   ],
   actualizado: '2026-10-11',
 } as const satisfies ModuloPagina;

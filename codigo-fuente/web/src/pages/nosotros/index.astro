@@ -1,5 +1,5 @@
 ---
-// /nosotros/ — quién está detrás de VRS Digital: el fundador, cómo usa la IA con revisión humana,
+// /nosotros/ — quién está detrás de VRS Digital: el fundador,
 // su capacidad (máximo dos proyectos a la vez), el aval MinTIC, sus valores y lo que no hace.
 // Todo el texto sale de src/data/contenido/nosotros.ts; foto, cifras, aval y contacto, de sitio.ts.
 // La plantilla arma SEO, JSON-LD (AboutPage, migas, FAQ; el fundador va en todas las páginas como
@@ -7,10 +7,8 @@
 // Momentos propios de la página:
 //   - Portada: el retrato del fundador en un pequeño laboratorio 3D (CSS) con fichas de vidrio.
 //   - #responsable: la misma persona en cada etapa (el mismo rostro en las seis) y cifras con contador.
-//   - #inteligencia-artificial: la tabla como recorrido con «compuerta» de revisión humana.
 //   - #capacidad: tablero del cupo (dos carriles encendidos y el tercero con candado).
 import PlantillaPagina from '@/components/pagina/PlantillaPagina.astro';
-import CaminoIA from '@/components/paginas/empresa/CaminoIA.astro';
 import CupoProyectos from '@/components/paginas/empresa/CupoProyectos.astro';
 import PerfilFundador from '@/components/paginas/empresa/PerfilFundador.astro';
 import RetratoFundador from '@/components/paginas/empresa/RetratoFundador.astro';
@@ -18,7 +16,6 @@ import { seccionDe } from '@/components/paginas/empresa/secciones';
 import { contenido } from '@/data/contenido/nosotros';
 
 const responsable = seccionDe(contenido, 'responsable', 'perfil');
-const ia = seccionDe(contenido, 'inteligencia-artificial', 'tabla');
 const capacidad = seccionDe(contenido, 'capacidad', 'lista');
 ---
 <PlantillaPagina
@@ -32,6 +29,5 @@ const capacidad = seccionDe(contenido, 'capacidad', 'lista');
 >
   <RetratoFundador slot="visual" />
   <PerfilFundador slot="seccion-responsable" seccion={responsable.s} fondo={responsable.fondo} numero={responsable.numero} resaltado="de principio a fin" />
-  <CaminoIA slot="seccion-inteligencia-artificial" seccion={ia.s} fondo={ia.fondo} numero={ia.numero} resaltado="con supervisión humana" />
   <CupoProyectos slot="seccion-capacidad" seccion={capacidad.s} fondo={capacidad.fondo} numero={capacidad.numero} resaltado="a propósito" />
 </PlantillaPagina>

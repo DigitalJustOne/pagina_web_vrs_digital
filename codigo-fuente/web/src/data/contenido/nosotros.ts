@@ -11,6 +11,9 @@
 //  - Confirmar si las reuniones son solo virtuales o también presenciales (hoy no se menciona).
 //  EDICIÓN FINAL (2026-10-06): se quitó «¿La IA escribe los textos de mi página?» porque
 //  repetía «¿Usan inteligencia artificial para hacer las páginas?» de la página de inicio.
+//  2026-10-18 (Víctor): la web no explica cómo se hace el trabajo. Se quitaron la sección
+//  «Cómo usamos la inteligencia artificial», las preguntas sobre herramientas de IA y la frase
+//  «usted habla directamente con quien hace el trabajo» y sus variantes.
 // ─────────────────────────────────────────────────────────────────────────────
 import { AVAL, CIFRAS, CONTACTO, CTA_PRINCIPAL, FUNDADOR, enlaceWhatsApp } from '@/data/sitio';
 import type { NombreIconoTarjeta } from '@/components/ui/iconos';
@@ -23,13 +26,13 @@ const minuscula = (t: string) => t.charAt(0).toLowerCase() + t.slice(1);
 export const contenido = {
   ruta: '/nosotros/',
   seo: {
-    titulo: 'Quién está detrás: Víctor Ramírez y su método',
+    titulo: 'Quién está detrás de VRS Digital: Víctor Ramírez',
     descripcion:
-      'Conozca a Víctor Ramírez, fundador y responsable de VRS Digital: cómo usa la IA con revisión humana, por qué atiende pocos proyectos y su aval MinTIC.',
+      'Conozca a Víctor Ramírez, fundador y responsable de VRS Digital: por qué atiende pocos proyectos, lo que hace y lo que no, y su aval MinTIC.',
     palabraClave: 'quién está detrás de VRS Digital',
     secundarias: [
       'Víctor Ramírez VRS Digital',
-      'agencia digital con inteligencia artificial',
+      'estudio digital en Bogotá',
       'empresa aliada MinTIC',
     ],
   },
@@ -41,12 +44,12 @@ export const contenido = {
     etiqueta: 'Nosotros',
     titulo: 'Víctor Ramírez, el responsable de cada proyecto de VRS Digital',
     subtitulo:
-      'VRS Digital es un estudio digital de Bogotá dirigido por su fundador. Usted habla directamente con quien diseña, desarrolla, revisa y responde por su proyecto, con procesos acelerados por inteligencia artificial y supervisión humana.',
+      'VRS Digital es un estudio digital de Bogotá dirigido por su fundador, responsable de cada proyecto de principio a fin.',
     ctaPrincipal: CTA_PRINCIPAL,
     ctaSecundario: { texto: 'Ver proyectos', href: '/proyectos/' },
   },
   respuestaDirecta:
-    'VRS Digital es un estudio digital de Bogotá dirigido por Víctor Alfonso Ramírez Sepúlveda, su fundador y responsable de cada proyecto. Trabaja solo, apoyado por inteligencia artificial para acelerar la investigación, los textos y el desarrollo, y revisa personalmente cada entrega.',
+    'VRS Digital es un estudio digital de Bogotá dirigido por Víctor Alfonso Ramírez Sepúlveda, su fundador y responsable de cada proyecto. Atiende máximo dos proyectos a la vez y revisa personalmente cada entrega.',
   secciones: [
     {
       id: 'responsable',
@@ -65,34 +68,11 @@ export const contenido = {
         ],
       },
       parrafos: [
-        `${FUNDADOR.nombre} fundó VRS Digital y es el responsable de cada proyecto. Atiende el diagnóstico, define la estrategia, diseña, desarrolla, revisa y presenta las entregas. Cuando usted escribe, le responde la misma persona que hace el trabajo.`,
+        `${FUNDADOR.nombre} fundó VRS Digital y es el responsable de cada proyecto. Atiende el diagnóstico, define la estrategia, diseña, desarrolla, revisa y presenta las entregas.`,
         'Ha desarrollado una web corporativa de 54 páginas y landing pages para campañas de Google Ads para una empresa de tejas y cubiertas, además de sitios y plataformas de restaurantes, logística, bienestar e industria eléctrica, que puede revisar en la página de proyectos, y Beauty Manager, el producto propio de VRS Digital para centros de estética.',
         'VRS Digital no tiene departamentos ni empleados, y no los aparenta. Preferimos que usted sepa desde el principio con quién trabaja y quién responde por el resultado.',
       ],
       cifras: CIFRAS,
-    },
-    {
-      id: 'inteligencia-artificial',
-      etiqueta: 'Inteligencia artificial',
-      titulo: 'Cómo usamos la inteligencia artificial, con supervisión humana',
-      introduccion:
-        'La inteligencia artificial (IA) nos permite hacer en menos tiempo la investigación, la redacción y el desarrollo. Las decisiones, la comunicación con usted y la calidad final siguen a cargo de una persona.',
-      tipo: 'tabla',
-      columnas: ['Actividad', 'Lo que acelera la IA', 'Lo que decide y revisa Víctor'],
-      filas: [
-        ['Investigación', 'Competidores, preguntas de sus clientes y estructura del sitio', 'Verificar las fuentes y decidir la estrategia'],
-        ['Textos', 'Borradores, titulares y preguntas frecuentes', 'Validar cada promesa, la precisión y el tono'],
-        ['Diseño', 'Bocetos, referencias y componentes', 'Elegir, ajustar y aprobar el diseño'],
-        ['Desarrollo', 'Código, correcciones y documentación', 'Probar el funcionamiento, la seguridad y la publicación'],
-        ['Posicionamiento', 'Temas de búsqueda, títulos, datos estructurados y enlaces', 'Validar la intención, la calidad y la coherencia'],
-        ['Agente de WhatsApp', 'Preguntas frecuentes, tono y escenarios de prueba', 'Aprobar los datos, los límites y las respuestas'],
-        ['Soporte', 'Diagnóstico y borradores de respuesta', 'Responderle y resolver'],
-      ],
-      parrafos: [
-        'No compartimos qué herramientas, modelos o instrucciones usamos: es parte de nuestro método. Lo que sí es público es el alcance de cada servicio, lo que depende de terceros como Meta o Google, y sus límites.',
-        'La IA no publica nada por su cuenta. Cada texto se verifica antes de mostrárselo, y usted aprueba el contenido de su web antes de publicarlo.',
-        'Cuando configuramos el agente de IA de WhatsApp Business, usamos una función de Meta. No es una tecnología nuestra ni un chatbot propio.',
-      ],
     },
     {
       id: 'capacidad',
@@ -123,7 +103,7 @@ export const contenido = {
           texto: 'Cada mensualidad indica cuántos cambios o solicitudes incluye. Usted sabe qué paga y qué recibe.',
         },
       ],
-      nota: 'La disponibilidad las 24 horas corresponde a su sitio web y al agente de WhatsApp configurado para su empresa, no al soporte personal de VRS Digital.',
+      nota: 'La disponibilidad las 24 horas corresponde a su sitio web y a la atención inteligente de su WhatsApp, no al soporte personal de VRS Digital.',
     },
     {
       id: 'aval',
@@ -144,7 +124,7 @@ export const contenido = {
       etiqueta: 'Valores',
       titulo: 'Lo que guía nuestro trabajo',
       tipo: 'tarjetas',
-      columnas: 3,
+      columnas: 2,
       items: [
         {
           titulo: 'Claridad',
@@ -153,13 +133,8 @@ export const contenido = {
         },
         {
           titulo: 'Honestidad',
-          texto: 'No prometemos el primer lugar en Google ni respuestas perfectas. Decimos qué depende de nosotros y qué depende de Meta o de Google.',
+          texto: 'No prometemos el primer lugar en Google ni respuestas perfectas. Decimos qué depende de nosotros y qué depende de terceros, como Google o WhatsApp.',
           icono: icono('shield'),
-        },
-        {
-          titulo: 'Trato directo',
-          texto: 'Usted habla con quien hace el trabajo. Sin intermediarios ni mensajes que se pierden entre áreas.',
-          icono: icono('users'),
         },
         {
           titulo: 'Calidad antes que volumen',
@@ -168,13 +143,8 @@ export const contenido = {
         },
         {
           titulo: 'Cuidado de los datos',
-          texto: 'Pedimos solo los datos necesarios, incluimos la autorización de tratamiento de datos en los formularios y no recomendamos usar el agente de WhatsApp con información sensible.',
+          texto: 'Pedimos solo los datos necesarios, incluimos la autorización de tratamiento de datos en los formularios y no recomendamos usar la atención inteligente de WhatsApp con información sensible.',
           icono: icono('lock'),
-        },
-        {
-          titulo: 'Método reservado, alcance público',
-          texto: 'Nuestras herramientas son reservadas. Lo que usted recibe, lo que no incluye y lo que depende de terceros, siempre por escrito.',
-          icono: icono('file'),
         },
       ],
     },
@@ -191,7 +161,7 @@ export const contenido = {
         'Sistemas de gestión de clientes (CRM).',
         'Conexiones técnicas entre programas (API) ni integraciones con facturación, inventario o programas de gestión empresarial (ERP).',
         'Envíos masivos de mensajes por WhatsApp.',
-        'Soporte interno de Meta ni recuperación de cuentas suspendidas.',
+        'Soporte técnico de WhatsApp ni recuperación de cuentas suspendidas.',
       ],
       nota: 'Si su necesidad está fuera de este alcance, se lo decimos desde la primera conversación.',
     },
@@ -200,12 +170,7 @@ export const contenido = {
     {
       pregunta: '¿VRS Digital es una agencia o una sola persona?',
       respuesta:
-        'VRS Digital es un estudio digital dirigido por su fundador, Víctor Ramírez, que trabaja solo y apoyado por inteligencia artificial. No tiene departamentos ni equipo de ventas. Esto significa que usted habla directamente con quien diseña, desarrolla y revisa su proyecto, y que trabajamos con un máximo de dos proyectos al mismo tiempo.',
-    },
-    {
-      pregunta: '¿Qué herramientas de inteligencia artificial usan?',
-      respuesta:
-        'Nuestro método y nuestras herramientas son reservados. Lo que sí le explicamos es para qué usamos la IA (investigación, borradores, diseño y desarrollo) y qué revisa una persona: la información, las promesas, el tono, el funcionamiento y la seguridad. Ninguna entrega se publica sin la revisión de Víctor Ramírez y sin su aprobación.',
+        'VRS Digital es un estudio digital dirigido por su fundador, Víctor Ramírez, responsable de cada proyecto. No tiene departamentos ni equipo de ventas, y trabaja con un máximo de dos proyectos al mismo tiempo.',
     },
     {
       pregunta: '¿Por qué trabajan con un máximo de dos proyectos al mismo tiempo?',
@@ -223,7 +188,7 @@ export const contenido = {
     },
   ],
   cta: {
-    titulo: 'Hable directamente con quien hará su proyecto',
+    titulo: 'Pida una revisión digital gratuita',
     texto:
       'Solicite una revisión digital gratuita. Víctor Ramírez revisa su web, su visibilidad en Google y su atención por WhatsApp, y le entrega tres prioridades concretas.',
     ctaPrincipal: CTA_PRINCIPAL,
@@ -233,7 +198,7 @@ export const contenido = {
   enlacesInternos: [
     { texto: 'Proyectos de páginas web y plataformas', href: '/proyectos/' },
     { texto: 'Precios y qué incluye cada plan', href: '/precios/' },
-    { texto: 'Configuración del agente de IA de WhatsApp Business', href: '/asistente-whatsapp-business/' },
+    { texto: 'Atención inteligente en WhatsApp Business', href: '/asistente-whatsapp-business/' },
     { texto: 'Solicitar una revisión digital gratuita', href: '/contacto/' },
   ],
   fuentes: [

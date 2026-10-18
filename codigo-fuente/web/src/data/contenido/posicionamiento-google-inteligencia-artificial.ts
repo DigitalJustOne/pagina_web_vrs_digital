@@ -418,7 +418,7 @@ export const contenido = {
   },
   enlacesInternos: [
     { texto: 'Diseño de páginas web en Bogotá para empresas', href: '/paginas-web-bogota/' },
-    { texto: 'Configuración del agente de IA de WhatsApp Business', href: '/asistente-whatsapp-business/' },
+    { texto: 'Atención inteligente en WhatsApp Business', href: '/asistente-whatsapp-business/' },
     { texto: 'Precios del plan Web Visible y de los demás planes', href: '/precios/' },
     { texto: 'Guía: cuánto cuesta una página web en Bogotá', href: '/recursos/cuanto-cuesta-una-pagina-web-en-bogota/' },
     { texto: 'Páginas web para empresas de servicios', href: '/paginas-web-empresas-servicios/' },

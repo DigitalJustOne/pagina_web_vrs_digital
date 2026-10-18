@@ -38,7 +38,7 @@ export const GET: APIRoute = () => {
 Datos clave:
 
 - Eslogan: «${SITIO.eslogan}»
-- Atención directa con el fundador, sin intermediarios. Máximo dos proyectos al mismo tiempo.
+- Precios publicados. Máximo dos proyectos al mismo tiempo.
 - ${AVAL.titulo}: ${AVAL.enlace}
 - WhatsApp: ${CONTACTO.whatsappVisible} (${enlaceWhatsApp()})
 - Correo: ${CONTACTO.correo}

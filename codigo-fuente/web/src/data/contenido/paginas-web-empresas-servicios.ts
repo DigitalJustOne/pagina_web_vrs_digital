@@ -98,9 +98,9 @@ export const contenido = {
     ctaPrincipal: CTA_PRINCIPAL,
     ctaSecundario: { texto: 'Ver precios y planes', href: '/precios/' },
     precio: `Desde ${desde('esencial')}`,
-    puntos: ['Una página por cada servicio', 'Precio «desde» y proceso claros', 'Atención directa con el fundador'],
+    puntos: ['Una página por cada servicio', 'Precio «desde» y proceso claros', 'Dominio y hosting el primer año'],
   },
-  respuestaDirecta: `Una empresa de servicios vende algo que no se ve. Su web debe explicar qué hace, para quién, cómo trabaja y cuánto cuesta empezar. VRS Digital diseña esa web desde ${desde('esencial')} al año, o en 12 cuotas de ${cuotaDesde('esencial')} al mes, IVA incluido, la prepara para Google y asistentes de IA y, en el plan ${atencion.nombre}, configura el agente de IA de WhatsApp Business para responder preguntas frecuentes.`,
+  respuestaDirecta: `Una empresa de servicios vende algo que no se ve. Su web debe explicar qué hace, para quién, cómo trabaja y cuánto cuesta empezar. VRS Digital diseña esa web desde ${desde('esencial')} al año, o en 12 cuotas de ${cuotaDesde('esencial')} al mes, IVA incluido, la prepara para Google y asistentes de IA y, en el plan ${atencion.nombre}, deja su WhatsApp Business respondiendo preguntas frecuentes con atención inteligente.`,
   secciones: [
     {
       id: 'problema',
@@ -169,7 +169,7 @@ export const contenido = {
       etiqueta: 'Atención por WhatsApp',
       titulo: 'WhatsApp: respuestas inmediatas para lo repetitivo, una persona para lo importante',
       introduccion:
-        'El agente de IA de WhatsApp Business es una función de Meta dentro de la app. Nosotros la configuramos con la información que su empresa aprueba. Esto puede hacer y esto no:',
+        'Con la atención inteligente, su WhatsApp Business responde con la información que su empresa aprueba. Esto puede hacer y esto no:',
       tipo: 'comparacion',
       etiquetaIncluye: 'El agente puede',
       etiquetaNoIncluye: 'Siempre pasa a una persona',
@@ -187,8 +187,8 @@ export const contenido = {
         'Urgencias, quejas y clientes que piden hablar con alguien.',
       ],
       parrafos: [
-        'Meta habilita el agente de forma gradual, por país y por cuenta, y lo verificamos en el diagnóstico. Si su cuenta aún no lo tiene, configuramos las funciones clásicas de la app: bienvenida, ausencia, respuestas rápidas, etiquetas y catálogo.',
-        'Meta informa que usa los mensajes de los chats donde el agente está activo para mejorar su inteligencia artificial. Por eso no lo recomendamos para conversaciones con información de salud, financiera o jurídica sensible.',
+        'No todas las cuentas de WhatsApp Business son compatibles: lo revisamos en el diagnóstico. Si su cuenta aún no lo es, dejamos listas las respuestas básicas: bienvenida, ausencia, respuestas rápidas, etiquetas y catálogo.',
+        'No la recomendamos para conversaciones con información de salud, financiera o jurídica sensible.',
         ACLARACION_HORARIO,
       ],
       enlace: { texto: 'Ver el servicio de WhatsApp Business', href: '/asistente-whatsapp-business/' },
@@ -205,10 +205,10 @@ export const contenido = {
       id: 'precio',
       etiqueta: 'Precio',
       titulo: 'Cuánto cuesta la web de una empresa de servicios',
-      introduccion: `La web sola, ${esencial.nombre}, cuesta desde ${desde('esencial')} al año, o en 12 cuotas de ${cuotaDesde('esencial')} al mes, IVA incluido. Con una página por servicio y seguimiento en Google, ${visible.nombre} empieza en ${desde('visible')}. Con el agente de IA de WhatsApp Business configurado, ${atencion.nombre} empieza en ${desde('atencion')}.`,
+      introduccion: `La web sola, ${esencial.nombre}, cuesta desde ${desde('esencial')} al año, o en 12 cuotas de ${cuotaDesde('esencial')} al mes, IVA incluido. Con una página por servicio y seguimiento en Google, ${visible.nombre} empieza en ${desde('visible')}. Con atención inteligente en WhatsApp Business, ${atencion.nombre} empieza en ${desde('atencion')}.`,
       tipo: 'planes',
       compacto: true,
-      nota: 'Licencias y suscripciones externas, incluidos los costos de Meta, se identifican por separado. El valor final depende del alcance y queda por escrito antes de empezar.',
+      nota: 'Licencias y suscripciones externas se identifican por separado. El valor final depende del alcance y queda por escrito antes de empezar.',
       enlace: { texto: 'Ver precios completos y condiciones', href: '/precios/' },
     },
     {
@@ -245,7 +245,7 @@ export const contenido = {
     {
       pregunta: '¿Necesito un CRM, una API o un chatbot a medida?',
       respuesta:
-        'Para empezar, no. Nuestro servicio usa su web y la app WhatsApp Business con el agente de IA que Meta ofrece, sin programación. No vendemos CRM, API ni chatbots desarrollados a medida, ni integraciones con otros sistemas. Para la mayoría de pymes de servicios, una web clara y un WhatsApp bien configurado resuelven lo principal.',
+        'Para empezar, no. Su web y su WhatsApp Business con atención inteligente resuelven lo principal sin programación. No vendemos CRM, API ni chatbots desarrollados a medida, ni integraciones con otros sistemas. Para la mayoría de pymes de servicios, una web clara y un WhatsApp bien configurado resuelven lo principal.',
     },
     {
       pregunta: '¿Cómo es el proceso para tener mi página web?',
@@ -263,13 +263,9 @@ export const contenido = {
   },
   enlacesInternos: [
     { texto: 'Diseño de páginas web en Bogotá para empresas', href: '/paginas-web-bogota/' },
-    { texto: 'Configuración del agente de IA de WhatsApp Business', href: '/asistente-whatsapp-business/' },
+    { texto: 'Atención inteligente en WhatsApp Business', href: '/asistente-whatsapp-business/' },
     { texto: 'Precios, condiciones y formas de pago', href: '/precios/' },
     { texto: 'Guía: cuánto cuesta una página web en Bogotá', href: '/recursos/cuanto-cuesta-una-pagina-web-en-bogota/' },
-  ],
-  fuentes: [
-    { titulo: 'About using business AI to chat with customers (Centro de ayuda de WhatsApp)', url: 'https://faq.whatsapp.com/291930066973116/', idioma: 'en' },
-    { titulo: 'Meta Business Agent en WhatsApp (página oficial, español)', url: 'https://whatsappbusiness.com/es-la/products/business-app-ai-agent/' },
   ],
   /** Datos para servicio() de @/lib/schema. El precio sale de sitio.ts. */
   servicio: {

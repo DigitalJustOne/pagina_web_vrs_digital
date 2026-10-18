@@ -260,7 +260,7 @@ export const contenido = {
   enlacesInternos: [
     { texto: 'Términos y condiciones del servicio', href: '/terminos/' },
     { texto: 'Contacto y canales de atención', href: '/contacto/' },
-    { texto: 'Guía: qué puede hacer el agente de IA de WhatsApp Business', href: '/recursos/agente-ia-whatsapp-business/' },
+    { texto: 'Atención inteligente en WhatsApp Business', href: '/asistente-whatsapp-business/' },
   ],
   fuentes: [
     { titulo: 'Ley 1581 de 2012 (Secretaría del Senado)', url: URL_LEY_1581 },

@@ -29,7 +29,7 @@ const capa = fondo === 'bajo' ? 'bg-surface-high' : 'bg-surface-low';
 const TEMAS = 5;
 ---
 <MarcoEmpresa seccion={s} fondo={fondo} numero={numero} resaltado={resaltado}>
-  <ul role="list" class="grid gap-5 lg:grid-cols-2 lg:gap-6">
+  <ul role="list" class:list={['grid gap-5 lg:gap-6', guias.length > 1 ? 'lg:grid-cols-2' : 'max-w-3xl']}>
     {
       guias.map((g, i) => (
         <li data-revelar style={`--retraso:${(i % 2) * 110}ms`} class:list={['tarjeta-guia group relative isolate flex flex-col overflow-hidden rounded-panel', capa]}>

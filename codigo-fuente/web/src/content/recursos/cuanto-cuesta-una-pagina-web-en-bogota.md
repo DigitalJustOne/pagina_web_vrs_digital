@@ -3,7 +3,7 @@ titulo: 'Cuánto cuesta una página web en Bogotá (2026)'
 h1: '¿Cuánto cuesta una página web para empresa en Bogotá en 2026?'
 descripcion: 'Precios que publican agencias de Bogotá en 2026, qué hace variar el valor, costos de dominio, alojamiento e IVA, y cómo comparar cotizaciones. Con enlaces.'
 publicado: 2026-10-06
-actualizado: 2026-10-13
+actualizado: 2026-10-18
 autor: 'Víctor Ramírez'
 palabraClave: 'cuánto cuesta una página web en Bogotá'
 secundarias:
@@ -50,12 +50,6 @@ fuentes:
     url: 'https://stivenramirez.com/blog/cuanto-cobra-disenador-web-colombia/'
   - titulo: 'Ley 1480 de 2011, Estatuto del Consumidor (Secretaría del Senado)'
     url: 'https://www.secretariasenado.gov.co/senado/basedoc/ley_1480_2011.html'
-  - titulo: 'Meta One on WhatsApp Business App (WhatsApp Business)'
-    url: 'https://whatsappbusiness.com/products/business-app-meta-one/'
-    idioma: 'en'
-  - titulo: 'Introducing Meta One (Meta Newsroom, 15 de septiembre de 2026)'
-    url: 'https://about.fb.com/news/2026/09/introducing-meta-one-subscription-service-more-features-ai/'
-    idioma: 'en'
 ---
 
 Por **Víctor Ramírez**, fundador de VRS Digital. Precios consultados el 6 de octubre de 2026.
@@ -141,11 +135,8 @@ La primera cotización casi nunca muestra el costo total. Estos son los concepto
 | Alojamiento (hosting) | El servidor donde vive la web | Entre $300.000 y $1.200.000 al año para alojamiento profesional, según Cangrejo Digital. [Zcalaris](https://zcalaris.com/) cobra $600.000 al año desde el segundo año. |
 | Mantenimiento | Cambios, actualizaciones, copias y soporte | Entre $250.000 y $900.000 al mes en agencias, según Cangrejo Digital; entre $150.000 y $500.000 al mes con independientes, según Stiven Ramírez. Zcalaris ofrece administración opcional por $100.000 al mes. |
 | IVA | Impuesto sobre las ventas | Si el proveedor es responsable de IVA, la tarifa general es del 19 %. |
-| Costos de Meta | Si usa el agente de IA de WhatsApp Business | Según Meta, la app es gratuita e incluye un cupo mensual de respuestas del agente. Para más respuestas ofrece planes de pago (Meta One) desde US$14,99 al mes, según Meta (septiembre de 2026); [puede variar por país](https://whatsappbusiness.com/products/business-app-meta-one/). |
 
 Sobre el IVA: el Estatuto del Consumidor ([Ley 1480 de 2011, artículo 26](https://www.secretariasenado.gov.co/senado/basedoc/ley_1480_2011.html)) exige informar el precio «incluidos todos los impuestos y costos adicionales». Si una cotización no lo dice, pregúntelo antes de firmar.
-
-Sobre Meta: esos cobros los hace Meta directamente, no el proveedor de su web, y Meta puede cambiarlos. Ningún proveedor serio debería incluirlos en su precio sin decirlo.
 
 ## Cómo calcular el costo del primer año
 
@@ -164,7 +155,7 @@ Publicamos el valor inicial de cada plan, con IVA incluido. El valor final depen
 | Landing Page | Quien necesita una sola página para vender un servicio o una promoción | {{landing}}, pago único | No aplica | {{landingDominio}} con dominio y hosting |
 | Web Esencial | Empresas que necesitan presencia profesional y un contacto claro | Desde {{precioAnual:esencial}} | Desde {{cuota:esencial}} | Desde {{totalCuotas:esencial}} |
 | Web Visible | Empresas que quieren recibir clientes desde Google y asistentes de IA | Desde {{precioAnual:visible}} | Desde {{cuota:visible}} | Desde {{totalCuotas:visible}} |
-| Web + Atención Inteligente | Empresas que además quieren responder por WhatsApp fuera de horario | Desde {{precioAnual:atencion}} | Desde {{cuota:atencion}} | Desde {{totalCuotas:atencion}}, más los costos de Meta |
+| Web + Atención Inteligente | Empresas que además quieren responder por WhatsApp fuera de horario | Desde {{precioAnual:atencion}} | Desde {{cuota:atencion}} | Desde {{totalCuotas:atencion}} |
 
 Lo que conviene saber de nuestros planes:
 
@@ -172,7 +163,7 @@ Lo que conviene saber de nuestros planes:
 - **Dominio + Hosting**: en Web Esencial, Web Visible y Web + Atención Inteligente van incluidos el primer año. Para la Landing Page y el Plan Emprendedor cuestan {{dominioHosting}} al año. El dominio (.com o .com.co) queda a nombre de su empresa.
 - **Web Esencial** incluye hasta cinco secciones o páginas, diseño adaptado a celular, botón de WhatsApp, formulario, optimización inicial para Google, certificado de seguridad y un manual breve.
 - **Web Visible** suma investigación de lo que buscan sus clientes, una página por servicio, datos estructurados, preguntas frecuentes y seguimiento mensual.
-- **Web + Atención Inteligente** suma la configuración del agente de IA que Meta ofrece en WhatsApp Business: verificamos que su cuenta tenga acceso, organizamos la información, lo probamos con 25 a 40 preguntas y definimos cuándo pasa la conversación a una persona. Si su cuenta no tiene acceso, descontamos o posponemos ese componente y configuramos las funciones clásicas de la app. El agente puede responder a cualquier hora; nuestro acompañamiento humano es de {{horario}}, y respondemos en uno o dos días hábiles.
+- **Web + Atención Inteligente** suma atención inteligente en WhatsApp Business: organizamos la información de su empresa, la probamos con 25 a 40 preguntas y definimos cuándo pasa la conversación a una persona. Si su cuenta no es compatible, descontamos o posponemos ese componente y dejamos listas las respuestas básicas. El agente puede responder a cualquier hora; nuestro acompañamiento humano es de {{horario}}, y respondemos en uno o dos días hábiles.
 - El **Plan Emprendedor** es una oferta aparte para microempresas que empiezan: una página de una sola sección, estandarizada, con alojamiento (hosting) y agenda básica, por {{emprendedor}} al mes.
 
 Cada plan web se puede pagar de una vez por su precio anual, o en 12 cuotas mensuales que suman 20 % más. Las licencias y las suscripciones externas se identifican por separado. Puede ver el detalle en [precios y condiciones](/precios/).
@@ -188,7 +179,7 @@ Haga estas preguntas a cada proveedor, incluidos nosotros, y pida las respuestas
 3. **¿El precio es de una vez o en cuotas? ¿Cuánto suman las cuotas en total?**
 4. **¿Qué incluye el precio que paga?** Y en qué horario responden.
 5. **¿Hay cobros periódicos o permanencia mínima?**
-6. **¿El precio incluye IVA? ¿Qué se paga aparte?** Dominio, alojamiento, licencias, fotos, costos de Meta.
+6. **¿El precio incluye IVA? ¿Qué se paga aparte?** Dominio, alojamiento, licencias, fotos y suscripciones externas.
 7. **¿Cuál es la fecha estimada de entrega?** Y qué necesita usted entregar para cumplirla.
 8. **¿Qué pasa con mi web si el proveedor deja de prestar el servicio?** Accesos, copias de seguridad y traslado.
 9. **¿Cómo se ve en un celular?** Pida enlaces de webs que ya hicieron y ábralos desde su teléfono.

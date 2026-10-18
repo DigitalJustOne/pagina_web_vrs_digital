@@ -1,13 +1,19 @@
 // ─────────────────────────────────────────────────────────────────────────────
-//  Contenido de /asistente-whatsapp-business/ (servicio: configuración del agente de IA
-//  de Meta en WhatsApp Business).
-//  Palabra clave principal: «configurar agente IA WhatsApp Business».
+//  Contenido de /asistente-whatsapp-business/ (servicio: atención inteligente en WhatsApp Business).
+//  Palabra clave principal: «atención inteligente WhatsApp Business».
+//
+//  DECISIÓN DE VÍCTOR (2026-10-18): la web NO explica cómo se hace el trabajo. No decir que el
+//  servicio es «configurar el agente de IA que Meta ofrece», ni «función de Meta», ni «cuando su
+//  cuenta tiene acceso», ni citar páginas de Meta. Se habla del resultado para el cliente. Se
+//  mantiene lo que lo protege: nunca decir que VRS creó la tecnología (no «nuestro chatbot» ni
+//  «IA propia»), avisar que no todas las cuentas son compatibles, que hay costos externos si
+//  superan el cupo gratuito, que la IA puede equivocarse y qué pasa con los datos.
 //  Fuentes: informe del Director (2026-10-05: «El servicio de WhatsApp», «Procedimiento del
 //  agente», «Protección de datos») y fuentes oficiales de Meta y WhatsApp verificadas el
 //  2026-10-06 (al final). Solo se afirma lo que dicen esas fuentes.
 //
 //  REGLAS DE ESTA PÁGINA:
-//  - El agente es de Meta. Nunca «nuestro chatbot», «chatbot personalizado» ni «asistente propio».
+//  - Nunca «nuestro chatbot», «chatbot personalizado», «asistente propio» ni «IA propia».
 //  - No afirmar que está disponible en Colombia: no hay confirmación oficial de Meta.
 //  - No usar la tarifa de US$2 por millón de tokens: es de la API (WhatsApp Business Platform),
 //    que VRS Digital no vende. El costo de la app se explica con el cupo gratuito y Meta One.
@@ -48,12 +54,7 @@ const atencion = plan('atencion');
 /** Aclaración obligatoria cerca de cualquier mención de «a cualquier hora» o «24/7». */
 const ACLARACION_HORARIO = `El agente puede responder a cualquier hora. Nuestro acompañamiento humano es de ${minuscula(CONTACTO.horario)}. ${CONTACTO.respuestaHumana}`;
 
-const URL_META_PRODUCTO = 'https://whatsappbusiness.com/products/business-app-ai-agent/';
-const URL_META_PRODUCTO_ES = 'https://whatsappbusiness.com/es-la/products/business-app-ai-agent/';
-const URL_AYUDA = 'https://faq.whatsapp.com/291930066973116/';
-const URL_META_ONE = 'https://whatsappbusiness.com/products/business-app-meta-one/';
-
-const MENSAJE_WHATSAPP = 'Hola, quiero saber si mi WhatsApp Business puede usar el agente de IA de Meta.';
+const MENSAJE_WHATSAPP = 'Hola, quiero saber si mi WhatsApp Business puede tener atención inteligente.';
 
 /** Conversación de ejemplo (firma ficticia): la usan la sección #ejemplo y la ilustración de la portada. */
 const CONVERSACION_EJEMPLO = {
@@ -85,7 +86,7 @@ const CONVERSACION_EJEMPLO = {
         'Buenos días, Andrea. Ya leí su consulta. Para darle el valor exacto, ¿me confirma si este año tuvo ingresos solo como independiente o también como empleada?',
     },
   ],
-  nota: 'Ejemplo ilustrativo con una firma ficticia, no de un cliente real. Las respuestas reales dependen de la información que su empresa apruebe y de las funciones que Meta habilite en su cuenta.',
+  nota: 'Ejemplo ilustrativo con una firma ficticia, no de un cliente real. Las respuestas reales dependen de la información que su empresa apruebe y de las funciones disponibles en su cuenta.',
 } as const;
 
 const MENSAJE_AGENTE = CONVERSACION_EJEMPLO.mensajes.find((m) => m.de === 'asistente')!;
@@ -113,17 +114,15 @@ export const relojAtencion = {
 export const contenido = {
   ruta: '/asistente-whatsapp-business/',
   seo: {
-    // 44 caracteres + « | VRS Digital» (Seo.astro) = 58.
-    titulo: 'Configurar agente de IA de WhatsApp Business',
+    // 41 caracteres + « | VRS Digital» (Seo.astro) = 55.
+    titulo: 'Atención inteligente en WhatsApp Business',
     descripcion:
-      'Configuramos el agente de IA que Meta ofrece en WhatsApp Business: datos de su negocio, tono, pruebas y paso a una persona. Sin API ni CRM. Consulte si aplica.',
-    palabraClave: 'configurar agente IA WhatsApp Business',
-    // «agente de IA de WhatsApp Business», «Meta Business Agent» y «cómo automatizar respuestas»
-    // son búsquedas informativas: las atiende la guía /recursos/agente-ia-whatsapp-business/.
+      'Su WhatsApp Business responde a sus clientes a cualquier hora con la información de su empresa y le pasa los casos que necesitan una persona.',
+    palabraClave: 'atención inteligente WhatsApp Business',
     secundarias: [
       'asistente de WhatsApp para empresas',
-      'atención inteligente WhatsApp',
-      'configuración del agente de IA de WhatsApp Business',
+      'respuestas automáticas WhatsApp Business',
+      'agente de IA WhatsApp Business',
     ],
   },
   migas: [
@@ -132,44 +131,38 @@ export const contenido = {
   ],
   hero: {
     etiqueta: 'Atención inteligente en WhatsApp Business',
-    titulo: 'Configuramos el agente de IA de WhatsApp Business para su empresa',
+    titulo: 'Atención inteligente en WhatsApp Business para su empresa',
     subtitulo:
-      'Meta ofrece un agente de inteligencia artificial dentro de la app WhatsApp Business. Nosotros preparamos la información de su empresa, lo configuramos, lo probamos y definimos cuándo debe pasarle la conversación a usted.',
+      'Su WhatsApp Business responde a sus clientes a cualquier hora, con la información que usted aprueba, y le pasa a usted los casos que necesitan una persona. Lo dejamos listo, probado y ajustado.',
     ctaPrincipal: CTA_PRINCIPAL,
     ctaSecundario: { texto: 'Preguntar por WhatsApp', href: enlaceWhatsApp(MENSAJE_WHATSAPP) },
-    puntos: ['Función oficial de Meta, sin programación', 'Verificamos su cuenta antes de cobrar el agente', 'Sin API, CRM ni chatbot a medida'],
+    puntos: ['Responde a cualquier hora', 'Revisamos su cuenta antes de cobrar', 'Usted decide qué responde'],
     precio: `Plan ${atencion.nombre} desde ${desde('atencion')}`,
   },
   respuestaDirecta:
-    'Meta ofrece dentro de la app WhatsApp Business un agente de inteligencia artificial (Meta Business Agent) que responde a sus clientes con la información que usted le da. VRS Digital no creó esa tecnología: verificamos si su cuenta tiene acceso, organizamos la información de su negocio, lo configuramos, lo probamos y definimos cuándo debe pasarle la conversación a usted.',
-  // Fecha AAAA-MM-DD: la plantilla la muestra como «Información verificada el 6 de octubre de 2026».
-  // (Antes era una frase y se leía «Información verificada el Información sobre Meta…».) Que Meta
-  // cambia nombres, funciones y precios ya lo dice la tarjeta «Cambios» de #depende-de-meta.
-  verificado: '2026-10-06',
+    'Con la atención inteligente de VRS Digital, su WhatsApp Business responde a sus clientes a cualquier hora con la información de su empresa: servicios, horarios, precios autorizados y cómo empezar. Usted define qué puede responder, qué datos puede pedir y cuándo le pasa la conversación a una persona.',
   secciones: [
     {
       id: 'que-es',
       etiqueta: 'Qué es',
-      // H2 comercial: «Qué es el agente de IA de WhatsApp Business» es el título de la guía.
-      titulo: 'El agente de IA de Meta que configuramos en su WhatsApp Business',
+      titulo: 'Qué es la atención inteligente en WhatsApp',
       tipo: 'texto',
       parrafos: [
-        'Es una función de Meta disponible dentro de la app WhatsApp Business. Meta la presentó en junio de 2026 con el nombre Meta Business Agent. Responde los mensajes de sus clientes con la información de su empresa y no requiere programación.',
-        'Según Meta, aprende de su página de Facebook, de sus chats anteriores de WhatsApp y de su sitio web. Usted también puede cargarle catálogos, listas de precios, documentos y fotos, y decidir con qué información aprende.',
+        'Es un asistente de inteligencia artificial que trabaja dentro de su WhatsApp Business. Responde los mensajes de sus clientes con la información de su empresa, a cualquier hora, y le pasa a usted los casos que necesitan una persona.',
+        'Aprende de la información que usted aprueba: su catálogo, sus listas de precios, sus documentos, sus fotos y su sitio web.',
       ],
       destacado: {
         titulo: 'Nuestro servicio, en una frase',
         texto:
-          'Configuramos y optimizamos la atención inteligente disponible en WhatsApp Business para que responda preguntas frecuentes, explique sus servicios, comparta información comercial y pida los datos necesarios antes de pasar la conversación a una persona.',
+          'Dejamos su WhatsApp Business respondiendo preguntas frecuentes, explicando sus servicios, compartiendo información comercial y pidiendo los datos necesarios antes de pasar la conversación a una persona.',
       },
-      enlace: { texto: 'Qué es y qué puede hacer: lea la guía completa', href: '/recursos/agente-ia-whatsapp-business/' },
     },
     {
       id: 'ejemplo',
       etiqueta: 'Ejemplo',
       titulo: 'Así se ve una conversación con el agente',
       introduccion:
-        'En este ejemplo, una firma contable ficticia configuró el agente para responder lo básico, pedir solo el nombre y pasar el caso a una persona. El agente no da el precio exacto porque la firma no lo autorizó.',
+        'En este ejemplo, una firma contable ficticia tiene la atención inteligente lista para responder lo básico, pedir solo el nombre y pasar el caso a una persona. El agente no da el precio exacto porque la firma no lo autorizó.',
       tipo: 'conversacion',
       puntos: [
         `Responde a las ${MENSAJE_AGENTE.hora} con la información que la firma aprobó.`,
@@ -181,10 +174,9 @@ export const contenido = {
     },
     {
       id: 'que-puede-hacer',
-      etiqueta: 'Según Meta',
-      titulo: 'Qué puede hacer el agente, según Meta',
-      introduccion:
-        'Esto es lo que Meta describe en su página oficial. Lo que funcione en su cuenta depende de lo que Meta tenga habilitado para ella.',
+      etiqueta: 'Qué hace',
+      titulo: 'Qué puede hacer por su empresa',
+      introduccion: 'Lo que funcione en su cuenta lo revisamos en el diagnóstico, antes de cobrar.',
       tipo: 'lista',
       items: [
         'Responder preguntas sobre horarios, ubicación, productos, servicios y precios.',
@@ -192,16 +184,15 @@ export const contenido = {
         'Responder sobre descuentos, formas de pago y envíos, con la información que usted autorice.',
         'Pedirle datos al cliente para entender qué necesita (calificar prospectos).',
         'Pasarle a usted los temas complejos o sensibles que usted defina.',
-        'Agendar citas, cuando Meta habilite esa función en su cuenta.',
+        'Agendar citas, cuando su cuenta tenga esa función.',
       ],
       nota: ACLARACION_HORARIO,
-      enlace: { texto: 'Ver la página oficial de Meta', href: URL_META_PRODUCTO_ES },
     },
     {
       id: 'controles',
       etiqueta: 'Usted tiene el control',
-      titulo: 'Lo que usted controla del agente',
-      introduccion: 'Meta le da a la empresa estos controles. Los dejamos configurados y le explicamos cómo usarlos.',
+      titulo: 'Lo que usted controla',
+      introduccion: 'Lo dejamos listo y le explicamos cómo usar cada control.',
       tipo: 'tarjetas',
       columnas: 3,
       items: [
@@ -232,7 +223,7 @@ export const contenido = {
         },
         {
           titulo: 'Apagarlo',
-          texto: 'Puede activarlo por chat o para todos, y desconectarlo por completo desde las herramientas de la app.',
+          texto: 'Puede activarlo por chat o para todos, y desconectarlo por completo cuando quiera.',
           icono: icono('lock'),
         },
       ],
@@ -240,17 +231,16 @@ export const contenido = {
     {
       id: 'alcance',
       etiqueta: 'Qué hacemos',
-      titulo: 'Qué incluye nuestra configuración y qué no',
-      introduccion:
-        'Nuestro trabajo es preparar, configurar, probar y ajustar. No desarrollamos software: usamos la función que Meta ya ofrece en su cuenta.',
+      titulo: 'Qué incluye el servicio y qué no',
+      introduccion: 'Preparamos, probamos y ajustamos la atención de su WhatsApp Business.',
       tipo: 'comparacion',
       incluye: [
-        'Verificación de que su cuenta tenga acceso al agente.',
+        'Revisión de que su cuenta de WhatsApp Business sea compatible.',
         'Organización de la información comercial de su empresa.',
         'Optimización del perfil, la descripción, los horarios y el catálogo.',
         'Definición del tono y el estilo de las respuestas.',
         'Preguntas y respuestas frecuentes preparadas con usted.',
-        'Carga de enlaces, archivos y políticas, cuando la herramienta lo permita.',
+        'Carga de enlaces, archivos y políticas, cuando su cuenta lo permita.',
         'Definición de los datos que el agente puede pedir.',
         'Criterios para pasar la conversación a una persona.',
         'Prueba de 25 a 40 preguntas y corrección de las respuestas con problemas.',
@@ -259,16 +249,16 @@ export const contenido = {
         'Revisión de las respuestas del agente cada mes.',
       ],
       noIncluye: [
-        'Desarrollo de un chatbot propio o a medida.',
+        'Chatbot a medida.',
         'Programación de API (conexión técnica entre sistemas).',
         'CRM (programa para gestionar clientes y ventas).',
         'Integración con facturación, inventario, ERP (software de gestión empresarial) u otros programas.',
         'Envíos masivos de mensajes.',
         'Automatización en varios canales.',
         'Garantía de respuestas perfectas.',
-        'Garantía de que Meta mantenga la función disponible.',
+        'Garantía de que WhatsApp mantenga la función disponible.',
         'Recuperación de cuentas suspendidas.',
-        'Soporte interno de Meta.',
+        'Soporte técnico de WhatsApp.',
       ],
     },
     {
@@ -290,9 +280,8 @@ export const contenido = {
         'Lo que el agente nunca debe afirmar.',
         'Los datos que puede pedirle al cliente.',
       ],
-      // Antes era la sección «Por qué su web mejora las respuestas del agente».
       parrafos: [
-        'Meta indica que el agente aprende de su sitio web. Una web clara, con una página por servicio, precios «desde» y preguntas frecuentes, le da al agente mejor información para responder.',
+        'El agente también aprende de su sitio web. Una web clara, con una página por servicio, precios «desde» y preguntas frecuentes, le da mejor información para responder.',
         `Por eso lo ofrecemos junto con la web en el plan ${atencion.nombre}: la misma información ordenada sirve a Google, a los asistentes de IA y a sus clientes en WhatsApp.`,
       ],
     },
@@ -311,44 +300,40 @@ export const contenido = {
         ['Precios', '5', 'Que use solo los precios autorizados y no prometa descuentos.', '«¿Me lo deja más barato si pago hoy?»'],
         ['Atención humana', '5', 'Que pase la conversación a una persona cuando corresponde.', '«Quiero hablar con alguien» o «Tengo una queja».'],
       ],
-      // Criterios de aprobación (antes, sección aparte «Cuándo lo damos por aprobado»).
       parrafos: [
         'El agente se activa con sus clientes solo si cumple estos criterios: no inventa precios ni políticas, no promete servicios que su empresa no presta, mantiene el tono definido, pide solo los datos necesarios, reconoce lo que no sabe, pasa la conversación a una persona cuando corresponde y no expone información privada. Si una respuesta falla, la corregimos y repetimos la prueba.',
-        'Aun así, como toda inteligencia artificial, el agente puede equivocarse. WhatsApp lo advierte: los mensajes generados por IA pueden no ser precisos ni apropiados. Por eso usted puede responder personalmente en cualquier chat.',
+        'Aun así, como toda inteligencia artificial, el agente puede equivocarse. Por eso usted puede responder personalmente en cualquier chat.',
       ],
       nota: 'En todos los grupos incluimos errores de ortografía y lenguaje informal, como «ola, q precio tiene?», porque así escriben muchos clientes.',
     },
     {
-      id: 'depende-de-meta',
-      etiqueta: 'Lo que depende de Meta',
-      titulo: 'Lo que depende de Meta, no de nosotros',
-      introduccion:
-        'El agente es una función de Meta. Su disponibilidad, sus costos y sus reglas los define Meta. Esto es lo que usted debe saber antes de contratar:',
+      id: 'antes-de-contratar',
+      etiqueta: 'Antes de contratar',
+      titulo: 'Lo que debe saber antes de contratar',
       tipo: 'tarjetas',
       columnas: 2,
       items: [
         {
-          titulo: 'Disponibilidad',
-          texto:
-            'Meta indica que el agente está disponible para empresas elegibles en mercados seleccionados, y que algunas funciones pueden no estar habilitadas para todas. No encontramos una confirmación oficial de Meta para Colombia. Por eso lo verificamos en su cuenta.',
+          titulo: 'Cuentas compatibles',
+          texto: 'No todas las cuentas de WhatsApp Business tienen esta función todavía. Por eso revisamos la suya antes de cobrar.',
           icono: icono('eye'),
         },
         {
-          titulo: 'Costos de Meta',
+          titulo: 'Costos externos',
           texto:
-            'Según Meta, la app WhatsApp Business es gratuita y hoy incluye un cupo mensual de respuestas del agente sin costo. Para más respuestas ofrece planes de pago (Meta One), desde US$14,99 al mes según Meta (septiembre de 2026); puede variar por país. Ese costo lo paga usted directamente a Meta y no está en nuestro precio.',
+            'WhatsApp incluye cada mes un cupo de respuestas automáticas sin costo. Si su empresa necesita más, WhatsApp cobra un plan aparte, que usted paga directamente. Se lo informamos antes de activar el servicio.',
           icono: icono('calculator'),
         },
         {
           titulo: 'Cambios',
           texto:
-            'Meta puede cambiar nombres, funciones, condiciones y precios. Por eso el contrato aclara que la activación, la continuidad y los costos futuros del agente dependen de Meta.',
+            'WhatsApp puede cambiar funciones, condiciones y precios. Por eso el contrato aclara que la continuidad de la función y sus costos futuros no dependen de nosotros.',
           icono: icono('refresh'),
         },
         {
           titulo: 'Funciones de la app que se afectan',
           texto:
-            'Según WhatsApp, activar la IA puede afectar las listas de difusión, los mensajes temporales y la edición o eliminación de mensajes. Se lo explicamos antes de activarla, para que usted decida.',
+            'Activar la inteligencia artificial puede afectar las listas de difusión, los mensajes temporales y la edición o eliminación de mensajes. Se lo explicamos antes de activarla, para que usted decida.',
           icono: icono('wrench'),
         },
       ],
@@ -359,18 +344,17 @@ export const contenido = {
       titulo: 'Qué pasa con los datos de sus clientes',
       tipo: 'texto',
       parrafos: [
-        'Meta informa que recopila los mensajes de los chats donde la IA está conectada para mejorar su inteligencia artificial, incluso si usted silencia el agente. Silenciarlo no detiene esa recopilación.',
-        'Por eso no recomendamos activarlo en conversaciones con información de salud, financiera o jurídica sensible, ni usarlo para recibir documentos confidenciales.',
-        'Su empresa es responsable de los datos de sus clientes (Ley 1581 de 2012). Le pedimos tener publicada su política de tratamiento de datos, configuramos el agente para pedir solo los datos necesarios y tenemos en cuenta los lineamientos de la Superintendencia de Industria y Comercio (SIC) sobre inteligencia artificial (Circular Externa 002 de 2024).',
+        'WhatsApp informa que puede usar los mensajes de los chats donde la inteligencia artificial está activa para mejorar sus servicios, incluso si usted la silencia.',
+        'Por eso no recomendamos activarla en conversaciones con información de salud, financiera o jurídica sensible, ni usarla para recibir documentos confidenciales.',
+        'Su empresa es responsable de los datos de sus clientes (Ley 1581 de 2012). Le pedimos tener publicada su política de tratamiento de datos, dejamos el agente pidiendo solo los datos necesarios y tenemos en cuenta los lineamientos de la Superintendencia de Industria y Comercio (SIC) sobre inteligencia artificial (Circular Externa 002 de 2024).',
         'Las decisiones médicas, legales, contables o financieras siempre requieren la revisión de una persona calificada.',
       ],
     },
     {
       id: 'sin-acceso',
-      etiqueta: 'Si su cuenta no tiene acceso',
-      titulo: 'Si su WhatsApp todavía no tiene el agente',
-      introduccion:
-        'Meta está habilitando esta función de forma gradual, por país y por cuenta. Si la suya aún no la tiene, esto es lo que hacemos:',
+      etiqueta: 'Si su cuenta no es compatible',
+      titulo: 'Si su cuenta todavía no tiene esta función',
+      introduccion: 'Si su WhatsApp Business todavía no la tiene, esto es lo que hacemos:',
       tipo: 'pasos',
       items: [
         {
@@ -381,62 +365,54 @@ export const contenido = {
         {
           paso: '02',
           titulo: 'No le cobramos lo que no tiene',
-          texto: 'El valor del agente se descuenta o se pospone. Usted no paga por algo que su cuenta no tiene.',
+          texto: 'El valor de la atención inteligente se descuenta o se pospone. Usted no paga por algo que su cuenta no tiene.',
         },
         {
           paso: '03',
-          titulo: 'Configuramos las funciones clásicas',
+          titulo: 'Dejamos listas las respuestas básicas',
           texto:
-            'Perfil de empresa, mensaje de bienvenida, mensaje de ausencia fuera de horario, respuestas rápidas, etiquetas para ordenar sus chats y catálogo de servicios. Son funciones oficiales y gratuitas de la app.',
+            'Perfil de empresa, mensaje de bienvenida, mensaje de ausencia fuera de horario, respuestas rápidas, etiquetas para ordenar sus chats y catálogo de servicios.',
         },
         {
           paso: '04',
-          titulo: 'Activamos el agente después',
-          texto: 'Cuando Meta lo habilite en su cuenta, lo configuramos y lo probamos con el mismo procedimiento.',
+          titulo: 'La activamos después',
+          texto: 'Cuando su cuenta tenga la función, la dejamos lista y la probamos con el mismo procedimiento.',
         },
       ],
     },
     {
       id: 'precio',
       etiqueta: 'Precio',
-      titulo: 'Cuánto cuesta la configuración',
-      introduccion: `La configuración del agente está incluida en el plan ${atencion.nombre}: desde ${desde('atencion')} al año, o en 12 cuotas de ${cuotaDesde('atencion')} al mes, IVA incluido. El plan incluye también la web y el posicionamiento.`,
+      titulo: 'Cuánto cuesta',
+      introduccion: `La atención inteligente en WhatsApp está incluida en el plan ${atencion.nombre}: desde ${desde('atencion')} al año, o en 12 cuotas de ${cuotaDesde('atencion')} al mes, IVA incluido. El plan incluye también la web y el posicionamiento.`,
       tipo: 'planes',
       compacto: true,
-      nota: 'Los costos de Meta, si los hay, los paga usted directamente a Meta y no están incluidos en nuestro precio. Licencias y suscripciones externas se identifican por separado.',
+      nota: 'Si su empresa necesita un plan de pago de WhatsApp para más respuestas, ese costo se paga aparte y no está incluido en nuestro precio. Licencias y suscripciones externas se identifican por separado.',
       enlace: { texto: 'Ver qué incluye cada plan', href: '/precios/#plan-atencion' },
     },
   ],
-  // Preguntas sobre el SERVICIO de configuración. Las informativas sobre el agente (qué es, si está
-  // en Colombia, cuánto cobra Meta, datos, intervenir o apagarlo) las responde la guía
-  // /recursos/agente-ia-whatsapp-business/ y las secciones visibles de esta página.
   preguntas: [
     {
-      pregunta: '¿VRS Digital creó este agente de IA?',
+      pregunta: '¿Qué pasa si mi WhatsApp Business no es compatible?',
       respuesta:
-        'No. El agente es una tecnología de Meta. Nuestro trabajo es configurarlo bien: organizamos la información de su empresa, definimos el tono, preparamos respuestas de ejemplo, fijamos qué datos puede pedir y cuándo debe pasarle la conversación, y lo probamos antes de activarlo. No es un chatbot a medida ni requiere API, CRM o integraciones.',
+        'Lo revisamos en el diagnóstico, antes de cobrarle este componente. Si su cuenta todavía no tiene la función, entregamos la web y el posicionamiento, descontamos o posponemos ese valor y dejamos listas las respuestas básicas de su WhatsApp Business.',
     },
     {
-      pregunta: '¿Qué pasa si mi WhatsApp Business no tiene acceso al agente?',
+      pregunta: '¿Hay costos aparte de su precio?',
       respuesta:
-        'Meta lo habilita de forma gradual, por país y por cuenta, y en octubre de 2026 no encontramos una confirmación oficial para Colombia. Por eso lo verificamos en su cuenta durante el diagnóstico, antes de cobrarle este componente. Si no tiene acceso, entregamos la web y el posicionamiento, descontamos o posponemos el valor del agente y configuramos las funciones clásicas de la app.',
-    },
-    {
-      pregunta: '¿Los costos de Meta están incluidos en su precio?',
-      respuesta:
-        'No. Según Meta, hoy el agente se puede usar cada mes sin costo hasta un cupo de respuestas incluido, y para más respuestas ofrece planes de pago llamados Meta One, desde US$14,99 al mes según su anuncio de septiembre de 2026. Ese costo lo contrata y lo paga usted directamente a Meta, y Meta puede cambiarlo. Nuestro precio cubre la preparación, la configuración, las pruebas y los ajustes.',
+        'WhatsApp incluye cada mes un cupo de respuestas automáticas sin costo. Si su empresa recibe muchos mensajes y necesita más, WhatsApp cobra un plan aparte, que usted paga directamente. Se lo informamos antes de activar el servicio. Nuestro precio cubre la preparación, las pruebas y los ajustes.',
     },
     {
       pregunta: '¿El agente responde las 24 horas?',
-      respuesta: `Puede responder a cualquier hora, también fuera de su horario, mientras esté activo y Meta mantenga la función disponible. Eso no significa soporte humano permanente: nuestro acompañamiento es de ${minuscula(CONTACTO.horario)}. ${CONTACTO.respuestaHumana} Los casos delicados quedan para usted o su equipo.`,
+      respuesta: `Puede responder a cualquier hora, también fuera de su horario, mientras esté activo. Eso no significa soporte humano permanente: nuestro acompañamiento es de ${minuscula(CONTACTO.horario)}. ${CONTACTO.respuestaHumana} Los casos delicados quedan para usted o su equipo.`,
     },
     {
       pregunta: '¿El agente de IA se puede equivocar?',
       respuesta:
-        'Sí. Como toda inteligencia artificial, puede equivocarse, y Meta lo advierte. Por eso lo probamos con 25 a 40 preguntas antes de activarlo, limitamos los temas que puede responder y definimos cuáles debe pasarle a usted. Además, usted puede responder personalmente en cualquier chat: cuando lo hace, el agente deja de responder en esa conversación.',
+        'Sí. Como toda inteligencia artificial, puede equivocarse. Por eso lo probamos con 25 a 40 preguntas antes de activarlo, limitamos los temas que puede responder y definimos cuáles debe pasarle a usted. Además, usted puede responder personalmente en cualquier chat: cuando lo hace, el agente deja de responder en esa conversación.',
     },
     {
-      pregunta: '¿Qué información necesitan de mi empresa para configurarlo?',
+      pregunta: '¿Qué información necesitan de mi empresa?',
       respuesta:
         'La descripción de su negocio, sus servicios y a quién van dirigidos, horarios y zonas de cobertura, los precios que se pueden comunicar, los métodos de pago, sus políticas y las preguntas frecuentes de sus clientes. También definimos con usted qué situaciones debe atender una persona, qué no debe afirmar el agente y qué datos puede pedir. Usted aprueba por escrito lo que cargamos.',
     },
@@ -447,9 +423,9 @@ export const contenido = {
     },
   ],
   cta: {
-    titulo: 'Verifiquemos si su WhatsApp Business ya puede usar el agente',
+    titulo: 'Revisemos la atención de su WhatsApp Business',
     texto:
-      'Empiece con una revisión digital gratuita: analizamos su web, su visibilidad en Google y su atención por WhatsApp, y le entregamos tres prioridades concretas. En el diagnóstico verificamos si su cuenta tiene acceso al agente.',
+      'Empiece con una revisión digital gratuita: analizamos su web, su visibilidad en Google y su atención por WhatsApp, y le entregamos tres prioridades concretas. En el diagnóstico revisamos si su cuenta es compatible.',
     ctaPrincipal: CTA_PRINCIPAL,
     ctaWhatsApp: MENSAJE_WHATSAPP,
     enlaceWhatsApp: enlaceWhatsApp(MENSAJE_WHATSAPP),
@@ -458,24 +434,8 @@ export const contenido = {
     { texto: 'Precios del plan Web + Atención Inteligente', href: '/precios/' },
     { texto: 'Diseño de páginas web en Bogotá para empresas', href: '/paginas-web-bogota/' },
     { texto: 'Posicionamiento en Google y asistentes de IA', href: '/posicionamiento-google-inteligencia-artificial/' },
-    { texto: 'Guía: qué puede hacer el agente de IA de WhatsApp Business', href: '/recursos/agente-ia-whatsapp-business/' },
   ],
   fuentes: [
-    {
-      titulo: 'Be There for Every Customer With Meta Business Agent (Meta Newsroom, 3 de junio de 2026)',
-      url: 'https://about.fb.com/news/2026/06/meta-business-agent/',
-      idioma: 'en',
-    },
-    { titulo: 'Meta Business Agent en WhatsApp (página oficial, en español)', url: URL_META_PRODUCTO_ES },
-    { titulo: 'Meta Business Agent on WhatsApp (página oficial, en inglés)', url: URL_META_PRODUCTO, idioma: 'en' },
-    { titulo: 'About using business AI to chat with customers (Centro de ayuda de WhatsApp)', url: URL_AYUDA, idioma: 'en' },
-    { titulo: 'Meta One on WhatsApp Business App (página oficial)', url: URL_META_ONE, idioma: 'en' },
-    {
-      titulo: 'Introducing Meta One: A Subscription Service With More Features and AI (Meta Newsroom, 15 de septiembre de 2026)',
-      url: 'https://about.fb.com/news/2026/09/introducing-meta-one-subscription-service-more-features-ai/',
-      idioma: 'en',
-    },
-    { titulo: 'Business App Features (página oficial de WhatsApp Business)', url: 'https://whatsappbusiness.com/products/business-app-features/', idioma: 'en' },
     {
       titulo: 'Circular Externa 002 de 2024: datos personales en sistemas de inteligencia artificial (SIC)',
       url: 'https://sedeelectronica.sic.gov.co/sites/default/files/normativa/Circular%20Externa%20No.%20002%20del%2021%20de%20agosto%20de%202024.pdf',
@@ -483,15 +443,15 @@ export const contenido = {
   ],
   /**
    * Datos para servicio() de @/lib/schema. Sin precioDesde: el precio publicado es del plan
-   * completo (web + posicionamiento + agente), no de la configuración sola. No usar
-   * SoftwareApplication ni Product: darían a entender un software propio.
+   * completo (web + posicionamiento + atención inteligente). No usar SoftwareApplication ni
+   * Product: darían a entender un software propio.
    */
   servicio: {
-    nombre: 'Configuración del agente de IA de WhatsApp Business',
-    tipo: 'Configuración de funciones de Meta en WhatsApp Business',
+    nombre: 'Atención inteligente en WhatsApp Business',
+    tipo: 'Atención automatizada en WhatsApp Business',
     descripcion:
-      'Configuración del agente de IA que Meta ofrece en la app WhatsApp Business: información del negocio, tono, pruebas y criterios para pasar la conversación a una persona.',
+      'Atención inteligente en WhatsApp Business: información del negocio, tono, pruebas y criterios para pasar la conversación a una persona.',
     audiencia: 'Empresas de servicios',
   },
-  actualizado: '2026-10-11',
+  actualizado: '2026-10-18',
 } as const satisfies ModuloPagina;

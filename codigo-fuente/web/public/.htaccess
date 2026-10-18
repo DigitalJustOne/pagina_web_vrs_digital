@@ -50,6 +50,8 @@ ErrorDocument 404 /404.html
   # /proyectos y /contacto (sin barra) los resuelve la regla 5c.
   # Páginas por sector retiradas el 2026-10-18 (sin menú por mercado) → empresas de servicios.
   RewriteRule ^paginas-web-(contadores|consultores|construccion)(/.*)?$  https://%{HTTP_HOST}/paginas-web-empresas-servicios/ [R=301,L]
+  # Guía del agente de WhatsApp retirada el 2026-10-18 (la web no explica cómo se presta el servicio).
+  RewriteRule ^recursos/agente-ia-whatsapp-business(/.*)?$  https://%{HTTP_HOST}/asistente-whatsapp-business/ [R=301,L]
 
   # ── 4b. Forzar HTTPS ────────────────────────────────────────────────────────
   # Redirige http:// a https:// con 301. La segunda condición evita bucles si

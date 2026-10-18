@@ -1,12 +1,12 @@
 ---
 /**
- * Señales de confianza: aval MinTIC, atención directa con el fundador y cupo limitado.
- * Datos desde AVAL y FUNDADOR (@/data/sitio).
+ * Señales de confianza: aval MinTIC, precios publicados y cupo limitado.
+ * Datos desde AVAL (@/data/sitio).
  *
  * <Insignias />                    → fila de tres tarjetas de vidrio (debajo del hero o antes del cierre)
  * <Insignias variante="compacta" /> → píldoras en línea (junto a un formulario o en un pie de sección)
  */
-import { AVAL, FUNDADOR } from '@/data/sitio';
+import { AVAL } from '@/data/sitio';
 import Icono from './Icono.astro';
 import type { NombreIcono } from './iconos';
 
@@ -25,9 +25,9 @@ const INSIGNIAS: { icono: NombreIcono; titulo: string; texto: string; enlace?: {
     enlace: { texto: 'Ver verificación en Cercia', href: AVAL.enlace },
   },
   {
-    icono: 'user',
-    titulo: 'Atención directa con el fundador',
-    texto: `${FUNDADOR.nombreCorto} lo atiende desde el diagnóstico hasta la entrega, sin intermediarios.`,
+    icono: 'calculator',
+    titulo: 'Precios publicados',
+    texto: 'Los precios y lo que incluye cada plan están publicados, con IVA incluido.',
   },
   {
     icono: 'target',

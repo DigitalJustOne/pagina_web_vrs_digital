@@ -91,7 +91,7 @@ export const contenido = {
     {
       pregunta: '¿Todavía desarrollan plataformas a medida?',
       respuesta:
-        'No forman parte de nuestra oferta actual. Beauty Manager es un producto propio para centros de estética que se puede adquirir; las demás son proyectos anteriores de diseño y desarrollo. Hoy nos concentramos en páginas web, posicionamiento en Google y asistentes de IA, configuración del agente de IA de WhatsApp Business y mantenimiento. Un desarrollo a medida solo se evalúa de forma excepcional y con un alcance controlado.',
+        'No forman parte de nuestra oferta actual. Beauty Manager es un producto propio para centros de estética que se puede adquirir; las demás son proyectos anteriores de diseño y desarrollo. Hoy nos concentramos en páginas web, posicionamiento en Google y asistentes de IA, atención inteligente en WhatsApp Business y mantenimiento. Un desarrollo a medida solo se evalúa de forma excepcional y con un alcance controlado.',
     },
     {
       pregunta: '¿Mi empresa obtendrá los mismos resultados que estos proyectos?',

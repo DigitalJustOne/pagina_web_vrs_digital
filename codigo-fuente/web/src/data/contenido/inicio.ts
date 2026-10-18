@@ -107,7 +107,7 @@ const CONVERSACION_DEMO = {
       texto: 'Perfecto, a las 10 me sirve. Gracias.',
     },
   ],
-  nota: 'Ejemplo ilustrativo con una firma contable ficticia. Las respuestas reales dependen de la información que su empresa apruebe y de las funciones que Meta habilite en su cuenta.',
+  nota: 'Ejemplo ilustrativo con una firma contable ficticia. Las respuestas reales dependen de la información que su empresa apruebe y de las funciones disponibles en su cuenta.',
 } as const;
 
 export const contenido = {
@@ -116,7 +116,7 @@ export const contenido = {
     // La página de inicio no recibe " | VRS Digital" desde Seo.astro: la marca va aquí (54 caracteres).
     titulo: 'Páginas web, Google y WhatsApp en Bogotá | VRS Digital',
     // El precio va junto a «IVA incluido» y al comienzo: así no se corta en el resultado de Google.
-    descripcion: `VRS Digital, estudio digital en Bogotá: páginas web listas para Google y la IA, y el agente de IA de WhatsApp. Desde ${desde('esencial')} IVA incluido.`,
+    descripcion: `VRS Digital, estudio digital en Bogotá: páginas web listas para Google y la IA, y atención inteligente en WhatsApp. Desde ${desde('esencial')} IVA incluido.`,
     // Marca y categoría. Las palabras clave de cada servicio viven en su propia página
     // (no repetirlas aquí para no competir con ellas).
     palabraClave: 'páginas web inteligentes para empresas de servicios',
@@ -127,14 +127,14 @@ export const contenido = {
     etiqueta: 'Estudio digital en Bogotá',
     titulo: 'Haga que encuentren su empresa y reciban respuesta cuando le escriban',
     subtitulo:
-      'Páginas web para empresas de servicios en Bogotá, preparadas para Google y asistentes de inteligencia artificial (IA), con el agente de IA que Meta ofrece en WhatsApp Business configurado.',
+      'Páginas web para empresas de servicios en Bogotá, preparadas para Google y asistentes de inteligencia artificial (IA), y con atención inteligente en WhatsApp Business.',
     ctaPrincipal: CTA_PRINCIPAL,
     ctaSecundario: { texto: 'Ver planes y precios', href: '/precios/' },
-    puntos: ['Atención directa con el fundador', 'Precios publicados', 'Máximo dos proyectos a la vez'],
+    puntos: ['Precios publicados', 'Dominio y hosting el primer año', 'Máximo dos proyectos a la vez'],
     // Precio visible en la primera pantalla (la plantilla agrega «IVA incluido»).
     precio: `Desde ${desde('esencial')}`,
   },
-  respuestaDirecta: `VRS Digital es un estudio digital de Bogotá dirigido por su fundador, Víctor Ramírez. Crea páginas web para empresas de servicios desde ${desde('esencial')} al año, o en 12 cuotas de ${cuotaDesde('esencial')} al mes (IVA incluido), las prepara para Google y asistentes de IA, y configura el agente de IA que Meta ofrece en WhatsApp Business cuando su cuenta tiene acceso. Usted habla directamente con quien hace el trabajo.`,
+  respuestaDirecta: `VRS Digital es un estudio digital de Bogotá dirigido por su fundador, Víctor Ramírez. Crea páginas web para empresas de servicios desde ${desde('esencial')} al año, o en 12 cuotas de ${cuotaDesde('esencial')} al mes (IVA incluido), las prepara para Google y asistentes de IA, y deja su WhatsApp Business respondiendo a sus clientes con atención inteligente.`,
   secciones: [
     {
       id: 'problema',
@@ -175,9 +175,9 @@ export const contenido = {
           href: '/posicionamiento-google-inteligencia-artificial/',
         },
         {
-          titulo: 'Agente de IA en WhatsApp Business',
+          titulo: 'Atención inteligente en WhatsApp Business',
           texto:
-            'Configuramos el agente de IA que Meta ofrece en WhatsApp Business: información de su negocio, tono, pruebas y cuándo pasarle la conversación a una persona. Primero verificamos que su cuenta tenga acceso.',
+            'Su WhatsApp Business responde a sus clientes a cualquier hora con la información de su empresa y le pasa a usted los casos que necesitan una persona. Antes de cobrar, revisamos que su cuenta sea compatible.',
           icono: icono('message'),
           href: '/asistente-whatsapp-business/',
         },
@@ -193,29 +193,25 @@ export const contenido = {
     {
       id: 'diferenciador',
       etiqueta: 'Por qué VRS Digital',
-      titulo: 'Hable con quien hace el trabajo, con precios publicados y entregas más rápidas gracias a la IA',
-      introduccion:
-        'VRS Digital es un estudio pequeño a propósito: una persona responsable, apoyada por inteligencia artificial y con un alcance claro desde el primer día.',
+      titulo: 'Precios claros, todo en un solo plan y pocos proyectos a la vez',
+      introduccion: 'VRS Digital es un estudio pequeño a propósito, con un alcance claro desde el primer día.',
       tipo: 'tarjetas',
       columnas: 3,
       items: [
         {
-          titulo: 'Comunicación directa',
-          texto:
-            'Usted habla con Víctor Ramírez, quien diseña, desarrolla, revisa y responde por su proyecto. Sin intermediarios ni cambios de interlocutor.',
-          icono: icono('users'),
+          titulo: 'Precios publicados',
+          texto: 'Los precios y lo que incluye cada plan están publicados, con IVA incluido. Usted sabe cuánto cuesta antes de escribirnos.',
+          icono: icono('calculator'),
         },
         {
-          titulo: 'Ejecución especializada',
-          texto:
-            'Nos concentramos en empresas de servicios. Web, visibilidad y WhatsApp se planean juntos, con precios y alcances publicados.',
+          titulo: 'Web, Google y WhatsApp juntos',
+          texto: 'Su web, su visibilidad en Google y su atención por WhatsApp se planean juntas, con una sola estrategia.',
           icono: icono('briefcase'),
         },
         {
-          titulo: 'Procesos acelerados con IA',
-          texto:
-            'La inteligencia artificial acelera la investigación, los textos, el diseño y el desarrollo. Una persona verifica y aprueba cada entrega.',
-          icono: icono('spark'),
+          titulo: 'Pocos proyectos a la vez',
+          texto: 'Atendemos máximo dos proyectos al mismo tiempo, para cuidar la calidad de cada entrega.',
+          icono: icono('users'),
         },
       ],
       enlace: { texto: 'Conozca cómo trabajamos', href: '/nosotros/' },
@@ -223,7 +219,7 @@ export const contenido = {
     {
       id: 'whatsapp',
       etiqueta: 'Atención por WhatsApp',
-      titulo: 'Así funciona la atención con el agente de IA de WhatsApp Business',
+      titulo: 'Así funciona la atención inteligente en WhatsApp Business',
       introduccion:
         'Un ejemplo con una firma contable ficticia. Un cliente escribe un domingo en la noche. El agente responde con la información que la firma aprobó, no da asesoría tributaria y deja el caso listo para que una persona de la firma lo retome el lunes.',
       tipo: 'conversacion',
@@ -234,11 +230,10 @@ export const contenido = {
         'Pide solo el dato necesario y evita recibir documentos financieros por el chat.',
         'Una persona de la empresa retoma la conversación en su horario de trabajo.',
       ],
-      // Portada: una nota breve con lo esencial; el detalle (acceso, errores, costos de Meta y datos)
-      // vive en /asistente-whatsapp-business/, enlazado abajo.
-      nota: `El agente de IA es una función de Meta: VRS Digital no creó esa tecnología, la configura, la prueba con 25 a 40 preguntas y la ajusta. Meta la habilita de forma gradual, por cuenta; puede equivocarse; usa los mensajes de esos chats para mejorar su IA, y define sus propios costos, que no están incluidos en nuestro precio. ${ACLARACION_HORARIO}`,
-      // La plantilla muestra «Información verificada el <fecha>»: aquí va la fecha (AAAA-MM-DD).
-      verificado: '2026-10-06',
+      // Portada: una nota breve con lo esencial; el detalle (cuentas compatibles, errores, costos
+      // externos y datos) vive en /asistente-whatsapp-business/, enlazado abajo. Sin explicar cómo se
+      // hace el trabajo (decisión de Víctor, 2026-10-18).
+      nota: `Antes de activarla, la probamos con 25 a 40 preguntas; aun así, como toda IA, puede equivocarse. No todas las cuentas de WhatsApp Business son compatibles, y si su empresa necesita más respuestas que el cupo gratuito de WhatsApp, ese plan se paga aparte. ${ACLARACION_HORARIO}`,
       enlace: { texto: 'Ver el servicio de WhatsApp Business', href: '/asistente-whatsapp-business/' },
     },
     {
@@ -278,7 +273,7 @@ export const contenido = {
         precio: `${formatoCOP(PLAN_ENTRADA.mensualidad)} al mes`,
         descripcion: PLAN_ENTRADA.descripcion,
       },
-      nota: `Puede pagar por ${MEDIOS_PAGO_TEXTO}. Licencias, suscripciones externas y costos de Meta se pagan aparte.`,
+      nota: `Puede pagar por ${MEDIOS_PAGO_TEXTO}. Licencias y suscripciones externas se pagan aparte.`,
       enlace: { texto: 'Ver qué incluye cada plan', href: '/precios/' },
     },
     {
@@ -295,7 +290,7 @@ export const contenido = {
     {
       pregunta: '¿Qué hace exactamente VRS Digital?',
       respuesta:
-        'VRS Digital diseña páginas web para empresas de servicios, las prepara para que Google y los asistentes de inteligencia artificial entiendan qué hace cada empresa, y configura el agente de IA que Meta ofrece dentro de WhatsApp Business. También ofrece mantenimiento mensual. No desarrolla chatbots a medida, sistemas de gestión de clientes (CRM) ni conexiones con otros programas (API o integraciones).',
+        'VRS Digital diseña páginas web para empresas de servicios, las prepara para que Google y los asistentes de inteligencia artificial entiendan qué hace cada empresa, y deja su WhatsApp Business respondiendo a sus clientes con atención inteligente. También ofrece mantenimiento mensual. No desarrolla chatbots a medida, sistemas de gestión de clientes (CRM) ni conexiones con otros programas (API o integraciones).',
     },
     // Preguntas propias de la página de inicio. Las de cada servicio (agente de WhatsApp, 24 horas,
     // garantías en Google, SEO/AEO/GEO, precios) viven en su página para no duplicarlas.
@@ -305,18 +300,13 @@ export const contenido = {
         'Con empresas y profesionales de servicios que necesitan explicar bien lo que ofrecen y reciben muchas preguntas por WhatsApp. Si su caso no encaja, se lo decimos.',
     },
     {
-      pregunta: '¿Usan inteligencia artificial para hacer las páginas?',
-      respuesta:
-        'Sí. La inteligencia artificial acelera la investigación, los borradores de textos, el diseño y el desarrollo. Víctor Ramírez verifica la información, ajusta el tono, prueba el funcionamiento y aprueba cada entrega antes de mostrársela. Usted revisa y aprueba los textos de su web. El método y las herramientas son reservados; el alcance y los límites del servicio, no.',
-    },
-    {
       pregunta: '¿En qué se diferencia VRS Digital de una agencia tradicional?',
       respuesta:
-        'Usted habla directamente con quien diseña, desarrolla y revisa su proyecto, sin intermediarios. Su web, su visibilidad en Google y su WhatsApp se planean con una sola estrategia. Los precios y los alcances están publicados. A cambio, somos claros con los límites: atendemos máximo dos proyectos a la vez y no ofrecemos CRM, API ni chatbots a medida.',
+        'Su web, su visibilidad en Google y su WhatsApp se planean con una sola estrategia. Los precios y los alcances están publicados. Atendemos máximo dos proyectos a la vez para cuidar cada entrega, y somos claros con los límites: no ofrecemos CRM, API ni chatbots a medida.',
     },
     {
       pregunta: '¿Puedo contratar solo la página web?',
-      respuesta: `Sí. El plan ${plan('esencial').nombre} incluye la página web, desde ${desde('esencial')} al año, o en 12 cuotas de ${cuotaDesde('esencial')} al mes. El seguimiento mensual en Google empieza en ${plan('visible').nombre}, y la configuración del agente de IA de WhatsApp Business, en ${plan('atencion').nombre}. Para microempresas que empiezan está el ${PLAN_ENTRADA.nombre}, por ${formatoCOP(PLAN_ENTRADA.mensualidad)} al mes. Dominio y hosting van incluidos en los planes web; los costos externos van aparte.`,
+      respuesta: `Sí. El plan ${plan('esencial').nombre} incluye la página web, desde ${desde('esencial')} al año, o en 12 cuotas de ${cuotaDesde('esencial')} al mes. El seguimiento mensual en Google empieza en ${plan('visible').nombre}, y la atención inteligente en WhatsApp, en ${plan('atencion').nombre}. Para microempresas que empiezan está el ${PLAN_ENTRADA.nombre}, por ${formatoCOP(PLAN_ENTRADA.mensualidad)} al mes. Dominio y hosting van incluidos en los planes web; los costos externos van aparte.`,
     },
     {
       pregunta: '¿Qué es la revisión digital gratuita?',
@@ -334,25 +324,11 @@ export const contenido = {
   enlacesInternos: [
     { texto: 'Diseño de páginas web en Bogotá para empresas', href: '/paginas-web-bogota/' },
     { texto: 'Posicionamiento en Google y asistentes de IA', href: '/posicionamiento-google-inteligencia-artificial/' },
-    { texto: 'Configuración del agente de IA de WhatsApp Business', href: '/asistente-whatsapp-business/' },
+    { texto: 'Atención inteligente en WhatsApp Business', href: '/asistente-whatsapp-business/' },
     { texto: 'Precios y qué incluye cada plan', href: '/precios/' },
     { texto: 'Guía: cuánto cuesta una página web en Bogotá', href: '/recursos/cuanto-cuesta-una-pagina-web-en-bogota/' },
   ],
   fuentes: [
-    {
-      titulo: 'Meta Business Agent en WhatsApp (página oficial de WhatsApp Business)',
-      url: 'https://whatsappbusiness.com/es-la/products/business-app-ai-agent/',
-    },
-    {
-      titulo: 'About using business AI to chat with customers (Centro de ayuda de WhatsApp)',
-      url: 'https://faq.whatsapp.com/291930066973116/',
-      idioma: 'en',
-    },
-    {
-      titulo: 'Meta One on WhatsApp Business App (página oficial de WhatsApp Business)',
-      url: 'https://whatsappbusiness.com/products/business-app-meta-one/',
-      idioma: 'en',
-    },
     {
       titulo: 'AI features and your website (Google Search Central)',
       url: 'https://developers.google.com/search/docs/appearance/ai-features',
@@ -410,7 +386,7 @@ export const recorrido = {
       paso: '03',
       titulo: 'Reciben respuesta',
       texto:
-        'Si le escriben un domingo en la noche, el agente de IA que Meta ofrece en WhatsApp Business responde con la información que usted aprobó y deja el caso listo para que su equipo lo retome en horario de trabajo.',
+        'Si le escriben un domingo en la noche, la atención inteligente de su WhatsApp Business responde con la información que usted aprobó y deja el caso listo para que su equipo lo retome en horario de trabajo.',
       icono: icono('message'),
     },
   ],
@@ -440,5 +416,5 @@ export const recorrido = {
     seguimiento: CONVERSACION_DEMO.mensajes[8],
   },
   // La aclaración de horario va una sola vez en la portada: en la sección «whatsapp».
-  nota: 'El agente es una función de Meta: primero verificamos que su cuenta tenga acceso.',
+  nota: 'Antes de cobrar, revisamos que su cuenta de WhatsApp Business sea compatible.',
 } as const;

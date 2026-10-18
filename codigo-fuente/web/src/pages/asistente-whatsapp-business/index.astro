@@ -1,5 +1,5 @@
 ---
-// /asistente-whatsapp-business/ — configuración del agente de IA que Meta ofrece en WhatsApp Business.
+// /asistente-whatsapp-business/ — atención inteligente en WhatsApp Business.
 // Todo el texto sale de src/data/contenido/asistente-whatsapp-business.ts y los precios de sitio.ts.
 // La plantilla arma SEO, JSON-LD (página, migas, FAQ y servicio), secciones, preguntas y cierre.
 // Momentos propios de la página:
@@ -8,7 +8,7 @@
 //   - #pruebas: banco de pruebas (una celda por pregunta y una tarjeta por grupo), con los
 //     criterios de aprobación al pie.
 // JSON-LD: el módulo no da precioDesde al servicio (el precio publicado es del plan completo), así
-// que la oferta se publica aparte: el plan Web + Atención Inteligente, que incluye la configuración.
+// que la oferta se publica aparte: el plan Web + Atención Inteligente, que incluye este servicio.
 import PlantillaPagina from '@/components/pagina/PlantillaPagina.astro';
 import BancoPruebas from '@/components/paginas/servicios/BancoPruebas.astro';
 import RelojAtencion from '@/components/paginas/servicios/RelojAtencion.astro';
@@ -40,16 +40,16 @@ const oferta = {
 ---
 <PlantillaPagina
   contenido={contenido}
-  resaltado="agente de IA de WhatsApp Business"
+  resaltado="WhatsApp Business"
   jsonldExtra={[oferta]}
   opciones={{
     'que-es': { iluminar: true },
     ejemplo: { resaltado: 'una conversación' },
-    'que-puede-hacer': { resaltado: 'según Meta', plegar: 'Ver qué puede hacer' },
+    'que-puede-hacer': { resaltado: 'por su empresa', plegar: 'Ver qué puede hacer' },
     controles: { resaltado: 'usted controla', plegar: 'Ver los controles' },
     alcance: { resaltado: 'y qué no' },
     informacion: { plegar: 'Ver la información que pedimos' },
-    'depende-de-meta': { resaltado: 'no de nosotros', plegar: 'Ver lo que depende de Meta' },
+    'antes-de-contratar': { resaltado: 'antes de contratar', plegar: 'Ver lo que debe saber' },
     privacidad: { resaltado: 'sus clientes', plegar: 'Ver qué pasa con los datos' },
     'sin-acceso': { resaltado: 'todavía no', plegar: 'Ver qué hacemos en ese caso' },
   }}

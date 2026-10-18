@@ -127,7 +127,7 @@ export const contenido = {
         {
           paso: '04',
           titulo: 'Diagnóstico, si quiere avanzar',
-          texto: 'Reunión de hasta 45 minutos para confirmar el alcance y verificar si su WhatsApp Business tiene acceso al agente de IA de Meta.',
+          texto: 'Reunión de hasta 45 minutos para confirmar el alcance y revisar si su WhatsApp Business es compatible con la atención inteligente.',
         },
         {
           paso: '05',
@@ -209,7 +209,7 @@ export const contenido = {
     },
     {
       pregunta: '¿Qué pasa si quiero avanzar después de la revisión?',
-      respuesta: `Agendamos una reunión de diagnóstico de hasta 45 minutos para confirmar el alcance y verificar si su WhatsApp Business tiene acceso al agente de IA de Meta. Luego le enviamos una propuesta con máximo tres opciones. Si la acepta, el proyecto inicia con el ${anticipo}\u00a0% del valor y una fecha asignada según disponibilidad.`,
+      respuesta: `Agendamos una reunión de diagnóstico de hasta 45 minutos para confirmar el alcance y revisar si su WhatsApp Business es compatible con la atención inteligente. Luego le enviamos una propuesta con máximo tres opciones. Si la acepta, el proyecto inicia con el ${anticipo}\u00a0% del valor y una fecha asignada según disponibilidad.`,
     },
     {
       pregunta: '¿Cuándo podríamos empezar mi proyecto?',
@@ -226,7 +226,7 @@ export const contenido = {
   },
   enlacesInternos: [
     { texto: 'Precios y qué incluye cada plan', href: '/precios/' },
-    { texto: 'Configuración del agente de IA de WhatsApp Business', href: '/asistente-whatsapp-business/' },
+    { texto: 'Atención inteligente en WhatsApp Business', href: '/asistente-whatsapp-business/' },
     { texto: 'Proyectos de páginas web y plataformas', href: '/proyectos/' },
     { texto: 'Quién está detrás de VRS Digital', href: '/nosotros/' },
   ],

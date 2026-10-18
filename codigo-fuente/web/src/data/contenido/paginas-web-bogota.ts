@@ -72,19 +72,19 @@ export const contenido = {
     etiqueta: 'Páginas web profesionales en Bogotá',
     titulo: 'Diseño de páginas web en Bogotá para su empresa',
     subtitulo:
-      'Una web clara, rápida y adaptada a celular que explica lo que usted ofrece, genera confianza y facilita que le escriban. Usted habla directamente con quien la diseña y la construye.',
+      'Una web clara, rápida y adaptada a celular que explica lo que usted ofrece, genera confianza y facilita que le escriban.',
     ctaPrincipal: CTA_PRINCIPAL,
     ctaSecundario: { texto: 'Ver precios y planes', href: '/precios/' },
     precio: `Desde ${desde('esencial')}`,
-    puntos: ['Precio publicado desde el primer día', 'Dominio y hosting incluidos el primer año', 'Atención directa con el fundador'],
+    puntos: ['Precio publicado desde el primer día', 'Dominio y hosting incluidos el primer año', 'Máximo dos proyectos a la vez'],
   },
-  respuestaDirecta: `Diseñamos páginas web para empresas de servicios en Bogotá. El plan ${esencial.nombre} cuesta desde ${desde('esencial')} al año, o en 12 cuotas de ${cuotaDesde('esencial')} al mes, e incluye hasta cinco secciones adaptadas a celular, botón de WhatsApp, formulario y optimización inicial para Google. Usted trata directamente con ${FUNDADOR.nombreCorto}, quien dirige y revisa cada proyecto.`,
+  respuestaDirecta: `Diseñamos páginas web para empresas de servicios en Bogotá. El plan ${esencial.nombre} cuesta desde ${desde('esencial')} al año, o en 12 cuotas de ${cuotaDesde('esencial')} al mes, e incluye hasta cinco secciones adaptadas a celular, botón de WhatsApp, formulario y optimización inicial para Google. Dominio y hosting van incluidos el primer año.`,
   secciones: [
     {
       id: 'que-incluye',
       etiqueta: 'Qué incluye',
       titulo: 'Qué incluye su página web',
-      introduccion: `Esto es lo que incluye el plan ${esencial.nombre}, el punto de partida. Los planes superiores suman posicionamiento mensual en Google y atención con el agente de IA de WhatsApp Business.`,
+      introduccion: `Esto es lo que incluye el plan ${esencial.nombre}, el punto de partida. Los planes superiores suman posicionamiento mensual en Google y atención inteligente en WhatsApp Business.`,
       tipo: 'comparacion',
       incluye: esencial.incluye,
       noIncluye: [
@@ -173,7 +173,7 @@ export const contenido = {
       introduccion: `Tres planes con precio publicado. La web sola empieza en ${desde('esencial')} al año, o en 12 cuotas de ${cuotaDesde('esencial')} al mes, IVA incluido. El valor final depende del alcance y se entrega por escrito antes de empezar.`,
       tipo: 'planes',
       compacto: true,
-      nota: 'Licencias y suscripciones externas, incluidos los costos de Meta, se identifican por separado.',
+      nota: 'Licencias y suscripciones externas se identifican por separado.',
       enlace: { texto: 'Ver precios completos, condiciones y formas de pago', href: '/precios/' },
     },
     {
@@ -200,8 +200,6 @@ export const contenido = {
       tipo: 'texto',
       parrafos: [
         `VRS Digital es un estudio digital de Bogotá dirigido por su fundador, ${FUNDADOR.nombreCorto}. Él atiende el diagnóstico, define la estructura, revisa cada texto y aprueba cada entrega.`,
-        'Usamos inteligencia artificial (IA) para acelerar la investigación, la redacción y el desarrollo. Las decisiones, la revisión final y la comunicación con usted están a cargo de una persona.',
-        'Sin intermediarios: quien habla con usted es quien responde por el resultado.',
       ],
       cifras: CIFRAS,
       enlace: { texto: `Conozca a ${FUNDADOR.nombreCorto}`, href: '/nosotros/' },
@@ -262,7 +260,7 @@ export const contenido = {
   enlacesInternos: [
     { texto: 'Precios, condiciones y formas de pago', href: '/precios/' },
     { texto: 'Posicionamiento en Google y asistentes de IA', href: '/posicionamiento-google-inteligencia-artificial/' },
-    { texto: 'Configuración del agente de IA de WhatsApp Business', href: '/asistente-whatsapp-business/' },
+    { texto: 'Atención inteligente en WhatsApp Business', href: '/asistente-whatsapp-business/' },
     { texto: 'Proyectos realizados por VRS Digital', href: '/proyectos/' },
     { texto: 'Guía: cuánto cuesta una página web en Bogotá', href: '/recursos/cuanto-cuesta-una-pagina-web-en-bogota/' },
   ],

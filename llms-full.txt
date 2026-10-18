@@ -1,8 +1,8 @@
 # VRS Digital: información completa
 
-> VRS Digital es un estudio digital de Bogotá, Colombia, dirigido por su fundador, Víctor Alfonso Ramírez Sepúlveda. Crea páginas web para empresas de servicios, las prepara para Google y asistentes de IA, y configura el agente de IA que Meta ofrece en WhatsApp Business. Landing Page desde $350.000 COP (pago único). Planes web: precio anual desde $1.200.000 COP, o 12 cuotas desde $120.000 COP al mes (20 % más en total). Precios en pesos colombianos, IVA incluido.
+> VRS Digital es un estudio digital de Bogotá, Colombia, dirigido por su fundador, Víctor Alfonso Ramírez Sepúlveda. Crea páginas web para empresas de servicios, las prepara para Google y asistentes de IA, y ofrece atención inteligente en WhatsApp Business. Landing Page desde $350.000 COP (pago único). Planes web: precio anual desde $1.200.000 COP, o 12 cuotas desde $120.000 COP al mes (20 % más en total). Precios en pesos colombianos, IVA incluido.
 
-Este archivo reúne el contenido esencial de https://goldenrod-bee-973005.hostingersite.com/ en texto plano. Todos los precios están en pesos colombianos (COP). Última actualización: 2026-10-13. Resumen con enlaces: https://goldenrod-bee-973005.hostingersite.com/llms.txt
+Este archivo reúne el contenido esencial de https://goldenrod-bee-973005.hostingersite.com/ en texto plano. Todos los precios están en pesos colombianos (COP). Última actualización: 2026-10-18. Resumen con enlaces: https://goldenrod-bee-973005.hostingersite.com/llms.txt
 
 ## Quiénes somos
 
@@ -108,7 +108,7 @@ Para empresas que quieren ser encontradas y responder a sus clientes incluso fue
 
 Todo lo de Web Visible, más:
 
-- Verificación de que su cuenta tenga acceso al agente de Meta
+- Revisión de que su cuenta de WhatsApp Business sea compatible
 - Organización de la información de su negocio
 - Configuración del tono de las respuestas
 - Respuestas de ejemplo y documentos de apoyo
@@ -179,7 +179,7 @@ No incluye:
 
 ## Proceso de trabajo
 
-1. Diagnóstico: Formulario único y reunión de hasta 45 minutos. Confirmamos el alcance y verificamos si su WhatsApp tiene acceso al agente de Meta.
+1. Diagnóstico: Formulario único y reunión de hasta 45 minutos. Confirmamos el alcance y revisamos si su WhatsApp Business es compatible.
 2. Preparación: Investigación, lista de páginas y textos iniciales. Usted revisa todo en un documento central.
 3. Construcción: Diseño, desarrollo, optimización para Google y configuración de WhatsApp, con pruebas en celular y computador.
 4. Aprobación: Presentación completa, dos rondas de ajustes y aprobación por escrito.
@@ -351,17 +351,17 @@ Enlace público: https://darkgreen-barracuda-813471.hostingersite.com/
 
 URL: https://goldenrod-bee-973005.hostingersite.com/
 
-VRS Digital, estudio digital en Bogotá: páginas web listas para Google y la IA, y el agente de IA de WhatsApp. Desde $1.200.000 IVA incluido.
+VRS Digital, estudio digital en Bogotá: páginas web listas para Google y la IA, y atención inteligente en WhatsApp. Desde $1.200.000 IVA incluido.
 
-En resumen: VRS Digital es un estudio digital de Bogotá dirigido por su fundador, Víctor Ramírez. Crea páginas web para empresas de servicios desde $1.200.000 al año, o en 12 cuotas de $120.000 al mes (IVA incluido), las prepara para Google y asistentes de IA, y configura el agente de IA que Meta ofrece en WhatsApp Business cuando su cuenta tiene acceso. Usted habla directamente con quien hace el trabajo.
+En resumen: VRS Digital es un estudio digital de Bogotá dirigido por su fundador, Víctor Ramírez. Crea páginas web para empresas de servicios desde $1.200.000 al año, o en 12 cuotas de $120.000 al mes (IVA incluido), las prepara para Google y asistentes de IA, y deja su WhatsApp Business respondiendo a sus clientes con atención inteligente.
 
-### Quién está detrás: Víctor Ramírez y su método
+### Quién está detrás de VRS Digital: Víctor Ramírez
 
 URL: https://goldenrod-bee-973005.hostingersite.com/nosotros/
 
-Conozca a Víctor Ramírez, fundador y responsable de VRS Digital: cómo usa la IA con revisión humana, por qué atiende pocos proyectos y su aval MinTIC.
+Conozca a Víctor Ramírez, fundador y responsable de VRS Digital: por qué atiende pocos proyectos, lo que hace y lo que no, y su aval MinTIC.
 
-En resumen: VRS Digital es un estudio digital de Bogotá dirigido por Víctor Alfonso Ramírez Sepúlveda, su fundador y responsable de cada proyecto. Trabaja solo, apoyado por inteligencia artificial para acelerar la investigación, los textos y el desarrollo, y revisa personalmente cada entrega.
+En resumen: VRS Digital es un estudio digital de Bogotá dirigido por Víctor Alfonso Ramírez Sepúlveda, su fundador y responsable de cada proyecto. Atiende máximo dos proyectos a la vez y revisa personalmente cada entrega.
 
 ### Proyectos de páginas web y plataformas
 
@@ -385,7 +385,7 @@ URL: https://goldenrod-bee-973005.hostingersite.com/paginas-web-bogota/
 
 Diseño de páginas web en Bogotá para empresas de servicios: rápidas, adaptadas a celular, con WhatsApp y listas para Google. Desde $1.200.000 IVA incluido.
 
-En resumen: Diseñamos páginas web para empresas de servicios en Bogotá. El plan Web Esencial cuesta desde $1.200.000 al año, o en 12 cuotas de $120.000 al mes, e incluye hasta cinco secciones adaptadas a celular, botón de WhatsApp, formulario y optimización inicial para Google. Usted trata directamente con Víctor Ramírez, quien dirige y revisa cada proyecto. Precios en pesos colombianos, IVA incluido.
+En resumen: Diseñamos páginas web para empresas de servicios en Bogotá. El plan Web Esencial cuesta desde $1.200.000 al año, o en 12 cuotas de $120.000 al mes, e incluye hasta cinco secciones adaptadas a celular, botón de WhatsApp, formulario y optimización inicial para Google. Dominio y hosting van incluidos el primer año. Precios en pesos colombianos, IVA incluido.
 
 ### Posicionamiento en Google y asistentes de IA
 
@@ -395,13 +395,13 @@ Posicionamiento web en Bogotá: preparamos su web para que Google y los asistent
 
 En resumen: Preparamos su web para que Google y los asistentes de inteligencia artificial (IA), como ChatGPT, Gemini o Copilot, entiendan qué hace su empresa, para quién y dónde. Según Google, aparecer en sus resúmenes con IA no exige archivos ni códigos especiales: exige una web que Google pueda leer, clara y útil. Nadie puede garantizar posiciones ni menciones.
 
-### Configurar agente de IA de WhatsApp Business
+### Atención inteligente en WhatsApp Business
 
 URL: https://goldenrod-bee-973005.hostingersite.com/asistente-whatsapp-business/
 
-Configuramos el agente de IA que Meta ofrece en WhatsApp Business: datos de su negocio, tono, pruebas y paso a una persona. Sin API ni CRM. Consulte si aplica.
+Su WhatsApp Business responde a sus clientes a cualquier hora con la información de su empresa y le pasa los casos que necesitan una persona.
 
-En resumen: Meta ofrece dentro de la app WhatsApp Business un agente de inteligencia artificial (Meta Business Agent) que responde a sus clientes con la información que usted le da. VRS Digital no creó esa tecnología: verificamos si su cuenta tiene acceso, organizamos la información de su negocio, lo configuramos, lo probamos y definimos cuándo debe pasarle la conversación a usted.
+En resumen: Con la atención inteligente de VRS Digital, su WhatsApp Business responde a sus clientes a cualquier hora con la información de su empresa: servicios, horarios, precios autorizados y cómo empezar. Usted define qué puede responder, qué datos puede pedir y cuándo le pasa la conversación a una persona.
 
 ### Página web para empresas de servicios y pymes
 
@@ -409,7 +409,7 @@ URL: https://goldenrod-bee-973005.hostingersite.com/paginas-web-empresas-servici
 
 Página web para empresas de servicios profesionales: abogados, inmobiliarias, SST y servicios técnicos. Explique qué hace y cuánto cuesta empezar. Vea cómo.
 
-En resumen: Una empresa de servicios vende algo que no se ve. Su web debe explicar qué hace, para quién, cómo trabaja y cuánto cuesta empezar. VRS Digital diseña esa web desde $1.200.000 al año, o en 12 cuotas de $120.000 al mes, IVA incluido, la prepara para Google y asistentes de IA y, en el plan Web + Atención Inteligente, configura el agente de IA de WhatsApp Business para responder preguntas frecuentes.
+En resumen: Una empresa de servicios vende algo que no se ve. Su web debe explicar qué hace, para quién, cómo trabaja y cuánto cuesta empezar. VRS Digital diseña esa web desde $1.200.000 al año, o en 12 cuotas de $120.000 al mes, IVA incluido, la prepara para Google y asistentes de IA y, en el plan Web + Atención Inteligente, deja su WhatsApp Business respondiendo preguntas frecuentes con atención inteligente.
 
 ### Precios: páginas web, Google y WhatsApp con IA
 
@@ -419,19 +419,19 @@ Planes web desde $1.200.000 al año, o en 12 cuotas. Landing desde $350.000, pag
 
 En resumen: Landing Page desde $350.000, pago único. Web Esencial desde $1.200.000 al año, Web Visible desde $2.200.000 y Web + Atención Inteligente desde $3.000.000. Cada plan web también se puede pagar en 12 cuotas mensuales, con 20 % más en total. El Plan Emprendedor cuesta $49.900 al mes. Dominio y hosting van incluidos el primer año en los planes web; para la Landing Page, $149.900 al año. Todo con IVA incluido.
 
-### Guías: páginas web, Google y WhatsApp con IA
+### Guías sobre páginas web para empresas
 
 URL: https://goldenrod-bee-973005.hostingersite.com/recursos/
 
-Guías claras para empresas de servicios: cuánto cuesta una página web en Bogotá y qué puede hacer el agente de IA de WhatsApp Business. Con fuentes oficiales.
+Guías claras para empresas de servicios: cuánto cuesta una página web en Bogotá, qué se paga aparte y cómo comparar cotizaciones. Con fuentes.
 
-En resumen: En Recursos, VRS Digital publica guías prácticas para dueños de empresas de servicios en Colombia: cuánto cuesta una página web en Bogotá y qué puede hacer el agente de IA de WhatsApp Business. Cada guía lleva la firma de Víctor Ramírez, cita fuentes oficiales o públicas y se revisa cuando cambian los datos.
+En resumen: En Recursos, VRS Digital publica guías prácticas para dueños de empresas de servicios en Colombia: cuánto cuesta una página web en Bogotá, qué se paga aparte y cómo comparar cotizaciones. Cada guía lleva la firma de Víctor Ramírez, cita fuentes oficiales o públicas y se revisa cuando cambian los datos.
 
 ## Preguntas frecuentes
 
 ### ¿Qué hace exactamente VRS Digital?
 
-VRS Digital diseña páginas web para empresas de servicios, las prepara para que Google y los asistentes de inteligencia artificial entiendan qué hace cada empresa, y configura el agente de IA que Meta ofrece dentro de WhatsApp Business. También ofrece mantenimiento mensual. No desarrolla chatbots a medida, sistemas de gestión de clientes (CRM) ni conexiones con otros programas (API o integraciones).
+VRS Digital diseña páginas web para empresas de servicios, las prepara para que Google y los asistentes de inteligencia artificial entiendan qué hace cada empresa, y deja su WhatsApp Business respondiendo a sus clientes con atención inteligente. También ofrece mantenimiento mensual. No desarrolla chatbots a medida, sistemas de gestión de clientes (CRM) ni conexiones con otros programas (API o integraciones).
 
 Fuente: https://goldenrod-bee-973005.hostingersite.com/
 
@@ -441,21 +441,15 @@ Con empresas y profesionales de servicios que necesitan explicar bien lo que ofr
 
 Fuente: https://goldenrod-bee-973005.hostingersite.com/
 
-### ¿Usan inteligencia artificial para hacer las páginas?
-
-Sí. La inteligencia artificial acelera la investigación, los borradores de textos, el diseño y el desarrollo. Víctor Ramírez verifica la información, ajusta el tono, prueba el funcionamiento y aprueba cada entrega antes de mostrársela. Usted revisa y aprueba los textos de su web. El método y las herramientas son reservados; el alcance y los límites del servicio, no.
-
-Fuente: https://goldenrod-bee-973005.hostingersite.com/
-
 ### ¿En qué se diferencia VRS Digital de una agencia tradicional?
 
-Usted habla directamente con quien diseña, desarrolla y revisa su proyecto, sin intermediarios. Su web, su visibilidad en Google y su WhatsApp se planean con una sola estrategia. Los precios y los alcances están publicados. A cambio, somos claros con los límites: atendemos máximo dos proyectos a la vez y no ofrecemos CRM, API ni chatbots a medida.
+Su web, su visibilidad en Google y su WhatsApp se planean con una sola estrategia. Los precios y los alcances están publicados. Atendemos máximo dos proyectos a la vez para cuidar cada entrega, y somos claros con los límites: no ofrecemos CRM, API ni chatbots a medida.
 
 Fuente: https://goldenrod-bee-973005.hostingersite.com/
 
 ### ¿Puedo contratar solo la página web?
 
-Sí. El plan Web Esencial incluye la página web, desde $1.200.000 al año, o en 12 cuotas de $120.000 al mes. El seguimiento mensual en Google empieza en Web Visible, y la configuración del agente de IA de WhatsApp Business, en Web + Atención Inteligente. Para microempresas que empiezan está el Plan Emprendedor, por $49.900 al mes. Dominio y hosting van incluidos en los planes web; los costos externos van aparte. Precios en pesos colombianos, IVA incluido.
+Sí. El plan Web Esencial incluye la página web, desde $1.200.000 al año, o en 12 cuotas de $120.000 al mes. El seguimiento mensual en Google empieza en Web Visible, y la atención inteligente en WhatsApp, en Web + Atención Inteligente. Para microempresas que empiezan está el Plan Emprendedor, por $49.900 al mes. Dominio y hosting van incluidos en los planes web; los costos externos van aparte. Precios en pesos colombianos, IVA incluido.
 
 Fuente: https://goldenrod-bee-973005.hostingersite.com/
 
@@ -467,13 +461,7 @@ Fuente: https://goldenrod-bee-973005.hostingersite.com/
 
 ### ¿VRS Digital es una agencia o una sola persona?
 
-VRS Digital es un estudio digital dirigido por su fundador, Víctor Ramírez, que trabaja solo y apoyado por inteligencia artificial. No tiene departamentos ni equipo de ventas. Esto significa que usted habla directamente con quien diseña, desarrolla y revisa su proyecto, y que trabajamos con un máximo de dos proyectos al mismo tiempo.
-
-Fuente: https://goldenrod-bee-973005.hostingersite.com/nosotros/
-
-### ¿Qué herramientas de inteligencia artificial usan?
-
-Nuestro método y nuestras herramientas son reservados. Lo que sí le explicamos es para qué usamos la IA (investigación, borradores, diseño y desarrollo) y qué revisa una persona: la información, las promesas, el tono, el funcionamiento y la seguridad. Ninguna entrega se publica sin la revisión de Víctor Ramírez y sin su aprobación.
+VRS Digital es un estudio digital dirigido por su fundador, Víctor Ramírez, responsable de cada proyecto. No tiene departamentos ni equipo de ventas, y trabaja con un máximo de dos proyectos al mismo tiempo.
 
 Fuente: https://goldenrod-bee-973005.hostingersite.com/nosotros/
 
@@ -503,7 +491,7 @@ Fuente: https://goldenrod-bee-973005.hostingersite.com/proyectos/
 
 ### ¿Todavía desarrollan plataformas a medida?
 
-No forman parte de nuestra oferta actual. Beauty Manager es un producto propio para centros de estética que se puede adquirir; las demás son proyectos anteriores de diseño y desarrollo. Hoy nos concentramos en páginas web, posicionamiento en Google y asistentes de IA, configuración del agente de IA de WhatsApp Business y mantenimiento. Un desarrollo a medida solo se evalúa de forma excepcional y con un alcance controlado.
+No forman parte de nuestra oferta actual. Beauty Manager es un producto propio para centros de estética que se puede adquirir; las demás son proyectos anteriores de diseño y desarrollo. Hoy nos concentramos en páginas web, posicionamiento en Google y asistentes de IA, atención inteligente en WhatsApp Business y mantenimiento. Un desarrollo a medida solo se evalúa de forma excepcional y con un alcance controlado.
 
 Fuente: https://goldenrod-bee-973005.hostingersite.com/proyectos/
 
@@ -545,7 +533,7 @@ Fuente: https://goldenrod-bee-973005.hostingersite.com/contacto/
 
 ### ¿Qué pasa si quiero avanzar después de la revisión?
 
-Agendamos una reunión de diagnóstico de hasta 45 minutos para confirmar el alcance y verificar si su WhatsApp Business tiene acceso al agente de IA de Meta. Luego le enviamos una propuesta con máximo tres opciones. Si la acepta, el proyecto inicia con el 50 % del valor y una fecha asignada según disponibilidad.
+Agendamos una reunión de diagnóstico de hasta 45 minutos para confirmar el alcance y revisar si su WhatsApp Business es compatible con la atención inteligente. Luego le enviamos una propuesta con máximo tres opciones. Si la acepta, el proyecto inicia con el 50 % del valor y una fecha asignada según disponibilidad.
 
 Fuente: https://goldenrod-bee-973005.hostingersite.com/contacto/
 
@@ -645,37 +633,31 @@ Ya no como antes. Google ya casi no muestra las preguntas frecuentes como result
 
 Fuente: https://goldenrod-bee-973005.hostingersite.com/posicionamiento-google-inteligencia-artificial/
 
-### ¿VRS Digital creó este agente de IA?
+### ¿Qué pasa si mi WhatsApp Business no es compatible?
 
-No. El agente es una tecnología de Meta. Nuestro trabajo es configurarlo bien: organizamos la información de su empresa, definimos el tono, preparamos respuestas de ejemplo, fijamos qué datos puede pedir y cuándo debe pasarle la conversación, y lo probamos antes de activarlo. No es un chatbot a medida ni requiere API, CRM o integraciones.
-
-Fuente: https://goldenrod-bee-973005.hostingersite.com/asistente-whatsapp-business/
-
-### ¿Qué pasa si mi WhatsApp Business no tiene acceso al agente?
-
-Meta lo habilita de forma gradual, por país y por cuenta, y en octubre de 2026 no encontramos una confirmación oficial para Colombia. Por eso lo verificamos en su cuenta durante el diagnóstico, antes de cobrarle este componente. Si no tiene acceso, entregamos la web y el posicionamiento, descontamos o posponemos el valor del agente y configuramos las funciones clásicas de la app.
+Lo revisamos en el diagnóstico, antes de cobrarle este componente. Si su cuenta todavía no tiene la función, entregamos la web y el posicionamiento, descontamos o posponemos ese valor y dejamos listas las respuestas básicas de su WhatsApp Business.
 
 Fuente: https://goldenrod-bee-973005.hostingersite.com/asistente-whatsapp-business/
 
-### ¿Los costos de Meta están incluidos en su precio?
+### ¿Hay costos aparte de su precio?
 
-No. Según Meta, hoy el agente se puede usar cada mes sin costo hasta un cupo de respuestas incluido, y para más respuestas ofrece planes de pago llamados Meta One, desde US$14,99 al mes según su anuncio de septiembre de 2026. Ese costo lo contrata y lo paga usted directamente a Meta, y Meta puede cambiarlo. Nuestro precio cubre la preparación, la configuración, las pruebas y los ajustes.
+WhatsApp incluye cada mes un cupo de respuestas automáticas sin costo. Si su empresa recibe muchos mensajes y necesita más, WhatsApp cobra un plan aparte, que usted paga directamente. Se lo informamos antes de activar el servicio. Nuestro precio cubre la preparación, las pruebas y los ajustes.
 
 Fuente: https://goldenrod-bee-973005.hostingersite.com/asistente-whatsapp-business/
 
 ### ¿El agente responde las 24 horas?
 
-Puede responder a cualquier hora, también fuera de su horario, mientras esté activo y Meta mantenga la función disponible. Eso no significa soporte humano permanente: nuestro acompañamiento es de lunes a viernes, de 9:00 a. m. a 6:00 p. m. (hora de Colombia). Respondemos en uno o dos días hábiles. Los casos delicados quedan para usted o su equipo.
+Puede responder a cualquier hora, también fuera de su horario, mientras esté activo. Eso no significa soporte humano permanente: nuestro acompañamiento es de lunes a viernes, de 9:00 a. m. a 6:00 p. m. (hora de Colombia). Respondemos en uno o dos días hábiles. Los casos delicados quedan para usted o su equipo.
 
 Fuente: https://goldenrod-bee-973005.hostingersite.com/asistente-whatsapp-business/
 
 ### ¿El agente de IA se puede equivocar?
 
-Sí. Como toda inteligencia artificial, puede equivocarse, y Meta lo advierte. Por eso lo probamos con 25 a 40 preguntas antes de activarlo, limitamos los temas que puede responder y definimos cuáles debe pasarle a usted. Además, usted puede responder personalmente en cualquier chat: cuando lo hace, el agente deja de responder en esa conversación.
+Sí. Como toda inteligencia artificial, puede equivocarse. Por eso lo probamos con 25 a 40 preguntas antes de activarlo, limitamos los temas que puede responder y definimos cuáles debe pasarle a usted. Además, usted puede responder personalmente en cualquier chat: cuando lo hace, el agente deja de responder en esa conversación.
 
 Fuente: https://goldenrod-bee-973005.hostingersite.com/asistente-whatsapp-business/
 
-### ¿Qué información necesitan de mi empresa para configurarlo?
+### ¿Qué información necesitan de mi empresa?
 
 La descripción de su negocio, sus servicios y a quién van dirigidos, horarios y zonas de cobertura, los precios que se pueden comunicar, los métodos de pago, sus políticas y las preguntas frecuentes de sus clientes. También definimos con usted qué situaciones debe atender una persona, qué no debe afirmar el agente y qué datos puede pedir. Usted aprueba por escrito lo que cargamos.
 
@@ -707,7 +689,7 @@ Fuente: https://goldenrod-bee-973005.hostingersite.com/paginas-web-empresas-serv
 
 ### ¿Necesito un CRM, una API o un chatbot a medida?
 
-Para empezar, no. Nuestro servicio usa su web y la app WhatsApp Business con el agente de IA que Meta ofrece, sin programación. No vendemos CRM, API ni chatbots desarrollados a medida, ni integraciones con otros sistemas. Para la mayoría de pymes de servicios, una web clara y un WhatsApp bien configurado resuelven lo principal.
+Para empezar, no. Su web y su WhatsApp Business con atención inteligente resuelven lo principal sin programación. No vendemos CRM, API ni chatbots desarrollados a medida, ni integraciones con otros sistemas. Para la mayoría de pymes de servicios, una web clara y un WhatsApp bien configurado resuelven lo principal.
 
 Fuente: https://goldenrod-bee-973005.hostingersite.com/paginas-web-empresas-servicios/
 
@@ -737,13 +719,13 @@ Fuente: https://goldenrod-bee-973005.hostingersite.com/precios/
 
 ### ¿Por qué los precios dicen «desde»?
 
-Porque cada empresa necesita un alcance distinto. El precio publicado es el valor mínimo de cada plan. Lo que más lo cambia es el número de páginas, si hay que preparar los textos, la migración de una web anterior, los idiomas, el tamaño del catálogo y la cantidad de información para el agente de WhatsApp. El valor final queda por escrito antes de empezar.
+Porque cada empresa necesita un alcance distinto. El precio publicado es el valor mínimo de cada plan. Lo que más lo cambia es el número de páginas, si hay que preparar los textos, la migración de una web anterior, los idiomas, el tamaño del catálogo y la cantidad de información para la atención inteligente de WhatsApp. El valor final queda por escrito antes de empezar.
 
 Fuente: https://goldenrod-bee-973005.hostingersite.com/precios/
 
 ### ¿Qué se paga aparte?
 
-El dominio y el hosting de la Landing Page y del Plan Emprendedor ($149.900 al año). Las licencias y las suscripciones externas se identifican por separado en la propuesta. Si usa el agente de IA de WhatsApp y necesita más respuestas que el cupo gratuito de Meta, el plan de pago lo contrata y lo paga usted directamente a Meta. Los servicios que no estén en su plan se cotizan aparte. Precios en pesos colombianos, IVA incluido.
+El dominio y el hosting de la Landing Page y del Plan Emprendedor ($149.900 al año). Las licencias y las suscripciones externas se identifican por separado en la propuesta. Si usa la atención inteligente de WhatsApp y necesita más respuestas que el cupo gratuito, el plan de pago de WhatsApp lo paga usted directamente. Los servicios que no estén en su plan se cotizan aparte. Precios en pesos colombianos, IVA incluido.
 
 Fuente: https://goldenrod-bee-973005.hostingersite.com/precios/
 
@@ -755,7 +737,7 @@ Fuente: https://goldenrod-bee-973005.hostingersite.com/precios/
 
 ### ¿En qué se diferencia el Plan Emprendedor?
 
-Es una página de una sola sección, estandarizada, con alojamiento (hosting) y agenda básica incluidos, por $49.900 al mes. Está pensada para microempresas que empiezan. No incluye posicionamiento mensual ni atención inteligente en WhatsApp. Si su empresa necesita una página por servicio, aparecer mejor en Google o atención con el agente de IA, le conviene uno de los tres planes empresariales. Precios en pesos colombianos, IVA incluido.
+Es una página de una sola sección, estandarizada, con alojamiento (hosting) y agenda básica incluidos, por $49.900 al mes. Está pensada para microempresas que empiezan. No incluye posicionamiento mensual ni atención inteligente en WhatsApp. Si su empresa necesita una página por servicio, aparecer mejor en Google o atención inteligente en WhatsApp, le conviene uno de los tres planes empresariales. Precios en pesos colombianos, IVA incluido.
 
 Fuente: https://goldenrod-bee-973005.hostingersite.com/precios/
 
@@ -765,15 +747,9 @@ Las firma Víctor Ramírez, fundador de VRS Digital y responsable de cada proyec
 
 Fuente: https://goldenrod-bee-973005.hostingersite.com/recursos/
 
-### ¿Usan inteligencia artificial para escribir las guías?
-
-Sí, como apoyo para investigar y redactar. La inteligencia artificial acelera el trabajo, pero no publica nada por su cuenta: cada dato se verifica contra su fuente y una persona aprueba el texto. No compartimos qué herramientas usamos, pero sí las fuentes de cada afirmación, para que usted pueda comprobarlas.
-
-Fuente: https://goldenrod-bee-973005.hostingersite.com/recursos/
-
 ### ¿Cada cuánto se actualizan las guías?
 
-Las revisamos cada trimestre y cuando cambia un dato importante, como los precios del mercado o las condiciones de Meta para WhatsApp Business. Cada guía muestra la fecha de su última actualización. Si encuentra un dato desactualizado, escríbanos por WhatsApp o por correo y lo revisamos.
+Las revisamos cada trimestre y cuando cambia un dato importante, como los precios del mercado o las condiciones de WhatsApp Business. Cada guía muestra la fecha de su última actualización. Si encuentra un dato desactualizado, escríbanos por WhatsApp o por correo y lo revisamos.
 
 Fuente: https://goldenrod-bee-973005.hostingersite.com/recursos/
 
@@ -788,54 +764,6 @@ Fuente: https://goldenrod-bee-973005.hostingersite.com/recursos/
 Sí. Si tiene una pregunta sobre páginas web, posicionamiento en Google o atención por WhatsApp que no encuentra respondida, escríbanos por WhatsApp o por correo. Priorizamos los temas que nos preguntan los dueños de empresas de servicios y que podemos responder con fuentes verificables.
 
 Fuente: https://goldenrod-bee-973005.hostingersite.com/recursos/
-
-### ¿Qué es el agente de IA de WhatsApp Business?
-
-Es una función de Meta, llamada Meta Business Agent, que funciona dentro de la app WhatsApp Business. Responde los mensajes de sus clientes con la información de su empresa, como horarios, ubicación, productos, precios, pagos y envíos. No requiere programación. Meta lo presentó en junio de 2026 y lo está habilitando de forma gradual.
-
-Fuente: https://goldenrod-bee-973005.hostingersite.com/recursos/agente-ia-whatsapp-business/
-
-### ¿De qué información aprende el agente de IA?
-
-Según Meta, aprende de la página de Facebook de la empresa, de sus chats anteriores de WhatsApp y de su sitio web. La empresa también puede cargarle catálogos, listas de precios, documentos y fotos, y el agente usa los datos del perfil, como la descripción, la dirección y el horario. Por eso conviene revisar que esa información esté al día antes de activarlo.
-
-Fuente: https://goldenrod-bee-973005.hostingersite.com/recursos/agente-ia-whatsapp-business/
-
-### ¿El agente de IA de WhatsApp Business está disponible en Colombia?
-
-Al 6 de octubre de 2026 no encontramos una confirmación oficial de Meta para Colombia. Meta dice que está disponible para empresas elegibles en mercados seleccionados y que llegará a más mercados. La forma segura de saberlo es revisar la sección Herramientas de su app WhatsApp Business actualizada: si su cuenta tiene acceso, la opción aparece allí.
-
-Fuente: https://goldenrod-bee-973005.hostingersite.com/recursos/agente-ia-whatsapp-business/
-
-### ¿Cuánto cuesta el agente de IA de WhatsApp Business?
-
-La app WhatsApp Business es gratuita. Según Meta, el agente se puede usar gratis cada mes hasta un cupo incluido, y para más respuestas ofrece planes de pago de Meta One, desde US$14,99 al mes en septiembre de 2026. Meta advierte que los planes, beneficios y disponibilidad pueden variar por región. Esos cobros los hace Meta directamente.
-
-Fuente: https://goldenrod-bee-973005.hostingersite.com/recursos/agente-ia-whatsapp-business/
-
-### ¿Puedo responder yo mismo aunque el agente esté activo?
-
-Sí. Según el centro de ayuda de WhatsApp, si usted responde manualmente en un chat, el agente deja de generar respuestas en ese chat hasta que lo reactive. También puede activarlo solo en algunos chats o para todos, definir los temas que siempre deben pasar a una persona y desconectarlo por completo desde las herramientas de la app.
-
-Fuente: https://goldenrod-bee-973005.hostingersite.com/recursos/agente-ia-whatsapp-business/
-
-### ¿Qué pasa con los datos de mis clientes si activo el agente?
-
-WhatsApp informa que los mensajes de los chats donde la IA está conectada se recopilan para mejorar la inteligencia artificial de Meta, incluso si usted silencia el agente: silenciarlo no detiene esa recopilación. Por eso no conviene usarlo en conversaciones con información de salud, financiera o jurídica sensible, y su empresa debe tener publicada su política de tratamiento de datos.
-
-Fuente: https://goldenrod-bee-973005.hostingersite.com/recursos/agente-ia-whatsapp-business/
-
-### ¿En qué se diferencia de las respuestas automáticas de WhatsApp Business?
-
-Las funciones clásicas, como el mensaje de bienvenida, el de ausencia y las respuestas rápidas, envían siempre el texto que usted escribió. El agente de IA redacta cada respuesta según la pregunta y la información que aprendió. Es más flexible, pero puede equivocarse, y WhatsApp advierte que sus mensajes pueden no ser precisos ni apropiados. Por eso requiere pruebas y supervisión.
-
-Fuente: https://goldenrod-bee-973005.hostingersite.com/recursos/agente-ia-whatsapp-business/
-
-### ¿Qué funciones gratuitas de WhatsApp Business puedo usar sin el agente?
-
-Las funciones clásicas de la app: perfil de empresa completo, mensaje de bienvenida, mensaje de ausencia fuera de horario, respuestas rápidas para las preguntas frecuentes, etiquetas para ordenar sus chats y catálogo con sus servicios. Así ya responde mejor, y su información queda organizada para cuando Meta habilite el agente en su cuenta.
-
-Fuente: https://goldenrod-bee-973005.hostingersite.com/recursos/agente-ia-whatsapp-business/
 
 ### ¿Por qué algunas páginas web son tan baratas?
 
@@ -886,180 +814,6 @@ Depende de lo que incluya. En las referencias que revisamos, Cangrejo Digital pu
 Fuente: https://goldenrod-bee-973005.hostingersite.com/recursos/cuanto-cuesta-una-pagina-web-en-bogota/
 
 ## Guías
-
-### Agente de IA de WhatsApp Business: guía 2026
-
-URL: https://goldenrod-bee-973005.hostingersite.com/recursos/agente-ia-whatsapp-business/
-
-Qué hace el agente de IA de Meta en WhatsApp Business, de qué aprende, cuánto cuesta, si está disponible, sus riesgos y cuándo no usarlo. Con fuentes oficiales.
-
-En resumen: El agente de IA de WhatsApp Business (Meta Business Agent) es una función de Meta dentro de la app que responde a sus clientes con la información de su empresa: horarios, ubicación, productos, precios, pagos y envíos. Usted decide qué sabe, cómo habla y qué temas le pasa a una persona. Meta lo habilita por etapas, y puede equivocarse.
-
-Por **Víctor Ramírez**, fundador de VRS Digital. Información verificada el 6 de octubre de 2026.
-
-Desde junio de 2026, Meta ofrece dentro de la app WhatsApp Business un agente de inteligencia artificial (IA) que responde a los clientes de una empresa. Hay mucho entusiasmo, muchas promesas y bastante confusión, sobre todo con los precios. Esta guía resume lo que Meta y WhatsApp publican oficialmente: qué hace, de qué aprende, qué controla usted, cuánto cuesta, dónde está disponible y cuándo conviene no usarlo. Cuando un dato no viene de una fuente oficial, lo decimos.
-
-Una aclaración: en VRS Digital configuramos este agente para empresas, pero no lo creamos. Es tecnología de Meta.
-
-#### Qué es el agente de IA de WhatsApp Business
-
-Meta presentó el [Meta Business Agent](https://about.fb.com/news/2026/06/meta-business-agent/) el 3 de junio de 2026 para WhatsApp, Messenger e Instagram. En WhatsApp funciona dentro de la app WhatsApp Business, la aplicación gratuita para empresas pequeñas, y se configura sin programación.
-
-Antes de ese anuncio, Meta lo había lanzado en India con el nombre «Business AI» ([mayo de 2026](https://about.fb.com/news/2026/05/introducing-business-ai-on-whatsapp-for-small-businesses-in-india/)). Según [TechCrunch](https://techcrunch.com/2026/06/03/metas-ai-agent-for-whatsapp-business-is-now-available-globally/), Meta lo probó cerca de dos años en países como India y México antes del lanzamiento global.
-
-No hay que confundirlo con dos productos parecidos:
-
-- **Meta AI**, el asistente para personas, que llegó a Colombia en [julio de 2024](https://about.fb.com/news/2024/07/meta-ai-is-now-multilingual-more-creative-and-smarter/). Es otro producto: que usted pueda hablar con Meta AI no significa que su empresa tenga el agente.
-- **La WhatsApp Business Platform**, el acceso por API (programación) pensado para empresas medianas y grandes, con precios y condiciones propios. Esta guía trata solo de la app WhatsApp Business.
-
-#### Qué puede hacer, según Meta
-
-La [página oficial del producto](https://whatsappbusiness.com/products/business-app-ai-agent/) dice que el agente envía respuestas personalizadas las 24 horas. Ese «24 horas» se refiere al agente automático, no a la atención de una persona. Según Meta, puede:
-
-- Responder preguntas sobre horarios, ubicación, productos y precios.
-- Recomendar productos de su catálogo.
-- Atender preguntas sobre descuentos, pagos y envíos.
-- Pedirle información al cliente para apoyar la venta o el servicio.
-
-En el [anuncio de junio](https://about.fb.com/news/2026/06/meta-business-agent/), Meta agregó que el agente puede agendar citas, calificar prospectos (identificar qué necesita cada cliente) y «cerrar ventas», y que la empresa decide cuándo interviene una persona de su equipo. También anunció un resumen matutino de los chats que la empresa no alcanzó a atender.
-
-Dos advertencias de la propia Meta: la función está disponible «para empresas elegibles en mercados seleccionados», y algunas funciones del agente pueden no estar disponibles todavía para todas las empresas elegibles. En la práctica, lo que funcione en su cuenta depende de lo que Meta tenga habilitado para ella.
-
-Nuestra lectura: Meta usa la expresión «cerrar ventas», pero conviene pensar en el agente como una primera respuesta, rápida y ordenada. Las decisiones importantes, las cotizaciones finales y los casos delicados siguen necesitando a una persona.
-
-#### De qué aprende
-
-Según la [página oficial en español](https://whatsappbusiness.com/es-la/products/business-app-ai-agent/), el agente aprende automáticamente de la página de Facebook de la empresa, de sus chats anteriores y de su sitio web. Además, la empresa puede subirle catálogos, listas de precios, documentos y fotos.
-
-El [centro de ayuda de WhatsApp](https://faq.whatsapp.com/291930066973116/) agrega que usa la información del perfil de la empresa, como el catálogo, la descripción, la dirección y el horario.
-
-La consecuencia práctica es sencilla: el agente repite lo que encuentra. Si su página de Facebook tiene un horario viejo o su web muestra precios de hace dos años, el agente puede usarlos. Antes de activarlo, conviene revisar y ordenar esa información.
-
-#### Qué controla usted
-
-La página oficial describe cuatro controles:
-
-| Control | Qué permite |
-|---|---|
-| Conocimiento | Decidir con qué información aprende el agente. |
-| Personalidad | Definir la voz de la IA, es decir, el tono de las respuestas. Si una respuesta no le gusta, puede reescribirla. |
-| Público | Elegir a quién responde: «todos, solo clientes nuevos o clientes que llegan desde anuncios». |
-| Transferencia | Indicar los temas complejos o sensibles que siempre deben pasar a una persona. |
-
-Según el [centro de ayuda](https://faq.whatsapp.com/291930066973116/), además:
-
-- Si usted responde manualmente en un chat, el agente deja de generar respuestas en ese chat hasta que lo reactive.
-- Puede activarlo en un chat o para todos.
-- Puede desconectarlo por completo desde Herramientas, en la sección de IA para empresas.
-- También puede usarlo desde Meta Business Suite, vinculando la cuenta con un código QR.
-
-Meta lo resume así en su anuncio para India: las empresas mantienen el control, porque pueden responder directamente cuando lo necesiten, ajustar cómo funciona la IA o apagarla por completo.
-
-El nombre de la opción ha cambiado con las versiones de la app («IA para empresas», «Your Business AI», «Meta Business Agent»). Búsquela en **Herramientas**, con la app actualizada.
-
-#### Diferencias con WhatsApp Business tradicional
-
-La app WhatsApp Business ya tenía funciones automáticas antes del agente. Según la [página oficial de funciones](https://whatsappbusiness.com/products/business-app-features/), estas son las principales:
-
-| Función | Cómo funciona | Quién escribe el mensaje | Costo |
-|---|---|---|---|
-| Mensaje de bienvenida | Se envía solo a los clientes nuevos | Usted, una vez | Incluido en la app gratuita |
-| Mensaje de ausencia | Se envía fuera de su horario | Usted, una vez | Incluido en la app gratuita |
-| Respuestas rápidas | Atajos para enviar mensajes frecuentes | Usted, y usted decide cuándo enviarlos | Incluido en la app gratuita |
-| Etiquetas | Ordenan y filtran sus chats | No aplica | Incluido en la app gratuita |
-| Catálogo | Muestra productos y servicios en colecciones | Usted | Incluido en la app gratuita |
-| Agente de IA | Redacta cada respuesta según la pregunta y lo que aprendió | La IA, dentro de los límites que usted defina | Cupo mensual gratuito; más respuestas con planes de pago de Meta |
-
-La diferencia de fondo es esta: **las funciones clásicas son predecibles**, porque siempre envían el texto que usted escribió. **El agente es flexible**, porque responde preguntas que usted no anticipó, pero por eso mismo puede equivocarse.
-
-Para muchas empresas pequeñas, unas funciones clásicas bien configuradas ya resuelven buena parte del problema: el cliente recibe una respuesta inmediata, sabe cuándo lo atenderán y encuentra los servicios en el catálogo. El agente suma valor cuando las preguntas son muchas, variadas y repetidas, y la empresa puede supervisarlo.
-
-#### ¿Está disponible en Colombia?
-
-Esto es lo que dicen las fuentes oficiales, consultadas el 6 de octubre de 2026:
-
-- La página de producto en español dice: «Disponible para empresas elegibles en mercados seleccionados, y pronto en más mercados».
-- El centro de ayuda dice que la IA para empresas está disponible solo en algunos países para empresas seleccionadas, por ejemplo las que tienen anuncios de Facebook o Instagram que abren un chat de WhatsApp y un catálogo de productos. Ese texto puede ser anterior al anuncio de junio, pero sigue publicado.
-- En su anuncio de junio, Meta dijo que está expandiendo el agente a empresas de todos los tamaños a nivel global.
-
-**No encontramos una fuente oficial de Meta que confirme que el agente esté disponible en Colombia.** Algunos artículos en internet lo afirman, pero no citan a Meta. La forma segura de saberlo es revisar su propia app: con WhatsApp Business actualizado, entre a Herramientas. Si su cuenta tiene acceso, la opción aparece allí.
-
-Sobre el idioma, el centro de ayuda indica: «Only English and Spanish are supported. The language that business AI uses is determined by your business's phone number» (solo se admiten inglés y español, y el idioma lo determina el número de teléfono de la empresa). El anuncio de junio habla de responder en los idiomas locales de los clientes, así que el soporte de idiomas puede haberse ampliado.
-
-#### Cuánto cuesta
-
-Hay que separar tres cosas:
-
-1. **La app WhatsApp Business es gratuita**, según las [preguntas frecuentes oficiales](https://whatsappbusiness.com/resources/faq/).
-2. **El agente tiene un cupo gratuito.** Meta anunció en junio que empezar es gratis y que vendrían suscripciones de pago. Su [página de Meta One](https://whatsappbusiness.com/products/business-app-meta-one/) dice hoy: «Meta Business Agent is free to use each month up to an included allowance, with more responses available through Meta One plans» (el agente es gratuito cada mes hasta un cupo incluido, y hay más respuestas con los planes de Meta One).
-3. **Meta One es la suscripción de pago.** Meta la lanzó el [15 de septiembre de 2026](https://about.fb.com/news/2026/09/introducing-meta-one-subscription-service-more-features-ai/). Los planes para empresas son Essential (US$14,99 al mes), Advanced (US$49,99), Expert (US$149) y Max (US$499); cada nivel da más acceso al agente en WhatsApp. La suscripción es opcional, se compra por perfil o por número, y los suscriptores nuevos elegibles pueden tener 7 días de prueba.
-
-Meta advierte: «Plans, benefits, and availability may vary by region» (los planes, beneficios y disponibilidad pueden variar por región). En las páginas de Meta que consultamos no encontramos el tamaño del cupo gratuito ni cuántas respuestas incluye cada plan, y tampoco una confirmación de que Meta One esté disponible en Colombia.
-
-Si encuentra cálculos por tokens o «centavos por conversación», revise a qué producto se refieren. Esas tarifas por uso aparecen en la documentación para desarrolladores de la WhatsApp Business Platform (API). Para la app, Meta describe el cupo gratuito y los planes de Meta One. Muchos artículos mezclan las dos cosas.
-
-#### Riesgos que debe conocer
-
-##### Puede equivocarse
-
-El centro de ayuda lo dice sin rodeos: «AI-generated messages may not be accurate or appropriate» (los mensajes generados por IA pueden no ser precisos ni apropiados). Si el agente da un precio equivocado o promete algo que su empresa no hace, el cliente lo recibe como información de su empresa. El Estatuto del Consumidor ([Ley 1480 de 2011, artículo 23](https://leyes.co/el_estatuto_del_consumidor/23.htm)) exige que la información a los consumidores sea clara, veraz, suficiente, oportuna, verificable, comprensible, precisa e idónea. Por eso el agente necesita información aprobada, pruebas antes de activarlo y supervisión.
-
-##### Meta usa los mensajes para mejorar su IA
-
-El centro de ayuda indica: «Messages sent or received in chats that have connected business AI will still be collected by Meta to improve AI at Meta, even when you mute business AI». Es decir, Meta recopila los mensajes de los chats donde la IA está conectada para mejorar su inteligencia artificial, incluso si usted la silencia. Silenciarla no detiene esa recopilación.
-
-##### Algunas funciones de la app cambian
-
-Según el mismo artículo, activar la IA para empresas puede afectar las listas de difusión, los mensajes temporales y la edición y eliminación de mensajes. Si su empresa depende de alguna de esas funciones, revíselo antes de activarla.
-
-##### Depende de Meta
-
-Meta decide la disponibilidad, las funciones, los nombres y los precios, y los cambia con frecuencia: «Business AI» pasó a llamarse «Meta Business Agent», y Meta Verified se está integrando en Meta One. Lo que hoy es gratuito puede cambiar.
-
-##### Sus obligaciones con los datos de sus clientes
-
-Su empresa responde por los datos personales de sus clientes según la Ley 1581 de 2012. La Superintendencia de Industria y Comercio publicó lineamientos para tratar datos personales en sistemas de IA ([Circular Externa 002 de 2024](https://sedeelectronica.sic.gov.co/sites/default/files/normativa/Circular%20Externa%20No.%20002%20del%2021%20de%20agosto%20de%202024.pdf)): aplicar el principio de precaución, documentar un estudio de impacto de privacidad, usar datos veraces y actualizados, y ser transparente con los titulares. En la práctica: publique su política de tratamiento de datos, pida solo los datos necesarios y no use el agente para recibir información sensible.
-
-#### Cuándo no usarlo, o usarlo con mucho cuidado
-
-- **Conversaciones con información sensible**: salud, finanzas personales, procesos jurídicos o documentos confidenciales.
-- **Asesoría profesional sobre casos concretos**: tributaria, legal, médica o financiera. El agente puede dar información general aprobada; el caso lo atiende una persona.
-- **Información que cambia todos los días** y que nadie puede mantener al día, como precios o disponibilidad de inventario.
-- **Cuando nadie puede supervisar** los chats ni atender los casos que el agente transfiere.
-- **Si su empresa depende de las listas de difusión o los mensajes temporales**, que pueden verse afectados.
-- **Si necesita conectar WhatsApp con un CRM, un inventario u otros sistemas**: eso corresponde a la WhatsApp Business Platform (API), otro producto con otra complejidad.
-- **Si su cuenta todavía no tiene acceso**: en ese caso, configure bien las funciones clásicas de la app y active el agente cuando Meta lo habilite.
-
-#### Cómo prepararlo antes de activarlo
-
-El agente responde tan bien como la información que recibe. Antes de activarlo, reúna:
-
-- Descripción del negocio, servicios y a quién van dirigidos.
-- Horarios y zonas de cobertura.
-- Precios que se pueden comunicar y métodos de pago.
-- Políticas: cambios, cancelaciones y garantías.
-- Las preguntas frecuentes reales de sus clientes.
-- Las situaciones que siempre debe atender una persona.
-- Lo que el agente nunca debe afirmar.
-- Los datos que puede pedirle al cliente, y solo esos.
-
-Después, pruébelo con preguntas normales, ambiguas, fuera de su alcance, sobre precios y pidiendo hablar con una persona, incluidos errores de ortografía y lenguaje informal. Apruébelo solo si no inventa precios ni políticas, no promete servicios que usted no presta, mantiene el tono, pide pocos datos, reconoce lo que no sabe, pasa la conversación cuando corresponde y no expone información privada.
-
-#### Qué hace VRS Digital
-
-Configuramos el agente de IA que Meta ofrece en WhatsApp Business. Verificamos si su cuenta tiene acceso, organizamos la información de su empresa, definimos el tono y los temas que pasan a una persona, lo probamos con 25 a 40 preguntas y corregimos las respuestas con problemas. No desarrollamos chatbots propios, API, CRM ni integraciones.
-
-El agente puede responder a cualquier hora. Nuestro acompañamiento humano es de lunes a viernes, de 9:00 a. m. a 6:00 p. m. (hora de Colombia), y respondemos en uno o dos días hábiles.
-
-El servicio está incluido en el plan Web + Atención Inteligente, desde $3.000.000 al año, o en 12 cuotas de $300.000 al mes. Los costos de Meta los paga usted directamente a Meta y no están incluidos en nuestro precio. Si su cuenta no tiene acceso, entregamos la web, descontamos o posponemos ese componente y configuramos las funciones clásicas de la app. Vea el detalle en [configuración del agente de IA de WhatsApp Business](https://goldenrod-bee-973005.hostingersite.com/asistente-whatsapp-business/).
-
-#### Cómo hicimos esta guía
-
-Consultamos el 6 de octubre de 2026 las páginas oficiales de Meta y WhatsApp enlazadas en el texto. Usamos prensa solo para contexto y lo indicamos. La investigación y la redacción se hicieron con apoyo de inteligencia artificial, y cada dato fue verificado por Víctor Ramírez contra su fuente.
-
-Meta cambia nombres, funciones y precios con frecuencia, así que revisamos esta guía cada trimestre. Si ve un dato desactualizado, [escríbanos](https://goldenrod-bee-973005.hostingersite.com/contacto/) y lo corregimos.
-
-Precios de VRS Digital en esta guía: Precios en pesos colombianos, IVA incluido.
 
 ### Cuánto cuesta una página web en Bogotá (2026)
 
@@ -1152,11 +906,8 @@ La primera cotización casi nunca muestra el costo total. Estos son los concepto
 | Alojamiento (hosting) | El servidor donde vive la web | Entre $300.000 y $1.200.000 al año para alojamiento profesional, según Cangrejo Digital. [Zcalaris](https://zcalaris.com/) cobra $600.000 al año desde el segundo año. |
 | Mantenimiento | Cambios, actualizaciones, copias y soporte | Entre $250.000 y $900.000 al mes en agencias, según Cangrejo Digital; entre $150.000 y $500.000 al mes con independientes, según Stiven Ramírez. Zcalaris ofrece administración opcional por $100.000 al mes. |
 | IVA | Impuesto sobre las ventas | Si el proveedor es responsable de IVA, la tarifa general es del 19 %. |
-| Costos de Meta | Si usa el agente de IA de WhatsApp Business | Según Meta, la app es gratuita e incluye un cupo mensual de respuestas del agente. Para más respuestas ofrece planes de pago (Meta One) desde US$14,99 al mes, según Meta (septiembre de 2026); [puede variar por país](https://whatsappbusiness.com/products/business-app-meta-one/). |
 
 Sobre el IVA: el Estatuto del Consumidor ([Ley 1480 de 2011, artículo 26](https://www.secretariasenado.gov.co/senado/basedoc/ley_1480_2011.html)) exige informar el precio «incluidos todos los impuestos y costos adicionales». Si una cotización no lo dice, pregúntelo antes de firmar.
-
-Sobre Meta: esos cobros los hace Meta directamente, no el proveedor de su web, y Meta puede cambiarlos. Ningún proveedor serio debería incluirlos en su precio sin decirlo.
 
 #### Cómo calcular el costo del primer año
 
@@ -1175,7 +926,7 @@ Publicamos el valor inicial de cada plan, con IVA incluido. El valor final depen
 | Landing Page | Quien necesita una sola página para vender un servicio o una promoción | $350.000, pago único | No aplica | $449.900 con dominio y hosting |
 | Web Esencial | Empresas que necesitan presencia profesional y un contacto claro | Desde $1.200.000 | Desde $120.000 | Desde $1.440.000 |
 | Web Visible | Empresas que quieren recibir clientes desde Google y asistentes de IA | Desde $2.200.000 | Desde $220.000 | Desde $2.640.000 |
-| Web + Atención Inteligente | Empresas que además quieren responder por WhatsApp fuera de horario | Desde $3.000.000 | Desde $300.000 | Desde $3.600.000, más los costos de Meta |
+| Web + Atención Inteligente | Empresas que además quieren responder por WhatsApp fuera de horario | Desde $3.000.000 | Desde $300.000 | Desde $3.600.000 |
 
 Lo que conviene saber de nuestros planes:
 
@@ -1183,7 +934,7 @@ Lo que conviene saber de nuestros planes:
 - **Dominio + Hosting**: en Web Esencial, Web Visible y Web + Atención Inteligente van incluidos el primer año. Para la Landing Page y el Plan Emprendedor cuestan $149.900 al año. El dominio (.com o .com.co) queda a nombre de su empresa.
 - **Web Esencial** incluye hasta cinco secciones o páginas, diseño adaptado a celular, botón de WhatsApp, formulario, optimización inicial para Google, certificado de seguridad y un manual breve.
 - **Web Visible** suma investigación de lo que buscan sus clientes, una página por servicio, datos estructurados, preguntas frecuentes y seguimiento mensual.
-- **Web + Atención Inteligente** suma la configuración del agente de IA que Meta ofrece en WhatsApp Business: verificamos que su cuenta tenga acceso, organizamos la información, lo probamos con 25 a 40 preguntas y definimos cuándo pasa la conversación a una persona. Si su cuenta no tiene acceso, descontamos o posponemos ese componente y configuramos las funciones clásicas de la app. El agente puede responder a cualquier hora; nuestro acompañamiento humano es de lunes a viernes, de 9:00 a. m. a 6:00 p. m. (hora de Colombia), y respondemos en uno o dos días hábiles.
+- **Web + Atención Inteligente** suma atención inteligente en WhatsApp Business: organizamos la información de su empresa, la probamos con 25 a 40 preguntas y definimos cuándo pasa la conversación a una persona. Si su cuenta no es compatible, descontamos o posponemos ese componente y dejamos listas las respuestas básicas. El agente puede responder a cualquier hora; nuestro acompañamiento humano es de lunes a viernes, de 9:00 a. m. a 6:00 p. m. (hora de Colombia), y respondemos en uno o dos días hábiles.
 - El **Plan Emprendedor** es una oferta aparte para microempresas que empiezan: una página de una sola sección, estandarizada, con alojamiento (hosting) y agenda básica, por $49.900 al mes.
 
 Cada plan web se puede pagar de una vez por su precio anual, o en 12 cuotas mensuales que suman 20 % más. Las licencias y las suscripciones externas se identifican por separado. Puede ver el detalle en [precios y condiciones](https://goldenrod-bee-973005.hostingersite.com/precios/).
@@ -1199,7 +950,7 @@ Haga estas preguntas a cada proveedor, incluidos nosotros, y pida las respuestas
 3. **¿El precio es de una vez o en cuotas? ¿Cuánto suman las cuotas en total?**
 4. **¿Qué incluye el precio que paga?** Y en qué horario responden.
 5. **¿Hay cobros periódicos o permanencia mínima?**
-6. **¿El precio incluye IVA? ¿Qué se paga aparte?** Dominio, alojamiento, licencias, fotos, costos de Meta.
+6. **¿El precio incluye IVA? ¿Qué se paga aparte?** Dominio, alojamiento, licencias, fotos y suscripciones externas.
 7. **¿Cuál es la fecha estimada de entrega?** Y qué necesita usted entregar para cumplirla.
 8. **¿Qué pasa con mi web si el proveedor deja de prestar el servicio?** Accesos, copias de seguridad y traslado.
 9. **¿Cómo se ve en un celular?** Pida enlaces de webs que ya hicieron y ábralos desde su teléfono.

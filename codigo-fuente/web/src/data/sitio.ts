@@ -14,7 +14,7 @@ export const SITIO = {
   categoria: 'Páginas web, posicionamiento y atención por WhatsApp para empresas de servicios',
   eslogan: 'Más visible. Mejor atendido.',
   propuesta:
-    'VRS Digital crea páginas web para empresas de servicios, las prepara para Google y asistentes de IA, y configura el agente de IA que Meta ofrece en WhatsApp Business.',
+    'VRS Digital crea páginas web para empresas de servicios, las prepara para Google y asistentes de IA, y ofrece atención inteligente en WhatsApp Business.',
   ciudad: 'Bogotá',
   pais: 'CO',
   imagenSocial: '/img/og-vrs-digital.png',
@@ -148,7 +148,7 @@ export const PLANES: Plan[] = [
     precioAnualHasta: 5_200_000,
     incluyeAnterior: 'Todo lo de Web Visible, más:',
     incluye: [
-      'Verificación de que su cuenta tenga acceso al agente de Meta',
+      'Revisión de que su cuenta de WhatsApp Business sea compatible',
       'Organización de la información de su negocio',
       'Configuración del tono de las respuestas',
       'Respuestas de ejemplo y documentos de apoyo',
@@ -396,7 +396,7 @@ export const AVAL = {
 
 // ── Proceso de entrega (informe, sección "Proceso de entrega") ──────────────
 export const PROCESO = [
-  { paso: '01', titulo: 'Diagnóstico', texto: 'Formulario único y reunión de hasta 45 minutos. Confirmamos el alcance y verificamos si su WhatsApp tiene acceso al agente de Meta.' },
+  { paso: '01', titulo: 'Diagnóstico', texto: 'Formulario único y reunión de hasta 45 minutos. Confirmamos el alcance y revisamos si su WhatsApp Business es compatible.' },
   { paso: '02', titulo: 'Preparación', texto: 'Investigación, lista de páginas y textos iniciales. Usted revisa todo en un documento central.' },
   { paso: '03', titulo: 'Construcción', texto: 'Diseño, desarrollo, optimización para Google y configuración de WhatsApp, con pruebas en celular y computador.' },
   { paso: '04', titulo: 'Aprobación', texto: 'Presentación completa, dos rondas de ajustes y aprobación por escrito.' },
