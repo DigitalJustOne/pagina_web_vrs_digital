@@ -8,17 +8,15 @@
    Solo el subconjunto latino (cubre tildes, ñ, ¿, ¡, «», — y …): son los mismos archivos que
    precarga Base.astro. Los demás subconjuntos de @fontsource (cirílico, griego, vietnamita)
    no se usan en español y solo agrandaban el CSS que bloquea el primer pintado.
-   font-display: optional (no swap): las dos fuentes se precargan (Base.astro), así que en una
-   visita normal llegan antes del primer pintado y se usan. Si la red es tan lenta que no llegan a
-   tiempo, la página se queda con el respaldo hasta la siguiente visita (ya en caché) y nunca
-   cambia de fuente a medio leer: con swap, el cambio partía títulos y párrafos en otro número de
-   líneas y movía el contenido (CLS de 0,12 a 0,24 a 384-414 px, y en Android el respaldo real es
-   Roboto, no Arial). El respaldo conserva métricas ajustadas (medidas con Chromium contra Arial /
-   Liberation Sans) para que esa primera visita lenta se vea casi igual. */
+   font-display: swap (2026-10-18): con «optional», cuando la fuente llegaba tarde (Cloudflare la
+   servía sin caché) el navegador la descartaba: la web se veía con la letra de respaldo y la consola
+   avisaba «preloaded but not used». Con swap siempre se usan Inter y Space Grotesk. El salto al
+   cambiar de letra se reduce con el respaldo de métricas ajustadas (medidas con Chromium contra
+   Arial / Liberation Sans) y con la caché larga de /_astro/ (public/_headers). */
 @font-face {
   font-family: 'Inter Variable';
   font-style: normal;
-  font-display: optional;
+  font-display: swap;
   font-weight: 100 900;
   src: url('../../node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2') format('woff2-variations');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
@@ -26,7 +24,7 @@
 @font-face {
   font-family: 'Space Grotesk Variable';
   font-style: normal;
-  font-display: optional;
+  font-display: swap;
   font-weight: 300 700;
   src: url('../../node_modules/@fontsource-variable/space-grotesk/files/space-grotesk-latin-wght-normal.woff2') format('woff2-variations');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;

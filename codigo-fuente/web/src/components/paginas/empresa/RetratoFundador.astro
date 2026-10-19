@@ -233,8 +233,19 @@ const [proyectos] = CIFRAS;
     .ficha-aval {
       max-width: 9.5rem;
     }
+    /* En celular las fichas tapaban la cara (Víctor, 2026-10-18): se dejan solo el nombre, centrado
+       bajo el retrato. Las otras dos repiten datos que la página ya dice en texto. */
+    .ficha-cifra,
+    .ficha-aval {
+      display: none;
+    }
     .ficha-nombre {
-      max-width: 12.5rem;
+      left: 0;
+      right: 0;
+      bottom: 3%;
+      width: max-content;
+      max-width: 85%;
+      margin-inline: auto;
     }
   }
 

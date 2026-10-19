@@ -1,0 +1,4 @@
+# Encabezados para Cloudflare (Hostinger usa public/.htaccess).
+# Los archivos de /_astro/ llevan una huella en el nombre: se pueden guardar en caché un año.
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
