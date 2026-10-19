@@ -54,7 +54,7 @@ Su web de hasta 5 páginas, con botón de WhatsApp y formulario. Trae dominio y 
 
 Incluye:
 
-- Hasta 5 páginas, por ejemplo: Inicio, Servicios, Nosotros y Contacto
+- Páginas como Inicio, Servicios, Nosotros y Contacto
 - Nosotros escribimos los textos y usted los aprueba
 - Se ve bien en el celular y en el computador
 - Botón de WhatsApp y formulario de contacto
@@ -70,7 +70,7 @@ No incluye:
 
 ### Web Visible
 
-Todo lo de Web Esencial, más una página para cada servicio y trabajo cada mes para que su empresa salga en Google.
+Su web de hasta 10 páginas, con una página para cada servicio y trabajo cada mes para que su empresa salga en Google.
 
 - Precio anual: desde $2.200.000 COP (IVA incluido), pago de una vez
 - O en 12 cuotas: $220.000 COP al mes, total $2.640.000 COP (IVA incluido)
@@ -93,7 +93,7 @@ No incluye:
 
 ### Web + Atención Inteligente (oferta principal)
 
-Todo lo de Web Visible, más respuestas automáticas en su WhatsApp Business, a cualquier hora.
+Su web de hasta 15 páginas, con todo lo de Web Visible, más respuestas automáticas en su WhatsApp Business a cualquier hora.
 
 - Precio anual: desde $3.000.000 COP (IVA incluido), pago de una vez
 - O en 12 cuotas: $300.000 COP al mes, total $3.600.000 COP (IVA incluido)
@@ -730,14 +730,14 @@ Un solo pago puede salir más caro si después cobran aparte el hosting y los ca
 
 #### Cuánto cuesta una página web en VRS Digital
 
-Estos son nuestros precios más bajos. El final depende de cuántas páginas y servicios tenga su web, y de si hay que pasar una web anterior o cargar un catálogo. Queda por escrito antes de pagar.
+Estos son nuestros precios más bajos. Cada plan trae más páginas que el anterior. El precio final depende de cuántas páginas use dentro de su plan, y de si hay que pasar una web anterior o cargar un catálogo. Queda por escrito antes de pagar.
 
 | Plan | Qué recibe | Precio | O 12 cuotas de | Total en cuotas |
 |---|---|---|---|---|
 | Landing Page | Una sola página para vender un servicio o una promoción, con botón de WhatsApp y formulario | $350.000, un solo pago | No aplica | No aplica |
 | Web Esencial | Hasta 5 páginas, con botón de WhatsApp y formulario. Trae dominio y hosting del primer año. | Desde $1.200.000 al año | Desde $120.000 | Desde $1.440.000 |
-| Web Visible | Todo lo de Web Esencial, más una página por servicio y revisión cada mes en Google | Desde $2.200.000 al año | Desde $220.000 | Desde $2.640.000 |
-| Web + Atención Inteligente | Todo lo de Web Visible, más respuestas automáticas en su WhatsApp Business | Desde $3.000.000 al año | Desde $300.000 | Desde $3.600.000 |
+| Web Visible | Hasta 10 páginas, con una para cada servicio, y revisión cada mes en Google | Desde $2.200.000 al año | Desde $220.000 | Desde $2.640.000 |
+| Web + Atención Inteligente | Hasta 15 páginas, con todo lo de Web Visible, más respuestas automáticas en su WhatsApp Business | Desde $3.000.000 al año | Desde $300.000 | Desde $3.600.000 |
 | Plan Emprendedor | Una página muy sencilla, con un diseño base ya hecho. Trae hosting y una dirección web temporal gratis. Sin formulario ni agenda. | $49.900 al mes, pago fijo | No aplica | No aplica |
 
 Lo que debe saber:
