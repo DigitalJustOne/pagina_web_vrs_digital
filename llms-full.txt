@@ -732,13 +732,13 @@ Un solo pago puede salir más caro si después cobran aparte el hosting y los ca
 
 Estos son nuestros precios más bajos. El final depende de cuántas páginas y servicios tenga su web, y de si hay que pasar una web anterior o cargar un catálogo. Queda por escrito antes de pagar.
 
-| Plan | Qué recibe | Un solo pago | O 12 cuotas de | Total en cuotas |
+| Plan | Qué recibe | Precio | O 12 cuotas de | Total en cuotas |
 |---|---|---|---|---|
-| Landing Page | Una sola página para vender un servicio o una promoción, con botón de WhatsApp y formulario | $350.000 | No aplica | No aplica |
+| Landing Page | Una sola página para vender un servicio o una promoción, con botón de WhatsApp y formulario | $350.000, un solo pago | No aplica | No aplica |
 | Web Esencial | Hasta 5 páginas, con botón de WhatsApp y formulario. Trae dominio y hosting del primer año. | Desde $1.200.000 al año | Desde $120.000 | Desde $1.440.000 |
 | Web Visible | Todo lo de Web Esencial, más una página por servicio y revisión cada mes en Google | Desde $2.200.000 al año | Desde $220.000 | Desde $2.640.000 |
 | Web + Atención Inteligente | Todo lo de Web Visible, más respuestas automáticas en su WhatsApp Business | Desde $3.000.000 al año | Desde $300.000 | Desde $3.600.000 |
-| Plan Emprendedor | Una página muy sencilla, con un diseño base ya hecho. Trae hosting y una dirección web temporal gratis. Sin formulario ni agenda. | $49.900 al mes | No aplica | No aplica |
+| Plan Emprendedor | Una página muy sencilla, con un diseño base ya hecho. Trae hosting y una dirección web temporal gratis. Sin formulario ni agenda. | $49.900 al mes, pago fijo | No aplica | No aplica |
 
 Lo que debe saber:
 
