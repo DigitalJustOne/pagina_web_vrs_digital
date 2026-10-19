@@ -14,11 +14,11 @@
 //
 //  2026-10-12: la Dirección agregó la Landing Page (pago único) y pidió unificar dominio y hosting
 //  en un paquete comercial: DOMINIO_HOSTING y LANDING de sitio.ts.
-//  PENDIENTE DE LA DIRECCIÓN antes de publicar:
-//  - Si el Plan Emprendedor ($49.900 al mes) pasa a precio anual, como los planes web.
-//  - Si la forma de pago en tres partes (50/30/20, FORMA_DE_PAGO) se mantiene para el precio
-//    anual. Hoy no aparece en esta página, pero sí en contacto y condiciones.
-//  - Qué es la «agenda básica» que incluye el Plan Emprendedor.
+//  2026-10-19 (Víctor: «la información no es clara»): página reescrita con la regla de claridad
+//  (LEEME, sección 1). Cada oferta responde la misma ficha (FILAS_FICHA de sitio.ts). Se quitaron
+//  las secciones que repetían lo de las tarjetas: cuotas, condiciones, factores y Plan Emprendedor.
+//  PENDIENTE DE VÍCTOR: tiempos de entrega;
+//  páginas máximas de Web Visible y Web + Atención Inteligente.
 // ─────────────────────────────────────────────────────────────────────────────
 import {
   CONTACTO,
@@ -51,7 +51,6 @@ const visible = plan('visible');
 const atencion = plan('atencion');
 
 const MEDIOS_PAGO_TEXTO = MEDIOS_PAGO.map(minuscula).join(', ').replace(/, ([^,]*)$/, ' o $1');
-const EMPRENDEDOR_NO_INCLUYE = PLAN_ENTRADA.noIncluye.map(minuscula).join(' ni ');
 const EMPRENDEDOR_PRECIO = `${formatoCOP(PLAN_ENTRADA.mensualidad)} al mes`;
 
 const LANDING_PRECIO = formatoCOP(LANDING.precio);
@@ -84,7 +83,7 @@ export const textosPrecios = {
     incluido: INCLUIDO,
     noIncluido: NO_INCLUIDO,
     /** Encabezado de cada grupo de filas: la base común y lo que agrega cada plan. */
-    grupos: PLANES.map((p, i) => (i === 0 ? 'La base de los tres planes' : `Lo que agrega ${p.nombre}`)),
+    grupos: PLANES.map((p, i) => (i === 0 ? 'Lo que traen los tres planes' : `Lo que agrega ${p.nombre}`)),
     precioAnual: 'Precio anual desde',
     cuotas: 'O en 12 cuotas de',
     alMes: 'al mes',
@@ -108,9 +107,9 @@ export const textosPrecios = {
 export const contenido = {
   ruta: '/precios/',
   seo: {
-    // 46 caracteres + « | VRS Digital» (Seo.astro) = 60.
-    titulo: 'Precios: páginas web, Google y WhatsApp con IA',
-    descripcion: `Planes web desde ${desde('esencial')} al año, o en 12 cuotas. Landing desde ${LANDING_PRECIO}, pago único. IVA incluido.`,
+    // 44 caracteres + « | VRS Digital» (Seo.astro).
+    titulo: 'Precios de páginas web, Google y WhatsApp',
+    descripcion: `Landing Page por ${LANDING_PRECIO}, pago único. Planes web desde ${desde('esencial')} al año o en 12 cuotas. Plan Emprendedor: ${EMPRENDEDOR_PRECIO}. IVA incluido.`,
     // «cuánto cuesta una página web en Bogotá» (búsqueda informativa) la atiende la guía de /recursos/.
     palabraClave: 'planes y precios de páginas web VRS Digital',
     secundarias: ['precio de página web para empresa', 'precio de posicionamiento web', 'precio de atención inteligente en WhatsApp', 'pagar página web en cuotas'],
@@ -121,139 +120,77 @@ export const contenido = {
   ],
   hero: {
     etiqueta: 'Precios publicados',
-    titulo: 'Precios de páginas web, posicionamiento y atención por WhatsApp',
-    subtitulo: `Landing desde ${LANDING_PRECIO}, pago único. Tres planes web con precio anual, que puede pagar de una vez o en 12 cuotas. Dominio y hosting incluidos el primer año en los planes web.`,
+    titulo: 'Precios de páginas web, Google y WhatsApp',
+    subtitulo: `Landing Page: ${LANDING_PRECIO}, un solo pago. Planes web desde ${desde('esencial')} al año, que puede pagar de una vez o en 12 cuotas. Plan Emprendedor: ${EMPRENDEDOR_PRECIO}.`,
     ctaPrincipal: CTA_PRINCIPAL,
     ctaSecundario: { texto: 'Preguntar por WhatsApp', href: enlaceWhatsApp(MENSAJE_WHATSAPP) },
-    puntos: ['Precios en pesos colombianos, IVA incluido', 'De una vez o en 12 cuotas', 'Dominio y hosting incluidos el primer año'],
+    puntos: ['IVA incluido', 'De una vez o en 12 cuotas', 'Dominio y hosting del primer año en los planes web'],
   },
-  respuestaDirecta: `${LANDING.nombre} desde ${LANDING_PRECIO}, pago único. ${esencial.nombre} desde ${desde('esencial')} al año, ${visible.nombre} desde ${desde('visible')} y ${atencion.nombre} desde ${desde('atencion')}. Cada plan web también se puede pagar en 12 cuotas mensuales, con 20 % más en total. El ${PLAN_ENTRADA.nombre} cuesta ${EMPRENDEDOR_PRECIO}. Dominio y hosting van incluidos el primer año en los planes web; para la ${LANDING.nombre}, ${DH_PRECIO}. Todo con IVA incluido.`,
+  respuestaDirecta: `${LANDING.nombre}: ${LANDING_PRECIO}, un solo pago. ${esencial.nombre} desde ${desde('esencial')} al año, ${visible.nombre} desde ${desde('visible')} y ${atencion.nombre} desde ${desde('atencion')}. Los planes web también se pagan en 12 cuotas, que suman 20 % más. ${PLAN_ENTRADA.nombre}: ${EMPRENDEDOR_PRECIO}. Todo con IVA incluido.`,
   secciones: [
     {
       id: 'planes',
       etiqueta: 'Planes',
-      titulo: 'Una landing y tres planes web con precio anual',
+      titulo: 'Tres planes web y dos opciones para empezar',
       introduccion:
-        'Cada plan web tiene un precio anual. Puede pagarlo de una vez o en 12 cuotas mensuales, que suman 20 % más. La Landing Page es pago único. Los precios están en pesos colombianos, con IVA incluido, y son el punto de partida: el valor final queda por escrito antes de cualquier pago.',
+        'Cada opción responde lo mismo, en el mismo orden: cuántas páginas trae, si trae dominio y hosting, si trae botón de WhatsApp, qué hacemos en Google y si trae respuestas automáticas.',
       tipo: 'planes',
       compacto: false,
-      // El plan Web + Atención Inteligente dice «incluso fuera de horario» (sitio.ts): aclaración obligatoria.
-      nota: `El agente de WhatsApp puede responder a cualquier hora. Nuestro acompañamiento humano es de ${minuscula(CONTACTO.horario)}. ${CONTACTO.respuestaHumana}`,
+      // Web + Atención Inteligente dice «a cualquier hora»: aclaración obligatoria (Ley 1480).
+      nota: `Las respuestas automáticas funcionan a cualquier hora. Nosotros atendemos ${minuscula(CONTACTO.horario)}.`,
     },
     {
       id: 'comparar',
       etiqueta: 'Comparar',
-      titulo: 'Qué incluye cada plan, punto por punto',
-      introduccion: `Cada plan suma lo del anterior: ${atencion.nombre} lo incluye todo.`,
+      titulo: 'Compare los tres planes web',
+      introduccion: `Cada plan trae todo lo del anterior. ${atencion.nombre} lo trae todo.`,
       tipo: 'tabla',
-      columnas: ['Qué incluye', ...PLANES.map((p) => p.nombre)],
+      columnas: ['Qué trae', ...PLANES.map((p) => p.nombre)],
       filas: FILAS_COMPARAR,
       // El último plan incluye todo lo de los anteriores: lo que él no incluye no está en ningún plan.
-      nota: `Lo que no incluye cada plan está en su tarjeta, arriba. Ningún plan incluye ${atencion.noIncluye.map(minuscula).join(', ').replace(/, ([^,]*)$/, ' ni $1')}.`,
-    },
-    {
-      id: 'cuotas',
-      etiqueta: 'Cuotas',
-      titulo: 'Pague de una vez o en 12 cuotas',
-      introduccion:
-        'Si prefiere pagar en cuotas, el total sube 20 %. Los valores son «desde», con IVA incluido.',
-      tipo: 'lista',
-      items: [
-        {
-          titulo: `${esencial.nombre}: ${desde('esencial')} de una vez, o 12 cuotas de ${cuota('esencial')}`,
-          texto: `Total en cuotas: ${total('esencial')}, IVA incluido.`,
-        },
-        {
-          titulo: `${visible.nombre}: ${desde('visible')} de una vez, o 12 cuotas de ${cuota('visible')}`,
-          texto: `Total en cuotas: ${total('visible')}, IVA incluido.`,
-        },
-        {
-          titulo: `${atencion.nombre}: ${desde('atencion')} de una vez, o 12 cuotas de ${cuota('atencion')}`,
-          texto: `Total en cuotas: ${total('atencion')}, IVA incluido.`,
-        },
-      ],
+      nota: `Ningún plan trae ${atencion.noIncluye.map(minuscula).join(', ').replace(/, ([^,]*)$/, ' ni $1')}.`,
     },
     {
       id: 'aparte',
       etiqueta: 'Se paga aparte',
       titulo: 'Qué se paga aparte',
-      introduccion: 'Para que no haya sorpresas, esto es lo que se paga aparte:',
       tipo: 'lista',
       items: [
         {
-          titulo: `${DOMINIO_HOSTING.nombre}: ${DH_PRECIO} para la ${LANDING.nombre} y el ${PLAN_ENTRADA.nombre}`,
-          texto: `La dirección de su web (por ejemplo suempresa.com.co) y el servidor donde vive, en un solo pago anual con IVA incluido. En los planes web va incluido el primer año; con la ${LANDING.nombre}, el primer año sale en ${formatoCOP(LANDING.precioConDominio)} con la página incluida.`,
+          titulo: `Dominio y hosting: ${DH_PRECIO}`,
+          texto: DOMINIO_HOSTING.aparte,
         },
         {
-          titulo: 'Licencias y suscripciones externas',
-          texto: 'Si su web necesita algún servicio de terceros, se lo indicamos en la propuesta con su costo, antes de empezar.',
+          titulo: 'Servicios de otras empresas',
+          texto: 'Si su web necesita un servicio de otra empresa con costo, como una licencia, se lo decimos con su precio antes de empezar.',
         },
         {
-          titulo: 'Plan de pago de WhatsApp, si lo necesita',
+          titulo: 'El plan de pago de WhatsApp, si lo necesita',
           texto:
-            'WhatsApp incluye cada mes un cupo de respuestas automáticas sin costo. Si su empresa necesita más, WhatsApp cobra un plan aparte, que usted paga directamente. Ese costo no está en nuestros precios y se lo informamos antes.',
+            'WhatsApp da cada mes un cupo de respuestas automáticas sin costo. Si su empresa necesita más, WhatsApp cobra un plan aparte y usted lo paga directamente. Se lo decimos antes.',
         },
       ],
       enlace: { texto: 'Lo que debe saber antes de contratar', href: '/asistente-whatsapp-business/#antes-de-contratar' },
     },
     {
-      id: 'factores',
-      etiqueta: 'Qué cambia el precio',
-      titulo: 'Por qué los precios dicen «desde»',
-      introduccion: 'El precio publicado es el valor mínimo de cada plan. Estos factores lo pueden subir:',
-      tipo: 'lista',
-      items: [
-        'El número de páginas o secciones.',
-        'Los textos: si usted los entrega listos o los preparamos nosotros.',
-        'La migración: trasladar el contenido de una web anterior.',
-        'Los idiomas: cada idioma adicional es una versión más de la web.',
-        'El catálogo: cuántos productos o servicios hay que mostrar.',
-        'La información para el agente de WhatsApp: cuántos servicios, políticas y preguntas debe conocer.',
-      ],
-    },
-    {
       id: 'pago',
       etiqueta: 'Forma de pago',
       titulo: 'Cómo se paga',
-      introduccion: 'Elija un plan y vea cuánto paga de una vez o en cuotas. Los valores son «desde», con IVA incluido.',
+      introduccion: 'Elija un plan y vea cuánto paga de una vez o en cuotas.',
       tipo: 'pasos',
       items: [
         {
           paso: '01',
           titulo: 'De una vez',
-          texto: 'Pague el precio anual completo por cualquiera de los medios de pago de abajo.',
+          texto: 'Paga el precio del año completo.',
         },
         {
           paso: '02',
           titulo: '12 cuotas mensuales',
-          texto: 'Pague cada mes una cuota de la misma cantidad. El total de las cuotas es 20 % mayor que el precio de una vez.',
+          texto: 'Paga cada mes la misma cuota. En total paga 20 % más.',
         },
       ],
       medios: MEDIOS_PAGO,
-    },
-    {
-      id: 'condiciones',
-      etiqueta: 'Condiciones',
-      titulo: 'Condiciones claras desde el inicio',
-      tipo: 'lista',
-      items: [
-        'Cada plan web tiene un precio anual: se paga de una vez o en 12 cuotas mensuales, que suman 20 % más.',
-        'En los planes web, el dominio y el hosting van incluidos el primer año. Para la Landing Page y el Plan Emprendedor cuestan $149.900 al año.',
-        'Licencias y suscripciones externas se identifican por separado.',
-        'Trabajamos con un máximo de dos proyectos al mismo tiempo; la fecha de inicio se asigna según disponibilidad.',
-      ],
-    },
-    {
-      id: 'emprendedor',
-      etiqueta: 'Para empezar',
-      titulo: `${PLAN_ENTRADA.nombre}: ${EMPRENDEDOR_PRECIO}`,
-      tipo: 'texto',
-      parrafos: [
-        PLAN_ENTRADA.descripcion,
-        'No se compara con los tres planes empresariales: es un producto distinto, estandarizado, para quien necesita estar en internet con lo básico.',
-        `No incluye ${EMPRENDEDOR_NO_INCLUYE}. Si quiere su propio dominio, se agrega con el paquete ${DOMINIO_HOSTING.nombre} (${DH_PRECIO}). Si su empresa necesita una página por servicio, aparecer mejor en Google o atención inteligente en WhatsApp, le conviene uno de los tres planes.`,
-      ],
-      enlace: { texto: `Solicitar el ${PLAN_ENTRADA.nombre}`, href: `${CTA_PRINCIPAL.href}?plan=emprendedor` },
     },
     {
       id: 'sin-acceso-whatsapp',
@@ -261,82 +198,67 @@ export const contenido = {
       titulo: 'Si su WhatsApp aún no es compatible',
       tipo: 'texto',
       parrafos: [
-        'No todas las cuentas de WhatsApp Business tienen todavía la atención inteligente. En el diagnóstico revisamos la suya.',
-        `Si aún no la tiene, entregamos la web y el posicionamiento, y el valor de la atención inteligente dentro del plan ${atencion.nombre} se descuenta o se pospone: usted no paga por algo que su cuenta no tiene. Mientras tanto, dejamos listas las respuestas básicas: mensaje de bienvenida, mensaje de ausencia, respuestas rápidas, etiquetas y catálogo.`,
+        'No todas las cuentas de WhatsApp Business pueden tener respuestas automáticas todavía. En el diagnóstico revisamos la suya.',
+        `Si la suya aún no puede, le entregamos la web y el trabajo en Google. Lo que cuestan las respuestas automáticas dentro de ${atencion.nombre} se descuenta o se deja para después: no paga por algo que su cuenta no tiene.`,
+        'Mientras tanto, le dejamos listos el mensaje de bienvenida, el mensaje para fuera de horario, las respuestas rápidas, las etiquetas y el catálogo.',
       ],
       enlace: { texto: 'Ver el servicio de WhatsApp Business', href: '/asistente-whatsapp-business/' },
     },
   ],
   preguntas: [
     {
-      pregunta: '¿Cuánto cuesta una landing page?',
-      respuesta: `La ${LANDING.nombre} cuesta ${LANDING_PRECIO}, pago único, IVA incluido. Es una página de una sola sección para vender un servicio o una promoción, con botón de WhatsApp, formulario y optimización inicial para Google. Lista para publicar, con dominio y hosting del primer año, cuesta ${formatoCOP(LANDING.precioConDominio)}.`,
-    },
-    {
-      pregunta: '¿Puedo pagar en cuotas?',
-      respuesta: `Sí. Cada plan web tiene un precio anual que puede pagar de una vez o en 12 cuotas mensuales. Las cuotas suman 20 % más. Por ejemplo, ${esencial.nombre} cuesta ${desde('esencial')} de una vez, o 12 cuotas de ${cuota('esencial')} (total ${total('esencial')}), IVA incluido.`,
-    },
-    {
       pregunta: '¿El dominio y el hosting están incluidos?',
-      respuesta: `En ${esencial.nombre}, ${visible.nombre} y ${atencion.nombre}, el dominio (.com o .com.co) y el hosting van incluidos el primer año. Para la ${LANDING.nombre} y el ${PLAN_ENTRADA.nombre} cuestan ${DH_PRECIO}, IVA incluido. El dominio queda a nombre de su empresa.`,
+      respuesta: `En ${esencial.nombre}, ${visible.nombre} y ${atencion.nombre}, sí: van incluidos el primer año, y el dominio queda a nombre de su empresa. ${DOMINIO_HOSTING.aparte}`,
     },
     {
       pregunta: '¿Por qué los precios dicen «desde»?',
       respuesta:
-        'Porque cada empresa necesita un alcance distinto. El precio publicado es el valor mínimo de cada plan. Lo que más lo cambia es el número de páginas, si hay que preparar los textos, la migración de una web anterior, los idiomas, el tamaño del catálogo y la cantidad de información para la atención inteligente de WhatsApp. El valor final queda por escrito antes de empezar.',
+        '«Desde» es el precio más bajo de cada plan. Sube si necesita más páginas, muchos textos, otro idioma, un catálogo grande o pasar el contenido de una web anterior. Antes de pagar, usted recibe el valor exacto por escrito.',
     },
     {
-      pregunta: '¿Qué se paga aparte?',
-      respuesta: `El dominio y el hosting de la ${LANDING.nombre} y del ${PLAN_ENTRADA.nombre} (${DH_PRECIO}). Las licencias y las suscripciones externas se identifican por separado en la propuesta. Si usa la atención inteligente de WhatsApp y necesita más respuestas que el cupo gratuito, el plan de pago de WhatsApp lo paga usted directamente. Los servicios que no estén en su plan se cotizan aparte.`,
+      pregunta: '¿Puedo pagar en cuotas?',
+      respuesta: `Sí, los planes web. Por ejemplo, ${esencial.nombre}: ${desde('esencial')} de una vez, o 12 cuotas de ${cuota('esencial')}. En cuotas paga ${total('esencial')} en total. Medios de pago: ${MEDIOS_PAGO_TEXTO}.`,
     },
     {
-      pregunta: '¿Cómo se paga?',
-      respuesta: `Puede pagar el precio anual de una vez o en 12 cuotas mensuales. Medios de pago: ${MEDIOS_PAGO_TEXTO}. Antes del primer pago usted recibe la propuesta por escrito con el alcance y el valor.`,
+      pregunta: '¿Cuánto cuesta una landing page?',
+      respuesta: `${LANDING_PRECIO}, un solo pago. Es una página para vender un servicio o una promoción, con botón de WhatsApp y formulario. Con dominio y hosting del primer año: ${formatoCOP(LANDING.precioConDominio)}.`,
     },
     {
-      pregunta: `¿En qué se diferencia el ${PLAN_ENTRADA.nombre}?`,
-      respuesta: `Es una página de una sola sección, estandarizada, con alojamiento (hosting) y agenda básica incluidos, por ${EMPRENDEDOR_PRECIO}. Está pensada para microempresas que empiezan. No incluye ${EMPRENDEDOR_NO_INCLUYE}. Si su empresa necesita una página por servicio, aparecer mejor en Google o atención inteligente en WhatsApp, le conviene uno de los tres planes empresariales.`,
+      pregunta: `¿Qué es el ${PLAN_ENTRADA.nombre}?`,
+      respuesta: `${PLAN_ENTRADA.queEs} Trae el hosting y una dirección web temporal gratis. No trae revisión mensual en Google ni respuestas automáticas en WhatsApp.`,
+    },
+    {
+      pregunta: '¿Cuándo pueden empezar?',
+      respuesta: 'Trabajamos con máximo dos proyectos al mismo tiempo. Por eso la fecha de inicio depende de cuándo haya cupo, y queda por escrito en la propuesta.',
     },
   ],
   cta: {
-    titulo: '¿Qué plan necesita su empresa?',
+    titulo: '¿No sabe qué plan necesita?',
     texto:
-      'Solicite una revisión digital gratuita. Analizamos su web, su visibilidad en Google y su atención por WhatsApp, y le recomendamos el plan que tiene sentido para usted, con tres prioridades concretas.',
+      'Pida la revisión gratuita. Miramos su web, cómo sale en Google y su WhatsApp, y le decimos qué plan le sirve, con tres mejoras concretas.',
     ctaPrincipal: CTA_PRINCIPAL,
     ctaWhatsApp: MENSAJE_WHATSAPP,
     enlaceWhatsApp: enlaceWhatsApp(MENSAJE_WHATSAPP),
   },
   enlacesInternos: [
-    { texto: 'Diseño de páginas web en Bogotá para empresas', href: '/paginas-web-bogota/' },
-    { texto: 'Posicionamiento en Google y asistentes de IA', href: '/posicionamiento-google-inteligencia-artificial/' },
+    { texto: 'Páginas web para empresas', href: '/paginas-web-bogota/' },
+    { texto: 'Aparecer en Google y en asistentes de IA', href: '/posicionamiento-google-inteligencia-artificial/' },
     { texto: 'Atención inteligente en WhatsApp Business', href: '/asistente-whatsapp-business/' },
-    { texto: 'Proyectos realizados por VRS Digital', href: '/proyectos/' },
+    { texto: 'Proyectos de VRS Digital', href: '/proyectos/' },
     { texto: 'Guía: cuánto cuesta una página web en Bogotá', href: '/recursos/cuanto-cuesta-una-pagina-web-en-bogota/' },
-    { texto: 'Solicitar una revisión digital', href: '/contacto/' },
+    { texto: 'Pedir la revisión gratuita', href: '/contacto/' },
   ],
   /** Ofertas para el JSON-LD (Service u Offer por plan). Precios idénticos a los visibles; sin AggregateRating. */
   ofertas: [
-    {
-      id: 'landing',
-      nombre: LANDING.nombre,
-      descripcion: LANDING.descripcion,
-      precioDesde: LANDING.precio,
-      cuotaDesde: null,
-    },
+    { id: 'landing', nombre: LANDING.nombre, descripcion: LANDING.queEs, precioDesde: LANDING.precio, cuotaDesde: null },
     ...PLANES.map((p) => ({
       id: p.id,
       nombre: p.nombre,
-      descripcion: p.paraQuien,
+      descripcion: p.queEs,
       precioDesde: p.precioAnualDesde,
       cuotaDesde: cuotaMensual(p.precioAnualDesde),
     })),
-    {
-      id: 'emprendedor',
-      nombre: PLAN_ENTRADA.nombre,
-      descripcion: PLAN_ENTRADA.descripcion,
-      precioDesde: null,
-      cuotaDesde: PLAN_ENTRADA.mensualidad,
-    },
+    { id: 'emprendedor', nombre: PLAN_ENTRADA.nombre, descripcion: PLAN_ENTRADA.queEs, precioDesde: null, cuotaDesde: PLAN_ENTRADA.mensualidad },
   ],
-  actualizado: '2026-10-13',
+  actualizado: '2026-10-19',
 } as const satisfies ModuloPagina;

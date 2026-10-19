@@ -28,7 +28,7 @@ import Pasos from '@/components/ui/Pasos.astro';
 import PlanesPrecios from '@/components/ui/PlanesPrecios.astro';
 import Tarjetas from '@/components/ui/Tarjetas.astro';
 import Formulario from '@/components/islas/Formulario';
-import { NOTA_PRECIOS, fechaLarga, idTitulo, muestraPrecio } from '@/lib/paginas';
+import { NOTA_PRECIOS, fechaLarga, idTitulo, muestraPrecio, necesitaNotaPrecios } from '@/lib/paginas';
 import type { FondoSeccion, OpcionesSeccion, Seccion, TipoSeccion } from '@/data/contenido/tipos';
 import Aclaraciones from './Aclaraciones.astro';
 import Aval from './Aval.astro';
@@ -82,7 +82,7 @@ const parrafosPie = s.tipo === 'texto' || s.tipo === 'perfil' || s.tipo === 'con
 const notaPie =
   s.tipo === 'formulario' || (s.tipo === 'pasos' && s.medios?.length && s.nota?.startsWith('Medios de pago')) ? undefined : s.nota;
 // PlanesPrecios ya trae NOTA_PRECIOS al pie.
-const pie = { parrafos: parrafosPie, nota: notaPie, notaPrecios: s.tipo !== 'planes' && muestraPrecio(s), enlace: s.enlace };
+const pie = { parrafos: parrafosPie, nota: notaPie, notaPrecios: s.tipo !== 'planes' && necesitaNotaPrecios(s), enlace: s.enlace };
 /** En «conversacion», las aclaraciones van a todo el ancho bajo el teléfono, y el pie tras ellas. */
 const aclaracionesAbajo = s.tipo === 'conversacion' && Boolean(s.aclaraciones?.length);
 

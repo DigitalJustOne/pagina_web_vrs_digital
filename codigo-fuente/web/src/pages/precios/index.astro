@@ -15,7 +15,7 @@ import PilaPlanes from '@/components/paginas/sectores/PilaPlanes.astro';
 import SimuladorPago from '@/components/paginas/sectores/SimuladorPago.astro';
 import { contenido } from '@/data/contenido/precios';
 import type { FondoSeccion, SeccionPasos, SeccionTabla } from '@/data/contenido/tipos';
-import { PLAN_ENTRADA, SITIO } from '@/data/sitio';
+import { SITIO } from '@/data/sitio';
 import { especificacionPrecio, urlAbsoluta } from '@/lib/schema';
 
 /** Sección por id, con su posición (para el fondo alterno y el número de orden). */
@@ -35,7 +35,7 @@ const catalogo = {
   name: `Planes de ${SITIO.nombre}`,
   url: urlAbsoluta(contenido.ruta),
   itemListElement: contenido.ofertas.map((o) => {
-    const ancla = o.id === 'emprendedor' ? '#emprendedor' : `#plan-${o.id}`;
+    const ancla = `#plan-${o.id}`;
     return {
       '@type': 'Offer',
       '@id': urlAbsoluta(contenido.ruta) + ancla,
@@ -65,15 +65,12 @@ const catalogo = {
   resaltado="Precios"
   jsonldExtra={[catalogo]}
   opciones={{
-    planes: { resaltado: 'Una landing' },
-    aparte: { resaltado: 'aparte', plegar: 'Ver qué se paga aparte' },
-    factores: { resaltado: '«desde»', plegar: 'Ver qué puede subir el precio' },
-    condiciones: { resaltado: 'Condiciones claras', plegar: 'Ver las condiciones' },
-    emprendedor: { resaltado: PLAN_ENTRADA.nombre, plegar: 'Ver en qué consiste' },
+    planes: { resaltado: 'dos opciones para empezar' },
+    aparte: { resaltado: 'aparte' },
     'sin-acceso-whatsapp': { resaltado: 'aún no es compatible', plegar: 'Ver qué pasa en ese caso' },
   }}
 >
   <PilaPlanes slot="visual" />
-  <ComparadorPlanes slot="seccion-comparar" seccion={comparar.s} fondo={comparar.fondo} numero={comparar.numero} resaltado="punto por punto" />
+  <ComparadorPlanes slot="seccion-comparar" seccion={comparar.s} fondo={comparar.fondo} numero={comparar.numero} resaltado="tres planes web" />
   <SimuladorPago slot="seccion-pago" seccion={pago.s} fondo={pago.fondo} numero={pago.numero} resaltado="se paga" />
 </PlantillaPagina>

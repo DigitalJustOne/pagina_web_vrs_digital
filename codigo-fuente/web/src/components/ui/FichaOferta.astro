@@ -1,0 +1,39 @@
+---
+/**
+ * Ficha de una oferta: las mismas preguntas, en el mismo orden, para todas las ofertas
+ * (FILAS_FICHA de sitio.ts). Regla de claridad (LEEME-WEB-NUEVA.md, sección 1): cada respuesta es
+ * un sí, un no o un número. Las filas sin respuesta confirmada no se muestran.
+ *
+ * <FichaOferta ficha={plan.ficha} />
+ */
+import { FILAS_FICHA, type Ficha } from '@/data/sitio';
+import Icono from './Icono.astro';
+
+interface Props {
+  ficha: Ficha;
+  class?: string;
+}
+
+const { ficha, class: clase } = Astro.props;
+const filas = FILAS_FICHA.flatMap((f) => {
+  const respuesta = ficha[f.id];
+  return respuesta ? [{ ...f, respuesta }] : [];
+});
+---
+<dl class:list={['grid gap-2.5', clase]}>
+  {
+    filas.map(({ pregunta, respuesta }) => (
+      <div class="flex items-start gap-3 text-[0.9375rem] leading-snug">
+        {respuesta.si ? (
+          <Icono nombre="tick" tamano={18} class="mt-px shrink-0 text-primary" />
+        ) : (
+          <Icono nombre="minus" tamano={18} class="mt-px shrink-0 text-ink-mute" />
+        )}
+        <div>
+          <dt class="inline font-semibold text-ink">{pregunta}:</dt>{' '}
+          <dd class:list={['inline', respuesta.si ? 'text-ink-soft' : 'text-ink-mute']}>{respuesta.texto}</dd>
+        </div>
+      </div>
+    ))
+  }
+</dl>

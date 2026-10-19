@@ -32,7 +32,7 @@ import Icono from '@/components/ui/Icono.astro';
 import Preguntas from '@/components/ui/Preguntas.astro';
 import RespuestaDirecta from '@/components/ui/RespuestaDirecta.astro';
 import { CONTACTO, enlaceWhatsApp } from '@/data/sitio';
-import { NOTA_PRECIOS, fechaLarga, grafoPagina, muestraPrecio } from '@/lib/paginas';
+import { NOTA_PRECIOS, fechaLarga, grafoPagina, necesitaNotaPrecios } from '@/lib/paginas';
 import type { FondoSeccion, ModuloPagina, OpcionesSeccion, TipoSeccion } from '@/data/contenido/tipos';
 import AvisoBorrador from './AvisoBorrador.astro';
 import HeroPagina from './HeroPagina.astro';
@@ -127,7 +127,7 @@ const itemsIndice = [
 const conIndice = indice ?? secciones.length >= 4;
 
 // ── Bajo la respuesta directa: nota de precios, verificación y vigencia ────
-const precioEnRespuesta = muestraPrecio(c.respuestaDirecta);
+const precioEnRespuesta = necesitaNotaPrecios(c.respuestaDirecta);
 const vigenciaVisible = !c.borrador && c.vigencia;
 
 const mensajeWhatsApp = c.cta?.ctaWhatsApp;

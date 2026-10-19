@@ -23,11 +23,11 @@ const capacidad = seccionDe(contenido, 'capacidad', 'lista');
   resaltado="el responsable de cada proyecto"
   opciones={{
     aval: { disposicion: 'dividido', resaltado: 'MinTIC' },
-    valores: { resaltado: 'nuestro trabajo' },
+    valores: { resaltado: 'cumplimos' },
     'fuera-de-alcance': { resaltado: 'no hacemos' },
   }}
 >
   <RetratoFundador slot="visual" />
-  <PerfilFundador slot="seccion-responsable" seccion={responsable.s} fondo={responsable.fondo} numero={responsable.numero} resaltado="de principio a fin" />
+  <PerfilFundador slot="seccion-responsable" seccion={responsable.s} fondo={responsable.fondo} numero={responsable.numero} resaltado="Una sola persona" />
   <CupoProyectos slot="seccion-capacidad" seccion={capacidad.s} fondo={capacidad.fondo} numero={capacidad.numero} resaltado="a propósito" />
 </PlantillaPagina>

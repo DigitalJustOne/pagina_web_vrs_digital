@@ -12,6 +12,9 @@
 //    Si alguno es demostración o producto propio, debe rotularse así (Ley 1480, art. 23).
 //  - Confirmar el compromiso de publicar casos nuevos solo con autorización escrita del cliente
 //    (lo afirman la sección «resultados» y la pregunta «¿Publicarán mi proyecto…?»).
+//  2026-10-19 (claridad): textos simples; se quitó la introducción del portafolio y la pregunta
+//  «¿Puedo ver estos proyectos funcionando?» (repetían que cada uno tiene enlace) y el enlace a la
+//  página por sector.
 //  EDICIÓN FINAL (2026-10-06): «¿Cuánto cuesta un proyecto?» se cambió por «¿Publicarán mi
 //  proyecto en esta página?»: el precio ya se responde en /precios/ y en /paginas-web-bogota/.
 // ─────────────────────────────────────────────────────────────────────────────
@@ -45,7 +48,7 @@ export const contenido = {
   seo: {
     titulo: 'Proyectos de páginas web y plataformas',
     descripcion:
-      'Proyectos de VRS Digital con enlace público: web corporativa y landing pages para Google Ads, webs y plataformas, y productos propios. Revise qué se hizo.',
+      'Proyectos de VRS Digital que puede abrir y revisar: webs, páginas de venta para Google Ads, plataformas y un producto propio para centros de estética.',
     palabraClave: 'proyectos de páginas web',
     secundarias: [
       'portafolio de páginas web Bogotá',
@@ -60,18 +63,17 @@ export const contenido = {
   hero: {
     etiqueta: 'Proyectos',
     titulo: 'Proyectos de páginas web y plataformas digitales',
-    subtitulo:
-      'Proyectos desarrollados por Víctor Ramírez y productos propios de VRS Digital. Cada uno tiene su enlace público para que usted lo revise.',
+    subtitulo: 'Trabajos hechos por Víctor Ramírez y productos propios de VRS Digital. Puede abrir cada uno y revisarlo.',
     ctaPrincipal: CTA_PRINCIPAL,
     ctaSecundario: { texto: 'Ver planes y precios', href: '/precios/' },
   },
-  respuestaDirecta: `Estos son los proyectos de VRS Digital con enlace público: una web corporativa y landing pages para campañas de Google Ads de una empresa de tejas y cubiertas, y webs y plataformas para industria, restaurantes, logística, bienestar y belleza, además de un producto propio. Cada uno tiene su enlace para revisarlo.`,
+  respuestaDirecta:
+    'Aquí están los proyectos de VRS Digital: la web de una empresa de tejas y sus páginas de venta para Google Ads, otras webs y plataformas, y Beauty Manager, un producto propio.',
   secciones: [
     {
       id: 'portafolio',
       etiqueta: 'Portafolio',
-      titulo: 'Proyectos con enlace público',
-      introduccion: 'Cada proyecto tiene un enlace para que usted lo revise. Al lado está el sector de cada uno.',
+      titulo: 'Proyectos que puede abrir',
       tipo: 'tarjetas',
       columnas: 3,
       items: PROYECTOS.map((p) => ({
@@ -84,19 +86,14 @@ export const contenido = {
   ],
   preguntas: [
     {
-      pregunta: '¿Puedo ver estos proyectos funcionando?',
-      respuesta:
-        'Sí. Cada uno tiene un enlace público para que usted lo revise.',
-    },
-    {
       pregunta: '¿Todavía desarrollan plataformas a medida?',
       respuesta:
-        'No forman parte de nuestra oferta actual. Beauty Manager es un producto propio para centros de estética que se puede adquirir; las demás son proyectos anteriores de diseño y desarrollo. Hoy nos concentramos en páginas web, posicionamiento en Google y asistentes de IA, atención inteligente en WhatsApp Business y mantenimiento. Un desarrollo a medida solo se evalúa de forma excepcional y con un alcance controlado.',
+        'No. Hoy hacemos páginas web, trabajo para aparecer en Google y respuestas automáticas en WhatsApp Business. Beauty Manager sí se puede comprar: es un producto propio para centros de estética.',
     },
     {
-      pregunta: '¿Mi empresa obtendrá los mismos resultados que estos proyectos?',
+      pregunta: '¿Me garantizan resultados para mi empresa?',
       respuesta:
-        'No podemos garantizarlo. Los resultados dependen de su negocio, su mercado, su operación y el tiempo. Lo que sí definimos con usted es el alcance, lo que se entrega y cómo se revisa el avance. Si contrata el seguimiento mensual, revisamos datos reales cada mes para decidir las siguientes mejoras.',
+        'No podemos garantizarlo. Depende de su negocio, su mercado y el tiempo. Lo que sí acordamos por escrito es qué incluye su proyecto y qué le entregamos.',
     },
     {
       pregunta: '¿Publicarán mi proyecto en esta página?',
@@ -106,17 +103,15 @@ export const contenido = {
   ],
   cta: {
     titulo: 'Veamos qué necesita su empresa',
-    texto:
-      'Solicite una revisión digital gratuita. Analizamos su web, su visibilidad en Google y su atención por WhatsApp, y le entregamos tres prioridades concretas.',
+    texto: 'Revisamos gratis su web, cómo aparece en Google y su WhatsApp. Le entregamos tres mejoras concretas.',
     ctaPrincipal: CTA_PRINCIPAL,
     ctaWhatsApp: MENSAJE_WHATSAPP,
     enlaceWhatsApp: enlaceWhatsApp(MENSAJE_WHATSAPP),
   },
   enlacesInternos: [
     { texto: 'Diseño de páginas web en Bogotá para empresas', href: '/paginas-web-bogota/' },
-    { texto: 'Páginas web para empresas de servicios', href: '/paginas-web-empresas-servicios/' },
     { texto: 'Precios y qué incluye cada plan', href: '/precios/' },
     { texto: 'Quién está detrás de VRS Digital', href: '/nosotros/' },
   ],
-  actualizado: '2026-10-11',
+  actualizado: '2026-10-19',
 } as const satisfies ModuloPagina;

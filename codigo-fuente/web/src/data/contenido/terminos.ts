@@ -132,7 +132,7 @@ export const contenido = {
       tipo: 'texto',
       parrafos: [
         'Los precios publicados en este sitio son valores iniciales («desde») e incluyen IVA. El valor final depende del número de páginas, los textos, la migración, el catálogo y la cantidad de información, y queda por escrito en la propuesta, con IVA incluido, antes de cualquier pago.',
-        ...CONDICIONES.filter((c) => c.includes('Dominio') || c.includes('Licencias')),
+        ...CONDICIONES.filter((c) => /dominio|licencia/i.test(c)),
         'Los planes de pago de WhatsApp Business para más respuestas automáticas, cuando apliquen, los paga el cliente directamente y no están incluidos en nuestros precios.',
       ],
     },

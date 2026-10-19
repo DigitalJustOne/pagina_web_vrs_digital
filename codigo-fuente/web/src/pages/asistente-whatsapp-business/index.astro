@@ -3,8 +3,8 @@
 // Todo el texto sale de src/data/contenido/asistente-whatsapp-business.ts y los precios de sitio.ts.
 // La plantilla arma SEO, JSON-LD (página, migas, FAQ y servicio), secciones, preguntas y cierre.
 // Momentos propios de la página:
-//   - Portada: teléfono dentro de un anillo de 24 horas (el agente puede responder a cualquier
-//     hora; una persona continúa en su horario), con las horas de la conversación de ejemplo.
+//   - Portada: teléfono dentro de un anillo de 24 horas (las respuestas automáticas contestan a
+//     cualquier hora; una persona sigue en su horario), con las horas de la conversación de ejemplo.
 //   - #pruebas: banco de pruebas (una celda por pregunta y una tarjeta por grupo), con los
 //     criterios de aprobación al pie.
 // JSON-LD: el módulo no da precioDesde al servicio (el precio publicado es del plan completo), así
@@ -25,7 +25,7 @@ const oferta = {
   '@type': 'Offer',
   '@id': urlAbsoluta(contenido.ruta) + '#oferta',
   name: atencion.nombre,
-  description: atencion.paraQuien,
+  description: atencion.queEs,
   url: urlAbsoluta('/precios/#plan-atencion'),
   itemOffered: { '@id': urlAbsoluta(contenido.ruta) + '#servicio' },
   seller: { '@id': urlAbsoluta('/#organizacion') },
@@ -43,15 +43,13 @@ const oferta = {
   resaltado="WhatsApp Business"
   jsonldExtra={[oferta]}
   opciones={{
-    'que-es': { iluminar: true },
     ejemplo: { resaltado: 'una conversación' },
     'que-puede-hacer': { resaltado: 'por su empresa', plegar: 'Ver qué puede hacer' },
     controles: { resaltado: 'usted controla', plegar: 'Ver los controles' },
     alcance: { resaltado: 'y qué no' },
-    informacion: { plegar: 'Ver la información que pedimos' },
+    informacion: { resaltado: 'nos da usted', plegar: 'Ver la información que pedimos' },
     'antes-de-contratar': { resaltado: 'antes de contratar', plegar: 'Ver lo que debe saber' },
     privacidad: { resaltado: 'sus clientes', plegar: 'Ver qué pasa con los datos' },
-    'sin-acceso': { resaltado: 'todavía no', plegar: 'Ver qué hacemos en ese caso' },
   }}
 >
   <RelojAtencion slot="visual" />

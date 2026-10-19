@@ -32,6 +32,13 @@ export function muestraPrecio(valor: unknown): boolean {
   return PATRON_PRECIO.test(texto);
 }
 
+/** Muestra un precio y todavía no dice «IVA incluido»: solo entonces se agrega NOTA_PRECIOS.
+ *  Regla de claridad (2026-10-19): el IVA se dice junto al precio, no repetido en cada bloque. */
+export function necesitaNotaPrecios(valor: unknown): boolean {
+  const texto = typeof valor === 'string' ? valor : JSON.stringify(valor ?? '');
+  return muestraPrecio(texto) && !/IVA incluido/i.test(texto);
+}
+
 export { NOTA_PRECIOS };
 
 // ── Fechas y enlaces ─────────────────────────────────────────────────────────

@@ -9,8 +9,12 @@
  *                                     a su detalle en /precios/. Mide un tercio de la grilla completa.
  * <PlanesPrecios sinEmprendedor />  → oculta las opciones de entrada (Landing Page y Plan Emprendedor).
  *
- * Cada plan web muestra un precio anual y la misma cantidad en 12 cuotas mensuales (cuotaMensual: 20 % más). Debajo de los planes va siempre la franja «Dominio + Hosting» (DOMINIO_HOSTING): el primer año va incluido en los planes web;
- * precio anual para la Landing Page y el Plan Emprendedor.
+ * Cada plan web muestra un precio anual y la misma cantidad en 12 cuotas mensuales (cuotaMensual: 20 % más). Debajo de los planes va siempre la franja «Dominio y hosting» (DOMINIO_HOSTING): qué trae cada oferta,
+ * con las dos palabras explicadas.
+ *
+ * Regla de claridad (Víctor, 2026-10-18): cada tarjeta dice primero qué es (queEs) y luego responde
+ * las mismas preguntas en el mismo orden (FichaOferta.astro, FILAS_FICHA de sitio.ts). La lista
+ * completa de lo que incluye queda plegada en celular.
  * <PlanesPrecios fondo="bajo" />    → si la sección usa bg-surface-low.
  * <PlanesPrecios recomendado="visible" /> → marca ese plan como recomendado para el público de la página.
  *
@@ -23,6 +27,7 @@
  */
 import { PLANES, PLAN_ENTRADA, LANDING, DOMINIO_HOSTING, NOTA_PRECIOS, CUOTAS, cuotaMensual, formatoCOP, CTA_PRINCIPAL, type IdPlan } from '@/data/sitio';
 import Plegable from '@/components/pagina/Plegable.astro';
+import FichaOferta from './FichaOferta.astro';
 import Icono from './Icono.astro';
 
 interface Props {
@@ -74,7 +79,7 @@ const totalCuotas = (precioAnual: number) => cuotaMensual(precioAnual) * CUOTAS.
                   </span>
                 )}
               </div>
-              <p class="mt-2 text-[0.9375rem] leading-snug text-ink-soft">{plan.paraQuien}</p>
+              <p class="mt-2 text-[0.9375rem] leading-snug text-ink-soft">{plan.queEs}</p>
             </div>
             <dl class="grid grid-cols-2 gap-4 lg:col-span-4">
               <div>
@@ -146,7 +151,7 @@ const totalCuotas = (precioAnual: number) => cuotaMensual(precioAnual) * CUOTAS.
             <Titulo class="font-display text-2xl leading-tight font-semibold tracking-[-0.02em] text-ink sm:text-[1.75rem]">
               {plan.nombre}
             </Titulo>
-            <p class="mt-3 text-base leading-relaxed text-ink-soft">{plan.paraQuien}</p>
+            <p class="mt-3 text-base leading-relaxed text-ink-soft">{plan.queEs}</p>
 
             <dl class="precio mt-6 grid gap-4 rounded-card bg-surface-lowest p-5">
               <div>
@@ -166,6 +171,8 @@ const totalCuotas = (precioAnual: number) => cuotaMensual(precioAnual) * CUOTAS.
               </div>
             </dl>
 
+            <FichaOferta ficha={plan.ficha} class="mt-6" />
+
             <a
               href={`${rutaContacto}?plan=${plan.id}`}
               class:list={['boton mt-6 w-full', plan.destacado ? 'boton-primario' : 'boton-secundario']}
@@ -175,7 +182,7 @@ const totalCuotas = (precioAnual: number) => cuotaMensual(precioAnual) * CUOTAS.
             </a>
 
             <div class="mt-6 flex-1 lg:mt-8">
-              <Plegable texto="Ver qué incluye y qué no">
+              <Plegable texto="Ver todo lo que incluye">
               <p class="text-sm font-semibold text-ink">{plan.incluyeAnterior ?? 'Incluye:'}</p>
               <ul role="list" class="mt-3 grid gap-2.5">
                 {plan.incluye.map((punto) => (
@@ -226,7 +233,7 @@ const totalCuotas = (precioAnual: number) => cuotaMensual(precioAnual) * CUOTAS.
         <div data-revelar class:list={['flex flex-wrap items-center justify-between gap-x-6 gap-y-3 rounded-panel px-5 py-4 sm:px-7', capa]}>
           <p class="text-[0.9375rem] leading-snug text-ink-soft">
             <span class="font-display font-semibold text-ink">{PLAN_ENTRADA.nombre}</span>
-            {' · '}para microempresas:{' '}
+            {' · '}una página sencilla, pago fijo:{' '}
             <span class="font-semibold text-ink">{formatoCOP(PLAN_ENTRADA.mensualidad)} al mes</span>, IVA incluido.
           </p>
           <a href="/precios/#plan-emprendedor" class="inline-flex min-h-12 items-center gap-1.5 text-sm font-semibold text-primary underline-offset-4 hover:underline">
@@ -243,7 +250,7 @@ const totalCuotas = (precioAnual: number) => cuotaMensual(precioAnual) * CUOTAS.
       <ul role="list" class="mt-6 grid gap-5 lg:grid-cols-2 lg:gap-6">
         <li id="plan-landing" data-revelar class:list={['entrada flex flex-col rounded-panel p-6 sm:p-8', capa]}>
           <Titulo class="font-display text-xl font-semibold tracking-[-0.01em] text-ink sm:text-2xl">{LANDING.nombre}</Titulo>
-          <p class="mt-2 text-base leading-relaxed text-ink-soft">{LANDING.paraQuien}</p>
+          <p class="mt-2 text-base leading-relaxed text-ink-soft">{LANDING.queEs}</p>
           <dl class="mt-5 grid gap-3 rounded-card bg-surface-lowest p-5">
             <div>
               <dt class="text-sm text-ink-soft">Pago único</dt>
@@ -255,15 +262,20 @@ const totalCuotas = (precioAnual: number) => cuotaMensual(precioAnual) * CUOTAS.
               <dd class="font-display text-xl font-semibold tracking-[-0.02em] text-primary">{formatoCOP(LANDING.precioConDominio)}</dd>
             </div>
           </dl>
-          <ul role="list" class="mt-5 grid flex-1 gap-2.5">
-            {LANDING.incluye.map((punto) => (
-              <li class="flex items-start gap-3 text-[0.9375rem] leading-snug text-ink-soft">
-                <Icono nombre="tick" tamano={18} class="mt-px text-primary" />
-                <span>{punto}</span>
-              </li>
-            ))}
-          </ul>
-          <p class="mt-4 text-sm leading-snug text-ink-mute">No incluye: {LANDING.noIncluye.map(minuscula).join(', ').replace(/, ([^,]*)$/, ' ni $1')}.</p>
+          <FichaOferta ficha={LANDING.ficha} class="mt-5" />
+          <div class="mt-5 flex-1">
+            <Plegable texto="Ver todo lo que incluye">
+              <ul role="list" class="grid gap-2.5">
+                {LANDING.incluye.map((punto) => (
+                  <li class="flex items-start gap-3 text-[0.9375rem] leading-snug text-ink-soft">
+                    <Icono nombre="tick" tamano={18} class="mt-px text-primary" />
+                    <span>{punto}</span>
+                  </li>
+                ))}
+              </ul>
+              <p class="mt-4 text-sm leading-snug text-ink-mute">No incluye: {LANDING.noIncluye.map(minuscula).join(', ').replace(/, ([^,]*)$/, ' ni $1')}.</p>
+            </Plegable>
+          </div>
           <a href={`${rutaContacto}?plan=landing`} class="boton boton-secundario mt-6 w-full">
             Solicitar la {LANDING.nombre}
             <Icono nombre="arrow-right" tamano={18} />
@@ -271,7 +283,7 @@ const totalCuotas = (precioAnual: number) => cuotaMensual(precioAnual) * CUOTAS.
         </li>
         <li id="plan-emprendedor" data-revelar class:list={['entrada flex flex-col rounded-panel p-6 sm:p-8', capa]}>
           <Titulo class="font-display text-xl font-semibold tracking-[-0.01em] text-ink sm:text-2xl">{PLAN_ENTRADA.nombre}</Titulo>
-          <p class="mt-2 text-base leading-relaxed text-ink-soft">{PLAN_ENTRADA.descripcion}</p>
+          <p class="mt-2 text-base leading-relaxed text-ink-soft">{PLAN_ENTRADA.queEs}</p>
           <dl class="mt-5 grid gap-3 rounded-card bg-surface-lowest p-5">
             <div>
               <dt class="text-sm text-ink-soft">Mensualidad</dt>
@@ -282,7 +294,20 @@ const totalCuotas = (precioAnual: number) => cuotaMensual(precioAnual) * CUOTAS.
               <dd class="mt-1.5 text-xs text-ink-soft">IVA incluido</dd>
             </div>
           </dl>
-          <p class="mt-4 flex-1 text-sm leading-snug text-ink-mute">No incluye: {PLAN_ENTRADA.noIncluye.map(minuscula).join(' ni ')}.</p>
+          <FichaOferta ficha={PLAN_ENTRADA.ficha} class="mt-5" />
+          <div class="mt-5 flex-1">
+            <Plegable texto="Ver todo lo que incluye">
+              <ul role="list" class="grid gap-2.5">
+                {PLAN_ENTRADA.incluye.map((punto) => (
+                  <li class="flex items-start gap-3 text-[0.9375rem] leading-snug text-ink-soft">
+                    <Icono nombre="tick" tamano={18} class="mt-px text-primary" />
+                    <span>{punto}</span>
+                  </li>
+                ))}
+              </ul>
+              <p class="mt-4 text-sm leading-snug text-ink-mute">No incluye: {PLAN_ENTRADA.noIncluye.map(minuscula).join(', ').replace(/, ([^,]*)$/, ' ni $1')}.</p>
+            </Plegable>
+          </div>
           <a href={`${rutaContacto}?plan=emprendedor`} class="boton boton-secundario mt-6 w-full">
             Solicitar el {PLAN_ENTRADA.nombre}
             <Icono nombre="arrow-right" tamano={18} />
@@ -297,11 +322,9 @@ const totalCuotas = (precioAnual: number) => cuotaMensual(precioAnual) * CUOTAS.
       <Icono nombre="spark" tamano={22} class="mt-0.5 shrink-0 text-primary" />
       <div>
         <p class="font-display text-lg font-semibold text-ink sm:text-xl">
-          Dominio y hosting incluidos el primer año
+          Dominio y hosting incluidos el primer año en los planes web
         </p>
-        <p class="mt-1.5 text-[0.9375rem] leading-snug text-ink-soft">
-          En todos los planes web. Para la Landing Page y el Plan Emprendedor, un solo pago de <span class="font-semibold text-ink">{formatoCOP(DOMINIO_HOSTING.precioAnual)} al año</span>, IVA incluido.
-        </p>
+        <p class="mt-1.5 text-[0.9375rem] leading-snug text-ink-soft">{DOMINIO_HOSTING.aparte}</p>
       </div>
     </div>
     {!compacto && (
@@ -318,7 +341,7 @@ const totalCuotas = (precioAnual: number) => cuotaMensual(precioAnual) * CUOTAS.
 
   <p class="mt-6 flex items-start gap-2.5 text-sm leading-relaxed text-ink-soft">
     <Icono nombre="info" tamano={18} class="mt-px text-primary" />
-    <span>{NOTA_PRECIOS} El valor final depende del alcance y se entrega por escrito antes de empezar.</span>
+    <span>{NOTA_PRECIOS} «Desde» es el precio más bajo: sube si necesita más páginas, otro idioma o pasar el contenido de una web anterior. Antes de pagar, usted recibe el valor exacto por escrito.</span>
   </p>
 </div>
 

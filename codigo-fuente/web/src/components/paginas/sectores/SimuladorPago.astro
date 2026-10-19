@@ -43,7 +43,7 @@ const tramos = s.items;
 // La nota «Medios de pago: …» repite las fichas; como en Seccion.astro, no se muestra dos veces.
 const nota = s.medios?.length && s.nota?.startsWith('Medios de pago') ? undefined : s.nota;
 ---
-<MarcoSector seccion={s} fondo={fondo} numero={numero} resaltado={resaltado} pie={{ nota, notaPrecios: true, enlace: s.enlace }}>
+<MarcoSector seccion={s} fondo={fondo} numero={numero} resaltado={resaltado} pie={{ nota, notaPrecios: false, enlace: s.enlace }}>
   <div class="simulador">
     <fieldset class="selector">
       <legend class="leyenda">{T.leyenda}</legend>

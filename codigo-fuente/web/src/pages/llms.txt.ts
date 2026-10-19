@@ -33,7 +33,7 @@ export const GET: APIRoute = () => {
 
   const cuerpo = `# ${SITIO.nombre}
 
-> ${SITIO.nombre} es un estudio digital de ${SITIO.ciudad}, Colombia, dirigido por su fundador, ${FUNDADOR.nombre}. ${SITIO.propuesta.replace(`${SITIO.nombre} crea`, 'Crea')} ${LANDING.nombre} desde ${formatoCOP(LANDING.precio)} COP (pago único). Planes web: precio anual desde ${formatoCOP(precioAnualMin)} COP, o 12 cuotas desde ${formatoCOP(cuotaMin)} COP al mes (20 % más en total). ${DOMINIO_HOSTING.resumen} ${NOTA_PRECIOS}
+> ${SITIO.nombre} es un estudio digital de ${SITIO.ciudad}, Colombia, dirigido por su fundador, ${FUNDADOR.nombre}. ${SITIO.propuesta.replace(`${SITIO.nombre} hace`, 'Hace')} ${LANDING.nombre} desde ${formatoCOP(LANDING.precio)} COP (pago único). Planes web: precio anual desde ${formatoCOP(precioAnualMin)} COP, o 12 cuotas desde ${formatoCOP(cuotaMin)} COP al mes (20 % más en total). ${DOMINIO_HOSTING.resumen} ${NOTA_PRECIOS}
 
 Datos clave:
 

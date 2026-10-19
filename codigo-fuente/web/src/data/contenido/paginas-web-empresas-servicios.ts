@@ -1,53 +1,51 @@
 // ─────────────────────────────────────────────────────────────────────────────
-//  Contenido de /paginas-web-empresas-servicios/ (sector general: empresas de servicios).
+//  Contenido de /paginas-web-empresas-servicios/ (empresas de servicios en general).
 //  Palabra clave principal: «página web para empresas de servicios».
-//  Fuentes: informe del Director (2026-10-05: sectores prioritarios, capacidad, servicio de
-//  WhatsApp, exclusiones), src/data/sitio.ts e investigación verificada el 2026-10-06.
-//  Precios, proceso, condiciones y contacto salen de sitio.ts: no los copie a mano.
+//  Precios, qué incluye y contacto salen de sitio.ts: no los copie a mano.
+//  Reglas de texto: GUIA-CLARIDAD.md (palabras simples, frases cortas, un dato en un lugar).
 //
 //  REGLAS DE ESTA PÁGINA:
 //  - No prometer especialización que no existe. Sin menú ni páginas por mercado (Víctor, 2026-10-18).
-//    Para abogados, inmobiliarias, servicios técnicos y empresas B2B se adapta la misma estructura.
-//  - Sin cifras de mercado ni casos de esos sectores: no hay casos documentados de VRS en ellos.
-//  EDICIÓN FINAL (2026-10-06): H1 y descripción sin «en Bogotá» para no competir con
-//  /paginas-web-bogota/ («diseño de páginas web Bogotá»). Se quitaron las preguntas de precio
-//  y de «sin acceso al agente», que ya responden /paginas-web-bogota/ y /asistente-whatsapp-business/.
-//  DISEÑO DE PÁGINA (2026-10-06, grupo servicios): la lista de #estructura vive en ESTRUCTURA
-//  (la usan la sección, la portada y el esquema). Exports `antesDespues` (ilustración deslizable
-//  de la portada: fallas de #problema y títulos de ESTRUCTURA) y `anatomiaPagina` (texto
-//  alternativo del esquema de #estructura). TEXTO NUEVO: lo debe revisar la Dirección.
+//  - Sin cifras de mercado ni casos de sectores: no hay casos documentados de VRS en ellos.
+//  REPARTO CON /paginas-web-bogota/ (2026-10-19): aquí va qué debe tener la web de una empresa
+//  de servicios, cómo se atiende por WhatsApp, el precio y lo que no hacemos. Los pasos, el
+//  tiempo de entrega y los proyectos están en /paginas-web-bogota/: no repetirlos aquí.
+//  DISEÑO DE PÁGINA: la lista de #estructura vive en ESTRUCTURA (la usan la sección, la portada
+//  y el esquema, que dibuja 8 partes: mantenga 8). Exports `antesDespues` (ilustración deslizable
+//  de la portada) y `anatomiaPagina` (texto alternativo del esquema de #estructura).
 // ─────────────────────────────────────────────────────────────────────────────
-import { CONTACTO, CTA_PRINCIPAL, PLANES, PROCESO, enlaceWhatsApp, formatoCOP, type IdPlan, cuotaMensual } from '@/data/sitio';
-import type { NombreIconoTarjeta } from '@/components/ui/iconos';
+import { CONDICIONES, CONTACTO, CTA_PRINCIPAL, PLANES, enlaceWhatsApp, formatoCOP, type IdPlan, cuotaMensual } from '@/data/sitio';
 import type { ModuloPagina } from './tipos';
 
-/** Valida en compilación que el icono exista en el set de tarjetas. */
-const icono = (nombre: NombreIconoTarjeta) => nombre;
 const plan = (id: IdPlan) => PLANES.find((p) => p.id === id)!;
 const desde = (id: IdPlan) => formatoCOP(plan(id).precioAnualDesde);
 const cuotaDesde = (id: IdPlan) => formatoCOP(cuotaMensual(plan(id).precioAnualDesde));
 /** Pasa a minúscula la primera letra, salvo en siglas (PSE, SST). */
 const minuscula = (t: string) => (/^\p{Lu}\p{Ll}/u.test(t) ? t.charAt(0).toLowerCase() + t.slice(1) : t);
+/** Une una lista en una frase: «a, b y c». */
+const enFrase = (l: readonly string[]) => l.map(minuscula).join(', ').replace(/, ([^,]*)$/, ' ni $1');
 
 const esencial = plan('esencial');
 const visible = plan('visible');
 const atencion = plan('atencion');
 
+const LICENCIAS = CONDICIONES.find((c) => c.includes('licencia'))!;
+
 /** Aclaración obligatoria cerca de cualquier mención de «a cualquier hora» o «fuera de horario». */
-const ACLARACION_HORARIO = `El agente puede responder a cualquier hora. Nuestro acompañamiento humano es de ${minuscula(CONTACTO.horario)}. ${CONTACTO.respuestaHumana}`;
+const ACLARACION_HORARIO = `Las respuestas automáticas funcionan a cualquier hora. Nuestro equipo atiende de ${minuscula(CONTACTO.horario)}. ${CONTACTO.respuestaHumana}`;
 
 const MENSAJE_WHATSAPP = 'Hola, tengo una empresa de servicios y quiero una revisión digital con VRS Digital.';
 
 /** Lo que debe tener la web de una empresa de servicios (sección #estructura y su ilustración). */
 const ESTRUCTURA = [
-  { titulo: 'Respuesta directa arriba', texto: 'Qué hace, para quién, dónde y desde cuánto, en dos a cuatro frases.' },
-  { titulo: 'Una página por servicio', texto: 'Qué incluye, qué no, para quién es, cuánto tarda y cómo se cotiza.' },
-  { titulo: 'Cómo trabaja', texto: 'Los pasos desde el primer contacto hasta la entrega, con lo que aporta el cliente.' },
-  { titulo: 'Precio o forma de cotizar', texto: 'Un valor «desde» o una explicación clara de qué lo hace variar.' },
-  { titulo: 'Pruebas reales', texto: 'Casos y reseñas auténticas, con autorización del cliente. Nunca inventadas.' },
-  { titulo: 'Quién está detrás', texto: 'Las personas responsables, con credenciales que se puedan verificar.' },
-  { titulo: 'Preguntas frecuentes reales', texto: 'Las que sus clientes hacen por WhatsApp, respondidas con claridad.' },
-  { titulo: 'Contacto visible', texto: 'WhatsApp y un formulario corto, con política de tratamiento de datos publicada.' },
+  { titulo: 'Respuesta clara arriba', texto: 'Qué hace, para quién, dónde y desde cuánto. En dos a cuatro frases.' },
+  { titulo: 'Una página por servicio', texto: 'Qué incluye, qué no, para quién es y cómo se cotiza.' },
+  { titulo: 'Cómo trabaja', texto: 'Los pasos desde el primer mensaje hasta la entrega.' },
+  { titulo: 'Precio o forma de cotizar', texto: 'Un precio «desde», o qué hace cambiar el precio.' },
+  { titulo: 'Pruebas reales', texto: 'Trabajos y reseñas reales, con permiso del cliente.' },
+  { titulo: 'Quién está detrás', texto: 'Las personas responsables, con datos que se puedan comprobar.' },
+  { titulo: 'Preguntas frecuentes', texto: 'Las que sus clientes hacen por WhatsApp, con respuestas cortas.' },
+  { titulo: 'Contacto a la vista', texto: 'WhatsApp y un formulario corto, con la política de datos publicada.' },
 ] as const;
 
 /**
@@ -56,7 +54,7 @@ const ESTRUCTURA = [
  */
 export const antesDespues = {
   etiqueta:
-    'Ilustración: la web de una empresa de servicios antes y después de ordenarla. Antes: todos los servicios en una sola página, sin precio «desde», un formulario con demasiados datos y un WhatsApp que no se ve. Después: respuesta directa arriba, una página por servicio, precio o forma de cotizar y contacto visible.',
+    'Ilustración: la web de una empresa de servicios antes y después de ordenarla. Antes: todos los servicios en una sola página, sin precio «desde», un formulario con demasiados datos y un WhatsApp que no se ve. Después: respuesta clara arriba, una página por servicio, precio o forma de cotizar y contacto a la vista.',
   antes: 'Antes',
   despues: 'Después',
   fallas: ['Todos los servicios en una sola página', 'Sin precio «desde»', 'Formulario con demasiados datos', 'WhatsApp que no se ve'],
@@ -75,8 +73,7 @@ export const contenido = {
   seo: {
     // 45 caracteres + « | VRS Digital» (Seo.astro) = 59.
     titulo: 'Página web para empresas de servicios y pymes',
-    descripcion:
-      'Página web para empresas de servicios profesionales: abogados, inmobiliarias, SST y servicios técnicos. Explique qué hace y cuánto cuesta empezar. Vea cómo.',
+    descripcion: `Página web para empresas de servicios: abogados, inmobiliarias, SST y servicios técnicos. Diga qué hace y cuánto cuesta. Desde ${desde('esencial')}.`,
     palabraClave: 'página web para empresas de servicios',
     // «páginas web para empresas» y «diseño de páginas web Bogotá» → /paginas-web-bogota/.
     secundarias: [
@@ -93,176 +90,114 @@ export const contenido = {
   hero: {
     etiqueta: 'Empresas de servicios',
     titulo: 'Páginas web para empresas de servicios profesionales',
-    subtitulo:
-      'Un servicio no se ve ni se toca. Su web debe explicar qué hace, para quién, cómo trabaja y cuánto cuesta empezar, y facilitar que le escriban. Nosotros la diseñamos, la preparamos para Google y ordenamos su atención por WhatsApp.',
+    subtitulo: 'Su web dice qué hace, para quién y cuánto cuesta. Así el cliente le escribe sabiendo qué va a recibir.',
     ctaPrincipal: CTA_PRINCIPAL,
     ctaSecundario: { texto: 'Ver precios y planes', href: '/precios/' },
     precio: `Desde ${desde('esencial')}`,
-    puntos: ['Una página por cada servicio', 'Precio «desde» y proceso claros', 'Dominio y hosting el primer año'],
+    puntos: ['Qué hace y cuánto cuesta, bien claro', 'WhatsApp y formulario a la vista'],
   },
-  respuestaDirecta: `Una empresa de servicios vende algo que no se ve. Su web debe explicar qué hace, para quién, cómo trabaja y cuánto cuesta empezar. VRS Digital diseña esa web desde ${desde('esencial')} al año, o en 12 cuotas de ${cuotaDesde('esencial')} al mes, IVA incluido, la prepara para Google y asistentes de IA y, en el plan ${atencion.nombre}, deja su WhatsApp Business respondiendo preguntas frecuentes con atención inteligente.`,
+  respuestaDirecta: `Un servicio no se puede ver antes de contratarlo. Por eso su web debe decir qué hace, para quién y cuánto cuesta. ${esencial.nombre} cuesta desde ${desde('esencial')} al año, IVA incluido, o 12 cuotas de ${cuotaDesde('esencial')} al mes.`,
   secciones: [
     {
       id: 'problema',
-      etiqueta: 'El problema',
-      titulo: 'Por qué una empresa de servicios necesita una web distinta',
-      introduccion:
-        'Quien compra un producto puede verlo. Quien contrata un servicio compra una promesa, y antes de escribir quiere entender qué recibe. Revise si su web tiene alguna de estas fallas frecuentes:',
+      etiqueta: 'Fallas comunes',
+      titulo: 'Lo que suele fallar en la web de una empresa de servicios',
+      introduccion: 'Revise si su web tiene alguna de estas fallas:',
       tipo: 'lista',
       variante: 'alerta',
       items: [
-        'La web lista servicios, pero no explica qué incluye cada uno ni para quién es.',
-        'Todos los servicios están en una sola página, y ni el cliente ni Google saben cuál es el principal.',
-        'No hay un precio «desde» ni una explicación de cómo se cotiza.',
-        'El número de WhatsApp no se ve o no hay mensaje de ausencia fuera de horario.',
-        'El formulario pide demasiados datos y la persona se va antes de enviarlo.',
-        'Las mismas preguntas llegan por WhatsApp todos los días y se responden a mano, horas o días después.',
+        'Nombra los servicios, pero no dice qué incluye cada uno.',
+        'Todos los servicios están en una sola página. Ni el cliente ni Google saben cuál es el principal.',
+        'No tiene precio «desde» ni dice cómo se cotiza.',
+        'El WhatsApp no se ve, o nadie responde fuera de horario.',
+        'El formulario pide demasiados datos y la persona se va sin enviarlo.',
+        'Las mismas preguntas llegan cada día y se responden a mano, horas después.',
       ],
-    },
-    {
-      id: 'sectores',
-      etiqueta: 'Con qué empresas',
-      titulo: 'Con qué empresas trabajamos',
-      introduccion:
-        'Partimos de una misma estructura y la adaptamos con la información de su empresa. No le vendemos una especialización que no tenemos. Algunos ejemplos:',
-      tipo: 'tarjetas',
-      columnas: 3,
-      items: [
-        {
-          titulo: 'Seguridad y salud en el trabajo (SST)',
-          texto: 'Licencia visible, estándares mínimos explicados y contenido antes de cada fecha de registro.',
-          icono: icono('shield'),
-        },
-        {
-          titulo: 'Abogados y firmas jurídicas pequeñas',
-          texto:
-            'Áreas de práctica, a quién atiende y cómo es la primera consulta. El agente de WhatsApp no da orientación jurídica: los casos pasan a un abogado.',
-          icono: icono('scale'),
-        },
-        {
-          titulo: 'Inmobiliarias pequeñas',
-          texto:
-            'Inmuebles, zonas, requisitos para arrendar y horarios de visita. El agente puede mostrar lo que usted carga en el catálogo; la visita la confirma una persona.',
-          icono: icono('home'),
-        },
-        {
-          titulo: 'Servicios técnicos para empresas',
-          texto:
-            'Cobertura, tipos de equipo, cómo se cotiza y tiempos de visita. El agente reúne los datos de la solicitud; las urgencias pasan a una persona.',
-          icono: icono('wrench'),
-        },
-      ],
-      nota: 'También atendemos agencias, profesionales independientes y empresas que venden a otras empresas. En el diagnóstico le decimos con franqueza si nuestro servicio le sirve.',
     },
     {
       id: 'estructura',
       etiqueta: 'Qué debe tener',
       titulo: 'Qué debe tener la web de una empresa de servicios',
-      introduccion: 'Sea cual sea su sector, una buena web de servicios responde lo mismo, en este orden:',
+      introduccion: 'Sea cual sea su sector, una buena web responde estas ocho cosas, en este orden:',
       tipo: 'lista',
       items: ESTRUCTURA,
-      nota: 'Esta misma estructura ayuda a Google y a los asistentes de inteligencia artificial (IA) a entender qué ofrece su empresa. Nadie puede garantizar una posición, pero una web clara es la base.',
-      enlace: { texto: 'Ver cómo trabajamos el posicionamiento', href: '/posicionamiento-google-inteligencia-artificial/' },
+      nota: 'Esto también ayuda a que Google y asistentes como ChatGPT entiendan qué ofrece. Nadie puede garantizar el primer lugar.',
+      enlace: { texto: 'Ver cómo trabajamos para que salga en Google', href: '/posicionamiento-google-inteligencia-artificial/' },
+    },
+    {
+      id: 'precio',
+      etiqueta: 'Precio',
+      titulo: 'Cuánto cuesta y qué páginas trae',
+      introduccion: `${esencial.nombre}: ${minuscula(esencial.incluye[0])}. No trae ${enFrase(esencial.noIncluye)}. ${visible.nombre} suma una página para cada servicio, desde ${desde('visible')}. ${atencion.nombre} suma respuestas automáticas en WhatsApp, desde ${desde('atencion')}.`,
+      tipo: 'planes',
+      compacto: true,
+      nota: LICENCIAS,
+      enlace: { texto: 'Ver precios completos y condiciones', href: '/precios/' },
     },
     {
       id: 'whatsapp',
-      etiqueta: 'Atención por WhatsApp',
-      titulo: 'WhatsApp: respuestas inmediatas para lo repetitivo, una persona para lo importante',
-      introduccion:
-        'Con la atención inteligente, su WhatsApp Business responde con la información que su empresa aprueba. Esto puede hacer y esto no:',
+      etiqueta: 'WhatsApp',
+      titulo: 'WhatsApp: respuestas automáticas para lo de siempre, una persona para lo importante',
+      introduccion: `Con ${atencion.nombre}, su WhatsApp Business responde con la información que usted aprueba.`,
       tipo: 'comparacion',
-      etiquetaIncluye: 'El agente puede',
+      etiquetaIncluye: 'Responde solo',
       etiquetaNoIncluye: 'Siempre pasa a una persona',
       incluye: [
-        'Responder sobre servicios, horarios, cobertura y formas de pago.',
-        'Compartir precios «desde» que usted autorice.',
-        'Recomendar servicios o productos de su catálogo.',
-        'Pedir los datos necesarios para entender la solicitud.',
-        'Pasarle la conversación a usted cuando el tema lo requiera.',
+        'Servicios, horarios, zonas donde trabaja y formas de pago.',
+        'Precios «desde» que usted autorice.',
+        'Servicios o productos de su catálogo.',
+        'Los datos que necesita para entender la solicitud.',
       ],
       noIncluye: [
-        'Asesoría jurídica, contable, médica o técnica sobre un caso concreto.',
+        'Consejos jurídicos, contables, médicos o técnicos sobre un caso.',
         'Cotizaciones finales, descuentos y negociaciones.',
-        'Recibir documentos o datos sensibles.',
+        'Documentos o datos sensibles.',
         'Urgencias, quejas y clientes que piden hablar con alguien.',
       ],
       parrafos: [
-        'No todas las cuentas de WhatsApp Business son compatibles: lo revisamos en el diagnóstico. Si su cuenta aún no lo es, dejamos listas las respuestas básicas: bienvenida, ausencia, respuestas rápidas, etiquetas y catálogo.',
-        'No la recomendamos para conversaciones con información de salud, financiera o jurídica sensible.',
+        'No todas las cuentas de WhatsApp Business son compatibles. Lo revisamos en el diagnóstico. Si la suya no lo es, dejamos listos los mensajes de bienvenida y de ausencia, las respuestas rápidas, las etiquetas y el catálogo.',
+        'No la recomendamos para conversaciones con datos sensibles de salud, dinero o asuntos legales.',
         ACLARACION_HORARIO,
       ],
       enlace: { texto: 'Ver el servicio de WhatsApp Business', href: '/asistente-whatsapp-business/' },
     },
     {
-      id: 'proceso',
-      etiqueta: 'Cómo trabajamos',
-      titulo: 'Cómo trabajamos, paso a paso',
-      introduccion: 'Cinco etapas con una sola persona responsable. Usted revisa y aprueba antes de que publiquemos.',
-      tipo: 'pasos',
-      items: PROCESO,
-    },
-    {
-      id: 'precio',
-      etiqueta: 'Precio',
-      titulo: 'Cuánto cuesta la web de una empresa de servicios',
-      introduccion: `La web sola, ${esencial.nombre}, cuesta desde ${desde('esencial')} al año, o en 12 cuotas de ${cuotaDesde('esencial')} al mes, IVA incluido. Con una página por servicio y seguimiento en Google, ${visible.nombre} empieza en ${desde('visible')}. Con atención inteligente en WhatsApp Business, ${atencion.nombre} empieza en ${desde('atencion')}.`,
-      tipo: 'planes',
-      compacto: true,
-      nota: 'Licencias y suscripciones externas se identifican por separado. El valor final depende del alcance y queda por escrito antes de empezar.',
-      enlace: { texto: 'Ver precios completos y condiciones', href: '/precios/' },
-    },
-    {
       id: 'que-no-hacemos',
-      etiqueta: 'Fuera de alcance',
+      etiqueta: 'Lo que no hacemos',
       titulo: 'Lo que no incluye nuestro servicio',
-      introduccion: 'Preferimos decirlo desde el principio. Estos trabajos no hacen parte de nuestros planes:',
+      introduccion: 'Se lo decimos desde el principio:',
       tipo: 'lista',
       variante: 'excluye',
       items: [
-        'CRM (programa para gestionar clientes y ventas) ni chatbots desarrollados a medida.',
-        'API (conexión técnica entre sistemas) ni integraciones con facturación, inventario u otros programas.',
-        'Envíos masivos de mensajes.',
-        'Primer lugar garantizado en Google o menciones garantizadas en asistentes de IA.',
+        'Programas para manejar clientes y ventas.',
+        'Chatbots hechos a la medida.',
+        'Conexión con otros programas de su empresa (ventas, facturación, inventario).',
+        'Envío de mensajes masivos.',
+        'El primer lugar en Google o que ChatGPT nombre su empresa. Nadie lo puede garantizar.',
       ],
     },
   ],
   preguntas: [
     {
-      pregunta: '¿Qué debe tener la página web de una empresa de servicios?',
+      pregunta: '¿Trabajan con abogados, inmobiliarias, SST o servicios técnicos?',
       respuesta:
-        'Una respuesta clara arriba: qué hace, para quién, dónde y desde cuánto. Luego, una página por servicio con lo que incluye y lo que no, cómo trabaja, cómo se cotiza, pruebas reales, quién está detrás, preguntas frecuentes y un contacto visible por WhatsApp y formulario. Así el cliente entiende qué recibe antes de escribirle.',
+        'Sí. Una buena web de servicios tiene las mismas partes en cualquier sector. La llenamos con la información de su empresa. Usted revisa que cumpla las reglas de su profesión.',
     },
     {
-      pregunta: '¿Trabajan con abogados, inmobiliarias o empresas de servicios técnicos?',
+      pregunta: '¿Las respuestas automáticas de WhatsApp pueden dar consejos legales o técnicos?',
       respuesta:
-        'Sí. La estructura de una buena web de servicios es la misma. La adaptamos con la información de su empresa y usted revisa que el contenido cumpla las reglas de su profesión. En el diagnóstico le decimos con franqueza si nuestro servicio le sirve.',
-    },
-    {
-      pregunta: '¿El agente de WhatsApp puede dar orientación legal o técnica a mis clientes?',
-      respuesta:
-        'No debe hacerlo. Lo configuramos para responder información general que usted aprueba, como servicios, horarios, cobertura y precios «desde». Cuando alguien pide orientación sobre su caso, el agente le pasa la conversación a una persona. WhatsApp advierte que los mensajes generados por IA pueden no ser precisos, por eso los temas delicados siempre los atiende alguien de su equipo.',
-    },
-    {
-      pregunta: '¿Necesito un CRM, una API o un chatbot a medida?',
-      respuesta:
-        'Para empezar, no. Su web y su WhatsApp Business con atención inteligente resuelven lo principal sin programación. No vendemos CRM, API ni chatbots desarrollados a medida, ni integraciones con otros sistemas. Para la mayoría de pymes de servicios, una web clara y un WhatsApp bien configurado resuelven lo principal.',
-    },
-    {
-      pregunta: '¿Cómo es el proceso para tener mi página web?',
-      respuesta:
-        'Son cinco etapas: diagnóstico, con una reunión de hasta 45 minutos; preparación de la estructura y los textos, que usted revisa en un documento; construcción; aprobación; y publicación. Trabajamos con máximo dos proyectos a la vez, así que la fecha de inicio se asigna según disponibilidad y queda por escrito.',
+        'No. Solo dan información general que usted aprueba. Si alguien pregunta por su caso, la conversación pasa a una persona. WhatsApp advierte que los mensajes hechos con IA pueden tener errores. Por eso los temas delicados los atiende alguien de su equipo.',
     },
   ],
   cta: {
-    titulo: 'Descubra qué está frenando la presencia digital de su empresa',
-    texto:
-      'Solicite una revisión digital gratuita. Analizamos su web, su visibilidad en Google y su atención por WhatsApp, y le entregamos tres prioridades concretas.',
+    titulo: 'Pida una revisión gratuita de su web',
+    texto: 'Le decimos qué le falta a su web para que un cliente entienda qué hace y le escriba.',
     ctaPrincipal: CTA_PRINCIPAL,
     ctaWhatsApp: MENSAJE_WHATSAPP,
     enlaceWhatsApp: enlaceWhatsApp(MENSAJE_WHATSAPP),
   },
   enlacesInternos: [
-    { texto: 'Diseño de páginas web en Bogotá para empresas', href: '/paginas-web-bogota/' },
+    { texto: 'Páginas web: qué trae, cuánto se demora y proyectos', href: '/paginas-web-bogota/' },
     { texto: 'Atención inteligente en WhatsApp Business', href: '/asistente-whatsapp-business/' },
     { texto: 'Precios, condiciones y formas de pago', href: '/precios/' },
     { texto: 'Guía: cuánto cuesta una página web en Bogotá', href: '/recursos/cuanto-cuesta-una-pagina-web-en-bogota/' },
@@ -272,9 +207,9 @@ export const contenido = {
     nombre: 'Páginas web para empresas de servicios',
     tipo: 'Diseño y desarrollo de páginas web',
     descripcion:
-      'Páginas web para empresas de servicios profesionales: una página por servicio, precio «desde», proceso claro y contacto por WhatsApp, preparadas para Google y asistentes de IA.',
+      'Páginas web para empresas de servicios: dicen qué hace la empresa, para quién y cuánto cuesta, con botón de WhatsApp y formulario.',
     precioDesde: esencial.precioAnualDesde,
     audiencia: 'Empresas de servicios',
   },
-  actualizado: '2026-10-11',
+  actualizado: '2026-10-19',
 } as const satisfies ModuloPagina;

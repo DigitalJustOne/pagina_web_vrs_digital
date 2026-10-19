@@ -42,7 +42,7 @@ const grupos = PLANES.map((_, i) => ({
 
 const sobreBajo = fondo === 'bajo';
 ---
-<MarcoSector seccion={s} fondo={fondo} numero={numero} resaltado={resaltado} pie={{ nota: s.nota, notaPrecios: true }}>
+<MarcoSector seccion={s} fondo={fondo} numero={numero} resaltado={resaltado} pie={{ nota: s.nota, notaPrecios: false }}>
   <div data-revelar class:list={['comparador', sobreBajo && 'sobre-bajo']}>
     <table aria-labelledby={idTitulo(s.id)}>
       <colgroup>

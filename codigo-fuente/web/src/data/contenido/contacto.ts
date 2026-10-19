@@ -11,6 +11,8 @@
 //    hay que decirlo en esta página (el visitante debe saber que le responde una IA).
 //  - El formulario enlaza /politica-de-privacidad/, que sigue en borrador (falta la validación
 //    del abogado y los datos de identificación).
+//  2026-10-19 (claridad): textos simples; el plazo de respuesta va una vez (respuesta directa) y el
+//  horario una vez (canales). Se quitaron preguntas que repetían las partes de la página.
 //  EDICIÓN FINAL (2026-10-06): se quitó «¿Trabajan con empresas fuera de Bogotá?» porque
 //  repetía «¿Dónde está ubicado VRS Digital?» de /nosotros/. El formulario también pide el plan.
 // ─────────────────────────────────────────────────────────────────────────────
@@ -20,7 +22,6 @@ import type { ModuloPagina } from './tipos';
 
 /** Valida en compilación que el icono exista en el set de tarjetas. */
 const icono = (nombre: NombreIconoTarjeta) => nombre;
-const minuscula = (t: string) => t.charAt(0).toLowerCase() + t.slice(1);
 const anticipo = FORMA_DE_PAGO[0].porcentaje;
 
 const MENSAJE_WHATSAPP = 'Hola, quiero solicitar una revisión digital gratuita para mi empresa.';
@@ -28,11 +29,11 @@ const MENSAJE_WHATSAPP = 'Hola, quiero solicitar una revisión digital gratuita 
 export const contenido = {
   ruta: '/contacto/',
   seo: {
-    // 41 caracteres + « | VRS Digital» = 55. «Gratuita» y «sin compromiso» van en título, descripción y respuesta.
+    // 41 caracteres + « | VRS Digital» = 55.
     titulo: 'Revisión digital gratuita para su empresa',
     descripcion:
-      'Revisión gratuita y sin compromiso: analizamos su web, su visibilidad en Google y su WhatsApp, y le entregamos tres prioridades concretas para mejorar.',
-    palabraClave: 'revisión de presencia digital',
+      'Revisamos gratis su web, cómo aparece en Google y su WhatsApp. Le enviamos las tres mejoras que más le ayudan. Sin compromiso de contratar.',
+    palabraClave: 'revisión digital gratuita',
     secundarias: [
       'contacto VRS Digital',
       'diagnóstico de página web',
@@ -47,92 +48,83 @@ export const contenido = {
   hero: {
     etiqueta: 'Contacto',
     titulo: 'Solicite su revisión digital gratuita',
-    subtitulo:
-      'Analizamos su página web, su visibilidad en Google y su atención por WhatsApp, y le entregamos tres prioridades concretas para mejorar. Es gratuita, sencilla y sin compromiso de contratar.',
+    subtitulo: 'Revisamos gratis su web, cómo aparece en Google y su WhatsApp. No lo obliga a contratar.',
     ctaPrincipal: { texto: 'Ir al formulario', href: '#formulario' },
     ctaSecundario: { texto: 'Escribir por WhatsApp', href: enlaceWhatsApp(MENSAJE_WHATSAPP) },
   },
-  respuestaDirecta:
-    'La revisión digital gratuita de VRS Digital analiza la claridad de su página web, su visibilidad en Google, cómo se ve en el celular, sus formas de contacto y su atención por WhatsApp. Usted recibe tres prioridades concretas. Es gratuita y sin compromiso de contratar. Una persona le responde en uno o dos días hábiles, de lunes a viernes.',
+  respuestaDirecta: `Usted recibe las tres mejoras que más le conviene hacer primero, explicadas en palabras sencillas. ${CONTACTO.respuestaHumana}`,
   secciones: [
     {
       id: 'que-revisamos',
-      etiqueta: 'La revisión',
+      etiqueta: 'Qué revisamos',
       titulo: 'Qué revisamos de su empresa',
-      introduccion: 'Cinco puntos que deciden si un cliente lo encuentra, entiende lo que ofrece y logra contactarlo.',
       tipo: 'tarjetas',
       columnas: 3,
       items: [
         {
-          titulo: 'Claridad de la web',
-          texto: 'Si su página dice en pocos segundos qué hace, para quién, dónde y cómo empezar.',
+          titulo: 'Su web',
+          texto: 'Si dice en pocos segundos qué hace, dónde está y cómo contactarlo.',
           icono: icono('eye'),
         },
         {
-          titulo: 'Visibilidad básica',
-          texto: 'Cómo aparece su empresa cuando la buscan en Google y qué información encuentran los asistentes de IA.',
+          titulo: 'Google',
+          texto: 'Cómo aparece su empresa en Google y en asistentes como ChatGPT.',
           icono: icono('search'),
         },
         {
-          titulo: 'Experiencia en celular',
-          texto: 'Si su web se lee bien, carga rápido y es fácil de usar desde el celular.',
+          titulo: 'Celular',
+          texto: 'Si su web se lee bien y carga rápido en el celular.',
           icono: icono('monitor'),
         },
         {
-          titulo: 'Formas de contacto',
-          texto: 'Si es fácil escribirle o llamarlo, y si el botón de WhatsApp y el formulario funcionan.',
+          titulo: 'Contacto',
+          texto: 'Si el botón de WhatsApp y el formulario funcionan.',
           icono: icono('check'),
         },
         {
-          titulo: 'Atención por WhatsApp',
-          texto: 'Cómo se responden hoy las preguntas frecuentes y qué pasa con los mensajes que llegan fuera de horario.',
+          titulo: 'WhatsApp',
+          texto: 'Cómo responde hoy las preguntas de siempre y los mensajes fuera de horario.',
           icono: icono('message'),
         },
       ],
     },
     {
       id: 'que-recibe',
-      etiqueta: 'Resultado',
-      titulo: 'Qué recibe: tres prioridades concretas',
+      etiqueta: 'Qué recibe',
+      titulo: 'Qué recibe: tres mejoras concretas',
       tipo: 'lista',
-      introduccion: 'No es un informe largo ni una lista de cien errores. Es una guía corta para decidir por dónde empezar.',
+      introduccion: 'Una guía corta, no un informe largo.',
       items: [
-        'Tres mejoras concretas para su empresa, explicadas en lenguaje sencillo.',
-        'Por qué importa cada una para que sus clientes lo encuentren, le entiendan o le escriban.',
-        'Qué conviene hacer primero, aunque decida hacerlo por su cuenta o con otro proveedor.',
+        'Las tres mejoras que más le ayudan, en palabras sencillas.',
+        'Por qué importa cada una.',
+        'Por cuál empezar. Puede hacerlas usted mismo o con otro proveedor.',
       ],
-      nota: 'La prepara Víctor Ramírez con apoyo de inteligencia artificial y la revisa personalmente. Si su necesidad está fuera de lo que hacemos (por ejemplo, un CRM, una API o un chatbot a medida), se lo decimos desde el principio.',
     },
     {
       id: 'que-pasa-despues',
-      etiqueta: 'Siguientes pasos',
+      etiqueta: 'Después',
       titulo: 'Qué pasa después de escribirnos',
       tipo: 'pasos',
       items: [
         {
           paso: '01',
           titulo: 'Usted nos escribe',
-          texto: 'Por el formulario o por WhatsApp. Solo le pedimos los datos necesarios para responderle.',
+          texto: 'Por el formulario o por WhatsApp.',
         },
         {
           paso: '02',
-          titulo: 'Le respondemos',
-          texto: `Una persona le responde, de ${minuscula(CONTACTO.horario)}.`,
+          titulo: 'Recibe la revisión',
+          texto: 'Le enviamos las tres mejoras para su empresa.',
         },
         {
           paso: '03',
-          titulo: 'Recibe la revisión',
-          texto: 'Le enviamos qué mejorar primero en su web, su visibilidad y su atención por WhatsApp.',
+          titulo: 'Reunión, si quiere avanzar',
+          texto: 'Hablamos hasta 45 minutos. Acordamos qué incluye su proyecto y revisamos si su WhatsApp Business es compatible con las respuestas automáticas.',
         },
         {
           paso: '04',
-          titulo: 'Diagnóstico, si quiere avanzar',
-          texto: 'Reunión de hasta 45 minutos para confirmar el alcance y revisar si su WhatsApp Business es compatible con la atención inteligente.',
-        },
-        {
-          paso: '05',
-          titulo: 'Propuesta y fecha de inicio',
-          texto: `Le enviamos una propuesta con máximo tres opciones. Si la acepta, el proyecto inicia con el ${anticipo}\u00a0% del valor y una fecha según disponibilidad.`,
+          titulo: 'Propuesta',
+          texto: `Le enviamos máximo tres opciones. Si acepta una, paga el ${anticipo} % para empezar.`,
         },
       ],
     },
@@ -141,15 +133,15 @@ export const contenido = {
       etiqueta: 'Formulario',
       titulo: 'Cuéntenos sobre su empresa',
       introduccion:
-        'Nombre, empresa, WhatsApp, el plan que le interesa (o «Aún no sé») y una descripción breve de lo que necesita. El correo y la dirección de su web son opcionales, pero nos ayudan a preparar la revisión.',
+        'Le pedimos su nombre, su empresa, su WhatsApp, el plan que le interesa y qué necesita. El correo y su web son opcionales.',
       tipo: 'formulario',
-      nota: 'Usamos sus datos solo para responder su solicitud, con su autorización y según la Ley 1581 de 2012 de protección de datos personales.',
+      nota: 'Usamos sus datos solo para responderle, con su autorización y según la Ley 1581 de 2012 de protección de datos personales.',
       enlacePrivacidad: { texto: 'Política de privacidad', href: '/politica-de-privacidad/' },
     },
     {
       id: 'canales',
       etiqueta: 'Canales',
-      titulo: 'Horarios y canales de atención',
+      titulo: 'WhatsApp, correo y horario',
       tipo: 'contacto',
       canales: [
         {
@@ -164,62 +156,34 @@ export const contenido = {
         },
       ],
       horario: CONTACTO.horario,
-      respuestaHumana: CONTACTO.respuestaHumana,
       redes: CONTACTO.redes,
-      parrafos: [
-        'Si escribe de noche o el fin de semana, ese plazo empieza a contar el siguiente día hábil.',
-        'La atención las 24 horas corresponde al agente de WhatsApp que configuramos para su empresa, no a nuestra atención personal.',
-      ],
+      parrafos: ['Si escribe de noche o el fin de semana, le respondemos desde el siguiente día hábil.'],
     },
     {
       id: 'antes-de-escribir',
-      etiqueta: 'Alcance',
+      etiqueta: 'No hacemos',
       titulo: 'Antes de escribirnos',
       tipo: 'lista',
-      introduccion: 'Trabajamos con empresas y profesionales de servicios. Para ahorrarle tiempo, esto es lo que no hacemos:',
+      introduccion: 'Para ahorrarle tiempo, esto no lo hacemos:',
       variante: 'excluye',
       items: [
-        'Chatbots desarrollados a medida.',
-        'Sistemas de gestión de clientes (CRM).',
-        'Conexiones técnicas entre programas (API) ni integraciones con facturación, inventario u otros sistemas.',
-        'Envíos masivos de mensajes.',
+        'Chatbots hechos a la medida.',
+        'Conexión con otros programas de su empresa (ventas, facturación, inventario).',
+        'Envío de mensajes masivos.',
       ],
-      nota: 'Trabajamos con un máximo de dos proyectos al mismo tiempo. La fecha de inicio se asigna según disponibilidad.',
+      nota: 'Trabajamos con máximo dos proyectos a la vez. La fecha de inicio depende de cuándo haya cupo.',
     },
   ],
   preguntas: [
     {
-      pregunta: '¿La revisión digital tiene algún costo?',
-      respuesta:
-        'No. La revisión no tiene costo ni lo obliga a contratar. La ofrecemos a empresas y profesionales de servicios cuyo caso encaje con lo que hacemos: páginas web, posicionamiento en Google y asistentes de IA, WhatsApp Business y mantenimiento. Si su necesidad está fuera de ese alcance, se lo decimos desde el principio.',
-    },
-    {
-      pregunta: '¿En cuánto tiempo me responden?',
-      respuesta: `Una persona le responde en uno o dos días hábiles. Atendemos de ${minuscula(CONTACTO.horario)}. Si escribe de noche o el fin de semana, el plazo empieza a contar el siguiente día hábil. No ofrecemos atención humana las 24 horas.`,
-    },
-    {
-      pregunta: '¿Qué datos debo enviar para pedir la revisión?',
-      respuesta:
-        'Su nombre, el nombre de su empresa, un número de WhatsApp, el plan que le interesa o «Aún no sé», y una descripción breve de lo que necesita. El correo y la dirección de su web son opcionales, pero nos ayudan a preparar la revisión. Usamos sus datos solo para responderle, con su autorización.',
-    },
-    {
       pregunta: '¿Necesito tener página web para pedir la revisión?',
       respuesta:
-        'No. Si aún no tiene página web, revisamos cómo lo encuentran hoy sus clientes: en Google, en redes sociales y por WhatsApp. La revisión le indicará por dónde empezar. Si ya tiene página, revisamos además su claridad, cómo se ve en el celular y qué tan fácil es contactarlo.',
-    },
-    {
-      pregunta: '¿Qué pasa si quiero avanzar después de la revisión?',
-      respuesta: `Agendamos una reunión de diagnóstico de hasta 45 minutos para confirmar el alcance y revisar si su WhatsApp Business es compatible con la atención inteligente. Luego le enviamos una propuesta con máximo tres opciones. Si la acepta, el proyecto inicia con el ${anticipo}\u00a0% del valor y una fecha asignada según disponibilidad.`,
-    },
-    {
-      pregunta: '¿Cuándo podríamos empezar mi proyecto?',
-      respuesta:
-        'Depende de la disponibilidad. Trabajamos con un máximo de dos proyectos al mismo tiempo para cuidar la calidad, así que la fecha de inicio se asigna según el cupo y se confirma junto con la propuesta. Si hoy no hay cupo, se lo decimos con claridad y le proponemos una fecha.',
+        'No. Si no tiene web, revisamos cómo lo encuentran hoy sus clientes: en Google, en redes sociales y por WhatsApp. Así sabe por dónde empezar.',
     },
   ],
   cta: {
-    titulo: 'Descubra qué está frenando la presencia digital de su empresa',
-    texto: 'Escríbanos por el formulario o por WhatsApp. La revisión es gratuita y sin compromiso.',
+    titulo: 'Sepa qué mejorar primero en su empresa',
+    texto: 'Escríbanos por el formulario o por WhatsApp. La revisión es gratis.',
     ctaPrincipal: { texto: CTA_PRINCIPAL.texto, href: '#formulario' },
     ctaWhatsApp: MENSAJE_WHATSAPP,
     enlaceWhatsApp: enlaceWhatsApp(MENSAJE_WHATSAPP),
@@ -230,5 +194,5 @@ export const contenido = {
     { texto: 'Proyectos de páginas web y plataformas', href: '/proyectos/' },
     { texto: 'Quién está detrás de VRS Digital', href: '/nosotros/' },
   ],
-  actualizado: '2026-10-11',
+  actualizado: '2026-10-19',
 } as const satisfies ModuloPagina;

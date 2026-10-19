@@ -13,7 +13,7 @@
  */
 import EncabezadoSeccion from '@/components/ui/EncabezadoSeccion.astro';
 import PieSeccion from '@/components/pagina/PieSeccion.astro';
-import { idTitulo, muestraPrecio } from '@/lib/paginas';
+import { idTitulo, necesitaNotaPrecios } from '@/lib/paginas';
 import type { Seccion } from '@/data/contenido/tipos';
 
 interface Props {
@@ -29,7 +29,7 @@ interface Props {
 }
 
 const { seccion: s, fondo = 'base', numero, resaltado, conPie = true, class: clase } = Astro.props;
-const pie = { parrafos: s.parrafos, nota: s.nota, enlace: s.enlace, notaPrecios: muestraPrecio(s) };
+const pie = { parrafos: s.parrafos, nota: s.nota, enlace: s.enlace, notaPrecios: necesitaNotaPrecios(s) };
 ---
 <section
   id={s.id}

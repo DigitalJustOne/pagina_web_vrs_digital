@@ -1,5 +1,5 @@
 ---
-// /posicionamiento-google-inteligencia-artificial/ — SEO, AEO y GEO en palabras sencillas.
+// /posicionamiento-google-inteligencia-artificial/ — Aparecer en Google y en asistentes de IA.
 // Todo el texto sale de src/data/contenido/posicionamiento-google-inteligencia-artificial.ts y
 // los precios de sitio.ts. La plantilla arma SEO, JSON-LD (página, migas, FAQ y servicio con su
 // oferta), secciones, preguntas y cierre.
@@ -17,15 +17,12 @@ const comoSeArma = contenido.secciones[indice] as SeccionPasos;
 ---
 <PlantillaPagina
   contenido={contenido}
-  resaltado="Google y asistentes de IA"
+  resaltado="Google y en asistentes de IA"
   opciones={{
-    siglas: { resaltado: 'cada sigla' },
-    'que-dice-google': { resaltado: 'inteligencia artificial', plegar: 'Leer las citas de Google' },
-    'que-hacemos': { resaltado: 'entiendan su empresa' },
+    'que-hacemos': { resaltado: 'salga en Google' },
+    'como-medimos': { resaltado: 'cada mes' },
     'que-no-garantizamos': { resaltado: 'nadie puede' },
-    'como-medimos': { resaltado: 'el avance', plegar: 'Ver cómo medimos' },
-    proceso: { resaltado: 'el posicionamiento', plegar: 'Ver las etapas' },
-    'perfil-google': { iluminar: true, plegar: 'Ver la respuesta' },
+    'perfil-google': { iluminar: true },
   }}
 >
   <EsquemaRespuesta slot="visual" />

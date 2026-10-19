@@ -5,7 +5,7 @@
  * Debajo, aparte, el Plan Emprendedor, y la nota «IVA incluido».
  *
  * Es contenido real (no una imagen): cada capa es un enlace al detalle del plan (#plan-<id>) y el
- * Plan Emprendedor lleva a #emprendedor. Precios: PLANES y PLAN_ENTRADA de sitio.ts.
+ * Plan Emprendedor lleva a #plan-emprendedor. Precios: PLANES y PLAN_ENTRADA de sitio.ts.
  * Textos: textosPrecios.pila (src/data/contenido/precios.ts).
  *
  * Movimiento: las capas suben en orden al cargar, flotan despacio, se inclinan con el puntero y
@@ -65,7 +65,7 @@ const n = PLANES.length;
         }
       </ol>
 
-      <a href="#emprendedor" class="aparte vidrio">
+      <a href="#plan-emprendedor" class="aparte vidrio">
         <span class="aparte-chip">{T.aparte}</span>
         <span class="aparte-nombre">{PLAN_ENTRADA.nombre}</span>
         <span class="aparte-valor">

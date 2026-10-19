@@ -2,42 +2,32 @@
 //  Contenido de /asistente-whatsapp-business/ (servicio: atención inteligente en WhatsApp Business).
 //  Palabra clave principal: «atención inteligente WhatsApp Business».
 //
-//  DECISIÓN DE VÍCTOR (2026-10-18): la web NO explica cómo se hace el trabajo. No decir que el
-//  servicio es «configurar el agente de IA que Meta ofrece», ni «función de Meta», ni «cuando su
-//  cuenta tiene acceso», ni citar páginas de Meta. Se habla del resultado para el cliente. Se
-//  mantiene lo que lo protege: nunca decir que VRS creó la tecnología (no «nuestro chatbot» ni
-//  «IA propia»), avisar que no todas las cuentas son compatibles, que hay costos externos si
-//  superan el cupo gratuito, que la IA puede equivocarse y qué pasa con los datos.
-//  Fuentes: informe del Director (2026-10-05: «El servicio de WhatsApp», «Procedimiento del
-//  agente», «Protección de datos») y fuentes oficiales de Meta y WhatsApp verificadas el
-//  2026-10-06 (al final). Solo se afirma lo que dicen esas fuentes.
+//  CLARIDAD (2026-10-19, GUIA-CLARIDAD.md): en palabras simples, el servicio son respuestas
+//  automáticas en el WhatsApp Business de la empresa. Nunca la palabra «agente»: se dice «la
+//  atención inteligente» o «las respuestas automáticas». Lo que recibe el cliente sale del plan
+//  'atencion' de PLANES (sitio.ts): queEs, incluye y noIncluye. Nada escrito a mano.
+//
+//  DECISIÓN DE VÍCTOR (2026-10-18): la web NO explica cómo se hace el trabajo. Esta página no
+//  nombra a Meta. Se mantiene lo que protege al cliente (Ley 1480 y 1581), dicho UNA vez cada uno:
+//  - la IA puede equivocarse → tarjeta en #antes-de-contratar;
+//  - no todas las cuentas son compatibles → tarjeta en #antes-de-contratar (y la pregunta de qué
+//    pasa en ese caso);
+//  - el plan de pago de WhatsApp va aparte → tarjeta en #antes-de-contratar;
+//  - qué pasa con los datos → sección #privacidad.
+//  #antes-de-contratar tiene enlaces desde otras páginas (precios.ts): no cambiar su id.
 //
 //  REGLAS DE ESTA PÁGINA:
 //  - Nunca «nuestro chatbot», «chatbot personalizado», «asistente propio» ni «IA propia».
-//  - No afirmar que está disponible en Colombia: no hay confirmación oficial de Meta.
-//  - No usar la tarifa de US$2 por millón de tokens: es de la API (WhatsApp Business Platform),
-//    que VRS Digital no vende. El costo de la app se explica con el cupo gratuito y Meta One.
-//  - No prometer «lista de casos que necesitan atención», agendamiento ni el resumen matutino
-//    como funciones garantizadas: no están confirmados para todas las cuentas.
-//  - Revisar cada trimestre: Meta cambia nombres, funciones y precios con frecuencia.
+//  - No afirmar que está disponible en Colombia.
+//  - No prometer agendamiento ni resúmenes como funciones garantizadas: no están en todas las cuentas.
+//  - Revisar cada trimestre: WhatsApp cambia nombres, funciones y precios con frecuencia.
 //
-//  PENDIENTE DE LA DIRECCIÓN antes de publicar:
-//  - Si se puede contratar solo la configuración de WhatsApp (sin web). Hoy la página dice
-//    que está incluida en el plan Web + Atención Inteligente.
-//  - Si la configuración de las funciones clásicas (bienvenida, ausencia, respuestas rápidas,
-//    etiquetas y catálogo) va sin costo adicional cuando la cuenta no tiene acceso al agente.
-//  - El informe pide «prueba de 25 a 40 preguntas» y a la vez una batería mínima de 30.
-//    Aquí se publica «de 25 a 40» y la distribución base de 30.
-//  EDICIÓN FINAL (2026-10-06): título a 58 caracteres con la marca; «Silenciarlo no detiene esa
-//  recopilación» en lugar de «solo desconectarlo detiene ese uso» (inferencia no textual de Meta);
-//  preguntas centradas en el servicio, sin repetir las de la guía ni las de /precios/.
-//  DISEÑO DE PÁGINA (2026-10-06, grupo servicios): la conversación de ejemplo vive en
-//  CONVERSACION_EJEMPLO y la sección #ejemplo va justo después de #que-es, con cuatro puntos que
-//  leen el ejemplo. Export `relojAtencion` con los rótulos del visual de portada (horas tomadas
-//  del ejemplo). `verificado` pasa a fecha ISO (antes era una frase y la plantilla la rompía).
-//  TEXTO NUEVO: lo debe revisar la Dirección.
+//  PENDIENTE DE LA DIRECCIÓN:
+//  - Si se puede contratar solo la atención inteligente (sin web). Hoy va en el plan Web + Atención
+//    Inteligente.
+//  - Si las respuestas básicas (cuando la cuenta no es compatible) van sin costo adicional.
 // ─────────────────────────────────────────────────────────────────────────────
-import { CONTACTO, CTA_PRINCIPAL, PLANES, enlaceWhatsApp, formatoCOP, type IdPlan, cuotaMensual } from '@/data/sitio';
+import { CONTACTO, CTA_PRINCIPAL, PLANES, enlaceWhatsApp, formatoCOP, type IdPlan } from '@/data/sitio';
 import type { NombreIconoTarjeta } from '@/components/ui/iconos';
 import type { ModuloPagina } from './tipos';
 
@@ -45,14 +35,10 @@ import type { ModuloPagina } from './tipos';
 const icono = (nombre: NombreIconoTarjeta) => nombre;
 const plan = (id: IdPlan) => PLANES.find((p) => p.id === id)!;
 const desde = (id: IdPlan) => formatoCOP(plan(id).precioAnualDesde);
-const cuotaDesde = (id: IdPlan) => formatoCOP(cuotaMensual(plan(id).precioAnualDesde));
 /** Pasa a minúscula la primera letra, salvo en siglas (PSE, SST). */
 const minuscula = (t: string) => (/^\p{Lu}\p{Ll}/u.test(t) ? t.charAt(0).toLowerCase() + t.slice(1) : t);
 
 const atencion = plan('atencion');
-
-/** Aclaración obligatoria cerca de cualquier mención de «a cualquier hora» o «24/7». */
-const ACLARACION_HORARIO = `El agente puede responder a cualquier hora. Nuestro acompañamiento humano es de ${minuscula(CONTACTO.horario)}. ${CONTACTO.respuestaHumana}`;
 
 const MENSAJE_WHATSAPP = 'Hola, quiero saber si mi WhatsApp Business puede tener atención inteligente.';
 
@@ -63,52 +49,53 @@ const CONVERSACION_EJEMPLO = {
   mensajes: [
     {
       de: 'cliente',
-      hora: '9:42\u00a0p.\u00a0m.',
+      hora: '9:42 p. m.',
       texto: 'Buenas noches. ¿Ustedes hacen la declaración de renta para independientes? ¿Cuánto cuesta?',
     },
     {
       de: 'asistente',
-      hora: '9:42\u00a0p.\u00a0m.',
+      hora: '9:42 p. m.',
       texto:
-        'Buenas noches. Sí, la firma prepara la declaración de renta de personas naturales, incluidos independientes. El valor depende de sus ingresos y de los soportes que tenga. ¿Me comparte su nombre para que una persona de la firma le confirme el valor exacto?',
+        'Buenas noches. Sí, la firma hace la declaración de renta de independientes. El valor depende de sus ingresos y soportes. ¿Me comparte su nombre para que una persona le confirme el valor?',
     },
-    { de: 'cliente', hora: '9:43\u00a0p.\u00a0m.', texto: 'Andrea Gómez' },
+    { de: 'cliente', hora: '9:43 p. m.', texto: 'Andrea Gómez' },
     {
       de: 'asistente',
-      hora: '9:43\u00a0p.\u00a0m.',
-      texto: 'Gracias, Andrea. Dejé su consulta lista para la firma. Le escribirán en horario de oficina, de lunes a viernes.',
+      hora: '9:43 p. m.',
+      texto: 'Gracias, Andrea. Dejé su consulta lista. La firma le escribe en horario de oficina, de lunes a viernes.',
     },
     {
       de: 'persona',
       separador: 'Al día siguiente',
-      hora: '8:15\u00a0a.\u00a0m.',
+      hora: '8:15 a. m.',
       texto:
-        'Buenos días, Andrea. Ya leí su consulta. Para darle el valor exacto, ¿me confirma si este año tuvo ingresos solo como independiente o también como empleada?',
+        'Buenos días, Andrea. Ya leí su consulta. ¿Este año tuvo ingresos solo como independiente o también como empleada?',
     },
   ],
-  nota: 'Ejemplo ilustrativo con una firma ficticia, no de un cliente real. Las respuestas reales dependen de la información que su empresa apruebe y de las funciones disponibles en su cuenta.',
+  nota: 'Ejemplo con una firma inventada, no con un cliente real.',
 } as const;
 
-const MENSAJE_AGENTE = CONVERSACION_EJEMPLO.mensajes.find((m) => m.de === 'asistente')!;
+const MENSAJE_AUTOMATICO = CONVERSACION_EJEMPLO.mensajes.find((m) => m.de === 'asistente')!;
 const MENSAJE_PERSONA = CONVERSACION_EJEMPLO.mensajes.find((m) => m.de === 'persona')!;
 
 /**
- * Textos de la ilustración de la portada: un teléfono dentro de un anillo de 24 horas. El agente
- * puede responder a cualquier hora; una persona continúa en su horario. Horas y rótulos salen de la
- * conversación de ejemplo. El arco «su equipo» es ilustrativo: cada empresa define su horario.
+ * Textos de la ilustración de la portada: un teléfono dentro de un anillo de 24 horas. Las
+ * respuestas automáticas contestan a cualquier hora; una persona continúa en su horario. Horas y
+ * rótulos salen de la conversación de ejemplo. Los nombres de las claves (agente, autorAgente…) los
+ * usa RelojAtencion.astro: no cambiarlos aquí.
  */
 export const relojAtencion = {
-  etiqueta: `Ilustración: un teléfono con una conversación de WhatsApp Business, rodeado por un anillo de 24 horas. A las ${MENSAJE_AGENTE.hora} responde el agente de IA; ${MENSAJE_PERSONA.separador?.toLowerCase()}, a las ${MENSAJE_PERSONA.hora}, continúa una persona del equipo.`,
-  agente: { hora: MENSAJE_AGENTE.hora, titulo: 'Responde el agente de IA', detalle: 'Fuera de horario' },
-  persona: { hora: MENSAJE_PERSONA.hora, titulo: 'Continúa una persona', detalle: MENSAJE_PERSONA.separador ?? '' },
+  etiqueta: `Ilustración: un teléfono con una conversación de WhatsApp Business, rodeado por un reloj de 24 horas. A las ${MENSAJE_AUTOMATICO.hora} contesta la respuesta automática; ${MENSAJE_PERSONA.separador?.toLowerCase()}, a las ${MENSAJE_PERSONA.hora}, sigue una persona del equipo.`,
+  agente: { hora: MENSAJE_AUTOMATICO.hora, titulo: 'Contesta la respuesta automática', detalle: 'Fuera de horario' },
+  persona: { hora: MENSAJE_PERSONA.hora, titulo: 'Sigue una persona', detalle: MENSAJE_PERSONA.separador ?? '' },
   separador: MENSAJE_PERSONA.separador ?? '',
   /** Rótulos sobre las burbujas (los mismos de la conversación de ejemplo). */
-  autorAgente: 'Agente de IA',
+  autorAgente: 'Respuesta automática',
   autorPersona: 'Persona del equipo',
-  leyendaAgente: 'Agente de IA: puede responder a cualquier hora',
+  leyendaAgente: 'Respuestas automáticas: a cualquier hora',
   leyendaEquipo: 'Su equipo: en su horario de atención',
   /** Rótulos de las horas del anillo (6 a. m., 12 m., 6 p. m.). */
-  horas: { manana: '6\u00a0a.\u00a0m.', mediodia: '12 m.', tarde: '6\u00a0p.\u00a0m.', medianoche: '12\u00a0a.\u00a0m.' },
+  horas: { manana: '6 a. m.', mediodia: '12 m.', tarde: '6 p. m.', medianoche: '12 a. m.' },
 } as const;
 
 export const contenido = {
@@ -116,13 +103,14 @@ export const contenido = {
   seo: {
     // 41 caracteres + « | VRS Digital» (Seo.astro) = 55.
     titulo: 'Atención inteligente en WhatsApp Business',
+    // 140 caracteres.
     descripcion:
-      'Su WhatsApp Business responde a sus clientes a cualquier hora con la información de su empresa y le pasa los casos que necesitan una persona.',
+      'Respuestas automáticas en el WhatsApp Business de su empresa, a cualquier hora y con la información que usted aprueba. Lo difícil pasa a usted.',
     palabraClave: 'atención inteligente WhatsApp Business',
     secundarias: [
       'asistente de WhatsApp para empresas',
       'respuestas automáticas WhatsApp Business',
-      'agente de IA WhatsApp Business',
+      'inteligencia artificial WhatsApp Business',
     ],
   },
   migas: [
@@ -133,42 +121,26 @@ export const contenido = {
     etiqueta: 'Atención inteligente en WhatsApp Business',
     titulo: 'Atención inteligente en WhatsApp Business para su empresa',
     subtitulo:
-      'Su WhatsApp Business responde a sus clientes a cualquier hora, con la información que usted aprueba, y le pasa a usted los casos que necesitan una persona. Lo dejamos listo, probado y ajustado.',
+      'Su WhatsApp Business contesta por sí mismo las preguntas de siempre, también de noche. Lo que necesita una persona, se lo pasa a usted.',
     ctaPrincipal: CTA_PRINCIPAL,
     ctaSecundario: { texto: 'Preguntar por WhatsApp', href: enlaceWhatsApp(MENSAJE_WHATSAPP) },
     puntos: ['Responde a cualquier hora', 'Revisamos su cuenta antes de cobrar', 'Usted decide qué responde'],
     precio: `Plan ${atencion.nombre} desde ${desde('atencion')}`,
   },
   respuestaDirecta:
-    'Con la atención inteligente de VRS Digital, su WhatsApp Business responde a sus clientes a cualquier hora con la información de su empresa: servicios, horarios, precios autorizados y cómo empezar. Usted define qué puede responder, qué datos puede pedir y cuándo le pasa la conversación a una persona.',
+    'La atención inteligente son respuestas automáticas en el WhatsApp Business de su empresa. Contestan con la información que usted aprueba: servicios, horarios, precios y cómo empezar. Usted decide qué datos piden y cuándo pasa la conversación a una persona.',
   secciones: [
-    {
-      id: 'que-es',
-      etiqueta: 'Qué es',
-      titulo: 'Qué es la atención inteligente en WhatsApp',
-      tipo: 'texto',
-      parrafos: [
-        'Es un asistente de inteligencia artificial que trabaja dentro de su WhatsApp Business. Responde los mensajes de sus clientes con la información de su empresa, a cualquier hora, y le pasa a usted los casos que necesitan una persona.',
-        'Aprende de la información que usted aprueba: su catálogo, sus listas de precios, sus documentos, sus fotos y su sitio web.',
-      ],
-      destacado: {
-        titulo: 'Nuestro servicio, en una frase',
-        texto:
-          'Dejamos su WhatsApp Business respondiendo preguntas frecuentes, explicando sus servicios, compartiendo información comercial y pidiendo los datos necesarios antes de pasar la conversación a una persona.',
-      },
-    },
     {
       id: 'ejemplo',
       etiqueta: 'Ejemplo',
-      titulo: 'Así se ve una conversación con el agente',
-      introduccion:
-        'En este ejemplo, una firma contable ficticia tiene la atención inteligente lista para responder lo básico, pedir solo el nombre y pasar el caso a una persona. El agente no da el precio exacto porque la firma no lo autorizó.',
+      titulo: 'Así se ve una conversación',
+      introduccion: 'Una firma contable inventada recibe un mensaje de noche, fuera de su horario:',
       tipo: 'conversacion',
       puntos: [
-        `Responde a las ${MENSAJE_AGENTE.hora} con la información que la firma aprobó.`,
+        `Contesta a las ${MENSAJE_AUTOMATICO.hora} con la información que la firma aprobó.`,
         'Pide solo el nombre.',
         'No da el precio exacto, porque la firma no lo autorizó.',
-        'Deja el caso listo para que una persona lo continúe.',
+        'Deja el caso listo para que una persona siga.',
       ],
       conversacion: CONVERSACION_EJEMPLO,
     },
@@ -176,135 +148,93 @@ export const contenido = {
       id: 'que-puede-hacer',
       etiqueta: 'Qué hace',
       titulo: 'Qué puede hacer por su empresa',
-      introduccion: 'Lo que funcione en su cuenta lo revisamos en el diagnóstico, antes de cobrar.',
       tipo: 'lista',
       items: [
-        'Responder preguntas sobre horarios, ubicación, productos, servicios y precios.',
+        'Contestar sobre horarios, ubicación, productos, servicios y precios.',
         'Recomendar productos o servicios de su catálogo.',
-        'Responder sobre descuentos, formas de pago y envíos, con la información que usted autorice.',
-        'Pedirle datos al cliente para entender qué necesita (calificar prospectos).',
-        'Pasarle a usted los temas complejos o sensibles que usted defina.',
-        'Agendar citas, cuando su cuenta tenga esa función.',
+        'Contestar sobre descuentos, formas de pago y envíos, si usted lo autoriza.',
+        'Pedirle datos al cliente para entender qué necesita.',
+        'Pasarle a usted los temas difíciles o delicados.',
+        'Agendar citas, si su cuenta tiene esa función.',
       ],
-      nota: ACLARACION_HORARIO,
     },
     {
       id: 'controles',
       etiqueta: 'Usted tiene el control',
       titulo: 'Lo que usted controla',
-      introduccion: 'Lo dejamos listo y le explicamos cómo usar cada control.',
       tipo: 'tarjetas',
-      columnas: 3,
+      columnas: 2,
       items: [
         {
-          titulo: 'Qué sabe',
-          texto: 'Usted decide con qué información aprende: su perfil, su catálogo, su sitio web, documentos y respuestas de ejemplo.',
-          icono: icono('file'),
-        },
-        {
           titulo: 'Cómo habla',
-          texto: 'Se define el tono de las respuestas. Si una respuesta no le gusta, se puede reescribir.',
+          texto: 'Usted elige el tono. Si una respuesta no le gusta, se reescribe.',
           icono: icono('message'),
         },
         {
           titulo: 'A quién responde',
-          texto: 'A todos sus clientes, solo a los clientes nuevos o solo a quienes llegan desde sus anuncios.',
+          texto: 'A todos sus clientes, solo a los nuevos o solo a quienes llegan por sus anuncios.',
           icono: icono('users'),
         },
         {
-          titulo: 'Cuándo le pasa la conversación',
-          texto: 'Usted define los temas que siempre deben pasar a una persona, como quejas o casos delicados.',
+          titulo: 'Qué le pasa a usted',
+          texto: 'Usted elige los temas que siempre atiende una persona, como quejas o casos delicados.',
           icono: icono('shield'),
         },
         {
-          titulo: 'Intervenir en cualquier chat',
-          texto: 'Si usted responde en un chat, el agente deja de responder en ese chat hasta que usted lo reactive.',
-          icono: icono('eye'),
-        },
-        {
-          titulo: 'Apagarlo',
-          texto: 'Puede activarlo por chat o para todos, y desconectarlo por completo cuando quiera.',
+          titulo: 'Responder usted o apagar',
+          texto: 'Si usted escribe en un chat, las respuestas automáticas paran ahí hasta que las active de nuevo. Puede apagarlas del todo cuando quiera.',
           icono: icono('lock'),
         },
       ],
     },
     {
       id: 'alcance',
-      etiqueta: 'Qué hacemos',
-      titulo: 'Qué incluye el servicio y qué no',
-      introduccion: 'Preparamos, probamos y ajustamos la atención de su WhatsApp Business.',
+      etiqueta: 'Qué recibe',
+      titulo: 'Qué recibe y qué no',
+      introduccion: `${atencion.queEs} Esto es lo que hacemos en su WhatsApp:`,
       tipo: 'comparacion',
-      incluye: [
-        'Revisión de que su cuenta de WhatsApp Business sea compatible.',
-        'Organización de la información comercial de su empresa.',
-        'Optimización del perfil, la descripción, los horarios y el catálogo.',
-        'Definición del tono y el estilo de las respuestas.',
-        'Preguntas y respuestas frecuentes preparadas con usted.',
-        'Carga de enlaces, archivos y políticas, cuando su cuenta lo permita.',
-        'Definición de los datos que el agente puede pedir.',
-        'Criterios para pasar la conversación a una persona.',
-        'Prueba de 25 a 40 preguntas y corrección de las respuestas con problemas.',
-        'Manual breve de supervisión.',
-        'Optimización inicial durante 30 días.',
-        'Revisión de las respuestas del agente cada mes.',
-      ],
-      noIncluye: [
-        'Chatbot a medida.',
-        'Programación de API (conexión técnica entre sistemas).',
-        'CRM (programa para gestionar clientes y ventas).',
-        'Integración con facturación, inventario, ERP (software de gestión empresarial) u otros programas.',
-        'Envíos masivos de mensajes.',
-        'Automatización en varios canales.',
-        'Garantía de respuestas perfectas.',
-        'Garantía de que WhatsApp mantenga la función disponible.',
-        'Recuperación de cuentas suspendidas.',
-        'Soporte técnico de WhatsApp.',
-      ],
+      incluye: atencion.incluye,
+      noIncluye: atencion.noIncluye,
     },
     {
       id: 'informacion',
       etiqueta: 'Lo que necesitamos',
-      titulo: 'Qué información necesitamos de su empresa',
-      introduccion:
-        'El agente responde tan bien como la información que recibe. Se la pedimos en un solo formulario, y usted aprueba por escrito lo que cargamos:',
+      titulo: 'Qué información nos da usted',
+      introduccion: 'Las respuestas salen de esta información. Usted la llena en un formulario y aprueba por escrito lo que cargamos:',
       tipo: 'lista',
       items: [
-        'Descripción del negocio.',
-        'Servicios y a quién van dirigidos.',
-        'Horarios y zonas de cobertura.',
-        'Precios que se pueden comunicar.',
-        'Métodos de pago.',
-        'Políticas: cambios, cancelaciones, garantías.',
-        'Preguntas frecuentes de sus clientes.',
-        'Situaciones que siempre debe atender una persona.',
-        'Lo que el agente nunca debe afirmar.',
-        'Los datos que puede pedirle al cliente.',
+        'Qué hace su empresa.',
+        'Sus servicios y para quién son.',
+        'Horarios y zonas donde atiende.',
+        'Precios que se pueden decir.',
+        'Formas de pago.',
+        'Reglas de cambios, cancelaciones y garantías.',
+        'Las preguntas que más le hacen.',
+        'Los casos que siempre atiende una persona.',
+        'Lo que nunca se debe decir.',
+        'Los datos que se le pueden pedir al cliente.',
       ],
-      parrafos: [
-        'El agente también aprende de su sitio web. Una web clara, con una página por servicio, precios «desde» y preguntas frecuentes, le da mejor información para responder.',
-        `Por eso lo ofrecemos junto con la web en el plan ${atencion.nombre}: la misma información ordenada sirve a Google, a los asistentes de IA y a sus clientes en WhatsApp.`,
-      ],
+      parrafos: ['También usa su web. Por eso va en el mismo plan: una web clara da mejores respuestas.'],
     },
     {
       id: 'pruebas',
       etiqueta: 'Pruebas',
-      titulo: 'Cómo lo probamos antes de activarlo',
+      titulo: 'Cómo probamos el servicio antes de activarlo',
       introduccion:
-        'Antes de que hable con sus clientes, le hacemos de 25 a 40 preguntas de prueba, según el tamaño de su negocio. Esta es la distribución base, con 30 preguntas en cinco grupos:',
+        'Le hacemos de 25 a 40 preguntas de prueba, según el tamaño de su negocio. Esta es la base, con 30 preguntas:',
       tipo: 'tabla',
       columnas: ['Grupo', 'Preguntas', 'Qué comprobamos', 'Ejemplo'],
       filas: [
-        ['Preguntas normales', '10', 'Que responda bien lo básico: servicios, horarios, ubicación y cómo empezar.', '«¿Qué servicios ofrecen?»'],
-        ['Preguntas ambiguas', '5', 'Que pida una aclaración en lugar de suponer.', '«¿Cuánto vale?», sin decir qué servicio.'],
-        ['Fuera de alcance', '5', 'Que reconozca lo que su empresa no hace y no invente.', '«¿Ustedes también venden computadores?»'],
+        ['Preguntas normales', '10', 'Que conteste bien lo básico: servicios, horarios, ubicación y cómo empezar.', '«¿Qué servicios ofrecen?»'],
+        ['Preguntas confusas', '5', 'Que pregunte en vez de suponer.', '«¿Cuánto vale?», sin decir qué servicio.'],
+        ['Lo que usted no vende', '5', 'Que no invente servicios que su empresa no tiene.', '«¿Ustedes también venden computadores?»'],
         ['Precios', '5', 'Que use solo los precios autorizados y no prometa descuentos.', '«¿Me lo deja más barato si pago hoy?»'],
-        ['Atención humana', '5', 'Que pase la conversación a una persona cuando corresponde.', '«Quiero hablar con alguien» o «Tengo una queja».'],
+        ['Hablar con una persona', '5', 'Que pase la conversación a una persona cuando toca.', '«Quiero hablar con alguien» o «Tengo una queja».'],
       ],
       parrafos: [
-        'El agente se activa con sus clientes solo si cumple estos criterios: no inventa precios ni políticas, no promete servicios que su empresa no presta, mantiene el tono definido, pide solo los datos necesarios, reconoce lo que no sabe, pasa la conversación a una persona cuando corresponde y no expone información privada. Si una respuesta falla, la corregimos y repetimos la prueba.',
-        'Aun así, como toda inteligencia artificial, el agente puede equivocarse. Por eso usted puede responder personalmente en cualquier chat.',
+        'Las preguntas traen errores de ortografía, como «ola, q precio tiene?», porque así escriben muchos clientes.',
+        'Solo la activamos si no inventa, pide pocos datos, reconoce lo que no sabe y no muestra información privada. Si una respuesta falla, la corregimos y repetimos la prueba.',
       ],
-      nota: 'En todos los grupos incluimos errores de ortografía y lenguaje informal, como «ola, q precio tiene?», porque así escriben muchos clientes.',
     },
     {
       id: 'antes-de-contratar',
@@ -314,27 +244,26 @@ export const contenido = {
       columnas: 2,
       items: [
         {
-          titulo: 'Cuentas compatibles',
-          texto: 'No todas las cuentas de WhatsApp Business tienen esta función todavía. Por eso revisamos la suya antes de cobrar.',
+          titulo: 'Puede equivocarse',
+          texto: 'Como toda inteligencia artificial, puede contestar mal. Por eso la probamos antes y usted puede responder en cualquier chat.',
           icono: icono('eye'),
         },
         {
-          titulo: 'Costos externos',
+          titulo: 'No todas las cuentas sirven',
+          texto: 'No todas las cuentas de WhatsApp Business tienen esta función. Revisamos la suya antes de cobrar.',
+          icono: icono('shield'),
+        },
+        {
+          titulo: 'El plan de pago de WhatsApp va aparte',
           texto:
-            'WhatsApp incluye cada mes un cupo de respuestas automáticas sin costo. Si su empresa necesita más, WhatsApp cobra un plan aparte, que usted paga directamente. Se lo informamos antes de activar el servicio.',
+            'WhatsApp da cada mes un cupo gratis de respuestas automáticas. Si necesita más, WhatsApp cobra un plan que usted le paga directamente. Ese costo no está en nuestro precio.',
           icono: icono('calculator'),
         },
         {
-          titulo: 'Cambios',
+          titulo: 'WhatsApp puede cambiar',
           texto:
-            'WhatsApp puede cambiar funciones, condiciones y precios. Por eso el contrato aclara que la continuidad de la función y sus costos futuros no dependen de nosotros.',
+            'WhatsApp puede cambiar la función o sus precios; eso no depende de nosotros. Además, al activarla pueden cambiar las listas de difusión, los mensajes temporales y la edición o borrado de mensajes.',
           icono: icono('refresh'),
-        },
-        {
-          titulo: 'Funciones de la app que se afectan',
-          texto:
-            'Activar la inteligencia artificial puede afectar las listas de difusión, los mensajes temporales y la edición o eliminación de mensajes. Se lo explicamos antes de activarla, para que usted decida.',
-          icono: icono('wrench'),
         },
       ],
     },
@@ -344,50 +273,19 @@ export const contenido = {
       titulo: 'Qué pasa con los datos de sus clientes',
       tipo: 'texto',
       parrafos: [
-        'WhatsApp informa que puede usar los mensajes de los chats donde la inteligencia artificial está activa para mejorar sus servicios, incluso si usted la silencia.',
-        'Por eso no recomendamos activarla en conversaciones con información de salud, financiera o jurídica sensible, ni usarla para recibir documentos confidenciales.',
-        'Su empresa es responsable de los datos de sus clientes (Ley 1581 de 2012). Le pedimos tener publicada su política de tratamiento de datos, dejamos el agente pidiendo solo los datos necesarios y tenemos en cuenta los lineamientos de la Superintendencia de Industria y Comercio (SIC) sobre inteligencia artificial (Circular Externa 002 de 2024).',
-        'Las decisiones médicas, legales, contables o financieras siempre requieren la revisión de una persona calificada.',
-      ],
-    },
-    {
-      id: 'sin-acceso',
-      etiqueta: 'Si su cuenta no es compatible',
-      titulo: 'Si su cuenta todavía no tiene esta función',
-      introduccion: 'Si su WhatsApp Business todavía no la tiene, esto es lo que hacemos:',
-      tipo: 'pasos',
-      items: [
-        {
-          paso: '01',
-          titulo: 'Entregamos lo demás',
-          texto: 'Su web y su posicionamiento se entregan completos, sin ese componente.',
-        },
-        {
-          paso: '02',
-          titulo: 'No le cobramos lo que no tiene',
-          texto: 'El valor de la atención inteligente se descuenta o se pospone. Usted no paga por algo que su cuenta no tiene.',
-        },
-        {
-          paso: '03',
-          titulo: 'Dejamos listas las respuestas básicas',
-          texto:
-            'Perfil de empresa, mensaje de bienvenida, mensaje de ausencia fuera de horario, respuestas rápidas, etiquetas para ordenar sus chats y catálogo de servicios.',
-        },
-        {
-          paso: '04',
-          titulo: 'La activamos después',
-          texto: 'Cuando su cuenta tenga la función, la dejamos lista y la probamos con el mismo procedimiento.',
-        },
+        'WhatsApp informa que puede usar los mensajes de los chats con respuestas automáticas para mejorar sus servicios, aunque usted las silencie.',
+        'Por eso no recomendamos usarlas en chats sobre salud, dinero o asuntos legales delicados, ni para recibir documentos confidenciales.',
+        'Las decisiones médicas, legales, contables o de dinero siempre las debe revisar una persona experta.',
+        'Su empresa responde por los datos de sus clientes (Ley 1581 de 2012). Le pedimos tener publicada su política de datos. Las respuestas piden solo los datos necesarios. Seguimos la guía de la Superintendencia de Industria y Comercio (Circular Externa 002 de 2024).',
       ],
     },
     {
       id: 'precio',
       etiqueta: 'Precio',
       titulo: 'Cuánto cuesta',
-      introduccion: `La atención inteligente en WhatsApp está incluida en el plan ${atencion.nombre}: desde ${desde('atencion')} al año, o en 12 cuotas de ${cuotaDesde('atencion')} al mes, IVA incluido. El plan incluye también la web y el posicionamiento.`,
+      introduccion: `Las respuestas automáticas vienen en el plan ${atencion.nombre}, junto con su web.`,
       tipo: 'planes',
       compacto: true,
-      nota: 'Si su empresa necesita un plan de pago de WhatsApp para más respuestas, ese costo se paga aparte y no está incluido en nuestro precio. Licencias y suscripciones externas se identifican por separado.',
       enlace: { texto: 'Ver qué incluye cada plan', href: '/precios/#plan-atencion' },
     },
   ],
@@ -395,37 +293,17 @@ export const contenido = {
     {
       pregunta: '¿Qué pasa si mi WhatsApp Business no es compatible?',
       respuesta:
-        'Lo revisamos en el diagnóstico, antes de cobrarle este componente. Si su cuenta todavía no tiene la función, entregamos la web y el posicionamiento, descontamos o posponemos ese valor y dejamos listas las respuestas básicas de su WhatsApp Business.',
+        'Le entregamos su web completa y descontamos o posponemos el valor de las respuestas automáticas. Dejamos listo lo básico: mensaje de bienvenida, mensaje fuera de horario, respuestas rápidas y catálogo. Cuando su cuenta tenga la función, la activamos y la probamos igual.',
     },
     {
-      pregunta: '¿Hay costos aparte de su precio?',
-      respuesta:
-        'WhatsApp incluye cada mes un cupo de respuestas automáticas sin costo. Si su empresa recibe muchos mensajes y necesita más, WhatsApp cobra un plan aparte, que usted paga directamente. Se lo informamos antes de activar el servicio. Nuestro precio cubre la preparación, las pruebas y los ajustes.',
-    },
-    {
-      pregunta: '¿El agente responde las 24 horas?',
-      respuesta: `Puede responder a cualquier hora, también fuera de su horario, mientras esté activo. Eso no significa soporte humano permanente: nuestro acompañamiento es de ${minuscula(CONTACTO.horario)}. ${CONTACTO.respuestaHumana} Los casos delicados quedan para usted o su equipo.`,
-    },
-    {
-      pregunta: '¿El agente de IA se puede equivocar?',
-      respuesta:
-        'Sí. Como toda inteligencia artificial, puede equivocarse. Por eso lo probamos con 25 a 40 preguntas antes de activarlo, limitamos los temas que puede responder y definimos cuáles debe pasarle a usted. Además, usted puede responder personalmente en cualquier chat: cuando lo hace, el agente deja de responder en esa conversación.',
-    },
-    {
-      pregunta: '¿Qué información necesitan de mi empresa?',
-      respuesta:
-        'La descripción de su negocio, sus servicios y a quién van dirigidos, horarios y zonas de cobertura, los precios que se pueden comunicar, los métodos de pago, sus políticas y las preguntas frecuentes de sus clientes. También definimos con usted qué situaciones debe atender una persona, qué no debe afirmar el agente y qué datos puede pedir. Usted aprueba por escrito lo que cargamos.',
-    },
-    {
-      pregunta: '¿Cómo prueban el agente antes de activarlo?',
-      respuesta:
-        'Le hacemos de 25 a 40 preguntas de prueba: normales, ambiguas, fuera de alcance, sobre precios y pedidos de hablar con una persona, con errores de ortografía y lenguaje informal. Lo aprobamos solo si no inventa precios ni políticas, mantiene el tono, pide pocos datos, reconoce lo que no sabe y pasa la conversación cuando corresponde. Si una respuesta falla, la corregimos y repetimos la prueba.',
+      pregunta: '¿Responde las 24 horas?',
+      respuesta: `Sí, contesta a cualquier hora mientras esté activa. Nuestro equipo atiende ${minuscula(CONTACTO.horario)}. ${CONTACTO.respuestaHumana}`,
     },
   ],
   cta: {
     titulo: 'Revisemos la atención de su WhatsApp Business',
     texto:
-      'Empiece con una revisión digital gratuita: analizamos su web, su visibilidad en Google y su atención por WhatsApp, y le entregamos tres prioridades concretas. En el diagnóstico revisamos si su cuenta es compatible.',
+      'Empiece con una revisión gratuita de su web, de cómo sale en Google y de su WhatsApp. Le entregamos tres cosas concretas para mejorar.',
     ctaPrincipal: CTA_PRINCIPAL,
     ctaWhatsApp: MENSAJE_WHATSAPP,
     enlaceWhatsApp: enlaceWhatsApp(MENSAJE_WHATSAPP),
@@ -433,7 +311,7 @@ export const contenido = {
   enlacesInternos: [
     { texto: 'Precios del plan Web + Atención Inteligente', href: '/precios/' },
     { texto: 'Diseño de páginas web en Bogotá para empresas', href: '/paginas-web-bogota/' },
-    { texto: 'Posicionamiento en Google y asistentes de IA', href: '/posicionamiento-google-inteligencia-artificial/' },
+    { texto: 'Aparecer en Google y en asistentes como ChatGPT', href: '/posicionamiento-google-inteligencia-artificial/' },
   ],
   fuentes: [
     {
@@ -443,15 +321,15 @@ export const contenido = {
   ],
   /**
    * Datos para servicio() de @/lib/schema. Sin precioDesde: el precio publicado es del plan
-   * completo (web + posicionamiento + atención inteligente). No usar SoftwareApplication ni
-   * Product: darían a entender un software propio.
+   * completo (web + Google + atención inteligente). No usar SoftwareApplication ni Product: darían
+   * a entender un software propio.
    */
   servicio: {
     nombre: 'Atención inteligente en WhatsApp Business',
-    tipo: 'Atención automatizada en WhatsApp Business',
+    tipo: 'Respuestas automáticas en WhatsApp Business',
     descripcion:
-      'Atención inteligente en WhatsApp Business: información del negocio, tono, pruebas y criterios para pasar la conversación a una persona.',
+      'Respuestas automáticas en el WhatsApp Business de la empresa, con la información que aprueba, probadas antes de activarlas y con paso a una persona.',
     audiencia: 'Empresas de servicios',
   },
-  actualizado: '2026-10-18',
+  actualizado: '2026-10-19',
 } as const satisfies ModuloPagina;

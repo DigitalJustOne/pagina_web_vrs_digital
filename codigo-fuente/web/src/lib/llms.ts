@@ -77,7 +77,7 @@ function preguntasDe(v: unknown): PreguntaLlms[] {
 }
 
 // ── Clasificación y orden por ruta ───────────────────────────────────────────
-const RUTAS_SERVICIO = SERVICIOS.filter((s) => s.slug !== 'precios').map((s) => `/${s.slug}/`);
+const RUTAS_SERVICIO = SERVICIOS.map((s) => `/${s.slug}/`);
 const RUTAS_SECTOR = SECTORES.map((s) => `/${s.slug}/`);
 const RUTAS_EMPRESA = ['/', '/nosotros/', '/proyectos/', '/contacto/'];
 
@@ -106,7 +106,7 @@ const RESPALDO: Record<string, { titulo: string; descripcion: string }> = {
   '/contacto/': { titulo: 'Contacto', descripcion: 'Solicite una revisión digital de su empresa por formulario, WhatsApp o correo.' },
 };
 for (const s of SERVICIOS) {
-  if (s.slug !== 'precios') RESPALDO[`/${s.slug}/`] = { titulo: s.nombre, descripcion: s.resumen };
+  RESPALDO[`/${s.slug}/`] = { titulo: s.nombre, descripcion: s.resumen };
 }
 for (const s of SECTORES) {
   RESPALDO[`/${s.slug}/`] ??= { titulo: `Páginas web para ${s.nombre.charAt(0).toLowerCase()}${s.nombre.slice(1)}`, descripcion: `Páginas web, visibilidad y atención por WhatsApp pensadas para ${s.nombre.toLowerCase()}.` };

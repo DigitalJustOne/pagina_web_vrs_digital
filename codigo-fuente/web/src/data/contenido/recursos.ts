@@ -12,8 +12,11 @@
 //  PENDIENTE DE LA DIRECCIÓN antes de publicar:
 //  - Confirmar los temas de la sección «en preparación». No llevan fecha a propósito: una
 //    guía se publica cuando está verificada.
+//  2026-10-19 (claridad): textos simples. Se quitó la sección «como-las-hacemos» (explicaba cómo
+//  se hacen las guías y repetía la pregunta «¿Quién escribe…?»). Las tarjetas de «servicios»
+//  salen de SERVICIOS (sitio.ts).
 // ─────────────────────────────────────────────────────────────────────────────
-import { CTA_PRINCIPAL, FUNDADOR, enlaceWhatsApp } from '@/data/sitio';
+import { CTA_PRINCIPAL, FUNDADOR, SERVICIOS, enlaceWhatsApp } from '@/data/sitio';
 import type { NombreIconoTarjeta } from '@/components/ui/iconos';
 import type { ModuloPagina } from './tipos';
 
@@ -41,11 +44,11 @@ export const contenido = {
     etiqueta: 'Recursos',
     titulo: 'Guías sobre páginas web, Google y WhatsApp para empresas de servicios',
     subtitulo:
-      'Respuestas claras a las preguntas que nos hacen los dueños de empresas antes de contratar: cuánto cuesta, qué funciona y qué no se puede prometer. Cada guía cita sus fuentes y lleva fecha de actualización.',
+      'Respuestas claras a lo que preguntan los dueños de empresas antes de contratar. Cada guía enlaza sus fuentes y muestra su fecha.',
     ctaPrincipal: { texto: 'Ver las guías', href: '#guias' },
     ctaSecundario: CTA_PRINCIPAL,
   },
-  respuestaDirecta: `En Recursos, VRS Digital publica guías prácticas para dueños de empresas de servicios en Colombia: cuánto cuesta una página web en Bogotá, qué se paga aparte y cómo comparar cotizaciones. Cada guía lleva la firma de ${FUNDADOR.nombreCorto}, cita fuentes oficiales o públicas y se revisa cuando cambian los datos.`,
+  respuestaDirecta: `Hoy hay una guía publicada: cuánto cuesta una página web en Bogotá, qué se paga aparte y cómo comparar cotizaciones. La firma ${FUNDADOR.nombreCorto}.`,
   secciones: [
     {
       id: 'guias',
@@ -59,7 +62,7 @@ export const contenido = {
           etiqueta: 'Precios',
           titulo: '¿Cuánto cuesta una página web para empresa en Bogotá en 2026?',
           resumen:
-            'Los precios que publican las agencias de Bogotá, por qué varían tanto, los costos que se pagan aparte y una lista para comparar cotizaciones.',
+            'Cuánto cobran las agencias de Bogotá, por qué los precios cambian tanto, qué se paga aparte y una lista para comparar cotizaciones.',
           icono: icono('calculator'),
           actualizado: '2026-10-18',
         },
@@ -69,40 +72,12 @@ export const contenido = {
       id: 'en-preparacion',
       etiqueta: 'En preparación',
       titulo: 'Temas que estamos preparando',
-      introduccion:
-        'Publicamos una guía cuando cada dato está verificado, por eso no anunciamos fechas. Estos son los próximos temas:',
+      introduccion: 'Publicamos una guía cuando cada dato está revisado. Por eso no damos fechas.',
       tipo: 'lista',
       items: [
-        'Cómo preparar su web para Google y los asistentes de IA, según la documentación oficial de Google.',
-        'Errores que hacen perder consultas por WhatsApp.',
+        'Cómo preparar su web para salir en Google y en asistentes como ChatGPT.',
+        'Errores que hacen perder clientes por WhatsApp.',
       ],
-    },
-    {
-      id: 'como-las-hacemos',
-      etiqueta: 'Cómo las hacemos',
-      titulo: 'Quién escribe estas guías y cómo se hacen',
-      tipo: 'tarjetas',
-      columnas: 3,
-      items: [
-        {
-          titulo: 'Quién',
-          texto: `Las firma ${FUNDADOR.nombreCorto}, fundador de VRS Digital y responsable de cada proyecto. Cada guía muestra la fecha de publicación y de actualización.`,
-          icono: icono('users'),
-        },
-        {
-          titulo: 'Cómo',
-          texto:
-            'La investigación y la redacción se hacen con apoyo de inteligencia artificial. Cada dato se verifica contra su fuente antes de publicar, y las fuentes van enlazadas.',
-          icono: icono('search'),
-        },
-        {
-          titulo: 'Por qué',
-          texto:
-            'Para que usted decida con información clara antes de contratar, con nosotros o con otro proveedor. No reemplazan la asesoría legal, contable o tributaria.',
-          icono: icono('eye'),
-        },
-      ],
-      nota: 'Somos parte interesada: vendemos páginas web y atención inteligente en WhatsApp. Por eso separamos nuestros precios de los datos de terceros y enlazamos cada fuente.',
     },
     {
       id: 'servicios',
@@ -110,53 +85,37 @@ export const contenido = {
       titulo: 'Si prefiere que lo hagamos por usted',
       tipo: 'tarjetas',
       columnas: 3,
-      items: [
-        {
-          titulo: 'Páginas web profesionales',
-          texto: 'Una web clara, rápida y adaptada a celular que explica sus servicios y facilita el contacto.',
-          icono: icono('monitor'),
-          href: '/paginas-web-bogota/',
-        },
-        {
-          titulo: 'Posicionamiento en Google y asistentes de IA',
-          texto: 'Estructura y contenido para que Google y los asistentes de IA entiendan qué hace su empresa.',
-          icono: icono('search'),
-          href: '/posicionamiento-google-inteligencia-artificial/',
-        },
-        {
-          titulo: 'Atención inteligente en WhatsApp Business',
-          texto: 'Su WhatsApp Business responde a sus clientes a cualquier hora y le pasa a usted los casos que necesitan una persona.',
-          icono: icono('message'),
-          href: '/asistente-whatsapp-business/',
-        },
-      ],
+      items: SERVICIOS.map((s) => ({
+        titulo: s.nombre,
+        texto: s.resumen,
+        icono: icono(s.icono),
+        href: `/${s.slug}/`,
+      })),
     },
   ],
   preguntas: [
     {
       pregunta: '¿Quién escribe las guías de VRS Digital?',
-      respuesta: `Las firma ${FUNDADOR.nombreCorto}, fundador de VRS Digital y responsable de cada proyecto. Él decide los temas, revisa cada dato contra su fuente y aprueba el texto final. Cada guía muestra su fecha de publicación y de última actualización, y enlaza las fuentes oficiales o públicas que usa.`,
+      respuesta: `Las firma ${FUNDADOR.nombreCorto}, fundador de VRS Digital. Cada dato se revisa contra su fuente, y las fuentes van enlazadas. Como vendemos páginas web, separamos nuestros precios de los datos de otras empresas.`,
     },
     {
       pregunta: '¿Cada cuánto se actualizan las guías?',
       respuesta:
-        'Las revisamos cada trimestre y cuando cambia un dato importante, como los precios del mercado o las condiciones de WhatsApp Business. Cada guía muestra la fecha de su última actualización. Si encuentra un dato desactualizado, escríbanos por WhatsApp o por correo y lo revisamos.',
+        'Las revisamos cada tres meses y cuando cambia un dato importante, como los precios. Si ve un dato viejo, escríbanos y lo revisamos.',
     },
     {
       pregunta: '¿Las guías reemplazan la asesoría de un profesional?',
       respuesta:
-        'No. Son guías informativas para que usted entienda opciones, costos y límites antes de decidir. Cuando un tema toca impuestos, contratos, datos personales o salud, la decisión debe tomarla con un profesional calificado. Las guías enlazan las fuentes oficiales para que pueda verificar cada dato.',
+        'No. Sirven para entender opciones, costos y límites. Si su caso tiene que ver con impuestos, contratos o datos personales, consulte a un profesional.',
     },
     {
       pregunta: '¿Puedo sugerir un tema para una guía?',
-      respuesta:
-        'Sí. Si tiene una pregunta sobre páginas web, posicionamiento en Google o atención por WhatsApp que no encuentra respondida, escríbanos por WhatsApp o por correo. Priorizamos los temas que nos preguntan los dueños de empresas de servicios y que podemos responder con fuentes verificables.',
+      respuesta: 'Sí. Escríbanos su pregunta por WhatsApp o por correo.',
     },
   ],
   cta: {
     titulo: '¿Tiene una pregunta sobre su caso?',
-    texto:
-      'Solicite una revisión digital. Revisamos su web, su visibilidad en Google y su atención por WhatsApp, y le entregamos tres prioridades concretas.',
+    texto: 'Revisamos gratis su web, cómo aparece en Google y su WhatsApp. Le entregamos tres mejoras concretas.',
     ctaPrincipal: CTA_PRINCIPAL,
     ctaWhatsApp: MENSAJE_WHATSAPP,
     enlaceWhatsApp: enlaceWhatsApp(MENSAJE_WHATSAPP),
@@ -173,7 +132,7 @@ export const contenido = {
       idioma: 'en',
     },
   ],
-  actualizado: '2026-10-11',
+  actualizado: '2026-10-19',
 } as const satisfies ModuloPagina;
 
 // ── Página de cada guía (/recursos/<slug>/) ─────────────────────────────────

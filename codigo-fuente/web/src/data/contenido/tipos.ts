@@ -149,7 +149,7 @@ export interface ProyectoDetalle {
 export interface ResumenPlan {
   readonly id: IdPlan;
   readonly nombre: string;
-  readonly paraQuien: string;
+  readonly queEs: string;
   readonly precioAnual: string;
   readonly cuotas: string;
   readonly destacado?: boolean;

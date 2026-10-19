@@ -14,7 +14,7 @@ export const SITIO = {
   categoria: 'Páginas web, posicionamiento y atención por WhatsApp para empresas de servicios',
   eslogan: 'Más visible. Mejor atendido.',
   propuesta:
-    'VRS Digital crea páginas web para empresas de servicios, las prepara para Google y asistentes de IA, y ofrece atención inteligente en WhatsApp Business.',
+    'VRS Digital hace páginas web para empresas, las deja listas para aparecer en Google y asistentes de IA, y ofrece respuestas automáticas en WhatsApp Business.',
   ciudad: 'Bogotá',
   pais: 'CO',
   imagenSocial: '/img/og-vrs-digital.png',
@@ -88,13 +88,43 @@ export function totalEnCuotas(precioAnual: number) {
   return cuotaMensual(precioAnual) * CUOTAS.numero;
 }
 
+// ── Ficha de cada oferta (Víctor, 2026-10-18: «la información no es clara») ─────────────────
+// Toda oferta (Landing Page, Plan Emprendedor y los tres planes web) responde las mismas preguntas,
+// en el mismo orden y con palabras simples: regla de claridad (LEEME-WEB-NUEVA.md, sección 1, y
+// GUIA-CLARIDAD.md). Las tarjetas, la tabla de /precios/, el formulario y llms.txt leen estas fichas.
+// Un dato que Víctor no ha confirmado no se escribe: esa fila queda sin respuesta y no se muestra.
+
+export type IdFila = 'paginas' | 'dominio' | 'hosting' | 'contacto' | 'google' | 'respuestas';
+
+export interface Respuesta {
+  /** true: la oferta lo trae (marca ✓). false: no lo trae (marca –). */
+  si: boolean;
+  /** Respuesta corta: un número o pocas palabras. */
+  texto: string;
+}
+
+export type Ficha = Partial<Record<IdFila, Respuesta>>;
+
+/** Las preguntas de la ficha, en orden. «explicacion» aclara la palabra técnica (se muestra una vez). */
+export const FILAS_FICHA: readonly { id: IdFila; pregunta: string; explicacion?: string }[] = [
+  { id: 'paginas', pregunta: 'Páginas' },
+  { id: 'dominio', pregunta: 'Dominio', explicacion: 'el nombre de su web, como suempresa.com' },
+  { id: 'hosting', pregunta: 'Hosting', explicacion: 'el espacio en internet donde queda guardada su web' },
+  { id: 'contacto', pregunta: 'Botón de WhatsApp y formulario' },
+  { id: 'google', pregunta: 'Google' },
+  { id: 'respuestas', pregunta: 'Respuestas automáticas en WhatsApp' },
+];
+
 export interface Plan {
   id: IdPlan;
   nombre: string;
-  paraQuien: string;
+  /** Qué recibe el cliente, en una frase y con números (no «para quién es»). */
+  queEs: string;
   /** Precio anual «desde», IVA incluido: se paga de una vez o en 12 cuotas (ver cuotaMensual). */
   precioAnualDesde: number;
   precioAnualHasta: number;
+  ficha: Ficha;
+  /** Todo lo que incluye, en palabras simples. */
   incluye: string[];
   noIncluye: string[];
   incluyeAnterior?: string;
@@ -102,94 +132,147 @@ export interface Plan {
   etiqueta?: string;
 }
 
+/** Precio anual del paquete de dominio y hosting (más abajo, DOMINIO_HOSTING). */
+const PRECIO_DOMINIO_HOSTING = 149_900;
+
+/** Lo que tienen igual los tres planes web. */
+const FICHA_PLANES_WEB = {
+  dominio: { si: true, texto: 'Incluido el primer año, a nombre de su empresa' },
+  hosting: { si: true, texto: 'Incluido el primer año' },
+  contacto: { si: true, texto: 'Sí' },
+} as const satisfies Ficha;
+
+/** Web Visible y Web + Atención Inteligente: una página por servicio y trabajo mensual en Google. */
+const FICHA_VISIBLE = {
+  paginas: { si: true, texto: 'Hasta 5, más una por cada servicio' },
+  google: { si: true, texto: 'Investigamos qué buscan sus clientes y cada mes revisamos cómo aparece' },
+} as const satisfies Ficha;
+
 export const PLANES: Plan[] = [
   {
     id: 'esencial',
     nombre: 'Web Esencial',
-    paraQuien: 'Para empresas que necesitan presencia profesional y un contacto claro.',
+    queEs: 'Su web de hasta 5 páginas, con botón de WhatsApp y formulario. Trae dominio y hosting del primer año.',
     precioAnualDesde: 1_200_000,
     precioAnualHasta: 1_900_000,
+    ficha: {
+      paginas: { si: true, texto: 'Hasta 5' },
+      ...FICHA_PLANES_WEB,
+      google: { si: true, texto: 'La dejamos lista para que Google la pueda mostrar' },
+      respuestas: { si: false, texto: 'No' },
+    },
     incluye: [
-      'Dominio (.com o .com.co) y hosting incluidos el primer año',
-      'Sitio de hasta cinco secciones o páginas, según alcance',
-      'Diseño adaptable a celular',
-      `Estructura y textos preparados con apoyo de IA y revisados por ${FUNDADOR.nombreCorto}`,
-      'Botón de WhatsApp',
-      'Formulario de contacto',
-      'Optimización inicial para Google en cada página',
-      'Certificado de seguridad (SSL) y configuración técnica',
-      'Manual breve de uso',
+      'Hasta 5 páginas, por ejemplo: Inicio, Servicios, Nosotros y Contacto',
+      'Nosotros escribimos los textos y usted los aprueba',
+      'Se ve bien en el celular y en el computador',
+      'Botón de WhatsApp y formulario de contacto',
+      'Cada página lista para que Google la pueda mostrar',
+      'Dominio y hosting del primer año, con el candado de seguridad',
+      'Un manual corto para usar su web',
     ],
-    noIncluye: ['Seguimiento mensual de posicionamiento', 'Contenido continuo', 'Atención inteligente en WhatsApp'],
+    noIncluye: ['Revisión mensual en Google', 'Textos nuevos cada mes', 'Respuestas automáticas en WhatsApp'],
   },
   {
     id: 'visible',
     nombre: 'Web Visible',
-    paraQuien: 'Para empresas que quieren recibir clientes desde Google y asistentes de IA.',
+    queEs: 'Todo lo de Web Esencial, más una página para cada servicio y trabajo cada mes para que su empresa salga en Google.',
     precioAnualDesde: 2_200_000,
     precioAnualHasta: 3_800_000,
     incluyeAnterior: 'Todo lo de Web Esencial, más:',
+    ficha: {
+      paginas: FICHA_VISIBLE.paginas,
+      ...FICHA_PLANES_WEB,
+      google: FICHA_VISIBLE.google,
+      respuestas: { si: false, texto: 'No' },
+    },
     incluye: [
-      'Investigación de lo que buscan sus clientes',
-      'Una página independiente por cada servicio',
-      'Títulos y descripciones escritos según la investigación de búsquedas',
-      'Enlaces internos entre páginas',
-      'Datos estructurados (código que describe su empresa a Google)',
-      'Optimización inicial de su perfil de Google (Google Business Profile)',
-      'Preguntas frecuentes preparadas para respuestas de IA',
-      'Seguimiento mensual en Google',
+      'Investigamos qué escriben en Google las personas que buscan lo que usted ofrece',
+      'Una página aparte para cada servicio, escrita con esas búsquedas',
+      'En cada página, el título y la descripción que Google muestra en sus resultados',
+      'Páginas enlazadas entre sí, para que Google las encuentre todas',
+      'Información oculta en la web que le dice a Google quién es su empresa y qué ofrece',
+      'Mejoramos su ficha de empresa en Google Maps',
+      'Preguntas frecuentes con respuestas cortas, que Google y asistentes como ChatGPT pueden entender',
+      'Cada mes revisamos cómo aparece su web en Google',
     ],
-    noIncluye: ['Atención inteligente en WhatsApp', 'Primer lugar garantizado en Google'],
+    noIncluye: ['Respuestas automáticas en WhatsApp', 'El primer lugar en Google: nadie lo puede garantizar'],
   },
   {
     id: 'atencion',
     nombre: 'Web + Atención Inteligente',
-    paraQuien: 'Para empresas que quieren ser encontradas y responder a sus clientes incluso fuera de horario.',
+    queEs: 'Todo lo de Web Visible, más respuestas automáticas en su WhatsApp Business, a cualquier hora.',
     precioAnualDesde: 3_000_000,
     precioAnualHasta: 5_200_000,
     incluyeAnterior: 'Todo lo de Web Visible, más:',
+    ficha: {
+      paginas: FICHA_VISIBLE.paginas,
+      ...FICHA_PLANES_WEB,
+      google: FICHA_VISIBLE.google,
+      respuestas: { si: true, texto: 'Sí, a cualquier hora' },
+    },
     incluye: [
-      'Revisión de que su cuenta de WhatsApp Business sea compatible',
-      'Organización de la información de su negocio',
-      'Configuración del tono de las respuestas',
-      'Respuestas de ejemplo y documentos de apoyo',
-      'Definición de los datos que el agente puede pedir',
-      'Criterios para pasar la conversación a una persona',
-      'Prueba de 25 a 40 preguntas y corrección de respuestas',
-      'Optimización inicial durante 30 días',
+      'Revisamos si su WhatsApp Business puede tener respuestas automáticas',
+      'Ordenamos la información de su negocio para que responda bien',
+      'Definimos el tono de las respuestas',
+      'Escribimos respuestas de ejemplo y documentos de apoyo',
+      'Definimos qué datos le puede pedir a su cliente',
+      'Definimos cuándo pasa la conversación a una persona',
+      'La probamos con 25 a 40 preguntas y corregimos lo que responda mal',
+      'Durante los primeros 30 días revisamos y mejoramos las respuestas',
     ],
-    noIncluye: ['Chatbot desarrollado a medida', 'API, CRM o integraciones con otros sistemas', 'Envíos masivos'],
+    noIncluye: [
+      'Un chatbot hecho a la medida',
+      'Conexión con otros programas de su empresa (ventas, facturación o inventario)',
+      'Envío de mensajes masivos',
+    ],
     destacado: true,
     etiqueta: 'Oferta principal',
   },
 ];
 
-/** Plan de entrada separado de los planes empresariales (decisión 14 del informe). */
+/** Plan de entrada separado de los planes web. Víctor (2026-10-19): costo fijo mensual, una página
+ *  muy sencilla con dirección web temporal gratuita, sin formulario ni agenda, para quien quiere probar
+ *  sin invertir mucho. Sin confirmar: si trae botón de WhatsApp (esa fila de la ficha no se muestra). */
 export const PLAN_ENTRADA = {
   nombre: 'Plan Emprendedor',
   mensualidad: 49_900,
-  descripcion: 'Página de una sola sección, estandarizada, con alojamiento (hosting) y agenda básica incluidos. Pensado para microempresas que empiezan.',
-  noIncluye: ['Posicionamiento mensual', 'Atención inteligente en WhatsApp'],
+  // Víctor, 2026-10-19: costo fijo mensual; página sencilla con dominio temporal
+  // gratuito, para quien no sabe nada de esto y quiere probar sin invertir mucho.
+  queEs: 'Una página muy sencilla por un pago fijo de $49.900 al mes. Para probar sin invertir mucho.',
+  ficha: {
+    paginas: { si: true, texto: '1' },
+    dominio: { si: true, texto: `Una dirección temporal gratis. Su propio dominio se agrega por ${formatoCOP(PRECIO_DOMINIO_HOSTING)} al año` },
+    hosting: { si: true, texto: 'Incluido' },
+    google: { si: false, texto: 'Sin revisión mensual' },
+    respuestas: { si: false, texto: 'No' },
+  } satisfies Ficha as Ficha,
+  incluye: ['1 página muy sencilla, con un diseño base ya hecho', 'Una dirección web temporal gratis', 'Hosting'],
+  noIncluye: [`Dominio propio: se agrega por ${formatoCOP(PRECIO_DOMINIO_HOSTING)} al año`, 'Formulario de contacto', 'Agenda', 'Revisión mensual en Google', 'Respuestas automáticas en WhatsApp'],
 } as const;
 
 // ── Dominio + hosting y landing (decisión de la Dirección, 2026-10-12) ──────
 // Víctor: unificar dominio y hosting en un solo paquete comercial (el hosting ya no le cuesta;
 // el dominio cuesta entre $70.000 y $140.000 al año) y publicar la landing en $300.000–$350.000.
 // Estrategia (13-10-2026, igual en el PC de Víctor): un solo precio anual que cubre cualquier dominio
-// .com o .com.co; incluido sin costo en los tres planes web mientras paguen la mensualidad (gancho de
-// venta); combo landing + primer año de dominio y hosting con ahorro real.
+// .com o .com.co; incluido sin costo en los tres planes web el primer año (gancho de venta); combo
+// landing + primer año de dominio y hosting con ahorro real. Nada se dice de lo que pasa después del
+// primer año (Víctor, 2026-10-13).
+
+const DOMINIO_HOSTING_APARTE = `La Landing Page no los trae: se agregan por ${formatoCOP(PRECIO_DOMINIO_HOSTING)} al año. El Plan Emprendedor trae el hosting y una dirección temporal gratis; su propio dominio se agrega por ${formatoCOP(PRECIO_DOMINIO_HOSTING)} al año. IVA incluido.`;
 
 /** Paquete anual de dominio y hosting. Un solo precio, sin letra pequeña. */
 export const DOMINIO_HOSTING = {
   nombre: 'Dominio + Hosting',
-  precioAnual: 149_900,
+  precioAnual: PRECIO_DOMINIO_HOSTING,
   incluye: [
-    'Dominio .com o .com.co, registrado a nombre de su empresa',
-    'Hosting (alojamiento) de su web',
-    'Certificado de seguridad (SSL), el candado del navegador',
+    'Dominio .com o .com.co (el nombre de su web), a nombre de su empresa',
+    'Hosting (el espacio en internet donde queda guardada su web)',
+    'El candado de seguridad que muestra el navegador',
   ],
+  /** Qué pasa con la Landing Page y el Plan Emprendedor, que no traen las dos cosas. */
+  aparte: DOMINIO_HOSTING_APARTE,
   /** Texto corto para notas de precios en todas las páginas. */
-  resumen: 'Dominio y hosting incluidos el primer año en los planes web. Para la Landing Page y el Plan Emprendedor, $149.900 al año, IVA incluido.',
+  resumen: `En los planes web, el dominio y el hosting van incluidos el primer año. ${DOMINIO_HOSTING_APARTE}`,
 } as const;
 
 /** Landing page: pago único, la puerta de entrada más económica. */
@@ -198,16 +281,23 @@ export const LANDING = {
   precio: 350_000,
   /** Landing + primer año de dominio y hosting (350.000 + 149.900 = 499.900; se ofrece en 449.900). */
   precioConDominio: 449_900,
-  paraQuien: 'Para lanzar un servicio, una promoción o su negocio con una sola página que lleva a WhatsApp.',
-  descripcion:
-    'Una página de una sola sección, diseñada para convertir visitas en mensajes de WhatsApp. Pago único, sin mensualidad obligatoria.',
+  queEs: 'Una sola página para vender un servicio o una promoción. Quien la visita le escribe por WhatsApp.',
+  ficha: {
+    paginas: { si: true, texto: '1' },
+    dominio: { si: false, texto: 'No incluido. Con dominio y hosting del primer año: $449.900 en total' },
+    hosting: { si: false, texto: 'No incluido. Va en el valor de $449.900' },
+    contacto: { si: true, texto: 'Sí' },
+    google: { si: true, texto: 'La dejamos lista para que Google la pueda mostrar' },
+    respuestas: { si: false, texto: 'No' },
+  } satisfies Ficha as Ficha,
   incluye: [
-    'Una página de una sola sección, con sus textos de venta',
-    'Diseño adaptable a celular',
+    '1 página para vender un servicio o una promoción',
+    'Los textos de venta',
+    'Se ve bien en el celular y en el computador',
     'Botón de WhatsApp y formulario de contacto',
-    'Optimización inicial para Google',
+    'Lista para que Google la pueda mostrar',
   ],
-  noIncluye: ['Varias páginas o una página por servicio', 'Seguimiento mensual de posicionamiento', 'Atención inteligente en WhatsApp'],
+  noIncluye: ['Más páginas', 'Revisión mensual en Google', 'Respuestas automáticas en WhatsApp'],
 } as const;
 
 /** Precio más bajo publicado (para «desde» en el menú, llms.txt y datos para Google). */
@@ -220,10 +310,10 @@ export const FORMA_DE_PAGO = [
 ] as const;
 
 export const CONDICIONES = [
-  'Cada plan tiene un precio anual: se paga de una vez o en 12 cuotas mensuales, que suman 20 % más.',
+  'Cada plan web tiene un precio al año. Puede pagarlo de una vez o en 12 cuotas mensuales, que suman 20 % más.',
   DOMINIO_HOSTING.resumen,
-  'Licencias y suscripciones externas se identifican por separado.',
-  'Trabajamos con un máximo de dos proyectos al mismo tiempo; la fecha de inicio se asigna según disponibilidad.',
+  'Si su web necesita un servicio de otra empresa con costo, como una licencia, se lo decimos con su precio antes de empezar.',
+  'Trabajamos con máximo dos proyectos al mismo tiempo. Por eso la fecha de inicio depende de cuándo haya cupo.',
 ] as const;
 
 /** Enlace de pago público de Bold (monto abierto: el cliente escribe el valor acordado). Sin claves. */
@@ -236,30 +326,26 @@ export const PAGO_EN_LINEA = {
 export const MEDIOS_PAGO = ['Transferencia Bancolombia', 'PSE a través de Bold', 'Tarjeta de crédito o débito a través de Bold'] as const;
 
 // ── Servicios (páginas de servicio) ─────────────────────────────────────────
+// Sin «Mantenimiento y mejoras mensuales» (2026-10-19): no tenía página ni precio, solo enlazaba a
+// /precios/, donde no se describe (Víctor, 2026-10-13). Un enlace sin información confunde.
 export const SERVICIOS = [
   {
     slug: 'paginas-web-bogota',
     nombre: 'Páginas web profesionales',
-    resumen: 'Una web clara, rápida y adaptada a celular que explica sus servicios y facilita el contacto.',
+    resumen: 'Su web, con botón de WhatsApp y formulario, que se ve bien en el celular.',
     icono: 'monitor',
   },
   {
     slug: 'posicionamiento-google-inteligencia-artificial',
-    nombre: 'Posicionamiento en Google y asistentes de IA',
-    resumen: 'Estructura y contenido para que Google y los asistentes de IA entiendan y puedan mostrar su empresa.',
+    nombre: 'Aparecer en Google y en asistentes de IA',
+    resumen: 'Trabajo para que Google y asistentes como ChatGPT entiendan su empresa y la puedan mostrar.',
     icono: 'search',
   },
   {
     slug: 'asistente-whatsapp-business',
     nombre: 'Atención inteligente en WhatsApp Business',
-    resumen: 'Configuramos el agente de IA disponible en WhatsApp Business para responder preguntas frecuentes, incluso fuera de horario.',
+    resumen: 'Respuestas automáticas en su WhatsApp Business para las preguntas de siempre, también fuera de horario.',
     icono: 'message',
-  },
-  {
-    slug: 'precios',
-    nombre: 'Mantenimiento y mejoras mensuales',
-    resumen: 'Mantenemos su información actualizada y mejoramos la web mes a mes, con un alcance definido.',
-    icono: 'refresh',
   },
 ] as const;
 
@@ -397,11 +483,11 @@ export const AVAL = {
 
 // ── Proceso de entrega (informe, sección "Proceso de entrega") ──────────────
 export const PROCESO = [
-  { paso: '01', titulo: 'Diagnóstico', texto: 'Formulario único y reunión de hasta 45 minutos. Confirmamos el alcance y revisamos si su WhatsApp Business es compatible.' },
-  { paso: '02', titulo: 'Preparación', texto: 'Investigación, lista de páginas y textos iniciales. Usted revisa todo en un documento central.' },
-  { paso: '03', titulo: 'Construcción', texto: 'Diseño, desarrollo, optimización para Google y configuración de WhatsApp, con pruebas en celular y computador.' },
-  { paso: '04', titulo: 'Aprobación', texto: 'Presentación completa, dos rondas de ajustes y aprobación por escrito.' },
-  { paso: '05', titulo: 'Publicación', texto: 'Dominio, seguridad, solicitud a Google para que muestre sus páginas, activación del agente si está disponible y manual breve.' },
+  { paso: '01', titulo: 'Diagnóstico', texto: 'Usted llena un formulario y hablamos hasta 45 minutos. Acordamos qué incluye su web y revisamos su WhatsApp Business.' },
+  { paso: '02', titulo: 'Preparación', texto: 'Investigamos, definimos las páginas y escribimos los textos. Usted los revisa en un solo documento.' },
+  { paso: '03', titulo: 'Construcción', texto: 'Hacemos el diseño y la web, la dejamos lista para Google y la probamos en celular y computador.' },
+  { paso: '04', titulo: 'Aprobación', texto: 'Le mostramos todo. Puede pedir cambios dos veces. Después la aprueba por escrito.' },
+  { paso: '05', titulo: 'Publicación', texto: 'Publicamos su web con el candado de seguridad y le pedimos a Google que la muestre. Si su plan lo trae, activamos las respuestas automáticas. Le entregamos un manual corto.' },
 ] as const;
 
 // ── Navegación ───────────────────────────────────────────────────────────────
@@ -411,7 +497,7 @@ export const MENU = [
     href: '/paginas-web-bogota/',
     hijos: [
       { nombre: 'Páginas web profesionales', href: '/paginas-web-bogota/' },
-      { nombre: 'Posicionamiento en Google y asistentes de IA', href: '/posicionamiento-google-inteligencia-artificial/' },
+      { nombre: 'Aparecer en Google y en asistentes de IA', href: '/posicionamiento-google-inteligencia-artificial/' },
       { nombre: 'Atención inteligente en WhatsApp', href: '/asistente-whatsapp-business/' },
     ],
   },

@@ -71,7 +71,7 @@ export const GET: APIRoute = () => {
     const encabezado = `### ${p.nombre}${p.etiqueta ? ` (${p.etiqueta.toLowerCase()})` : ''}`;
     return `${encabezado}
 
-${p.paraQuien}
+${p.queEs}
 
 - Precio anual: desde ${cop(p.precioAnualDesde)} (IVA incluido), pago de una vez
 - O en 12 cuotas: ${cop(cuotaMensual(p.precioAnualDesde))} al mes, total ${cop(totalEnCuotas(p.precioAnualDesde))} (IVA incluido)
@@ -126,7 +126,7 @@ Enlace público: ${c.enlace}`,
 
   const cuerpo = `# ${SITIO.nombre}: información completa
 
-> ${SITIO.nombre} es un estudio digital de ${SITIO.ciudad}, Colombia, dirigido por su fundador, ${FUNDADOR.nombre}. ${SITIO.propuesta.replace(`${SITIO.nombre} crea`, 'Crea')} ${LANDING.nombre} desde ${cop(LANDING.precio)} (pago único). Planes web: precio anual desde ${cop(precioAnualMin)}, o 12 cuotas desde ${cop(cuotaMin)} al mes (20 % más en total). ${NOTA_PRECIOS}
+> ${SITIO.nombre} es un estudio digital de ${SITIO.ciudad}, Colombia, dirigido por su fundador, ${FUNDADOR.nombre}. ${SITIO.propuesta.replace(`${SITIO.nombre} hace`, 'Hace')} ${LANDING.nombre} desde ${cop(LANDING.precio)} (pago único). Planes web: precio anual desde ${cop(precioAnualMin)}, o 12 cuotas desde ${cop(cuotaMin)} al mes (20 % más en total). ${NOTA_PRECIOS}
 
 Este archivo reúne el contenido esencial de ${urlAbsoluta('/')} en texto plano. Todos los precios están en pesos colombianos (COP). Última actualización: ${fechaActualizacion()}. Resumen con enlaces: ${urlAbsoluta('/llms.txt')}
 
@@ -159,7 +159,7 @@ ${planes}
 
 ### ${LANDING.nombre}
 
-${LANDING.paraQuien} ${LANDING.descripcion}
+${LANDING.queEs}
 
 - Precio: ${cop(LANDING.precio)}, pago único (IVA incluido)
 - Con dominio y hosting del primer año: ${cop(LANDING.precioConDominio)} (IVA incluido)
@@ -183,7 +183,7 @@ ${lista(DOMINIO_HOSTING.incluye)}
 
 ### ${PLAN_ENTRADA.nombre}
 
-${PLAN_ENTRADA.descripcion}
+${PLAN_ENTRADA.queEs}
 
 - Mensualidad: ${cop(PLAN_ENTRADA.mensualidad)} al mes (IVA incluido)
 
