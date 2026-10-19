@@ -34,7 +34,8 @@ export const FUNDADOR = {
 
 export const CONTACTO = {
   whatsappNumero: '573059129692',
-  whatsappVisible: '+57 305 912 9692',
+  // Víctor (2026-10-18): el número se muestra sin indicativo de país. Los enlaces (wa.me, tel:) sí lo llevan.
+  whatsappVisible: '305 912 9692',
   telefonoE164: '+573059129692',
   correo: 'vrsdigitalcol@gmail.com',
   // Espacios de no separación en «a. m.» y «p. m.»: la hora no se parte entre dos líneas.
